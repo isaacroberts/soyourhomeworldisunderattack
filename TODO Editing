@@ -1,0 +1,66 @@
+
+============ Python ================
+
+# The GotoButtons need to be their own class in the Python Writer so the chapter script can fix the links
+
+# Check alignments on complicated spans 
+
+============ Flutter ================
+
+# GotoButtons (Flutter) need to look like buttons
+	-need to disable the link (with visual indication) when the link is null / not found 
+
+Standardize font files (futura is wacky, rubik is wacky, etc)
+	- some of it may be weights 
+
+Put search bar into list (so it scrolls under)
+
+============ Book ================
+
+Door Signs (in general) should be a different color 
+
+# Call ahead 
+
+Move activities after BusTrip label 
+
+# T-shirts
+Needs to say the date 
+
+Add Header title before Indica's introduced 
+Nick yelled -> Nick yelped 
+
+# Manilla 
+
+Move manilla envelope to rest of Rachel's conversation 
+
+# Remove god's perfect marijuana 
+
+#RFK 
+
+This left-align text is not going to work. 
+
+
+============ Medium ===============
+
+- TabSpan (CustomLayout. needs absolute position. google whether it's already been done. Might need SpanThatHoldsTabs.) 
+	( what for?? ) 
+
+- Python Microservice for comments 
+	add_comment(string, box_id) // adds comment to set 
+	get_comments(box_id, n) //returns n random comments  
+	Remove n word 
+
+
+============ Large ================
+
+- Chapters need to announce to book what fonts are used 
+- ReaderScreen needs to ask elements whether it can continue.
+
+- Font types (blocking, non-reloading.)
+	Blocking: Gator font. Waits for ModernThrash to arrive before displaying any further elements. 
+	Non-reloading: If font is not ready when shown, it falls back to Palatino/Garamond/third (chosen manually during font_counter) and does not reload. 
+	
+- Use dynamic_cached_fonts package
+=
+
+
