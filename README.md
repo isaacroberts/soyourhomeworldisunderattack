@@ -4,7 +4,7 @@ It can be tempting to go crazy. But let's not, just yet. First, let's analyze th
 
 ## Website:
 
-soyourhomeworld.nfshost.com
+https://soyourhomeworld.nfshost.com
 
 ## Installation & Building
 
