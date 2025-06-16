@@ -1,18 +1,18 @@
 id,family,file,count
 97,Liberation Sans,LiberationSans-Regular.ttf,1
-0,Palatino,palatinolinotype_italic.ttf,33
-96,Liberation Mono,LiberationMono-Regular.ttf,3
+0,Palatino,palatinolinotype_italic.ttf,39
+96,Liberation Mono,LiberationMono-Regular.ttf,8
 1,Rubik,Rubik-VariableFont_wght.ttf,11
-0,Palatino,palatinolinotype_roman.ttf,101
+0,Palatino,palatinolinotype_roman.ttf,111
 97,Liberation Sans,LiberationSans-Bold.ttf,2
 9,Ani,Ani.ttf,2
 4,Aierbazzi,aierbazzi.ttf,1
-42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,22
+42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,28
 264,Vampire Wars,Vampire Wars.otf,5
 38,Dhurjati,dhurjati.ttf,4
 20,Brains Courage Demo,Brains Courage Demo.otf,2
 227,Silkscreen,Silkscreen-Regular.ttf,1
-15,Azeret Mono Light,AzeretMono-VariableFont_wght.ttf,8
+15,Azeret Mono Light,AzeretMono-VariableFont_wght.ttf,10
 227,Silkscreen,Silkscreen-Bold.ttf,1
 137,Montserrat Medium,Montserrat-VariableFont_wght.ttf,80
 213,Rock Salt,RockSalt-Regular.ttf,3
@@ -21,12 +21,13 @@ id,family,file,count
 67,IBM Plex Sans ExtraLight,IBMPlexSans-ExtraLight.ttf,1
 23,Casual Sketchy,Casual Sketchy.ttf,6
 24,Celtic Garamond the 2nd,CELTG___.TTF,16
-0,Palatino,palatinolinotype_bolditalic.ttf,17
-0,Palatino Linotype,palatinolinotype_bold.ttf,44
-42,EB Garamond Medium,EBGaramond-Italic-VariableFont_wght.ttf,13
+15,Azeret Mono Thin,AzeretMono-Italic-VariableFont_wght.ttf,1
+0,Palatino,palatinolinotype_bolditalic.ttf,18
+0,Palatino Linotype,palatinolinotype_bold.ttf,50
+42,EB Garamond Medium,EBGaramond-Italic-VariableFont_wght.ttf,14
 96,Liberation Mono,LiberationMono-Italic.ttf,1
 96,Liberation Mono,LiberationMono-Bold.ttf,1
-64,Heebo Black,Heebo-VariableFont_wght.ttf,12
+64,Heebo Black,Heebo-VariableFont_wght.ttf,11
 273,Z003,Z003-MediumItalic.t1,5
 7,Anathema,Anathema.ttf,1
 49,Futura Book,Futura Italic.ttf,1
@@ -40,21 +41,20 @@ id,family,file,count
 12,Arial,Arial.ttf,3
 186,PerryGothic,PERRYGOT.TTF,1
 3,Affordable Afterlife DEMO,AffordableAfterlifeDEMO-Regular.otf,11
-6,Amika Blackletter Free Font,Amika Blackletter Free Font.ttf,2
-245,Times New Roman,times.ttf,2
+6,Amika Blackletter Free Font,Amika Blackletter Free Font.ttf,3
 201,Raleway Thin,Raleway-VariableFont_wght.ttf,2
 33,Dancing Script,DancingScript-VariableFont_wght.ttf,1
-15,Azeret Mono,AzeretMono-Italic-VariableFont_wght.ttf,1
-45,Frank Ruhl Libre,FrankRuhlLibre-VariableFont_wght.ttf,8
+45,Frank Ruhl Libre,FrankRuhlLibre-VariableFont_wght.ttf,7
 14,Authentic,Authentic Signature.otf,2
 49,Futura Book,Futura Condensed ExtraBold.ttf,3
 153,Noto Sans,"NotoSans-VariableFont_wdth,wght.ttf",3
 19,Bradley Hand ITC,bradley-hand-itc.ttf,1
+68,Impact,Impact.ttf,2
 67,IBM Plex Sans ExtraLight,IBMPlexSans-Medium.ttf,1
 67,IBM Plex Sans ExtraLight,IBMPlexSans-Bold.ttf,1
 272,Yrsa SemiBold,Yrsa-Regular.ttf,1
-197,Purisa,Purisa.ttf,2
-88,Karumbi,Karumbi-Regular.ttf,2
-197,Purisa,Purisa-Oblique.ttf,1
+197,Purisa,Purisa.ttf,1
+271,Yellowtail,Yellowtail-Regular.ttf,1
+88,Karumbi,Karumbi-Regular.ttf,1
 70,Jamrul,JamrulNormal.ttf,1
 49,Futura,Futura Light Condensed.otf,1

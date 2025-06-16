@@ -186,7 +186,11 @@ for chapter in chapters:
                 else:
                     print('Chapter:', chapter.headline_text)
                     print('Text:', span.get_text())
-                    r = pst.response(f'No params found on {obj} CodeTag: {span}. (Any to continue)')
+                    label = pst.saveable_response(f'No params found on {obj} CodeTag: {span}. (Enter keyword / Blank to continue / x to exit)')
+                    label = label.strip()
+                    if len(label)>0:
+                        chapter.set_id(label)
+                        print("Set ID to label")
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1

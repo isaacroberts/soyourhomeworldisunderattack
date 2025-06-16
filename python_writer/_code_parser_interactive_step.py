@@ -371,19 +371,19 @@ class InteractiveMatchingStep():
             print("Checking related keywords.")
             for kw in koClasses:
                 if kw in obj:
-                    r = pst.saved_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
+                    r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
                     if r=='y':
-                        return obj
+                        return kw
 
                 elif obj in kw:
-                    r = pst.saved_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
+                    r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
                     if r=='y':
-                        return obj
+                        return kw
             print ("Checking all keywords.")
             for kw in koClasses:
-                r = pst.saved_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
+                r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
                 if r=='y':
-                    return obj
+                    return kw
             #Not a keyword
             assert False
 
@@ -395,6 +395,7 @@ class InteractiveMatchingStep():
 
         obj = self.match_obj_keyword(self.spans[i].obj)
         self.spans[i].obj = obj
+
 
         print('Upgraded span to keyword: ', self.spans[i])
 
