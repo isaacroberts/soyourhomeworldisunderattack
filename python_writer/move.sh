@@ -2,8 +2,8 @@
 shopt -s expand_aliases
 source ~/.profile
 
-rm -r ../book_binary/
-mkdir ../book_binary/
+rm -r ../server/book_binary/
+mkdir ../server/book_binary/
 
 mv -f generated_book/* ../server/book_binary/
 
