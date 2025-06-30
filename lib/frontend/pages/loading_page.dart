@@ -5,7 +5,7 @@ import '../elements/widgets/loader.dart';
 
 class LoadingPage extends StatelessWidget {
   final String message;
-  const LoadingPage({super.key, this.message = 'Loading...'});
+  const LoadingPage({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,9 @@ class LoadingPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
               // const CircularProgressIndicator(),
-              const TriWizardLoader(),
+              TriWizardLoader(
+                text: message,
+              ),
               if (message.isNotEmpty)
                 Text(
                   message,

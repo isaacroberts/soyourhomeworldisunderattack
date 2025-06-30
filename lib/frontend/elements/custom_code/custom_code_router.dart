@@ -1,61 +1,70 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+//My code
+import 'package:soyourhomeworld/backend/error_handler.dart';
+//Delayed loaders
 import 'package:soyourhomeworld/frontend/elements/common_blocks.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/ballot_screen.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/character_selection.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/title.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/tweet.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/ad_human_jacks.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/andy_thumbnail.dart';
+import 'package:soyourhomeworld/frontend/elements/custom_code/ballot_screen.dart'
+    deferred as ballot_screen_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/character_selection.dart'
+    deferred as character_selection_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
+    deferred as goto_button_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
+    deferred as shirts_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/title.dart'
+    deferred as title_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/tweet.dart'
+    deferred as tweet_lib;
+import 'package:soyourhomeworld/frontend/elements/widgets/ad_human_jacks.dart'
+    deferred as human_jacks_lib;
+import 'package:soyourhomeworld/frontend/elements/widgets/andy_thumbnail.dart'
+    deferred as andy_thumbnail_lib;
+//TODO: Remove
 import 'package:soyourhomeworld/frontend/icons.dart';
 
 import '../../../backend/binary_utils/buffer_ptr.dart';
+import '../holders/future_holder.dart';
+import '../holders/holder_base.dart';
+import '../holders/span_holding_code.dart';
 import '../holders/textholders.dart';
-import 'ad_widget.dart';
-import 'code_holders.dart';
-import 'misc_code_elements.dart';
-
-export 'timed_audio.dart';
-
-class IconHolder extends Holder {
-  late final IconData icon;
-  IconHolder(String icon, List<String> params) {
-    this.icon = RpgAwesome.getName(icon) ?? RpgAwesome.random();
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    return Icon(icon, size: 30, color: const Color(0x80000000));
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    //Add a box so user knows there's supposed to be something there
-    return Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-            border: Border.all(color: const Color(0x44000000), width: 2)),
-
-        //And then try to display it anyway
-        child: element(context));
-  }
-}
+import 'ad_widget.dart' deferred as ad_widget_lib;
+import 'misc_code_elements.dart' deferred as misc_code_lib;
 
 // ========= Routers =============
 
-Holder instantiateCodeTag(String cls, List<String> params) {
+//This will in the future need to hold a FutureHolder
+FutureHolder instantiateCodeTag(String cls, List<String> params) {
+  Future<Holder> holder = _instantiateCodeTag(cls, params);
+  return FutureHolder(holder);
+}
+
+Future<Holder> _instantiateCodeTag(String cls, List<String> params) async {
   if (cls == 'COPSTING') {
     return const HiddenTextElement();
   } else if (cls == 'ICON') {
-    return IconHolder(params[0], params.sublist(1));
+    int? iconIndex = int.tryParse(params[0]);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.IconHolder(
+        iconIndex ?? RpgAwesome.errorIconIndex, params.sublist(1));
   } else {
     dev.log("Missed CodeTag '$cls'");
   }
   return UnhandledCodeElement(cls, 'CodeTag');
+}
+
+double? readDoubleParam(List<String> params, String key) {
+  String? p = readParam(params, key);
+  if (p != null) {
+    double? d = double.tryParse(p);
+    if (d == null) {
+      ErrorList.showError(BookCodeException('Failed to read double param: $p'));
+    }
+    return null;
+  } else {
+    return null;
+  }
 }
 
 String? readParam(List<String> params, String key) {
@@ -108,40 +117,69 @@ Map<String, String> stripKnownParams(List<String> params) {
   }
 }
 
-Holder instantiateCodeBlock(
+FutureHolder instantiateCodeBlock(
     String cls, List<String> params, List<Holder> spans) {
+  //This needs to load the code's library
+  Future<Holder> future = _instantiateCodeBlock(cls, params, spans);
+  //Return the element immediately
+  return FutureHolder(future);
+}
+
+Future<Holder> _instantiateCodeBlock(
+    String cls, List<String> params, List<Holder> spans) async {
   Map<String, String> knownParams = stripKnownParams(params);
 
   dev.log("Cls: $cls");
 
   if (cls == 'Art') {
-    return ArtHolder(spans: spans);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.ArtHolder(spans: spans);
   } else if (cls == 'SHIRT') {
-    return Shirt(spans: spans) as SpanHoldingCode;
+    await shirts_lib.loadLibrary();
+    //TODO: Convert params to an object
+    double? width = readDoubleParam(params, 'width');
+    double? height = readDoubleParam(params, 'width');
+
+    return shirts_lib.Shirt(spans: spans, width: width, height: height);
+  } else if (cls == 'BUMPERSTICKER') {
+    await shirts_lib.loadLibrary();
+    double? width = readDoubleParam(params, 'width');
+    double? height = readDoubleParam(params, 'width');
+
+    return shirts_lib.BumperSticker(spans: spans, width: width, height: height);
   } else if (cls == 'TWEET') {
-    return TweetHolder(spans);
+    await tweet_lib.loadLibrary();
+    return tweet_lib.TweetHolder(spans);
   } else if (cls == 'SIGN') {
-    return Sign(spans: spans);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.Sign(spans: spans);
   } else if (cls == 'BG') {
     String? bg = params.isNotEmpty ? params[0] : null;
-    return BGCodeElement.fromString(bg, spans: spans);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.BGCodeElement.fromString(bg, spans: spans);
   } else if (cls == 'TICKET') {
-    return Ticket(spans: spans);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.Ticket(spans: spans);
   } else if (cls == 'POLLSCREEN') {
-    return PollScreen(spans: spans);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.PollScreen(spans: spans);
   } else if (cls == 'AD') {
-    return HumanJackAdHolder.random();
+    await human_jacks_lib.loadLibrary();
+    return human_jacks_lib.HumanJackAdHolder.random();
   } else if (cls == 'TITLE') {
     //No needed spans
-    return TitleHolder();
+    await title_lib.loadLibrary();
+    return title_lib.TitleHolder();
   } else if (cls == 'FULLBGAD') {
     // String? sc = readParam(params, 'color');
     //TODO: Parse colors
-    return AdElementHolder(spans: spans, color: null);
+    await ad_widget_lib.loadLibrary();
+    return ad_widget_lib.AdElementHolder(spans: spans, color: null);
   } else if (cls == 'BALLOT') {
     bool hasExtra = readBool(params, 'extra') ?? false;
     // List<String> links = readLinks(params, 'links') ?? [];
-    return BallotHolder(isExtended: hasExtra);
+    await ballot_screen_lib.loadLibrary();
+    return ballot_screen_lib.BallotHolder(isExtended: hasExtra);
   } else if (cls == "GOTOBUTTON") {
     String? link;
     if (params.isNotEmpty) {
@@ -149,26 +187,37 @@ Holder instantiateCodeBlock(
     }
     bool? isChapter = readBool(params, 'IsChapter') ?? true;
     dev.log("Goto: $link $isChapter; \n\tparams = $params");
-
-    return GotoButtonHolder(link: link, spans: spans, isChapter: isChapter);
+    await goto_button_lib.loadLibrary();
+    return goto_button_lib.GotoButtonHolder(
+        link: link, spans: spans, isChapter: isChapter);
   } else if (cls == 'CHARACTERSELECTIONSCREEN') {
-    return CharacterSelectionHolder();
+    await character_selection_lib.loadLibrary();
+    return character_selection_lib.CharacterSelectionHolder();
   } else if (cls == 'FLATEARTHANDYTHUMBNAIL') {
     String? link = knownParams['Link'];
-    return AndyThumbnailHolder(spans: spans, link: link);
+    await andy_thumbnail_lib.loadLibrary();
+    return andy_thumbnail_lib.AndyThumbnailHolder(spans: spans, link: link);
   } else {
     dev.log("Missed CodeBlock '$cls'");
     return UnhandledSpanHoldingCode(clsname: cls, spans: spans);
   }
 }
 
-Holder parseParsedBlock(String cls, List<String> params, BufferPtr bin) {
+FutureHolder parseParsedBlock(String cls, List<String> params, BufferPtr bin) {
+  Future<Holder> holder = _parseParsedBlock(cls, params, bin);
+  return FutureHolder(holder);
+}
+
+Future<Holder> _parseParsedBlock(
+    String cls, List<String> params, BufferPtr bin) async {
   dev.log("ParsedBlock: $cls");
   if (cls == 'COLUMNS') {
     // return UnhandledCodeElement(cls, "Columns");
-    return Columns.parse(bin);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.Columns.parse(bin);
   } else if (cls == 'SIGNCOLUMNS') {
-    return Sign2Cols.parse(bin);
+    await misc_code_lib.loadLibrary();
+    return misc_code_lib.Sign2Cols.parse(bin);
   } else {
     dev.log("Missed ParsedBlock '$cls'");
   }

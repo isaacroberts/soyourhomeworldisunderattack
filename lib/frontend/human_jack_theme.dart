@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'styles.dart';
+import 'base_text_theme.dart';
 
 const Color humanJack0 = Color(0xff001f33);
 const Color humanJack1 = Color(0xff052f45);

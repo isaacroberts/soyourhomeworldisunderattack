@@ -2,17 +2,17 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/code_holders.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 
-import '../holders/textholders.dart';
+import '../holders/holder_base.dart';
+import '../holders/holder_utils.dart';
 
 class TweetHolder extends Holder {
   late String user;
   late String tweet;
   TweetHolder(List<Holder> spans) : super() {
     //TODO: Strip text out of spans & parse for @ and :
-    String text = Holder.stripOutText(spans);
+    String text = HolderUtils.stripOutText(spans);
     List<String> parts = text.split(':');
 
     if (parts[0].contains('@')) {
@@ -67,7 +67,8 @@ class TweetWidget extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(5),
                 child:
-                    Icon(RpgAwesome.random(), color: const Color(0x88000000))),
+                    //TODO: This used to be random, which was better
+                    const Icon(RpgAwesome.chain, color: Color(0x88000000))),
             // CircleAvatar(
             //   backgroundColor: const Color(0xff5a7083),
             //   maxRadius: 10,

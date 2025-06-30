@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../styles.dart';
-import '../holders/textholders.dart';
+import '../../text_theme.dart';
+import '../holders/holder_base.dart';
 
 const List<String> _classes = [
   'Barbarian',
   'Cleric',
   'Rogue',
-  'Bard',
+  // 'Bard',
 ];
 const List<String> _classLinks = [
   'CallAhead',
   'NickGreenland',
   'Noir',
-  'Bard',
+  // 'Bard',
 ];
 
 const List<String> _classDescriptions = [
   "You rush headlong into danger. You fear not for your own safety, but prefer to meet challenges head on.",
   "You go with God in all things.",
   "You prefer to hang back, investigating a problem before engaging.",
-  "You like music.",
+  // "You like music.",
 ];
 
 class CharacterSelectionHolder extends Holder {
@@ -101,14 +102,7 @@ class _CharacterSelectionState extends State<CharacterSelection> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            listTile(context, 0),
-            listTile(context, 1),
-            listTile(context, 2),
-            listTile(context, 3),
-
-            // const SizedBox(
-            //   height: 15,
-            // ),
+            for (int n = 0; n < _classes.length; ++n) listTile(context, n),
             submitButton(context),
           ],
         ));

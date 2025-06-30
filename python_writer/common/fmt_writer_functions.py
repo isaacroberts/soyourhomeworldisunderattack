@@ -45,40 +45,7 @@ Have 3 Font Categories
     Possibly an SVG-rasterizer (using an InlineImageSpan)
 """
 
-TYPES = ['prdf', 'cspd', 'bkwd', 'inln', 'cxin', 'svgr']
-
-def pack_typed_font(font, type, curChapter):
-    assert type in TYPES
-    ix = TYPES.find(type)
-    code = ix + 1
-
-    typebyte = pack_untyped_short(code)
-
-    def byte(x):
-        return pack_untyped_short(x)
-    def uint(x):
-        return pack_untyped_uint(x)
-    def f32(x):
-        return pack_untyped_float(x)
-
-    match type:
-        case 'prdf':
-            fontId = get_predef_id(font)
-            return [typebyte, byte(fontId)]
-        case 'bkwd':
-            fontId = get_bookwide_font_id(font)
-            return [typebyte, uint(fotext_in_stylentId), f32(font.size)]
-        case 'chpt':
-            fontId = get_chapter_font_id(font)
-            preload = font.get_preload()
-            return [typebyte, uint(fontId), byte(preload), f32(font.size)]
-        case 'inln':
-            assert False, 'Unimplemented.'
-            # pass
-        case _:
-            assert False, f'Unrecognized type {type} in pack_typed_font'
-            #ff_id: uint32 size:f32 wousi:byte color:byte+
-
+# TYPES = ['prdf', 'cspd', 'bkwd', 'inln', 'cxin', 'svgr']
 
 def pack_wousi(font):
     b = BinList("wousi")

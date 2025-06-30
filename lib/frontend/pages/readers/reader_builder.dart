@@ -2,11 +2,11 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/colors.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/code_holders.dart';
+import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../backend/chapter.dart';
 import '../../../backend/error_handler.dart';
-import '../../elements/holders/textholders.dart';
+import '../../elements/holders/holder_base.dart';
 
 class ReaderBuilder extends StatefulWidget {
   final Chapter chapter;
@@ -33,7 +33,9 @@ class ReaderBuilder extends StatefulWidget {
 class ReaderBuilderState extends State<ReaderBuilder> {
   //Displays only N holders
   int itemsToDisplay = 0;
-  bool showFonts = true;
+  bool _showFonts = true;
+
+  bool get showFonts => _showFonts && ViewSettings.instance.showFonts;
 
   @override
   void initState() {
@@ -41,6 +43,11 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     dev.log("Reader ${chapter.varName}");
     widget.chapter.addListener(_chapterUpdated);
     loadAndDisplayThread();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -108,7 +115,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
                   return;
                 }
                 setState(() {
-                  showFonts = false;
+                  _showFonts = false;
                   this.itemsToDisplay = maxLength;
                 });
                 dev.log("(Font) Using fallbacks (chp ${chapter.varName})");
@@ -192,6 +199,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     // if (!chapter.loaded) {
     //   return unloadedBuilder(context);
     // }
+
     return IsFallbackProvider(
         showFonts: showFonts,
         child: ConstrainedBox(

@@ -4,9 +4,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
 
 import '../../../backend/utils.dart';
+import '../../base_text_theme.dart';
+import '../../text_theme.dart';
 
 class GreenlandGamePage extends StatelessWidget {
   const GreenlandGamePage({super.key});
@@ -221,7 +222,7 @@ class _SlotAndButtonState extends State<_SlotAndButton>
       return true;
     }
     num odds = getOdds();
-    return (RNG.nextDouble() < odds);
+    return (rNG.nextDouble() < odds);
   }
 
   void afterRoll() {
@@ -304,7 +305,7 @@ class _SlotRow extends StatelessWidget {
       {super.key, required this.animationValue, required this.goingToWin});
 
   String randInt() {
-    return RNG.nextInt(9).toString();
+    return rNG.nextInt(9).toString();
   }
 
   @override

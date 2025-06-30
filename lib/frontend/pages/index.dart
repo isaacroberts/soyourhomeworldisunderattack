@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
 
 import '../../backend/book.dart';
 import '../book_waiter.dart';
 import '../elements/scaffold.dart';
+import '../extra_styles.dart';
 
 class IndexWidget extends StatelessWidget {
   const IndexWidget({super.key});

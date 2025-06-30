@@ -81,14 +81,14 @@ class RavePainter extends CustomPainter {
 
   Offset randPoint(Size size) {
     return Offset(
-        RNG.nextDouble() * size.width, RNG.nextDouble() * size.height);
+        rNG.nextDouble() * size.width, rNG.nextDouble() * size.height);
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    int n = RNG.nextInt(3);
+    int n = rNG.nextInt(3);
     Color bg = getCN(n);
-    Color spots = getCN(RNG.nextInt(3));
+    Color spots = getCN(rNG.nextInt(3));
 
     canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height), Paint()..color = bg);

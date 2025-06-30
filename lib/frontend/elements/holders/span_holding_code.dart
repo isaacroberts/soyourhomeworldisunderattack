@@ -1,35 +1,10 @@
 // import 'dart:math' as math;
 
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 
-import '../holders/textholders.dart';
-
-class IsFallbackProvider extends InheritedWidget {
-  final bool showFonts;
-  const IsFallbackProvider(
-      {super.key, required this.showFonts, required super.child});
-
-  static bool shouldShowFonts(BuildContext context) {
-    return maybeOf(context)?.showFonts ?? true;
-  }
-
-  static IsFallbackProvider? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<IsFallbackProvider>();
-  }
-
-  static IsFallbackProvider of(BuildContext context) {
-    return maybeOf(context)!;
-  }
-
-  @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    if (oldWidget is IsFallbackProvider) {
-      return showFonts == oldWidget.showFonts;
-    } else {
-      return true;
-    }
-  }
-}
+import 'holder_base.dart';
 
 class SpanHoldingCode extends Holder {
   final List<Holder> spans;
@@ -59,6 +34,7 @@ class SpanHoldingCode extends Holder {
   Widget renderSpans(BuildContext context,
       {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
     bool showFonts = IsFallbackProvider.shouldShowFonts(context);
+    dev.log("SpanHoldingCode showFonts=$showFonts");
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

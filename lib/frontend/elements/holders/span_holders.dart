@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
 import '../../../backend/font_interm.dart';
-import '../../styles.dart';
+import '../../base_text_theme.dart';
+import 'holder_base.dart';
 
 export 'misc_holders.dart';
 

@@ -5,10 +5,13 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/backend/server.dart';
+import 'package:soyourhomeworld/frontend/elements/holders/future_holder.dart';
 
+import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
-import 'binary_utils/buffer_ptr.dart';
-import 'chapter_parser.dart';
+//Deferred loads
+import 'binary_utils/buffer_ptr.dart' deferred as buffer_lib;
+import 'chapter_parser.dart' deferred as parser_lib;
 
 typedef ChapterKey = int;
 
@@ -111,7 +114,9 @@ class Chapter extends ChangeNotifier {
   static ValueNotifier<bool> canLoad = ValueNotifier(true);
 
   void _addHolderFromStream(Holder h) {
+    // int ix = lines.length;
     lines.add(h);
+
     // notifyListeners();
   }
 
@@ -128,7 +133,7 @@ class Chapter extends ChangeNotifier {
     ErrorList.logErrorHolder(errorElem);
   }
 
-  void postLoadCleanup() {
+  void postLoadCleanup() async {
     if (lines.isNotEmpty) {
       Holder? topElement = lines[0];
       if (topElement is HeaderOfText) {
@@ -136,10 +141,25 @@ class Chapter extends ChangeNotifier {
         lines.removeAt(0);
       }
     }
-
+    awaitFutures();
     _loadStatus = LoadStatus.loaded;
     if (kDebugMode) {
       addGimme();
+    }
+    notifyListeners();
+  }
+
+  void awaitFutures() async {
+    for (int ix = 0; ix < lines.length; ++ix) {
+      Holder holder = lines[ix];
+      if (holder is FutureHolder) {
+        try {
+          Holder newHolder = await holder.holder;
+          lines[ix] = newHolder;
+        } catch (exception, trace) {
+          ErrorList.logError(exception, trace);
+        }
+      }
     }
     notifyListeners();
   }
@@ -195,8 +215,10 @@ class ChapterHolder {
       dev.log("LOad path: $path");
       ByteBuffer buffer = await getFileFromServer(path);
       ByteData data = buffer.asByteData();
-      BufferPtr ptr = BufferPtr(data.buffer);
-      ChapterParser parser = ChapterParser(debugId: info.varName, ptr: ptr);
+      await buffer_lib.loadLibrary();
+      var ptr = buffer_lib.BufferPtr(data.buffer);
+      await parser_lib.loadLibrary();
+      var parser = parser_lib.ChapterParser(debugId: info.varName, ptr: ptr);
       chapter =
           await parser.parseWithExistingChapterInfo(info, handleErrors: true);
     }

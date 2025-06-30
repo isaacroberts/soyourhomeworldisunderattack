@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/colors.dart';
 
+import '../base_text_theme.dart';
 import '../icons.dart';
 import '../styles.dart';
 
 Widget blankHeader(BuildContext context) {
-  return Text('...', style: headerFont);
+  return const Text('...', style: headerFont);
 }
 
 class ColoredIconCard extends StatelessWidget {

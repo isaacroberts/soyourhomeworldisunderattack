@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 
+import '../base_text_theme.dart';
 import '../icons.dart';
 import '../styles.dart';
 

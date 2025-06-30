@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
-import '../../../backend/error_handler.dart';
-import '../../elements/widgets/empty_chapter.dart';
 import '../readers/reader.dart';
 
 class PagingScroller extends StatefulWidget {
@@ -46,15 +44,15 @@ class _PagingScrollerState extends State<PagingScroller> {
     }
   }
 
-  void _onError(exception, trace) {
-    dev.log("!! Exception !!");
-    dev.log('$exception');
-    dev.log('$trace');
-    ErrorList.showError(exception, trace);
-    setState(() {
-      currentChapter = null;
-    });
-  }
+  // void _onError(exception, trace) {
+  //   dev.log("!! Exception !!");
+  //   dev.log('$exception');
+  //   dev.log('$trace');
+  //   ErrorList.showError(exception, trace);
+  //   setState(() {
+  //     currentChapter = null;
+  //   });
+  // }
 
   void incrementChapter() {
     setChapter(currentChapterIx + 1);
@@ -78,7 +76,8 @@ class _PagingScrollerState extends State<PagingScroller> {
 
     if (chp == null) {
       dev.log('Empty chapter');
-      return const EmptyChapterWidget();
+      return const Placeholder();
+      // return const EmptyChapterWidget();
     } else {
       return SingleChildScrollView(
           controller: _scrollController,

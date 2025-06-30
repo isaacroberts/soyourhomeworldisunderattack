@@ -3,15 +3,13 @@ import 'dart:developer' as dev;
 import 'binary_unpacker.dart';
 import 'text_data_structures.dart';
 
-import 'styles.dart';
-
 class LiveTextHolder extends TextHolder {
   String text = '';
   // Font? font;
-  StyleType? fontId;
 
+  @override
   String totext() {
-  return text;
+    return text;
   }
 
   void parseFont(BufferPtr data) {
@@ -19,14 +17,13 @@ class LiveTextHolder extends TextHolder {
       this is the part between ()
       (tab align & font? & color? & hilite? )
      */
-     print('Parsing font:');
-     print(data.toIntList());
+    dev.log('Parsing font:');
+    dev.log(data.toIntList().toString());
     var v1 = unpackValue(data);
-    print("V1: $v1 ${v1.runtimeType}");
+    dev.log("V1: $v1 ${v1.runtimeType}");
   }
 
   TextHolder convert() {
     return BodyTextElement(text);
   }
-
 }

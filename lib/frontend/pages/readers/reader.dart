@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/pages/readers/reader_builder.dart';
 
 import '../../../../backend/chapter.dart';
+import '../../elements/holders/holder_base.dart';
 import '../../elements/holders/textholders.dart';
 
 // ================ Reader (below scroller) ===============================
@@ -35,12 +36,14 @@ class ReaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? header = this.header(context);
-    return ReaderBuilder(
-      key: Key('RdrBldr_Chp${chapter.id}'),
-      chapter: chapter,
-      itemBuilder: itemBuilder,
-      leadItems: [if (header != null) header],
-      scrollController: scrollController,
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: ReaderBuilder(
+          key: Key('RdrBldr_Chp${chapter.id}'),
+          chapter: chapter,
+          itemBuilder: itemBuilder,
+          leadItems: [if (header != null) header],
+          scrollController: scrollController,
+        ));
   }
 }

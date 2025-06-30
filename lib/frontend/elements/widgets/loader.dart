@@ -1,61 +1,14 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
-
-class _McKLoader extends StatefulWidget {
-  const _McKLoader({super.key});
-
-  @override
-  State<_McKLoader> createState() => _McKLoaderState();
-}
-
-/*
-    Animated 3 icons spinning.
-    It did work decently and look pretty cool
-    It wasn't the vibe at the time though.
- */
-
-// const List<String> _icons = [
-//   'circle_cross.svg',
-//   'star_of_david.svg',
-//   'anarchism.svg'
-// ];
-//
-// const List<IconData> _iconDatum = [
-//   RpgAwesome.anchor,
-//   RpgAwesome.angel_wings,
-//   RpgAwesome.all_for_one
-// ];
-
-//
-class _McKLoaderState extends State<_McKLoader> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 200,
-        height: 200,
-        // color: Colors.blue,
-        decoration: BoxDecoration(border: Border.all()),
-        child: const Icon(
-          RpgAwesome.bleeding_eye,
-          size: 50,
-          color: Colors.white,
-        ));
-  }
-}
 
 //ThreeRotatingDots from https://pub.dev/packages/loading_animation_widget
 
 class TriWizardLoader extends StatefulWidget {
-  final double size = 100;
-  final Color color = Colors.white;
+  static const double size = 100;
+  static const Color color = Colors.white;
+  final String? text;
 
-  const TriWizardLoader({
-    super.key,
-    // required this.color,
-    // required this.size,
-  });
+  const TriWizardLoader({super.key, required this.text});
 
   @override
   State<TriWizardLoader> createState() => _TriWizardLoaderState();
@@ -91,10 +44,9 @@ class _TriWizardLoaderState extends State<TriWizardLoader>
 
   @override
   Widget build(BuildContext context) {
-    final Color color = widget.color;
-    final double size = widget.size;
-    final double dotSize = size / 3;
-    final double edgeOffset = (size - dotSize) / 2;
+    const double dotSize = TriWizardLoader.size / 3;
+    const double edgeOffset = (TriWizardLoader.size - dotSize) / 2;
+    const double pi = 3.1415926535897932384;
 
     // TODO: This needs to be changed so that ideally it's making a full rotation
     // and has 3 stops. That's something with tweens.
@@ -105,47 +57,50 @@ class _TriWizardLoaderState extends State<TriWizardLoader>
       curve: Curves.easeInOut,
     );
 
-    double dAngle = -2 * math.pi / 3;
+    const double dAngle = -2 * pi / 3;
 
     return SizedBox(
-      width: size,
-      height: size,
+      width: TriWizardLoader.size,
+      height: TriWizardLoader.size,
       child: AnimatedBuilder(
         animation: _animationController,
         builder: (_, __) => Transform.translate(
-          offset: Offset(0, size / 12),
+          offset: const Offset(0, TriWizardLoader.size / 12),
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
               _BuildDot.first(
-                color: color,
+                key: const Key("Dot1"),
+                color: TriWizardLoader.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
-                beginAngle: math.pi,
-                endAngle: math.pi + dAngle,
+                beginAngle: pi,
+                endAngle: pi + dAngle,
                 interval: firstDotsInterval,
                 index: wrap(0),
               ),
 
               _BuildDot.first(
-                color: color,
+                key: const Key("Dot2"),
+                color: TriWizardLoader.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
-                beginAngle: 5 * math.pi / 3,
-                endAngle: 5 * math.pi / 3 + dAngle,
+                beginAngle: 5 * pi / 3,
+                endAngle: 5 * pi / 3 + dAngle,
                 interval: firstDotsInterval,
                 index: wrap(1),
               ),
 
               _BuildDot.first(
-                color: color,
+                key: const Key("Dot3"),
+                color: TriWizardLoader.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
-                beginAngle: 7 * math.pi / 3,
-                endAngle: 7 * math.pi / 3 + dAngle,
+                beginAngle: 7 * pi / 3,
+                endAngle: 7 * pi / 3 + dAngle,
                 interval: firstDotsInterval,
                 index: wrap(2),
               ),
@@ -187,18 +142,6 @@ class _BuildDot extends StatelessWidget {
     required this.size,
     required this.index,
   }) : first = true;
-
-  const _BuildDot.second(
-      {super.key,
-      required this.controller,
-      required this.beginAngle,
-      required this.endAngle,
-      required this.interval,
-      required this.dotOffset,
-      required this.color,
-      required this.size,
-      required this.index})
-      : first = false;
 
   @override
   Widget build(BuildContext context) {

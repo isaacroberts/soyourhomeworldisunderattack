@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
+import 'holder_base.dart';
+
 // ============ Misc ============================
 
 class NewlineElement extends Holder {
@@ -11,7 +13,7 @@ class NewlineElement extends Holder {
 
   @override
   Widget element(BuildContext context) {
-    return SizedBox(height: height * 1.5);
+    return SizedBox(height: height);
   }
 
   @override

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
+//Deferred
+import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart'
+    deferred as error_icon_lib;
 
-import '../frontend/elements/holders/textholders.dart';
-import '../frontend/icons.dart';
+import '../frontend/base_text_theme.dart';
+import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/styles.dart';
+import '../frontend/text_theme.dart';
 
 class ErrorList {
   static ErrorList instance = ErrorList();
@@ -47,29 +52,31 @@ class ErrorList {
 
   // ==== Main Page ====
   Widget page(BuildContext context) {
-    return McScaffold(
-        source: 'Error',
-        child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text('Errors:', style: headerFont),
-              if (list.isEmpty)
-                const Center(
-                    child: Text(
-                  "No errors!",
-                  style: bodyFont,
-                )),
-              if (list.isNotEmpty)
-                Expanded(child: ListView.builder(itemBuilder: (context, index) {
-                  if (index >= 0 && index < list.length) {
-                    return list[list.length - index - 1].element(context);
-                  } else {
-                    return null;
-                  }
-                }))
-            ]));
+    return McScaffold(source: 'Error', child: widget(context));
+  }
+
+  Widget widget(BuildContext context) {
+    return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text('Errors:', style: headerFont),
+          if (list.isEmpty)
+            const Center(
+                child: Text(
+              "No errors!",
+              style: bodyFont,
+            )),
+          if (list.isNotEmpty)
+            Expanded(child: ListView.builder(itemBuilder: (context, index) {
+              if (index >= 0 && index < list.length) {
+                return list[list.length - index - 1].element(context);
+              } else {
+                return null;
+              }
+            }))
+        ]);
   }
 
   // === Snackbar ================
@@ -133,13 +140,6 @@ class ExceptionHolder extends Holder {
       : isWarning = true,
         exception = warning;
 
-  // static ExceptionHolder factory(Object exception, [StackTrace? stackTrace])
-  // {
-  //   ExceptionHolder e = ExceptionHolder(exception: exception, stackTrace: stackTrace ?? StackTrace.current);
-  //   ErrorList.registerErrorHolder(e);
-  //   return e;
-  // }
-
   @override
   Widget element(BuildContext context) {
     return ExceptionElement(exception: exception, stackTrace: stackTrace);
@@ -164,25 +164,43 @@ class ExceptionElement extends StatelessWidget {
     if (type == 'String') {
       type = 'Exception';
     }
-    return ExpansionTile(
-      // backgroundColor: errorSecondary,
-      collapsedBackgroundColor: errorBg,
-      // backgroundColor: e,
-      iconColor: errorSecondary,
-      collapsedIconColor: errorColor,
+    return Center(
+        child: SizedBox(
+            width: 800,
+            child: SelectionArea(
+                child: ExpansionTile(
+              // backgroundColor: errorSecondary,
+              collapsedBackgroundColor: errorBg,
+              // backgroundColor: e,
+              iconColor: errorSecondary,
+              collapsedIconColor: errorColor,
+              leading: DeferredWidget(
+                  loader: error_icon_lib.loadLibrary,
+                  builder: (context) => error_icon_lib.ErrorIcon(
+                      exceptionType: exception.runtimeType.toString())),
 
-      leading:
-          const Icon(RpgAwesome.player_pain, size: 50, color: Colors.black45),
-      shape: const RoundedRectangleBorder(
-          side: BorderSide(color: errorColor, width: 5)),
-      clipBehavior: Clip.none,
-      expandedAlignment: Alignment.topCenter,
-      controlAffinity: ListTileControlAffinity.leading,
-      title: Text(type, style: headerFont.copyWith(color: errorSecondary)),
-      subtitle: Text(exception.toString(), style: bodyFont),
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: errorColor, width: 5)),
+              clipBehavior: Clip.none,
+              expandedAlignment: Alignment.topCenter,
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(type,
+                  selectionColor: const Color(0xff000000),
+                  // selectionColor: ,
+                  style: appMonoFont.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      color: errorColor)),
+              subtitle: Text(exception.toString(),
+                  selectionColor: const Color(0xff000000),
+                  style: appMonoFont.copyWith(fontSize: 12, color: errorColor)),
 
-      children: [Text('StackTrace:\n$stackTrace', style: monoFont)],
-    );
+              children: [
+                Text('StackTrace:\n$stackTrace',
+                    selectionColor: const Color(0xff000000),
+                    style: appMonoFont.copyWith(fontSize: 12))
+              ],
+            ))));
   }
 }
 
@@ -273,6 +291,15 @@ class ChapterFormatException implements Exception {
   @override
   String toString() =>
       'ChapterFormatException (Error from chapter binary input): $msg [debugId=$debugId]';
+}
+
+class BookCodeException implements Exception {
+  final String msg;
+  // String? chapter;
+  BookCodeException(this.msg);
+  @override
+  String toString() =>
+      'BookCodeException (Error from book\'s code markers): $msg';
 }
 
 class FontException implements Exception {

@@ -3,23 +3,16 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../view_settings.dart';
+
 const List<(String, String?)> drawerItems = [
   ('Keep reading', null),
   ('Home', 'home'),
-
-  // ("Library", 'library'),
   ("Index", 'index'),
-  // ('Downloads', 'downloads'),
-  // ('Access', 'access'),
-  // ('Shop', 'shop'),
-  ('Dev Page', 'dev_page'),
-
-  // ('Quiz', 'quiz'),
-
-  ("Test Rig", 'testrig'),
-
+  ('Shop', 'search/tshirts/'),
   ("Error logger", 'logger'),
-  ('Cause error', 'error'),
+  ('Dev: Test Widget', 'dev_page'),
+  ('Dev: Icons', 'dev_icons'),
 ];
 
 class MenuDrawer extends StatelessWidget {
@@ -44,7 +37,7 @@ class MenuDrawer extends StatelessWidget {
       Scaffold.of(context).closeEndDrawer();
     } else if (url.isEmpty) {
       //home
-      context.go('/');
+      context.go('/', extra: {});
     } else {
       context.go('/$url');
     }
@@ -53,6 +46,7 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //List tiles
+
     List<Widget> listTiles = [];
     for ((String, String?) tup in drawerItems) {
       var widget = listTile(context, tup.$1, tup.$2);
@@ -60,6 +54,19 @@ class MenuDrawer extends StatelessWidget {
         listTiles.add(widget);
       }
     }
+    dev.log("ViewSettings values: ${ViewSettings.instance.toString()}");
+    listTiles.add(SwitchListTile(
+        title: const Text('Dev Rig'),
+        value: ViewSettings.instance.useTestRig,
+        onChanged: (b) => ViewSettings.instance.useTestRig = b));
+    // listTiles.add(SwitchListTile(
+    //     title: const Text('Infinite scroll'),
+    //     value: useInfiniteScroll,
+    //     onChanged: (b) => useInfiniteScroll = b));
+    listTiles.add(SwitchListTile(
+        title: const Text('Fonts'),
+        value: ViewSettings.instance.showFonts,
+        onChanged: (b) => ViewSettings.instance.showFonts = b));
     //Drawer
     return Drawer(
         key: const ValueKey('MenuDrawer'),

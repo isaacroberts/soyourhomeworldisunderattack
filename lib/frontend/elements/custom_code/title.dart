@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/colors.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/splash_bg.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
 
-import '../holders/textholders.dart';
+import '../../base_text_theme.dart';
+import '../holders/holder_base.dart';
+
+const String titleText = "My Home Planet is under Attack!";
+const String authorText = "by Joseph Silverstein";
 
 class TitleHolder extends Holder {
   @override
@@ -86,23 +89,25 @@ class _TitleTextWide extends StatelessWidget {
     return SizedBox(
         width: size.width,
         height: size.height,
-        child: const Column(
-          mainAxisSize: MainAxisSize.min,
-          //Center
-          mainAxisAlignment: MainAxisAlignment.center,
-          //Left
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "So, your Homeworld's under Attack.",
-              style: headerFont,
-            ),
-            Text("by Isaac Levin Roberts, PhD", style: bodyFont),
-            SizedBox(
-              height: 48,
-            ),
-          ],
-        ));
+        child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              //Center
+              mainAxisAlignment: MainAxisAlignment.end,
+              //Left
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  titleText,
+                  style: titleFont,
+                ),
+                Text(authorText, style: authorFont),
+                const SizedBox(
+                  height: 48,
+                ),
+              ],
+            )));
   }
 }
 
@@ -124,20 +129,24 @@ class _TitleTextPhone extends StatelessWidget {
         child: SizedBox(
             width: size.width,
             height: size.height,
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               //Put author name at the bottom of the screen
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  "So, your Home World's under Attack.",
-                  textAlign: TextAlign.left,
-                  style: headerFont,
-                ),
-                Text("by Isaac Levin Roberts, PhD",
-                    textAlign: TextAlign.left, style: bodyFont),
+                Text(titleText, textAlign: TextAlign.left, style: titleFont),
+                Text(authorText, textAlign: TextAlign.left, style: authorFont),
               ],
             )));
   }
 }
+
+TextStyle get titleFont => bodyFont.copyWith(fontVariations: [
+      FontVariation.width(2000),
+      // FontVariation.slant(60),
+      // FontVariation.italic(100)
+    ], color: textColor, fontSize: 48, fontWeight: FontWeight.w700);
+
+TextStyle get authorFont => bodyFont.copyWith(
+    color: textColor, fontWeight: FontWeight.w400, fontSize: 24);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../backend/utils.dart';
-import 'code_holders.dart';
+import '../holders/span_holding_code.dart';
 
 enum AdSize {
   banner(728, 90),
@@ -100,7 +100,7 @@ class _AdWrapperState extends State<AdWrapper> {
   @override
   void initState() {
     assert(widget.key != null);
-    loadSpeed = 1 + RNG.nextInt(5);
+    loadSpeed = 1 + rNG.nextInt(5);
     //TODO: This is to prevent them from reloading every time
     if (adCache.contains(widget.child.key)) {
       loaded = true;
@@ -135,7 +135,7 @@ class _AdWrapperState extends State<AdWrapper> {
         loadLevel += 1;
       });
       if (loadLevel < maxLoad) {
-        int ms = loadSpeed * loadLevel * RNG.nextInt(10) * RNG.nextInt(30);
+        int ms = loadSpeed * loadLevel * rNG.nextInt(10) * rNG.nextInt(30);
         // dev.log("wait $ms");
         Future.delayed(Duration(milliseconds: ms), _loadLevel);
       } else {

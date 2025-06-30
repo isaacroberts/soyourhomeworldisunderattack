@@ -1,14 +1,14 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'chapter_data.dart';
 import 'live_text_holder.dart';
 import 'text_data_structures.dart';
-
-import 'chapter_data.dart';
-import 'generated/index.dart';
 
 enum QuoteLevels { text, params, list }
 
@@ -39,7 +39,6 @@ enum Codes {
   //Letters
   CAPITALA(65),
 
-
   NChar(78),
 
   //Syms
@@ -54,16 +53,13 @@ enum Codes {
   BAR(124),
   RBRACE(125),
   TILDE(126),
-
-
   ;
 
   final int code;
   const Codes(this.code);
-
 }
 
-String CHR(int x) {
+String toChar(int x) {
   return String.fromCharCode(x);
 }
 
@@ -73,10 +69,11 @@ class BufferPtr {
   final ByteBuffer buffer;
   late ByteData region;
   BufferPtr(this.buffer, {this.start = 0, int? length}) {
-    print('New BufferPtr: Start $start len $length buffer ${buffer.lengthInBytes}');
+    dev.log(
+        'New BufferPtr: Start $start len $length buffer ${buffer.lengthInBytes}');
     region = buffer.asByteData(start, length);
     this.length = length ?? buffer.lengthInBytes;
-    print('\t New region: ${region} ${region.offsetInBytes}');
+    dev.log('\t New region: $region ${region.offsetInBytes}');
   }
 
   void update() {
@@ -84,7 +81,7 @@ class BufferPtr {
   }
 
   String toStr() {
-  return "[$start-${start+length} / ${buffer.lengthInBytes}]";
+    return "[$start-${start + length} / ${buffer.lengthInBytes}]";
   }
 
   bool hasMore() {
@@ -98,7 +95,6 @@ class BufferPtr {
   }
 
   int getUint8([int offset = 0]) {
-
     return region.getUint8(offset);
   }
 
@@ -133,46 +129,44 @@ class BufferPtr {
   }
 
   BufferPtr grabUntil(int charCode) {
-  print("I'm grabbing. ${toStr()}");
-  print('Region: ${region} ${region.offsetInBytes}');
+    dev.log("I'm grabbing. ${toStr()}");
+    dev.log('Region: $region ${region.offsetInBytes}');
 
     int i = 0;
-    print('Buffer grabbing: ${toIntList()}');
+    dev.log('Buffer grabbing: ${toIntList()}');
 
     while (i < length) {
       int d = getUint8(i);
-      print('Grabbin over: $d');// ${CHR(d)}');
+      dev.log('Grabbin over: $d'); // ${CHR(d)}');
       if (d == charCode) {
-        print('Char code $d ${charCode} ${CHR(charCode)} matched at $i (${i+start})');
-        print('Subset: $start - ${start+i}');
+        dev.log(
+            'Char code $d $charCode ${toChar(charCode)} matched at $i (${i + start})');
+        dev.log('Subset: $start - ${start + i}');
         var s = subset(0, i);
-        start += i+1;
-        length -= i+1;
+        start += i + 1;
+        length -= i + 1;
         update();
-        print ("Done!");
+        dev.log("Done!");
         return s;
         // return buffer.asByteData(i0, i);
-      }
-      else {
-      //print('Ignore $d ${charCode} at $i (${i+start})');
-
+      } else {
+        //dev.log('Ignore $d ${charCode} at $i (${i+start})');
       }
       i++;
     }
-    print('Missed char code ${charCode} on ${toIntList()} ($start $length)');
+    dev.log('Missed char code $charCode on ${toIntList()} ($start $length)');
 
     start = length;
     length = 0;
     update();
     throw ("Run out of buffer on grabUntil");
-    return subset(0, region.lengthInBytes);
+    // return subset(0, region.lengthInBytes);
   }
 }
 
 class ChapterLoader {
-  final int number=69;
+  final int number = 69;
   String filename;
-
 
   LoadStatus _loadStatus = LoadStatus.unloaded;
 
@@ -195,7 +189,7 @@ class ChapterLoader {
    */
 
   LoadStatus load() {
-    print('loadin!!g');
+    dev.log('loadin!!g');
 
     _loadStatus = LoadStatus.loading;
     readFile();
@@ -209,37 +203,34 @@ class ChapterLoader {
     if (lines.last is EndOfChapterText) {
       endWidget = lines.last as EndOfChapterText;
     } else {
-      print('Empty chapter ender');
+      dev.log('Empty chapter ender');
       endWidget = EndOfChapterText(number);
     }
     _loadStatus = LoadStatus.loaded;
-    print('Loaded successfully');
+    dev.log('Loaded successfully');
     return LoadStatus.loaded;
   }
 
-    void readFile() async {
-      print('start read');
-      String path = filename;
-      print('path = $path');
-      File f = File(path);
+  void readFile() async {
+    dev.log('start read');
+    String path = filename;
+    dev.log('path = $path');
+    File f = File(path);
 
-      parseData(f.readAsBytesSync());
+    parseData(f.readAsBytesSync());
 
-      print(' File ${f.path} ${f.length()}');
+    dev.log(' File ${f.path} ${f.length()}');
 
-      for (var line in lines) {
-      print("Line: ${line.runtimeType} ${line.totext()}");
-      }
-
-
+    for (var line in lines) {
+      dev.log("Line: ${line.runtimeType} ${line.totext()}");
     }
+  }
 
   FutureOr<LoadStatus> parseData(Uint8List list) async {
-
     lines = [];
 
     lines.insert(0, const BodyTextElement("Yuck Fou"));
-    print('parsing ${list.length}');
+    dev.log('parsing ${list.length}');
 
     int i = 0;
 
@@ -265,46 +256,44 @@ class ChapterLoader {
         S - MultiSpan
         ( ta )
     */
-    String elemType;
-
     while (ptr.hasMore()) {
       int val = ptr.getUint8();
       ptr.consume(1);
 
       String char = String.fromCharCode(val);
-      print("Symbol: $i $val $char");
+      dev.log("Symbol: $i $val $char");
 
       if (val == 10) {
-        print('Mystery 10 char');
+        dev.log('Mystery 10 char');
       }
       // ;
       else if (val == Codes.SEMICOLON.code) {
-        print('Element finished');
-        print(liveHolder.text);
-          TextHolder holder = liveHolder.convert();
-          lines.add(holder);
-          liveHolder = LiveTextHolder();
+        dev.log('Element finished');
+        dev.log(liveHolder.text);
+        TextHolder holder = liveHolder.convert();
+        lines.add(holder);
+        liveHolder = LiveTextHolder();
       }
       // {
       else if (val == Codes.LBRACE.code) {
-        print('Ptr: ${ptr.toStr()}');
+        dev.log('Ptr: ${ptr.toStr()}');
 
         BufferPtr textBin = ptr.grabUntil(Codes.RBRACE.code);
-        print('Grabbed string');
+        dev.log('Grabbed string');
         Uint8List list = textBin.toIntList();
-        print('List: $list');
-        print('Text Region: ${textBin.toStr()}');
-        print('Main ptr: ${ptr.toStr()}');
+        dev.log('List: $list');
+        dev.log('Text Region: ${textBin.toStr()}');
+        dev.log('Main ptr: ${ptr.toStr()}');
         //for (int ix in list) {
-        //  print("$ix : ");
+        //  dev.log("$ix : ");
         //  String char = String.fromCharCode(ix);
-        //  print("   = $char");
+        //  dev.log("   = $char");
         //}
-        print('Done');
+        dev.log('Done');
 
-        liveHolder.text = utf8.decode(textBin.toIntList(), allowMalformed:true);
-        print("String ${liveHolder.text}");
-
+        liveHolder.text =
+            utf8.decode(textBin.toIntList(), allowMalformed: true);
+        dev.log("String ${liveHolder.text}");
       }
       // (
       else if (val == Codes.LPAREN.code) {
@@ -319,31 +308,28 @@ class ChapterLoader {
 
         BufferPtr fontData = ptr.grabUntil(Codes.RPAREN.code);
         liveHolder.parseFont(fontData);
-
-        } else if (val == Codes.NChar.code) {
-
+      } else if (val == Codes.NChar.code) {
         ptr.consume(1);
         double height = ptr.getFloat32();
-        print('Newline height = $height');
+        dev.log('Newline height = $height');
         ptr.consume(4);
         lines.add(BlankOfText(height: height));
-
       } else if ('}])'.contains(char)) {
-      print('');
-        print('ERROR Unmatched close value $char');
-        print('');
+        dev.log('');
+        dev.log('ERROR Unmatched close value $char');
+        dev.log('');
         //assert(false);
 
         return LoadStatus.error;
       } else {
-        print('Please handle $char $val');
+        dev.log('Please handle $char $val');
         return LoadStatus.error;
       }
       i += 1;
       // i = data.length;
     }
 
-    print("Extracted string: $str");
+    dev.log("Extracted string: $str");
 
     return LoadStatus.loaded;
   }
@@ -351,13 +337,13 @@ class ChapterLoader {
   //File reader
 
   void onFileReadError(object, StackTrace trace) {
-    print("FILE read ERROR");
+    dev.log("FILE read ERROR");
     throw trace;
     // trace.toString()
   }
 
   void onFileReadDone() {
-    print('File read done.');
+    dev.log('File read done.');
   }
 
   int get length => lines.length;
@@ -378,7 +364,6 @@ class ChapterLoader {
   }
 
   //Utility
-
 }
 
 /*

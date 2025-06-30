@@ -6,8 +6,9 @@ import 'package:soyourhomeworld/backend/chapter_parser.dart';
 import 'package:soyourhomeworld/frontend/colors.dart';
 
 import '../../../backend/binary_utils/buffer_ptr.dart';
-import '../custom_code/code_holders.dart';
-import '../holders/textholders.dart';
+import '../../icons.dart';
+import '../holders/holder_base.dart';
+import '../holders/span_holding_code.dart';
 
 // =========== Misc Widgets ===============
 
@@ -24,6 +25,31 @@ Color? namedColors(String? str) {
   }
   dev.log("Missing color name: $str");
   return null;
+}
+
+class IconHolder extends Holder {
+  late final IconData icon;
+  IconHolder(int iconIndex, List<String> params) {
+    icon = RpgAwesome.values[iconIndex];
+  }
+
+  @override
+  Widget element(BuildContext context) {
+    return Icon(icon, size: 30, color: const Color(0x80000000));
+  }
+
+  @override
+  Widget fallback(BuildContext context) {
+    //Add a box so user knows there's supposed to be something there
+    return Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+            border: Border.all(color: const Color(0x44000000), width: 2)),
+
+        //And then try to display it anyway
+        child: element(context));
+  }
 }
 
 class BGCodeElement extends SpanHoldingCode {
@@ -133,7 +159,6 @@ class Columns extends Holder {
 
     // b += pack_literal('[')
     bin.assertConsume('[', debugId: 'columns');
-    bool going = true;
     List<List<Holder>> cols = [];
     while (bin.hasMore() && bin.getChar(0) == 'c') {
       // # c  len(col):uint   [spans...]
@@ -218,7 +243,8 @@ class Sign extends SpanHoldingCode {
 
   @override
   Widget element(BuildContext context) {
-    return _SignWidget(child: super.element(context));
+    return _SignWidget(
+        key: Key('Sign$hashCode'), child: super.element(context));
   }
 }
 

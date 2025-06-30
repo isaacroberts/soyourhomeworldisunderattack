@@ -74,7 +74,6 @@ Future<Map<String, dynamic>?> sendAndHandleErrors(String endpoint,
 
 Future<ByteBuffer> getFileFromServer(String path) async {
   var uri = Uri.parse('${getURL()}/$path');
-  Map body = {};
   final client = http.Client();
   final request = http.Request('GET', uri);
   final response = await client.send(request);

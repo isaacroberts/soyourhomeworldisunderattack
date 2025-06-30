@@ -303,16 +303,8 @@ H = hex = BBBB
     update();
     throw ChapterFormatException("Run out of buffer on grabUntil",
         debugId: '?');
-    return subset(0, region.lengthInBytes);
+    // return subset(0, region.lengthInBytes);
   }
-
-  // BufferPtr consumeUntilParenMatched() {
-  //   return _consumeUntilMatched(Codes.LPAREN.code, Codes.RPAREN.code);
-  // }
-
-  // BufferPtr consumeUntilGatorMatched() {
-  //   return _consumeUntilMatched(Codes.LGATOR.code, Codes.RGATOR.code);
-  // }
 
   String? consumeText({bool leadingQuoteAlreadyParsed = false}) {
     if (leadingQuoteAlreadyParsed || consumeIf(Codes.LBRACE)) {

@@ -10,7 +10,7 @@ import 'package:soyourhomeworld/frontend/pages/readers/reader.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';
-import '../../styles.dart';
+import '../../base_text_theme.dart';
 import '../loading_page.dart';
 
 class MasterScroller extends StatefulWidget {
@@ -172,7 +172,9 @@ class _MasterScrollerState extends State<MasterScroller> {
   }
 
   Widget _firstPageProgressIndicatorBuilder(BuildContext context) {
-    return const LoadingPage();
+    return const LoadingPage(
+      message: 'Loading first page...',
+    );
   }
 
   void nullCallback() {}

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/code_holders.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/wave_background.dart';
 import 'package:soyourhomeworld/frontend/human_jack_theme.dart';
 
 import '../../../backend/utils.dart';
 import '../custom_code/ad_widget.dart';
-import '../holders/textholders.dart';
+import '../holders/holder_base.dart';
 import 'party_ad.dart';
 
 /*
@@ -91,7 +90,7 @@ class HumanJackAdHolder extends Holder {
   const HumanJackAdHolder(this.type);
   HumanJackAdHolder.random()
       : type =
-            HumanJackAdType.values[RNG.nextInt(HumanJackAdType.values.length)];
+            HumanJackAdType.values[rNG.nextInt(HumanJackAdType.values.length)];
 
   @override
   Widget element(BuildContext context) {

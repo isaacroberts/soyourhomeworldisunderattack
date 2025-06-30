@@ -1,4 +1,4 @@
-import 'dart:async';
+// import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
@@ -39,10 +39,10 @@ class ChapterSpider with ChangeNotifier {
 
   int currentChapterMinimum = 0;
 
-  late final Timer _timer;
+  // late final Timer _timer;
 
   ChapterSpider({required this.book, ChapterKey startChp = 0}) {
-    _timer = Timer.periodic(const Duration(milliseconds: 60), _pollLoading);
+    // _timer = Timer.periodic(const Duration(milliseconds: 60), _pollLoading);
     initFirst(startChp);
   }
 

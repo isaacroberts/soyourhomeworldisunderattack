@@ -1,14 +1,9 @@
 import 'dart:async';
 import 'dart:developer' as dev;
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:soyourhomeworld/backend/chapter_parser.dart';
-import 'package:soyourhomeworld/backend/server.dart';
 
-import '../frontend/pages/scrollers/test_rig_scroller.dart';
-import 'binary_utils/buffer_ptr.dart';
+import '_book_libs.dart' deferred as book_lib;
 import 'chapter.dart';
 import 'error_handler.dart';
 
@@ -130,14 +125,14 @@ class Book {
     return chapters[key].chapter;
   }
 
-  Future<Chapter> refreshChapter(ChapterKey key) {
-    if (TEST_RIG) {
-      chapters[key].chapter = null;
-      return chapters[key].getOrLoadChapter();
-    } else {
-      throw Exception("Requesting a reload without the test rig - impossible!");
-    }
-  }
+  // Future<Chapter> refreshChapter(ChapterKey key) {
+  //   if (TEST_RIG) {
+  //     chapters[key].chapter = null;
+  //     return chapters[key].getOrLoadChapter();
+  //   } else {
+  //     throw Exception("Requesting a reload without the test rig - impossible!");
+  //   }
+  // }
 
   Future<Chapter?> getNextChapter(Chapter? current) async {
     if (current == null) {
@@ -159,7 +154,19 @@ class Book {
 }
 
 class BookLoader {
+  // There can be only one McKinsey Plan.
+
+  static BookLoader? _instance;
+  static get instance {
+    _instance ??= BookLoader._mckinsey();
+    return _instance;
+  }
+
+  ///
   final String id;
+
+  //
+  Book? book;
 
   //Loaded
   String title = '';
@@ -168,7 +175,7 @@ class BookLoader {
   String byline = '';
 
   BookLoader(this.id);
-  BookLoader.mckinsey() : id = defaultBook;
+  BookLoader._mckinsey() : id = defaultBook;
 
   Book convert() {
     return Book(
@@ -188,126 +195,29 @@ class BookLoader {
     return chapters[ix].displayName;
   }
 
-  int? findChapterByVarname(String name) {
-    name = name.toLowerCase();
-    for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].varName.toLowerCase() == name) {
-        return ix;
-      }
-    }
-    dev.log("Couldn't find chapter $name");
-    for (int ix = 0; ix < chapters.length; ++ix) {
-      dev.log(
-          '$ix: varName=${chapters[ix].varName} display=${chapters[ix].displayName}');
-      if (chapters[ix].varName.toLowerCase() == name) {
-        return ix;
-      }
-    }
-    return null;
-  }
+  // int? findChapterByVarname(String name) {
+  //   name = name.toLowerCase();
+  //   for (int ix = 0; ix < chapters.length; ++ix) {
+  //     if (chapters[ix].varName.toLowerCase() == name) {
+  //       return ix;
+  //     }
+  //   }
+  //   dev.log("Couldn't find chapter $name");
+  //   for (int ix = 0; ix < chapters.length; ++ix) {
+  //     dev.log(
+  //         '$ix: varName=${chapters[ix].varName} display=${chapters[ix].displayName}');
+  //     if (chapters[ix].varName.toLowerCase() == name) {
+  //       return ix;
+  //     }
+  //   }
+  //   return null;
+  // }
 
   Future<Book?> load() async {
-    ByteBuffer buffer = await getFileFromServer('book_binary/$id.book');
-
-    ByteData bytes = buffer.asByteData();
-    BufferPtr ptr = BufferPtr(bytes.buffer);
-
-    try {
-      parse(ptr);
-      await parseIndex();
-
-      // id.isNotEmpty && title.isNotEmpty && chapters.isNotEmpty;
-
-      if (wellFormed()) {
-        return convert();
-      } else {
-        ErrorList.logError(ChapterFormatException(
-            'Malformed book id=$id title=$title chp.length=${chapters.length}',
-            debugId: "Book_$id"));
-        return null;
-      }
-    } catch (exception, trace) {
-      dev.log(" ! Book Loading Exception: $exception");
-      ErrorList.logError(exception, trace);
-      return null;
+    if (book != null) {
+      return book;
     }
-  }
-
-  void parse(BufferPtr ptr) {
-    //TODO: Update this
-
-    dev.log('Parsing ${this.id}');
-
-    ptr.assertConsume('.', debugId: this.id);
-    ptr.assertConsume('.', debugId: this.id);
-    ptr.assertConsume('\\', debugId: this.id);
-    ptr.assertConsume('/', debugId: this.id);
-    ptr.assertConsume('.', debugId: this.id);
-    ptr.assertConsume('.', debugId: this.id);
-
-    // dev.log('--1-');
-    String? id = ptr.consumeText();
-    assert(id == this.id);
-
-    ptr.assertConsume('T', debugId: this.id);
-    ptr.assertConsume(':', debugId: this.id);
-
-// ptr += pack_text(title)
-    String? title = ptr.consumeText();
-    if (title == null) {
-      throw ChapterFormatException("Null title in book header",
-          debugId: this.id);
-    } else {
-      this.title = title;
-    }
-
-    // dev.log('--2-');
-// ptr += '='
-    ptr.assertConsume('C', debugId: this.id);
-    ptr.assertConsume(':', debugId: this.id);
-    Color? c = ptr.consumeColor();
-    if (c != null) {
-      color = c;
-    }
-
-    // dev.log('-3--');
-    ptr.assertConsume('B', debugId: this.id);
-    ptr.assertConsume(':', debugId: this.id);
-    String? byline = ptr.consumeText();
-
-    if (byline != null) {
-      this.byline = byline;
-    }
-    // dev.log('4---');
-// ptr += '>-*/\\*-<'
-    ptr.assertConsume('>', debugId: this.id);
-    ptr.assertConsume('-', debugId: this.id);
-    ptr.assertConsume('*', debugId: this.id);
-    ptr.assertConsume('/', debugId: this.id);
-    ptr.assertConsume('\\', debugId: this.id);
-    ptr.assertConsume('*', debugId: this.id);
-    ptr.assertConsume('-', debugId: this.id);
-    ptr.assertConsume('<', debugId: this.id);
-
-    dev.log(
-        'Book loaded. Id = $id title = $title byline = ${this.byline.substring(0, 5)}...');
-    assert(!ptr.hasMore());
-  }
-
-  Future<void> parseIndex() async {
-    ByteBuffer buffer = await getFileFromServer('book_binary/$id/index');
-
-    ByteData bytes = buffer.asByteData();
-    BufferPtr ptr = BufferPtr(bytes.buffer);
-    ChapterParser parser = ChapterParser(debugId: 'book$id', ptr: ptr);
-    ptr.assertConsume('+', debugId: id);
-    while (ptr.hasMore() && ptr.getChar() == '(') {
-      ChapterInfo? chapter = await parser.parseBookHeader(chapters.length);
-      if (chapter != null) {
-        chapters.add(ChapterHolder(chapter));
-      }
-    }
-    ptr.assertConsume(';', debugId: id);
-    dev.log('${chapters.length} chapters in book $id');
+    await book_lib.loadLibrary();
+    return book_lib.loadBookLoader(this);
   }
 }

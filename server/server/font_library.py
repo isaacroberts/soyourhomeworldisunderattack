@@ -4,7 +4,7 @@ from flask_json import FlaskJSON, JsonError, json_response, as_json
 
 class FontLibrary:
     def __init__(self):
-        self.df = pd.read_csv('fonts/font_files.csv', index_col=0)
+        self.df = pd.read_csv('font_files.csv', index_col=0)
         # Might've been removed by earlier script
         if 'path' in self.df.columns:
             # Don't need the path, since it's already been moved

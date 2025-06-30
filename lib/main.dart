@@ -1,12 +1,19 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
+//Checked imports
+import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
+import 'package:soyourhomeworld/frontend/view_settings.dart';
 
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+//Loaded directly
 
-import 'frontend/elements/router.dart';
+//Deferred load
+import 'backend/error_handler.dart';
+import 'frontend/text_theme.dart';
+import 'router.dart' as router_lib;
 
 Future<void> main() async {
   // if (kDebugMode) {
@@ -18,83 +25,79 @@ Future<void> main() async {
   // runApp(const ProviderScope(child: MyStatefulApp()));
 }
 
+final ViewSettings settings = ViewSettings.defaultsThenLoad();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    //TODO : Learn about RouteInformationProvider
-    return MaterialApp.router(
-      title: 'The McKinsey Plan',
-      // scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
-      // scrollBehavior:
-      //     ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      theme: theme,
-      routerConfig: router(),
-    );
-  }
-}
-
-/*
-class MyStatefulApp extends StatefulWidget {
-  const MyStatefulApp({super.key});
-
-  @override
-  State<MyStatefulApp> createState() => _MyStatefulAppState();
-}
-
-String twochars(int n) {
-  String s = n.toString();
-  if (s.isEmpty) {
-    return '00';
-  }
-  if (s.length == 1) {
-    return '0$s';
-  } else if (s.length == 2) {
-    return s;
-  } else {
-    return s;
-  }
-}
-
-void _timerCallback(Timer t) {
-  int min = t.tick ~/ 60;
-  int sec = t.tick % 60;
-  if (sec % 5 == 0) {
-    dev.log('${twochars(min)}:${twochars(sec)}');
-  }
-}
-
-class _MyStatefulAppState extends State<MyStatefulApp> {
-  late final Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), _timerCallback);
-    dev.log('Timer!');
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _timer.cancel();
+  Future future() async {
+    dev.log("Loading router");
+    // return router_lib.loadLibrary();
+    // var f = await router_lib.loadLibrary();
+    // dev.log("Loaded router $f");
+    return 'hi';
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      key: const Key('ROUTER'),
       title: 'The McKinsey Plan',
-      // scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
-      // scrollBehavior:
-      //     ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
       theme: theme,
-      routerConfig: router(),
+      themeMode: ThemeMode.dark,
+      routerConfig: router_lib.router(),
+      // showPerformanceOverlay: true,
     );
+    return FutureBuilder(future: future(), builder: builder);
+  }
+
+  Widget builder(BuildContext context, AsyncSnapshot snapshot) {
+    if (snapshot.hasError) {
+      dev.log("Router load error");
+      ErrorList.logError(snapshot.error!, snapshot.stackTrace);
+      return MaterialApp(
+          title: 'The McKinsey Plan',
+          scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
+          theme: theme,
+          themeMode: ThemeMode.dark,
+          home: ErrorList.instance.page(context));
+    } else if (snapshot.connectionState == ConnectionState.done) {
+      dev.log("Got lib: ${snapshot.data}");
+      //TODO: I think move this under the router, using a wrapper to distribute the ViewSettings and an instance to single-ize.
+      //Then, see if that fixes it.
+      // Router
+      //    ViewSettingsProvider
+      //       Scaffold
+      //           Deferred Loaders (which seem like they have to be stateful)
+      return MaterialApp.router(
+        key: const Key('ROUTER'),
+        title: 'The McKinsey Plan',
+        scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
+        theme: theme,
+        themeMode: ThemeMode.dark,
+        routerConfig: router_lib.router(),
+        // showPerformanceOverlay: true,
+      );
+    } else {
+      // dev.log("Loadingpage: ${snapshot.connectionState} ${snapshot.}");
+      return MaterialApp(
+          title: 'The McKinsey Plan',
+          scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
+          theme: theme,
+          themeMode: ThemeMode.dark,
+          home: const McScaffold(
+              source: null,
+              child: Center(
+                  child: TriWizardLoader(
+                text: 'Loading router',
+              ))));
+    }
   }
 }
-*/
+
 class NoThumbScrollBehavior extends ScrollBehavior {
+  // const NoThumbScrollBehavior() : super(sh)
   @override
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,

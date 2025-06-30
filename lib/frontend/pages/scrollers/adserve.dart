@@ -48,7 +48,7 @@ class _AdServeWidgetState extends State<AdServeWidget>
     } else {
       List<HumanJackAdType> types =
           HumanJackAdType.getAdsForSize(AdSize.banner);
-      newType = types[RNG.nextInt(types.length)];
+      newType = types[rNG.nextInt(types.length)];
     }
     dev.log("Ad: Set $newType");
     setState(() {
@@ -210,7 +210,7 @@ class _AdServeWidgetState extends State<AdServeWidget>
         loadLevel += 1;
       });
       if (loadLevel < maxLoad) {
-        int ms = 1 + loadLevel * RNG.nextInt(100) * RNG.nextInt(30);
+        int ms = 1 + loadLevel * rNG.nextInt(100) * rNG.nextInt(30);
         Future.delayed(Duration(milliseconds: ms), _loadLevel);
       } else {
         _load();

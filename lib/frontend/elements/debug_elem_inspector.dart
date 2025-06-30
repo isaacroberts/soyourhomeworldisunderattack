@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/font_interm.dart';
 import 'package:soyourhomeworld/frontend/colors.dart';
 import 'package:soyourhomeworld/frontend/elements/custom_code/ad_widget.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/code_holders.dart';
 import 'package:soyourhomeworld/frontend/styles.dart';
 
+import '../base_text_theme.dart';
+import 'holders/holder_base.dart';
+import 'holders/span_holding_code.dart';
 import 'holders/textholders.dart';
 
 const TextStyle debugFont = TextStyle(
     fontFamily: 'Andale Mono', fontSize: 12, fontWeight: FontWeight.w300);
 
 class KeyValueInspectorRow extends StatelessWidget {
-  final String varkey;
-  final value;
+  final String varKey;
+  final dynamic value;
   const KeyValueInspectorRow(
-      {super.key, required this.varkey, required this.value});
+      {super.key, required this.varKey, required this.value});
 
   Widget valueDisplay() {
     if (value is Color) {
@@ -58,7 +60,7 @@ class KeyValueInspectorRow extends StatelessWidget {
             Flexible(
                 flex: 1,
                 child: Text(
-                  '$varkey ($type):',
+                  '$varKey ($type):',
                   maxLines: 1,
                   overflow: TextOverflow.visible,
                   style: debugFont,
@@ -228,16 +230,16 @@ class FontInspectorRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpandoInspector(
-        unexpanded: KeyValueInspectorRow(varkey: 'Font', value: font.family),
+        unexpanded: KeyValueInspectorRow(varKey: 'Font', value: font.family),
         expanded: [
-          KeyValueInspectorRow(varkey: 'Family', value: font.family),
-          KeyValueInspectorRow(varkey: 'Id', value: font.fileId),
-          KeyValueInspectorRow(varkey: 'URL', value: font.fileUrl),
-          KeyValueInspectorRow(varkey: 'Load Status', value: font.loadStatus()),
-          KeyValueInspectorRow(varkey: 'Size', value: font.size),
-          KeyValueInspectorRow(varkey: 'Color', value: font.color),
-          KeyValueInspectorRow(varkey: 'Weight', value: font.weight),
-          KeyValueInspectorRow(varkey: 'Italic', value: font.italic),
+          KeyValueInspectorRow(varKey: 'Family', value: font.family),
+          KeyValueInspectorRow(varKey: 'Id', value: font.fileId),
+          KeyValueInspectorRow(varKey: 'URL', value: font.fileUrl),
+          KeyValueInspectorRow(varKey: 'Load Status', value: font.loadStatus()),
+          KeyValueInspectorRow(varKey: 'Size', value: font.size),
+          KeyValueInspectorRow(varKey: 'Color', value: font.color),
+          KeyValueInspectorRow(varKey: 'Weight', value: font.weight),
+          KeyValueInspectorRow(varKey: 'Italic', value: font.italic),
         ]);
   }
 }
@@ -276,9 +278,9 @@ class FragInspector extends StatelessWidget {
     FragOfText frag = this.frag;
     if (frag is FragColoredBox) {
       return [
-        KeyValueInspectorRow(varkey: 'width', value: frag.width),
-        KeyValueInspectorRow(varkey: 'height', value: frag.height),
-        KeyValueInspectorRow(varkey: 'color', value: frag.color),
+        KeyValueInspectorRow(varKey: 'width', value: frag.width),
+        KeyValueInspectorRow(varKey: 'height', value: frag.height),
+        KeyValueInspectorRow(varKey: 'color', value: frag.color),
       ];
     } else if (frag is FragBody) {
       return [
@@ -291,9 +293,9 @@ class FragInspector extends StatelessWidget {
       ];
     } else if (frag is ColoredBoxFrag) {
       return [
-        KeyValueInspectorRow(varkey: 'width', value: frag.width),
-        KeyValueInspectorRow(varkey: 'height', value: frag.height),
-        KeyValueInspectorRow(varkey: 'color', value: frag.color),
+        KeyValueInspectorRow(varKey: 'width', value: frag.width),
+        KeyValueInspectorRow(varKey: 'height', value: frag.height),
+        KeyValueInspectorRow(varKey: 'color', value: frag.color),
       ];
     } else {
       throw Exception(
@@ -305,7 +307,7 @@ class FragInspector extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpandoInspector(
         unexpanded: KeyValueInspectorRow(
-            varkey: 'Frag', value: frag.runtimeType.toString()),
+            varKey: 'Frag', value: frag.runtimeType.toString()),
         expanded: fuckoffIfLadder());
   }
 }
@@ -319,22 +321,22 @@ class HolderDataIfLadders {
     } else if (holder is AlignedBodyText) {
       return [
         txtRw,
-        KeyValueInspectorRow(varkey: 'tabs', value: holder.tabs),
-        KeyValueInspectorRow(varkey: 'align', value: holder.align),
+        KeyValueInspectorRow(varKey: 'tabs', value: holder.tabs),
+        KeyValueInspectorRow(varKey: 'align', value: holder.align),
       ];
     } else if (holder is HiliteFontText) {
       return [
         txtRw,
-        KeyValueInspectorRow(varkey: 'tabs', value: holder.tabs),
-        KeyValueInspectorRow(varkey: 'align', value: holder.align),
-        KeyValueInspectorRow(varkey: 'color', value: holder.color),
+        KeyValueInspectorRow(varKey: 'tabs', value: holder.tabs),
+        KeyValueInspectorRow(varKey: 'align', value: holder.align),
+        KeyValueInspectorRow(varKey: 'color', value: holder.color),
         FontInspectorRow(font: holder.font),
       ];
     } else if (holder is CustomFontText) {
       return [
         txtRw,
-        KeyValueInspectorRow(varkey: 'tabs', value: holder.tabs),
-        KeyValueInspectorRow(varkey: 'align', value: holder.align),
+        KeyValueInspectorRow(varKey: 'tabs', value: holder.tabs),
+        KeyValueInspectorRow(varKey: 'align', value: holder.align),
         FontInspectorRow(font: holder.font),
       ];
     }
@@ -359,24 +361,24 @@ class HolderDataIfLadders {
   static List<Widget> codeLadder(Holder holder) {
     if (holder is AdElementHolder) {
       return [
-        KeyValueInspectorRow(varkey: 'color', value: holder.color),
+        KeyValueInspectorRow(varKey: 'color', value: holder.color),
         for (Holder span in holder.spans) SubSpanInspectorRow(holder: span)
       ];
     } else {
       return [
-        const KeyValueInspectorRow(varkey: 'Not Implemented Yet', value: 'Sry'),
+        const KeyValueInspectorRow(varKey: 'Not Implemented Yet', value: 'Sry'),
       ];
     }
   }
 
   static List<Widget> fuckoffIfLadder(Holder holder) {
     if (holder is NewlineElement) {
-      return [KeyValueInspectorRow(varkey: 'height', value: holder.height)];
+      return [KeyValueInspectorRow(varKey: 'height', value: holder.height)];
     } else if (holder is ColoredBoxHolder) {
       return [
-        KeyValueInspectorRow(varkey: 'width', value: holder.width),
-        KeyValueInspectorRow(varkey: 'height', value: holder.height),
-        KeyValueInspectorRow(varkey: 'color', value: holder.color),
+        KeyValueInspectorRow(varKey: 'width', value: holder.width),
+        KeyValueInspectorRow(varKey: 'height', value: holder.height),
+        KeyValueInspectorRow(varKey: 'color', value: holder.color),
       ];
     } else if (holder is TextHolder) {
       return textIfLadder(holder);
@@ -385,25 +387,22 @@ class HolderDataIfLadders {
       for (FragOfText span in holder.spans) {
         w.add(FragInspector(span));
       }
-      w.add(KeyValueInspectorRow(varkey: 'tabs', value: holder.tabs));
-      w.add(KeyValueInspectorRow(varkey: 'align', value: holder.align));
+      w.add(KeyValueInspectorRow(varKey: 'tabs', value: holder.tabs));
+      w.add(KeyValueInspectorRow(varKey: 'align', value: holder.align));
       return w;
     } else if (holder is UnhandledSpanHoldingCode) {
       return [
-        KeyValueInspectorRow(varkey: 'Class', value: holder.clsname),
-        const KeyValueInspectorRow(varkey: 'Type', value: 'CodeBlock'),
+        KeyValueInspectorRow(varKey: 'Class', value: holder.clsname),
+        const KeyValueInspectorRow(varKey: 'Type', value: 'CodeBlock'),
         for (Holder span in holder.spans) SubSpanInspectorRow(holder: span)
       ];
     } else if (holder is HiddenTextElement) {
       return [
-        const KeyValueInspectorRow(varkey: 'Text = ', value: "Hidden"),
+        const KeyValueInspectorRow(varKey: 'Text = ', value: "Hidden"),
       ];
     } else {
       return codeLadder(holder);
     }
-    return [
-      const KeyValueInspectorRow(varkey: 'Not Implemented Yet', value: 'Sry')
-    ];
   }
 }
 

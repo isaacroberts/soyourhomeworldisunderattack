@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/backend/font_interm.dart';
 import 'package:soyourhomeworld/frontend/styles.dart';
 
+import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/buffer_ptr.dart';
 
@@ -34,8 +36,9 @@ class Wousi {
 
   Wousi.fromByte(int byte) {
     if (byte < 15) {
-      throw FontException("Invalid Wousi byte: Weight=0. (byte=$byte)",
-          family: '?');
+      // throw FontException("Invalid Wousi byte: Weight=0. (byte=$byte)",
+      //     family: '?');
+      dev.log("Invalid Wousi byte: Weight=0. (byte=$byte)");
       //Invalid Weight
       weight = 500;
       italic = false;
@@ -69,7 +72,7 @@ class LiveFont {
   Wousi? wousi;
 
   bool isBody() {
-    return (fontId == 1) &&
+    return (fontId == 0) &&
         (size == null || size == 12) &&
         (bgCol == null) &&
         (fontCol == null) &&
@@ -77,7 +80,7 @@ class LiveFont {
   }
 
   bool isStandardHeader() {
-    return (fontId == 2) &&
+    return (fontId == 1) &&
         (size == null || size == 24) &&
         (bgCol == null) &&
         (fontCol == null) &&
@@ -219,7 +222,7 @@ class LiveFont {
 
   FontInterm convertToFontInterm() {
     return FontInterm(
-        fileId: fontId ?? 1,
+        fileId: fontId ?? 0,
         size: size ?? 12,
         italic: wousi?.italic ?? false,
         weight: wousi?.weight,

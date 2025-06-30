@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/code_holders.dart';
 import 'package:soyourhomeworld/frontend/pages/readers/reader_builder.dart';
 import 'package:soyourhomeworld/frontend/styles.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../elements/debug_elem_inspector.dart';
-import '../../elements/holders/textholders.dart';
+import '../../elements/holders/holder_base.dart';
+import '../../elements/holders/span_holding_code.dart';
 
 typedef ChangeChapterCallback = void Function(int);
 

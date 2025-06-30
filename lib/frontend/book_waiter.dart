@@ -36,7 +36,10 @@ class BookWaiter extends StatelessWidget {
             return ExceptionBox.fromException(
                 snapshot.error ?? '?', snapshot.stackTrace);
           } else {
-            return const Center(child: TriWizardLoader());
+            return const Center(
+                child: TriWizardLoader(
+              text: 'Getting book',
+            ));
           }
         });
   }
@@ -52,6 +55,6 @@ class StdBookWaiter extends StatelessWidget {
     if (Book.maybeOf(context) != null) {
       return child;
     }
-    return BookWaiter(book: BookLoader.mckinsey().load(), child: child);
+    return BookWaiter(book: BookLoader.instance.load(), child: child);
   }
 }

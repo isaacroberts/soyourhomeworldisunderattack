@@ -1,81 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/holders/span_holders.dart';
 
 import '../../../backend/font_interm.dart';
-import '../../styles.dart';
-import '../custom_code/code_holders.dart';
+import '../../base_text_theme.dart';
+// import '../custom_code/code_holders.dart';
+
+import 'holder_base.dart';
 
 export 'misc_holders.dart';
 export 'span_holders.dart';
 
 const double k = 12;
-
-// ============ Base ============================
-
-abstract class Holder {
-  const Holder();
-
-  Widget elementOrFallback(BuildContext context, bool showFonts) {
-    if (showFonts) {
-      return element(context);
-    } else {
-      return fallback(context);
-    }
-  }
-
-  Widget elementCheckingFallback(BuildContext context) {
-    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
-    if (showFonts) {
-      return element(context);
-    } else {
-      return fallback(context);
-    }
-  }
-
-  Widget element(BuildContext context);
-  Widget fallback(BuildContext context);
-
-  Future load() async {
-    return null;
-  }
-
-  bool isLoaded() {
-    return true;
-  }
-
-  //Visual utilities
-
-  static Widget fallbackWrap(Widget child) {
-    return child;
-  }
-
-  static String stripOutTextFromFrags(List<FragOfText> frags) {
-    String text = '';
-    for (FragOfText f in frags) {
-      if (f is FragBody) {
-        text += f.text;
-      }
-    }
-    return text;
-  }
-
-  static String stripOutText(List<Holder> holders) {
-    String text = '';
-    for (Holder h in holders) {
-      if (h is TextHolder) {
-        text += h.text;
-        text += '\n';
-      } else if (h is SpanOfText) {
-        text += stripOutTextFromFrags(h.spans);
-        text += '\n';
-      } else if (h is SpanHoldingCode) {
-        text += stripOutText(h.spans);
-        text += '\n';
-      }
-    }
-    return text;
-  }
-}
 
 // ========== Base ================
 
@@ -172,7 +106,21 @@ class HeaderOfText extends TextHolder {
 
   @override
   Widget fallback(BuildContext context) {
-    return element(context);
+    return Container(
+        height: 36,
+        color: const Color(0x88666666),
+        alignment: Alignment.center,
+        child: Text(text,
+            textAlign: TextAlign.center,
+            style: headerFont.copyWith(
+              color: const Color(0xbbffffff),
+              fontSize: 24,
+              // fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w500,
+              // color: const Color(0xff000000),
+              decorationColor: const Color(0xbbffffff),
+              decoration: TextDecoration.underline,
+            )));
   }
 }
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/code_holders.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
+import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart';
+
+import '../../base_text_theme.dart';
+import '../../text_theme.dart';
 
 class YoutubeVideo extends StatelessWidget {
   final Widget? profileIcon;

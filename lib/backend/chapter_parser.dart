@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 
 import '../frontend/elements/custom_code/custom_code_router.dart';
+import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/binary.dart';
 import 'binary_utils/buffer_ptr.dart';
@@ -82,7 +83,8 @@ class ChapterParser {
     // ptr += '*'
     ptr.assertConsume('*', debugId: varName);
     // ptr += pack_untyped_uint(file_size)
-    int filesize = ptr.consumeUint32();
+    //int filesize =
+    ptr.consumeUint32();
     // ptr += ')'
     ptr.assertConsume(')', debugId: varName);
     // ptr += ';'

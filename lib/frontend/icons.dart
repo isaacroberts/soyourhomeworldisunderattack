@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: constant_identifier_names
 
-import '../backend/utils.dart';
+import 'package:flutter/material.dart';
 
 class RpgAwesome {
   RpgAwesome._();
@@ -10,8 +10,7 @@ class RpgAwesome {
   static const _kFontFam = 'RpgAwesome';
   static const _kFontPkg = null; //"fluttericon";
 
-  static IconData random() => values[RNG.nextInt(values.length)];
-
+  static const int errorIconIndex = 30;
   static const List<IconData> values = [
     acid,
     acorn,
@@ -1501,1491 +1500,509 @@ class RpgAwesome {
   static const IconData zigzag_leaf =
       IconData(0xeaee, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
-  static IconData? getName(String n) {
-    if (n == 'acid') {
-      return acid;
-    }
-    if (n == 'acorn') {
-      return acorn;
-    }
-    if (n == 'alien_fire') {
-      return alien_fire;
-    }
-    if (n == 'all_for_one') {
-      return all_for_one;
-    }
-    if (n == 'alligator_clip') {
-      return alligator_clip;
-    }
-    if (n == 'ammo_bag') {
-      return ammo_bag;
-    }
-    if (n == 'anchor') {
-      return anchor;
-    }
-    if (n == 'angel_wings') {
-      return angel_wings;
-    }
-    if (n == 'ankh') {
-      return ankh;
-    }
-    if (n == 'anvil') {
-      return anvil;
-    }
-    if (n == 'apple') {
-      return apple;
-    }
-    if (n == 'aquarius') {
-      return aquarius;
-    }
-    if (n == 'arcane_mask') {
-      return arcane_mask;
-    }
-    if (n == 'archer') {
-      return archer;
-    }
-    if (n == 'archery_target') {
-      return archery_target;
-    }
-    if (n == 'arena') {
-      return arena;
-    }
-    if (n == 'aries') {
-      return aries;
-    }
-    if (n == 'arrow_cluster') {
-      return arrow_cluster;
-    }
-    if (n == 'arrow_flights') {
-      return arrow_flights;
-    }
-    if (n == 'arson') {
-      return arson;
-    }
-    if (n == 'aura') {
-      return aura;
-    }
-    if (n == 'aware') {
-      return aware;
-    }
-    if (n == 'axe_swing') {
-      return axe_swing;
-    }
-    if (n == 'axe') {
-      return axe;
-    }
-    if (n == 'ball') {
-      return ball;
-    }
-    if (n == 'barbed_arrow') {
-      return barbed_arrow;
-    }
-    if (n == 'barrier') {
-      return barrier;
-    }
-    if (n == 'bat_sword') {
-      return bat_sword;
-    }
-    if (n == 'battered_axe') {
-      return battered_axe;
-    }
-    if (n == 'batteries') {
-      return batteries;
-    }
-    if (n == 'battery_0') {
-      return battery_0;
-    }
-    if (n == 'battery_25') {
-      return battery_25;
-    }
-    if (n == 'battery_50') {
-      return battery_50;
-    }
-    if (n == 'battery_75') {
-      return battery_75;
-    }
-    if (n == 'battery_100') {
-      return battery_100;
-    }
-    if (n == 'battery_black') {
-      return battery_black;
-    }
-    if (n == 'battery_negative') {
-      return battery_negative;
-    }
-    if (n == 'battery_positive') {
-      return battery_positive;
-    }
-    if (n == 'battery_white') {
-      return battery_white;
-    }
-    if (n == 'batwings') {
-      return batwings;
-    }
-    if (n == 'beam_wake') {
-      return beam_wake;
-    }
-    if (n == 'bear_trap') {
-      return bear_trap;
-    }
-    if (n == 'beer') {
-      return beer;
-    }
-    if (n == 'beetle') {
-      return beetle;
-    }
-    if (n == 'bell') {
-      return bell;
-    }
-    if (n == 'biohazard') {
-      return biohazard;
-    }
-    if (n == 'bird_claw') {
-      return bird_claw;
-    }
-    if (n == 'bird_mask') {
-      return bird_mask;
-    }
-    if (n == 'blade_bite') {
-      return blade_bite;
-    }
-    if (n == 'blast') {
-      return blast;
-    }
-    if (n == 'blaster') {
-      return blaster;
-    }
-    if (n == 'bleeding_eye') {
-      return bleeding_eye;
-    }
-    if (n == 'bleeding_hearts') {
-      return bleeding_hearts;
-    }
-    if (n == 'bolt_shield') {
-      return bolt_shield;
-    }
-    if (n == 'bomb_explosion') {
-      return bomb_explosion;
-    }
-    if (n == 'bombs') {
-      return bombs;
-    }
-    if (n == 'bone_bite') {
-      return bone_bite;
-    }
-    if (n == 'bone_knife') {
-      return bone_knife;
-    }
-    if (n == 'book') {
-      return book;
-    }
-    if (n == 'boomerang') {
-      return boomerang;
-    }
-    if (n == 'boot_stomp') {
-      return boot_stomp;
-    }
-    if (n == 'bottle_vapors') {
-      return bottle_vapors;
-    }
-    if (n == 'bottled_bolt') {
-      return bottled_bolt;
-    }
-    if (n == 'bottom_right') {
-      return bottom_right;
-    }
-    if (n == 'bowie_knife') {
-      return bowie_knife;
-    }
-    if (n == 'bowling_pin') {
-      return bowling_pin;
-    }
-    if (n == 'brain_freeze') {
-      return brain_freeze;
-    }
-    if (n == 'brandy_bottle') {
-      return brandy_bottle;
-    }
-    if (n == 'bridge') {
-      return bridge;
-    }
-    if (n == 'broadhead_arrow') {
-      return broadhead_arrow;
-    }
-    if (n == 'broadsword') {
-      return broadsword;
-    }
-    if (n == 'broken_bone') {
-      return broken_bone;
-    }
-    if (n == 'broken_bottle') {
-      return broken_bottle;
-    }
-    if (n == 'broken_heart') {
-      return broken_heart;
-    }
-    if (n == 'broken_shield') {
-      return broken_shield;
-    }
-    if (n == 'broken_skull') {
-      return broken_skull;
-    }
-    if (n == 'bubbling_potion') {
-      return bubbling_potion;
-    }
-    if (n == 'bullets') {
-      return bullets;
-    }
-    if (n == 'burning_book') {
-      return burning_book;
-    }
-    if (n == 'burning_embers') {
-      return burning_embers;
-    }
-    if (n == 'burning_eye') {
-      return burning_eye;
-    }
-    if (n == 'burning_meteor') {
-      return burning_meteor;
-    }
-    if (n == 'burst_blob') {
-      return burst_blob;
-    }
-    if (n == 'butterfly') {
-      return butterfly;
-    }
-    if (n == 'campfire') {
-      return campfire;
-    }
-    if (n == 'cancel') {
-      return cancel;
-    }
-    if (n == 'cancer') {
-      return cancer;
-    }
-    if (n == 'candle_fire') {
-      return candle_fire;
-    }
-    if (n == 'candle') {
-      return candle;
-    }
-    if (n == 'cannon_shot') {
-      return cannon_shot;
-    }
-    if (n == 'capitol') {
-      return capitol;
-    }
-    if (n == 'capricorn') {
-      return capricorn;
-    }
-    if (n == 'carrot') {
-      return carrot;
-    }
-    if (n == 'castle_emblem') {
-      return castle_emblem;
-    }
-    if (n == 'castle_flag') {
-      return castle_flag;
-    }
-    if (n == 'cat') {
-      return cat;
-    }
-    if (n == 'chain') {
-      return chain;
-    }
-    if (n == 'cheese') {
-      return cheese;
-    }
-    if (n == 'chemical_arrow') {
-      return chemical_arrow;
-    }
-    if (n == 'chessboard') {
-      return chessboard;
-    }
-    if (n == 'chicken_leg') {
-      return chicken_leg;
-    }
-    if (n == 'circle_of_circles') {
-      return circle_of_circles;
-    }
-    if (n == 'circular_saw') {
-      return circular_saw;
-    }
-    if (n == 'circular_shield') {
-      return circular_shield;
-    }
-    if (n == 'cloak_and_dagger') {
-      return cloak_and_dagger;
-    }
-    if (n == 'clockwork') {
-      return clockwork;
-    }
-    if (n == 'clover') {
-      return clover;
-    }
-    if (n == 'clovers_card') {
-      return clovers_card;
-    }
-    if (n == 'clovers') {
-      return clovers;
-    }
-    if (n == 'cluster_bomb') {
-      return cluster_bomb;
-    }
-    if (n == 'coffee_mug') {
-      return coffee_mug;
-    }
-    if (n == 'cog_wheel') {
-      return cog_wheel;
-    }
-    if (n == 'cog') {
-      return cog;
-    }
-    if (n == 'cold_heart') {
-      return cold_heart;
-    }
-    if (n == 'compass') {
-      return compass;
-    }
-    if (n == 'corked_tube') {
-      return corked_tube;
-    }
-    if (n == 'crab_claw') {
-      return crab_claw;
-    }
-    if (n == 'cracked_helm') {
-      return cracked_helm;
-    }
-    if (n == 'cracked_shield') {
-      return cracked_shield;
-    }
-    if (n == 'croc_sword') {
-      return croc_sword;
-    }
-    if (n == 'crossbow') {
-      return crossbow;
-    }
-    if (n == 'crossed_axes') {
-      return crossed_axes;
-    }
-    if (n == 'crossed_bones') {
-      return crossed_bones;
-    }
-    if (n == 'crossed_pistols') {
-      return crossed_pistols;
-    }
-    if (n == 'crossed_sabres') {
-      return crossed_sabres;
-    }
-    if (n == 'crossed_swords') {
-      return crossed_swords;
-    }
-    if (n == 'crown_of_thorns') {
-      return crown_of_thorns;
-    }
-    if (n == 'crown') {
-      return crown;
-    }
-    if (n == 'crowned_heart') {
-      return crowned_heart;
-    }
-    if (n == 'crush') {
-      return crush;
-    }
-    if (n == 'crystal_ball') {
-      return crystal_ball;
-    }
-    if (n == 'crystal_cluster') {
-      return crystal_cluster;
-    }
-    if (n == 'crystal_wand') {
-      return crystal_wand;
-    }
-    if (n == 'crystals') {
-      return crystals;
-    }
-    if (n == 'cubes') {
-      return cubes;
-    }
-    if (n == 'cut_palm') {
-      return cut_palm;
-    }
-    if (n == 'cycle') {
-      return cycle;
-    }
-    if (n == 'daggers') {
-      return daggers;
-    }
-    if (n == 'daisy') {
-      return daisy;
-    }
-    if (n == 'dead_tree') {
-      return dead_tree;
-    }
-    if (n == 'death_skull') {
-      return death_skull;
-    }
-    if (n == 'decapitation') {
-      return decapitation;
-    }
-    if (n == 'defibrillate') {
-      return defibrillate;
-    }
-    if (n == 'demolish') {
-      return demolish;
-    }
-    if (n == 'dervish_swords') {
-      return dervish_swords;
-    }
-    if (n == 'desert_skull') {
-      return desert_skull;
-    }
-    if (n == 'diamond') {
-      return diamond;
-    }
-    if (n == 'diamonds_card') {
-      return diamonds_card;
-    }
-    if (n == 'diamonds') {
-      return diamonds;
-    }
-    if (n == 'dice_five') {
-      return dice_five;
-    }
-    if (n == 'dice_four') {
-      return dice_four;
-    }
-    if (n == 'dice_one') {
-      return dice_one;
-    }
-    if (n == 'dice_six') {
-      return dice_six;
-    }
-    if (n == 'dice_three') {
-      return dice_three;
-    }
-    if (n == 'dice_two') {
-      return dice_two;
-    }
-    if (n == 'dinosaur') {
-      return dinosaur;
-    }
-    if (n == 'divert') {
-      return divert;
-    }
-    if (n == 'diving_dagger') {
-      return diving_dagger;
-    }
-    if (n == 'double_team') {
-      return double_team;
-    }
-    if (n == 'doubled') {
-      return doubled;
-    }
-    if (n == 'dragon_breath') {
-      return dragon_breath;
-    }
-    if (n == 'dragon_wing') {
-      return dragon_wing;
-    }
-    if (n == 'dragon') {
-      return dragon;
-    }
-    if (n == 'dragonfly') {
-      return dragonfly;
-    }
-    if (n == 'drill') {
-      return drill;
-    }
-    if (n == 'dripping_blade') {
-      return dripping_blade;
-    }
-    if (n == 'dripping_knife') {
-      return dripping_knife;
-    }
-    if (n == 'dripping_sword') {
-      return dripping_sword;
-    }
-    if (n == 'droplet_splash') {
-      return droplet_splash;
-    }
-    if (n == 'droplet') {
-      return droplet;
-    }
-    if (n == 'droplets') {
-      return droplets;
-    }
-    if (n == 'duel') {
-      return duel;
-    }
-    if (n == 'egg_pod') {
-      return egg_pod;
-    }
-    if (n == 'egg') {
-      return egg;
-    }
-    if (n == 'eggplant') {
-      return eggplant;
-    }
-    if (n == 'emerald') {
-      return emerald;
-    }
-    if (n == 'energise') {
-      return energise;
-    }
-    if (n == 'explosion') {
-      return explosion;
-    }
-    if (n == 'explosive_materials') {
-      return explosive_materials;
-    }
-    if (n == 'eye_monster') {
-      return eye_monster;
-    }
-    if (n == 'eye_shield') {
-      return eye_shield;
-    }
-    if (n == 'eyeball') {
-      return eyeball;
-    }
-    if (n == 'fairy_wand') {
-      return fairy_wand;
-    }
-    if (n == 'fairy') {
-      return fairy;
-    }
-    if (n == 'fall_down') {
-      return fall_down;
-    }
-    if (n == 'falling') {
-      return falling;
-    }
-    if (n == 'fast_ship') {
-      return fast_ship;
-    }
-    if (n == 'feather_wing') {
-      return feather_wing;
-    }
-    if (n == 'feathered_wing') {
-      return feathered_wing;
-    }
-    if (n == 'fedora') {
-      return fedora;
-    }
-    if (n == 'fire_bomb') {
-      return fire_bomb;
-    }
-    if (n == 'fire_breath') {
-      return fire_breath;
-    }
-    if (n == 'fire_ring') {
-      return fire_ring;
-    }
-    if (n == 'fire_shield') {
-      return fire_shield;
-    }
-    if (n == 'fire_symbol') {
-      return fire_symbol;
-    }
-    if (n == 'fire') {
-      return fire;
-    }
-    if (n == 'fireball_sword') {
-      return fireball_sword;
-    }
-    if (n == 'fish') {
-      return fish;
-    }
-    if (n == 'fizzing_flask') {
-      return fizzing_flask;
-    }
-    if (n == 'flame_symbol') {
-      return flame_symbol;
-    }
-    if (n == 'flaming_arrow') {
-      return flaming_arrow;
-    }
-    if (n == 'flaming_claw') {
-      return flaming_claw;
-    }
-    if (n == 'flaming_trident') {
-      return flaming_trident;
-    }
-    if (n == 'flask') {
-      return flask;
-    }
-    if (n == 'flat_hammer') {
-      return flat_hammer;
-    }
-    if (n == 'flower') {
-      return flower;
-    }
-    if (n == 'flowers') {
-      return flowers;
-    }
-    if (n == 'fluffy_swirl') {
-      return fluffy_swirl;
-    }
-    if (n == 'focused_lightning') {
-      return focused_lightning;
-    }
-    if (n == 'food_chain') {
-      return food_chain;
-    }
-    if (n == 'footprint') {
-      return footprint;
-    }
-    if (n == 'forging') {
-      return forging;
-    }
-    if (n == 'forward') {
-      return forward;
-    }
-    if (n == 'fox') {
-      return fox;
-    }
-    if (n == 'frost_emblem') {
-      return frost_emblem;
-    }
-    if (n == 'frostfire') {
-      return frostfire;
-    }
-    if (n == 'frozen_arrow') {
-      return frozen_arrow;
-    }
-    if (n == 'gamepad_cross') {
-      return gamepad_cross;
-    }
-    if (n == 'gavel') {
-      return gavel;
-    }
-    if (n == 'gear_hammer') {
-      return gear_hammer;
-    }
-    if (n == 'gear_heart') {
-      return gear_heart;
-    }
-    if (n == 'gears') {
-      return gears;
-    }
-    if (n == 'gecko') {
-      return gecko;
-    }
-    if (n == 'gem_pendant') {
-      return gem_pendant;
-    }
-    if (n == 'gem') {
-      return gem;
-    }
-    if (n == 'gemini') {
-      return gemini;
-    }
-    if (n == 'glass_heart') {
-      return glass_heart;
-    }
-    if (n == 'gloop') {
-      return gloop;
-    }
-    if (n == 'gold_bar') {
-      return gold_bar;
-    }
-    if (n == 'grappling_hook') {
-      return grappling_hook;
-    }
-    if (n == 'grass_patch') {
-      return grass_patch;
-    }
-    if (n == 'grass') {
-      return grass;
-    }
-    if (n == 'grenade') {
-      return grenade;
-    }
-    if (n == 'groundbreaker') {
-      return groundbreaker;
-    }
-    if (n == 'guarded_tower') {
-      return guarded_tower;
-    }
-    if (n == 'guillotine') {
-      return guillotine;
-    }
-    if (n == 'halberd') {
-      return halberd;
-    }
-    if (n == 'hammer_drop') {
-      return hammer_drop;
-    }
-    if (n == 'hammer') {
-      return hammer;
-    }
-    if (n == 'hand_emblem') {
-      return hand_emblem;
-    }
-    if (n == 'hand_saw') {
-      return hand_saw;
-    }
-    if (n == 'hand') {
-      return hand;
-    }
-    if (n == 'harpoon_trident') {
-      return harpoon_trident;
-    }
-    if (n == 'health_decrease') {
-      return health_decrease;
-    }
-    if (n == 'health_increase') {
-      return health_increase;
-    }
-    if (n == 'health') {
-      return health;
-    }
-    if (n == 'heart_bottle') {
-      return heart_bottle;
-    }
-    if (n == 'heart_tower') {
-      return heart_tower;
-    }
-    if (n == 'heartburn') {
-      return heartburn;
-    }
-    if (n == 'hearts_card') {
-      return hearts_card;
-    }
-    if (n == 'hearts') {
-      return hearts;
-    }
-    if (n == 'heat_haze') {
-      return heat_haze;
-    }
-    if (n == 'heavy_fall') {
-      return heavy_fall;
-    }
-    if (n == 'heavy_shield') {
-      return heavy_shield;
-    }
-    if (n == 'helmet') {
-      return helmet;
-    }
-    if (n == 'help') {
-      return help;
-    }
-    if (n == 'hive_emblem') {
-      return hive_emblem;
-    }
-    if (n == 'hole_ladder') {
-      return hole_ladder;
-    }
-    if (n == 'honeycomb') {
-      return honeycomb;
-    }
-    if (n == 'hood') {
-      return hood;
-    }
-    if (n == 'horn_call') {
-      return horn_call;
-    }
-    if (n == 'horns') {
-      return horns;
-    }
-    if (n == 'horseshoe') {
-      return horseshoe;
-    }
-    if (n == 'hospital_cross') {
-      return hospital_cross;
-    }
-    if (n == 'hot_surface') {
-      return hot_surface;
-    }
-    if (n == 'hourglass') {
-      return hourglass;
-    }
-    if (n == 'hydra_shot') {
-      return hydra_shot;
-    }
-    if (n == 'hydra') {
-      return hydra;
-    }
-    if (n == 'ice_cube') {
-      return ice_cube;
-    }
-    if (n == 'implosion') {
-      return implosion;
-    }
-    if (n == 'incense') {
-      return incense;
-    }
-    if (n == 'insect_jaws') {
-      return insect_jaws;
-    }
-    if (n == 'interdiction') {
-      return interdiction;
-    }
-    if (n == 'jetpack') {
-      return jetpack;
-    }
-    if (n == 'jigsaw_piece') {
-      return jigsaw_piece;
-    }
-    if (n == 'kaleidoscope') {
-      return kaleidoscope;
-    }
-    if (n == 'kettlebell') {
-      return kettlebell;
-    }
-    if (n == 'key_basic') {
-      return key_basic;
-    }
-    if (n == 'key') {
-      return key;
-    }
-    if (n == 'kitchen_knives') {
-      return kitchen_knives;
-    }
-    if (n == 'knife_fork') {
-      return knife_fork;
-    }
-    if (n == 'knife') {
-      return knife;
-    }
-    if (n == 'knight_helmet') {
-      return knight_helmet;
-    }
-    if (n == 'kunai') {
-      return kunai;
-    }
-    if (n == 'lantern_flame') {
-      return lantern_flame;
-    }
-    if (n == 'large_hammer') {
-      return large_hammer;
-    }
-    if (n == 'laser_blast') {
-      return laser_blast;
-    }
-    if (n == 'laser_site') {
-      return laser_site;
-    }
-    if (n == 'lava') {
-      return lava;
-    }
-    if (n == 'leaf') {
-      return leaf;
-    }
-    if (n == 'leo') {
-      return leo;
-    }
-    if (n == 'level_four_advanced') {
-      return level_four_advanced;
-    }
-    if (n == 'level_four') {
-      return level_four;
-    }
-    if (n == 'level_three_advanced') {
-      return level_three_advanced;
-    }
-    if (n == 'level_three') {
-      return level_three;
-    }
-    if (n == 'level_two_advanced') {
-      return level_two_advanced;
-    }
-    if (n == 'level_two') {
-      return level_two;
-    }
-    if (n == 'lever') {
-      return lever;
-    }
-    if (n == 'libra') {
-      return libra;
-    }
-    if (n == 'light_bulb') {
-      return light_bulb;
-    }
-    if (n == 'lighthouse') {
-      return lighthouse;
-    }
-    if (n == 'lightning_bolt') {
-      return lightning_bolt;
-    }
-    if (n == 'lightning_storm') {
-      return lightning_storm;
-    }
-    if (n == 'lightning_sword') {
-      return lightning_sword;
-    }
-    if (n == 'lightning_trio') {
-      return lightning_trio;
-    }
-    if (n == 'lightning') {
-      return lightning;
-    }
-    if (n == 'lion') {
-      return lion;
-    }
-    if (n == 'lit_candelabra') {
-      return lit_candelabra;
-    }
-    if (n == 'load') {
-      return load;
-    }
-    if (n == 'locked_fortress') {
-      return locked_fortress;
-    }
-    if (n == 'love_howl') {
-      return love_howl;
-    }
-    if (n == 'maggot') {
-      return maggot;
-    }
-    if (n == 'magnet') {
-      return magnet;
-    }
-    if (n == 'mass_driver') {
-      return mass_driver;
-    }
-    if (n == 'match') {
-      return match;
-    }
-    if (n == 'meat_hook') {
-      return meat_hook;
-    }
-    if (n == 'meat') {
-      return meat;
-    }
-    if (n == 'medical_pack') {
-      return medical_pack;
-    }
-    if (n == 'metal_gate') {
-      return metal_gate;
-    }
-    if (n == 'microphone') {
-      return microphone;
-    }
-    if (n == 'mine_wagon') {
-      return mine_wagon;
-    }
-    if (n == 'mining_diamonds') {
-      return mining_diamonds;
-    }
-    if (n == 'mirror') {
-      return mirror;
-    }
-    if (n == 'monster_skull') {
-      return monster_skull;
-    }
-    if (n == 'montains') {
-      return montains;
-    }
-    if (n == 'moon_sun') {
-      return moon_sun;
-    }
-    if (n == 'mp5') {
-      return mp5;
-    }
-    if (n == 'muscle_fat') {
-      return muscle_fat;
-    }
-    if (n == 'muscle_up') {
-      return muscle_up;
-    }
-    if (n == 'musket') {
-      return musket;
-    }
-    if (n == 'nails') {
-      return nails;
-    }
-    if (n == 'nodular') {
-      return nodular;
-    }
-    if (n == 'noose') {
-      return noose;
-    }
-    if (n == 'nuclear') {
-      return nuclear;
-    }
-    if (n == 'ocarina') {
-      return ocarina;
-    }
-    if (n == 'ocean_emblem') {
-      return ocean_emblem;
-    }
-    if (n == 'octopus') {
-      return octopus;
-    }
-    if (n == 'omega') {
-      return omega;
-    }
-    if (n == 'on_target') {
-      return on_target;
-    }
-    if (n == 'ophiuchus') {
-      return ophiuchus;
-    }
-    if (n == 'overhead') {
-      return overhead;
-    }
-    if (n == 'overmind') {
-      return overmind;
-    }
-    if (n == 'palm_tree') {
-      return palm_tree;
-    }
-    if (n == 'pawn') {
-      return pawn;
-    }
-    if (n == 'pawprint') {
-      return pawprint;
-    }
-    if (n == 'perspective_dice_five') {
-      return perspective_dice_five;
-    }
-    if (n == 'perspective_dice_four') {
-      return perspective_dice_four;
-    }
-    if (n == 'perspective_dice_one') {
-      return perspective_dice_one;
-    }
-    if (n == 'perspective_dice_random') {
-      return perspective_dice_random;
-    }
-    if (n == 'perspective_dice_six_two') {
-      return perspective_dice_six_two;
-    }
-    if (n == 'perspective_dice_six') {
-      return perspective_dice_six;
-    }
-    if (n == 'perspective_dice_three') {
-      return perspective_dice_three;
-    }
-    if (n == 'pill') {
-      return pill;
-    }
-    if (n == 'pills') {
-      return pills;
-    }
-    if (n == 'pine_tree') {
-      return pine_tree;
-    }
-    if (n == 'ping_pong') {
-      return ping_pong;
-    }
-    if (n == 'pisces') {
-      return pisces;
-    }
-    if (n == 'plain_dagger') {
-      return plain_dagger;
-    }
-    if (n == 'player_despair') {
-      return player_despair;
-    }
-    if (n == 'player_dodge') {
-      return player_dodge;
-    }
-    if (n == 'player_king') {
-      return player_king;
-    }
-    if (n == 'player_lift') {
-      return player_lift;
-    }
-    if (n == 'player_pain') {
-      return player_pain;
-    }
-    if (n == 'player_pyromaniac') {
-      return player_pyromaniac;
-    }
-    if (n == 'player_shot') {
-      return player_shot;
-    }
-    if (n == 'player_teleport') {
-      return player_teleport;
-    }
-    if (n == 'player_thunder_struck') {
-      return player_thunder_struck;
-    }
-    if (n == 'player') {
-      return player;
-    }
-    if (n == 'podium') {
-      return podium;
-    }
-    if (n == 'poison_cloud') {
-      return poison_cloud;
-    }
-    if (n == 'potion') {
-      return potion;
-    }
-    if (n == 'pyramids') {
-      return pyramids;
-    }
-    if (n == 'queen_crown') {
-      return queen_crown;
-    }
-    if (n == 'quill_ink') {
-      return quill_ink;
-    }
-    if (n == 'rabbit') {
-      return rabbit;
-    }
-    if (n == 'radar_dish') {
-      return radar_dish;
-    }
-    if (n == 'radial_balance') {
-      return radial_balance;
-    }
-    if (n == 'radioactive') {
-      return radioactive;
-    }
-    if (n == 'raven') {
-      return raven;
-    }
-    if (n == 'reactor') {
-      return reactor;
-    }
-    if (n == 'recycle') {
-      return recycle;
-    }
-    if (n == 'regeneration') {
-      return regeneration;
-    }
-    if (n == 'relic_blade') {
-      return relic_blade;
-    }
-    if (n == 'repair') {
-      return repair;
-    }
-    if (n == 'reverse') {
-      return reverse;
-    }
-    if (n == 'revolver') {
-      return revolver;
-    }
-    if (n == 'rifle') {
-      return rifle;
-    }
-    if (n == 'ringing_bell') {
-      return ringing_bell;
-    }
-    if (n == 'roast_chicken') {
-      return roast_chicken;
-    }
-    if (n == 'robot_arm') {
-      return robot_arm;
-    }
-    if (n == 'round_bottom_flask') {
-      return round_bottom_flask;
-    }
-    if (n == 'round_shield') {
-      return round_shield;
-    }
-    if (n == 'rss') {
-      return rss;
-    }
-    if (n == 'rune_stone') {
-      return rune_stone;
-    }
-    if (n == 'sagittarius') {
-      return sagittarius;
-    }
-    if (n == 'sapphire') {
-      return sapphire;
-    }
-    if (n == 'satellite') {
-      return satellite;
-    }
-    if (n == 'save') {
-      return save;
-    }
-    if (n == 'scorpio') {
-      return scorpio;
-    }
-    if (n == 'scroll_unfurled') {
-      return scroll_unfurled;
-    }
-    if (n == 'scythe') {
-      return scythe;
-    }
-    if (n == 'sea_serpent') {
-      return sea_serpent;
-    }
-    if (n == 'seagull') {
-      return seagull;
-    }
-    if (n == 'shark') {
-      return shark;
-    }
-    if (n == 'sheep') {
-      return sheep;
-    }
-    if (n == 'sheriff') {
-      return sheriff;
-    }
-    if (n == 'shield') {
-      return shield;
-    }
-    if (n == 'ship_emblem') {
-      return ship_emblem;
-    }
-    if (n == 'shoe_prints') {
-      return shoe_prints;
-    }
-    if (n == 'shot_through_the_heart') {
-      return shot_through_the_heart;
-    }
-    if (n == 'shotgun_shell') {
-      return shotgun_shell;
-    }
-    if (n == 'shovel') {
-      return shovel;
-    }
-    if (n == 'shuriken') {
-      return shuriken;
-    }
-    if (n == 'sickle') {
-      return sickle;
-    }
-    if (n == 'sideswipe') {
-      return sideswipe;
-    }
-    if (n == 'site') {
-      return site;
-    }
-    if (n == 'skull_trophy') {
-      return skull_trophy;
-    }
-    if (n == 'skull') {
-      return skull;
-    }
-    if (n == 'slash_ring') {
-      return slash_ring;
-    }
-    if (n == 'small_fire') {
-      return small_fire;
-    }
-    if (n == 'snail') {
-      return snail;
-    }
-    if (n == 'snake') {
-      return snake;
-    }
-    if (n == 'snorkel') {
-      return snorkel;
-    }
-    if (n == 'snowflake') {
-      return snowflake;
-    }
-    if (n == 'soccer_ball') {
-      return soccer_ball;
-    }
-    if (n == 'spades_card') {
-      return spades_card;
-    }
-    if (n == 'spades') {
-      return spades;
-    }
-    if (n == 'spawn_node') {
-      return spawn_node;
-    }
-    if (n == 'spear_head') {
-      return spear_head;
-    }
-    if (n == 'speech_bubble') {
-      return speech_bubble;
-    }
-    if (n == 'speech_bubbles') {
-      return speech_bubbles;
-    }
-    if (n == 'spider_face') {
-      return spider_face;
-    }
-    if (n == 'spikeball') {
-      return spikeball;
-    }
-    if (n == 'spiked_mace') {
-      return spiked_mace;
-    }
-    if (n == 'spiked_tentacle') {
-      return spiked_tentacle;
-    }
-    if (n == 'spinning_sword') {
-      return spinning_sword;
-    }
-    if (n == 'spiral_shell') {
-      return spiral_shell;
-    }
-    if (n == 'splash') {
-      return splash;
-    }
-    if (n == 'spray_can') {
-      return spray_can;
-    }
-    if (n == 'sprout_emblem') {
-      return sprout_emblem;
-    }
-    if (n == 'sprout') {
-      return sprout;
-    }
-    if (n == 'stopwatch') {
-      return stopwatch;
-    }
-    if (n == 'suckered_tentacle') {
-      return suckered_tentacle;
-    }
-    if (n == 'suits') {
-      return suits;
-    }
-    if (n == 'sun_symbol') {
-      return sun_symbol;
-    }
-    if (n == 'sun') {
-      return sun;
-    }
-    if (n == 'sunbeams') {
-      return sunbeams;
-    }
-    if (n == 'super_mushroom') {
-      return super_mushroom;
-    }
-    if (n == 'supersonic_arrow') {
-      return supersonic_arrow;
-    }
-    if (n == 'surveillance_camera') {
-      return surveillance_camera;
-    }
-    if (n == 'syringe') {
-      return syringe;
-    }
-    if (n == 'target_arrows') {
-      return target_arrows;
-    }
-    if (n == 'target_laser') {
-      return target_laser;
-    }
-    if (n == 'targeted') {
-      return targeted;
-    }
-    if (n == 'taurus') {
-      return taurus;
-    }
-    if (n == 'telescope') {
-      return telescope;
-    }
-    if (n == 'tentacle') {
-      return tentacle;
-    }
-    if (n == 'tesla') {
-      return tesla;
-    }
-    if (n == 'thorn_arrow') {
-      return thorn_arrow;
-    }
-    if (n == 'thorny_vine') {
-      return thorny_vine;
-    }
-    if (n == 'three_keys') {
-      return three_keys;
-    }
-    if (n == 'tic_tac_toe') {
-      return tic_tac_toe;
-    }
-    if (n == 'toast') {
-      return toast;
-    }
-    if (n == 'tombstone') {
-      return tombstone;
-    }
-    if (n == 'tooth') {
-      return tooth;
-    }
-    if (n == 'torch') {
-      return torch;
-    }
-    if (n == 'tower') {
-      return tower;
-    }
-    if (n == 'trail') {
-      return trail;
-    }
-    if (n == 'trefoil_lily') {
-      return trefoil_lily;
-    }
-    if (n == 'trident') {
-      return trident;
-    }
-    if (n == 'triforce') {
-      return triforce;
-    }
-    if (n == 'trophy') {
-      return trophy;
-    }
-    if (n == 'turd') {
-      return turd;
-    }
-    if (n == 'two_dragons') {
-      return two_dragons;
-    }
-    if (n == 'two_hearts') {
-      return two_hearts;
-    }
-    if (n == 'uncertainty') {
-      return uncertainty;
-    }
-    if (n == 'underhand') {
-      return underhand;
-    }
-    if (n == 'unplugged') {
-      return unplugged;
-    }
-    if (n == 'vase') {
-      return vase;
-    }
-    if (n == 'venomous_snake') {
-      return venomous_snake;
-    }
-    if (n == 'vest') {
-      return vest;
-    }
-    if (n == 'vial') {
-      return vial;
-    }
-    if (n == 'vine_whip') {
-      return vine_whip;
-    }
-    if (n == 'virgo') {
-      return virgo;
-    }
-    if (n == 'water_drop') {
-      return water_drop;
-    }
-    if (n == 'wifi') {
-      return wifi;
-    }
-    if (n == 'wireless_signal') {
-      return wireless_signal;
-    }
-    if (n == 'wolf_head') {
-      return wolf_head;
-    }
-    if (n == 'wolf_howl') {
-      return wolf_howl;
-    }
-    if (n == 'wooden_sign') {
-      return wooden_sign;
-    }
-    if (n == 'wrench') {
-      return wrench;
-    }
-    if (n == 'wyvern') {
-      return wyvern;
-    }
-    if (n == 'x_mark') {
-      return x_mark;
-    }
-    if (n == 'zebra_shield') {
-      return zebra_shield;
-    }
-    if (n == 'zigzag_leaf') {
-      return zigzag_leaf;
+  static const List<String> names = [
+    'acid',
+    'acorn',
+    'alien_fire',
+    'all_for_one',
+    'alligator_clip',
+    'ammo_bag',
+    'anchor',
+    'angel_wings',
+    'ankh',
+    'anvil',
+    'apple',
+    'aquarius',
+    'arcane_mask',
+    'archer',
+    'archery_target',
+    'arena',
+    'aries',
+    'arrow_cluster',
+    'arrow_flights',
+    'arson',
+    'aura',
+    'aware',
+    'axe_swing',
+    'axe',
+    'ball',
+    'barbed_arrow',
+    'barrier',
+    'bat_sword',
+    'battered_axe',
+    'batteries',
+    'battery_0',
+    'battery_25',
+    'battery_50',
+    'battery_75',
+    'battery_100',
+    'battery_black',
+    'battery_negative',
+    'battery_positive',
+    'battery_white',
+    'batwings',
+    'beam_wake',
+    'bear_trap',
+    'beer',
+    'beetle',
+    'bell',
+    'biohazard',
+    'bird_claw',
+    'bird_mask',
+    'blade_bite',
+    'blast',
+    'blaster',
+    'bleeding_eye',
+    'bleeding_hearts',
+    'bolt_shield',
+    'bomb_explosion',
+    'bombs',
+    'bone_bite',
+    'bone_knife',
+    'book',
+    'boomerang',
+    'boot_stomp',
+    'bottle_vapors',
+    'bottled_bolt',
+    'bottom_right',
+    'bowie_knife',
+    'bowling_pin',
+    'brain_freeze',
+    'brandy_bottle',
+    'bridge',
+    'broadhead_arrow',
+    'broadsword',
+    'broken_bone',
+    'broken_bottle',
+    'broken_heart',
+    'broken_shield',
+    'broken_skull',
+    'bubbling_potion',
+    'bullets',
+    'burning_book',
+    'burning_embers',
+    'burning_eye',
+    'burning_meteor',
+    'burst_blob',
+    'butterfly',
+    'campfire',
+    'cancel',
+    'cancer',
+    'candle_fire',
+    'candle',
+    'cannon_shot',
+    'capitol',
+    'capricorn',
+    'carrot',
+    'castle_emblem',
+    'castle_flag',
+    'cat',
+    'chain',
+    'cheese',
+    'chemical_arrow',
+    'chessboard',
+    'chicken_leg',
+    'circle_of_circles',
+    'circular_saw',
+    'circular_shield',
+    'cloak_and_dagger',
+    'clockwork',
+    'clover',
+    'clovers_card',
+    'clovers',
+    'cluster_bomb',
+    'coffee_mug',
+    'cog_wheel',
+    'cog',
+    'cold_heart',
+    'compass',
+    'corked_tube',
+    'crab_claw',
+    'cracked_helm',
+    'cracked_shield',
+    'croc_sword',
+    'crossbow',
+    'crossed_axes',
+    'crossed_bones',
+    'crossed_pistols',
+    'crossed_sabres',
+    'crossed_swords',
+    'crown_of_thorns',
+    'crown',
+    'crowned_heart',
+    'crush',
+    'crystal_ball',
+    'crystal_cluster',
+    'crystal_wand',
+    'crystals',
+    'cubes',
+    'cut_palm',
+    'cycle',
+    'daggers',
+    'daisy',
+    'dead_tree',
+    'death_skull',
+    'decapitation',
+    'defibrillate',
+    'demolish',
+    'dervish_swords',
+    'desert_skull',
+    'diamond',
+    'diamonds_card',
+    'diamonds',
+    'dice_five',
+    'dice_four',
+    'dice_one',
+    'dice_six',
+    'dice_three',
+    'dice_two',
+    'dinosaur',
+    'divert',
+    'diving_dagger',
+    'double_team',
+    'doubled',
+    'dragon_breath',
+    'dragon_wing',
+    'dragon',
+    'dragonfly',
+    'drill',
+    'dripping_blade',
+    'dripping_knife',
+    'dripping_sword',
+    'droplet_splash',
+    'droplet',
+    'droplets',
+    'duel',
+    'egg_pod',
+    'egg',
+    'eggplant',
+    'emerald',
+    'energise',
+    'explosion',
+    'explosive_materials',
+    'eye_monster',
+    'eye_shield',
+    'eyeball',
+    'fairy_wand',
+    'fairy',
+    'fall_down',
+    'falling',
+    'fast_ship',
+    'feather_wing',
+    'feathered_wing',
+    'fedora',
+    'fire_bomb',
+    'fire_breath',
+    'fire_ring',
+    'fire_shield',
+    'fire_symbol',
+    'fire',
+    'fireball_sword',
+    'fish',
+    'fizzing_flask',
+    'flame_symbol',
+    'flaming_arrow',
+    'flaming_claw',
+    'flaming_trident',
+    'flask',
+    'flat_hammer',
+    'flower',
+    'flowers',
+    'fluffy_swirl',
+    'focused_lightning',
+    'food_chain',
+    'footprint',
+    'forging',
+    'forward',
+    'fox',
+    'frost_emblem',
+    'frostfire',
+    'frozen_arrow',
+    'gamepad_cross',
+    'gavel',
+    'gear_hammer',
+    'gear_heart',
+    'gears',
+    'gecko',
+    'gem_pendant',
+    'gem',
+    'gemini',
+    'glass_heart',
+    'gloop',
+    'gold_bar',
+    'grappling_hook',
+    'grass_patch',
+    'grass',
+    'grenade',
+    'groundbreaker',
+    'guarded_tower',
+    'guillotine',
+    'halberd',
+    'hammer_drop',
+    'hammer',
+    'hand_emblem',
+    'hand_saw',
+    'hand',
+    'harpoon_trident',
+    'health_decrease',
+    'health_increase',
+    'health',
+    'heart_bottle',
+    'heart_tower',
+    'heartburn',
+    'hearts_card',
+    'hearts',
+    'heat_haze',
+    'heavy_fall',
+    'heavy_shield',
+    'helmet',
+    'help',
+    'hive_emblem',
+    'hole_ladder',
+    'honeycomb',
+    'hood',
+    'horn_call',
+    'horns',
+    'horseshoe',
+    'hospital_cross',
+    'hot_surface',
+    'hourglass',
+    'hydra_shot',
+    'hydra',
+    'ice_cube',
+    'implosion',
+    'incense',
+    'insect_jaws',
+    'interdiction',
+    'jetpack',
+    'jigsaw_piece',
+    'kaleidoscope',
+    'kettlebell',
+    'key_basic',
+    'key',
+    'kitchen_knives',
+    'knife_fork',
+    'knife',
+    'knight_helmet',
+    'kunai',
+    'lantern_flame',
+    'large_hammer',
+    'laser_blast',
+    'laser_site',
+    'lava',
+    'leaf',
+    'leo',
+    'level_four_advanced',
+    'level_four',
+    'level_three_advanced',
+    'level_three',
+    'level_two_advanced',
+    'level_two',
+    'lever',
+    'libra',
+    'light_bulb',
+    'lighthouse',
+    'lightning_bolt',
+    'lightning_storm',
+    'lightning_sword',
+    'lightning_trio',
+    'lightning',
+    'lion',
+    'lit_candelabra',
+    'load',
+    'locked_fortress',
+    'love_howl',
+    'maggot',
+    'magnet',
+    'mass_driver',
+    'match',
+    'meat_hook',
+    'meat',
+    'medical_pack',
+    'metal_gate',
+    'microphone',
+    'mine_wagon',
+    'mining_diamonds',
+    'mirror',
+    'monster_skull',
+    'montains',
+    'moon_sun',
+    'mp5',
+    'muscle_fat',
+    'muscle_up',
+    'musket',
+    'nails',
+    'nodular',
+    'noose',
+    'nuclear',
+    'ocarina',
+    'ocean_emblem',
+    'octopus',
+    'omega',
+    'on_target',
+    'ophiuchus',
+    'overhead',
+    'overmind',
+    'palm_tree',
+    'pawn',
+    'pawprint',
+    'perspective_dice_five',
+    'perspective_dice_four',
+    'perspective_dice_one',
+    'perspective_dice_random',
+    'perspective_dice_six_two',
+    'perspective_dice_six',
+    'perspective_dice_three',
+    'pill',
+    'pills',
+    'pine_tree',
+    'ping_pong',
+    'pisces',
+    'plain_dagger',
+    'player_despair',
+    'player_dodge',
+    'player_king',
+    'player_lift',
+    'player_pain',
+    'player_pyromaniac',
+    'player_shot',
+    'player_teleport',
+    'player_thunder_struck',
+    'player',
+    'podium',
+    'poison_cloud',
+    'potion',
+    'pyramids',
+    'queen_crown',
+    'quill_ink',
+    'rabbit',
+    'radar_dish',
+    'radial_balance',
+    'radioactive',
+    'raven',
+    'reactor',
+    'recycle',
+    'regeneration',
+    'relic_blade',
+    'repair',
+    'reverse',
+    'revolver',
+    'rifle',
+    'ringing_bell',
+    'roast_chicken',
+    'robot_arm',
+    'round_bottom_flask',
+    'round_shield',
+    'rss',
+    'rune_stone',
+    'sagittarius',
+    'sapphire',
+    'satellite',
+    'save',
+    'scorpio',
+    'scroll_unfurled',
+    'scythe',
+    'sea_serpent',
+    'seagull',
+    'shark',
+    'sheep',
+    'sheriff',
+    'shield',
+    'ship_emblem',
+    'shoe_prints',
+    'shot_through_the_heart',
+    'shotgun_shell',
+    'shovel',
+    'shuriken',
+    'sickle',
+    'sideswipe',
+    'site',
+    'skull_trophy',
+    'skull',
+    'slash_ring',
+    'small_fire',
+    'snail',
+    'snake',
+    'snorkel',
+    'snowflake',
+    'soccer_ball',
+    'spades_card',
+    'spades',
+    'spawn_node',
+    'spear_head',
+    'speech_bubble',
+    'speech_bubbles',
+    'spider_face',
+    'spikeball',
+    'spiked_mace',
+    'spiked_tentacle',
+    'spinning_sword',
+    'spiral_shell',
+    'splash',
+    'spray_can',
+    'sprout_emblem',
+    'sprout',
+    'stopwatch',
+    'suckered_tentacle',
+    'suits',
+    'sun_symbol',
+    'sun',
+    'sunbeams',
+    'super_mushroom',
+    'supersonic_arrow',
+    'surveillance_camera',
+    'syringe',
+    'target_arrows',
+    'target_laser',
+    'targeted',
+    'taurus',
+    'telescope',
+    'tentacle',
+    'tesla',
+    'thorn_arrow',
+    'thorny_vine',
+    'three_keys',
+    'tic_tac_toe',
+    'toast',
+    'tombstone',
+    'tooth',
+    'torch',
+    'tower',
+    'trail',
+    'trefoil_lily',
+    'trident',
+    'triforce',
+    'trophy',
+    'turd',
+    'two_dragons',
+    'two_hearts',
+    'uncertainty',
+    'underhand',
+    'unplugged',
+    'vase',
+    'venomous_snake',
+    'vest',
+    'vial',
+    'vine_whip',
+    'virgo',
+    'water_drop',
+    'wifi',
+    'wireless_signal',
+    'wolf_head',
+    'wolf_howl',
+    'wooden_sign',
+    'wrench',
+    'wyvern',
+    'x_mark',
+    'zebra_shield',
+    'zigzag_leaf'
+  ];
+
+  static IconData? getName(String name) {
+    for (int n = 0; n < names.length; ++n) {
+      if (name == names[n]) {
+        return values[n];
+      }
     }
     return null;
   }

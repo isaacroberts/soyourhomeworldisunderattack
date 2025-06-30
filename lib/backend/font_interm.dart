@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../frontend/base_text_theme.dart';
 import '../frontend/styles.dart';
 import 'font_cache.dart';
 
@@ -71,7 +72,7 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: FontCache.intToWeight(weight),
         color: color ?? fallbackTextColor,
-        fontFamily: 'Palatino');
+        fontFamily: fallbackFamily);
   }
 
   TextStyle instanceWithColor(Color bgColor) {

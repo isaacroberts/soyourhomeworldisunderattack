@@ -1,23 +1,20 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/book.dart';
 import 'package:soyourhomeworld/frontend/elements/common_blocks.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/chapter_selector.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/debug_chapter_selector.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../icons.dart';
 import '../drawer.dart';
 import '../readers/debug_reader.dart';
 
-const bool TEST_RIG = false && !kIsWeb;
-const int START_CHAPTER = 0;
-
 class TestRigScroller extends StatefulWidget {
   final Book book;
   final int startChapter;
-  const TestRigScroller(
-      {super.key, this.startChapter = START_CHAPTER, required this.book});
+  const TestRigScroller({super.key, this.startChapter = 0, required this.book});
 
   @override
   State<TestRigScroller> createState() => _TestRigScrollerState();
@@ -42,8 +39,9 @@ class _TestRigScrollerState extends State<TestRigScroller> {
   }
 
   void _refresh() {
-    int cur = chapter?.id ?? widget.startChapter;
-    widget.book.refreshChapter(cur).then(_chapterGot);
+    dev.log("Not implemented yet");
+    // int cur = chapter?.id ?? widget.startChapter;
+    // widget.book.refreshChapter(cur).then(_chapterGot);
   }
 
   void _nextChapter() {
