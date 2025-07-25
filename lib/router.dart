@@ -48,12 +48,16 @@ List<GoRoute> routes() {
   return [
     //Book
     GoRoute(
-        path: '/',
+        path: 'title',
         builder: (context, state) => DeferredPage(
             loader: title_lib.loadLibrary,
             builder: (c) => title_lib.TitlePage())),
     // GoRoute(path: '/home', builder: (context, state) => const ScrollDoor()),
-
+    GoRoute(
+        path: '/',
+        builder: (context, state) => const ScrollDoor(
+              key: Key("RootScroll"),
+            )),
     GoRoute(
         name: 'scroll',
         // path: '/scroll',
