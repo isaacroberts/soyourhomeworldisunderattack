@@ -58,11 +58,23 @@ class FontInterm {
 
   bool isFailed() => file?.failed() ?? false;
 
+  FontWeight? get fontWeight {
+    if (weight == null) {
+      return null;
+    }
+    if (fileId == 0) {
+      return FontCache.intToWeight(weight! - 100);
+    } else {
+      return FontCache.intToWeight(weight);
+    }
+  }
+
   TextStyle instance() {
     // dev.log("Color=$color");
     return TextStyle(
         fontSize: size * fontScale,
-        fontWeight: FontCache.intToWeight(weight),
+        fontWeight: fontWeight,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         color: color ?? textColor,
         fontFamily: family);
   }
@@ -70,15 +82,17 @@ class FontInterm {
   TextStyle fallback() {
     return TextStyle(
         fontSize: size * fontScale,
-        fontWeight: FontCache.intToWeight(weight),
+        fontWeight: fontWeight,
         color: color ?? fallbackTextColor,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         fontFamily: fallbackFamily);
   }
 
   TextStyle instanceWithColor(Color bgColor) {
     return TextStyle(
         fontSize: size * fontScale,
-        fontWeight: FontCache.intToWeight(weight),
+        fontWeight: fontWeight,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         color: color ?? textColor,
         fontFamily: family,
         backgroundColor: bgColor);
@@ -87,7 +101,8 @@ class FontInterm {
   TextStyle fallbackWithColor(Color bgColor) {
     return TextStyle(
         fontSize: size * fontScale,
-        fontWeight: FontCache.intToWeight(weight),
+        fontWeight: fontWeight,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         color: color ?? fallbackTextColor,
         fontFamily: 'Rubik',
         backgroundColor: bgColor);

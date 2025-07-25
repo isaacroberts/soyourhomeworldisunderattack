@@ -38,7 +38,7 @@ class BookWaiter extends StatelessWidget {
           } else {
             return const Center(
                 child: TriWizardLoader(
-              text: 'Getting book',
+              message: 'Getting book',
             ));
           }
         });

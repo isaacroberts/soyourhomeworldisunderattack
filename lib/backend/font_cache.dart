@@ -106,7 +106,17 @@ class FontFile {
 
   Future loadWithFuture() {
     dev.log("Loading font $id: $family");
-    return cache!.load();
+    try {
+      return cache!.load();
+    } catch (exception) {
+      if (exception is StateError) {
+        //means font has already been loaded
+        //The expected value is not used
+        return Future.value(69);
+      } else {
+        rethrow;
+      }
+    }
   }
 
   //Getters

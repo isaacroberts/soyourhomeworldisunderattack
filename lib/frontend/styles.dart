@@ -30,10 +30,7 @@ ColorScheme colorScheme = ColorScheme.fromSeed(
     seedColor: harveyDarkColor,
     secondary: rachelDarkColor,
     brightness: Brightness.dark,
+    contrastLevel: 1,
     surface: canvasColor);
 
 const Brightness brightness = Brightness.dark;
-
-/*
-    TODO: Application text theme!
- */

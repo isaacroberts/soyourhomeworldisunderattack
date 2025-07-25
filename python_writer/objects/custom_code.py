@@ -24,6 +24,7 @@ def code_tag_replacements():
 # These are all top-level. For low-level Keywords, you'll have to add another classtype
 def chapter_keywords():
     return ['Chapter', 'Section', 'Label',
+        'Part',
          'Next',
          'EndOfBook',
           "InvisibleHeadline",

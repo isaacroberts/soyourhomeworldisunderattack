@@ -14,6 +14,7 @@ const double k = 12;
 // ========== Base ================
 
 abstract class TextHolder extends Holder {
+  /// Has text which can be extracted
   final String text;
   const TextHolder({required this.text});
 }
@@ -82,61 +83,6 @@ class AlignedBodyText extends TextHolder {
   }
 }
 
-class HeaderOfText extends TextHolder {
-  const HeaderOfText({required super.text});
-
-  @override
-  Widget element(BuildContext context) {
-    return Container(
-        height: 36,
-        color: const Color(0x88000000),
-        alignment: Alignment.center,
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: headerFont.copyWith(
-              color: const Color(0xbbffffff),
-              fontSize: 24,
-              // fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w500,
-              // color: const Color(0xff000000),
-              decorationColor: const Color(0xbbffffff),
-              decoration: TextDecoration.underline,
-            )));
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return Container(
-        height: 36,
-        color: const Color(0x88666666),
-        alignment: Alignment.center,
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: headerFont.copyWith(
-              color: const Color(0xbbffffff),
-              fontSize: 24,
-              // fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w500,
-              // color: const Color(0xff000000),
-              decorationColor: const Color(0xbbffffff),
-              decoration: TextDecoration.underline,
-            )));
-  }
-}
-
-class HiddenTextElement extends Holder {
-  const HiddenTextElement();
-  @override
-  Widget element(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-}
-
 // ========= Styles ======================
 class CustomFontText extends FontWanterTextHolder {
   final TextAlign align;
@@ -200,6 +146,29 @@ class HiliteFontText extends FontWanterTextHolder {
 
 // ============ Headers ============================
 
+class HeaderOfText extends TextHolder {
+  const HeaderOfText({required super.text});
+
+  @override
+  Widget element(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: headerFont.color!))),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: headerFont,
+          // style: font.instance(),
+          textAlign: TextAlign.center,
+        ));
+  }
+
+  @override
+  Widget fallback(BuildContext context) {
+    return element(context);
+  }
+}
+
 class CustomHeaderOfText extends HeaderOfText {
   final TextAlign align;
   final FontInterm font;
@@ -210,7 +179,8 @@ class CustomHeaderOfText extends HeaderOfText {
   Widget element(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            border: Border.all(color: const Color(0x6f770077), width: 1)),
+            border: Border(
+                bottom: BorderSide(color: font.color ?? headerFont.color!))),
         child: Align(
             alignment: textAlignToHoriz(align),
             child: Text(

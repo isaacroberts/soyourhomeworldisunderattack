@@ -3,10 +3,10 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:soyourhomeworld/backend/book.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/title.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/chapter_end.dart';
 import 'package:soyourhomeworld/frontend/pages/readers/reader.dart';
+import 'package:soyourhomeworld/frontend/pages/title/title.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';

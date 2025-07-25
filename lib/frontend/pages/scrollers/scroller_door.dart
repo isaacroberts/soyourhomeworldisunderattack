@@ -21,8 +21,12 @@ import '../../../backend/book.dart';
 // const ScrollerDoor scrollerDoor = ScrollerDoor();
 
 class ScrollDoor extends StatelessWidget {
+  static const defaultStart = 0;
+
   final int startChapter;
-  const ScrollDoor({super.key, this.startChapter = 0});
+  const ScrollDoor({super.key, this.startChapter = defaultStart});
+  const ScrollDoor.nullSafe({super.key, required int? startChapter})
+      : startChapter = startChapter ?? defaultStart;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +43,8 @@ class ScrollDoor extends StatelessWidget {
       return DeferredPage(
           loader: server_offline_lib.loadLibrary,
           builder: (context) => server_offline_lib.ServerOfflinePage(
-              sourceError: ExceptionHolder(
-                  exception: bookSnapshot.error!,
-                  stackTrace: bookSnapshot.stackTrace ?? 'no stack trace')));
+              exception: bookSnapshot.error!,
+              stackTrace: bookSnapshot.stackTrace));
     }
 
     if (bookSnapshot.data == null) {}
@@ -99,11 +102,7 @@ class NamedChapterScrollerDoor extends StatelessWidget {
     if (startChapter == null) {
       dev.log("Couldn't find chapter $chapterName");
       ErrorList.logError(Exception("Couldn't find chapter $chapterName"));
-      return BookProvider(
-          book: book,
-          child: McScaffold(
-              source: 'scroll',
-              child: SearchIndexWidget(searchTerm: chapterName)));
+      return SearchIndexPage(searchTerm: chapterName);
     } else {
       return BookProvider(
           book: book,

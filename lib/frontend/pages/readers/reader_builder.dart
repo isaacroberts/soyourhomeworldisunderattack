@@ -9,6 +9,11 @@ import '../../../backend/error_handler.dart';
 import '../../elements/holders/holder_base.dart';
 
 class ReaderBuilder extends StatefulWidget {
+  /// Builds & shows elements, as loading fonts
+  ///
+  ///
+  /// TODO: This is causing jumps, when scrolling up.
+  /// I think the previous chapter is getting reloaded, and has a smaller height
   final Chapter chapter;
   final ScrollController? scrollController;
 
@@ -18,7 +23,7 @@ class ReaderBuilder extends StatefulWidget {
   final Widget? waitingWidget;
 
   const ReaderBuilder(
-      {super.key,
+      {required super.key,
       required this.chapter,
       required this.itemBuilder,
       required this.scrollController,
@@ -40,13 +45,15 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   @override
   void initState() {
     super.initState();
-    dev.log("Reader ${chapter.varName}");
+    dev.log("Reader init ${chapter.varName}");
     widget.chapter.addListener(_chapterUpdated);
     loadAndDisplayThread();
   }
 
   @override
   void didChangeDependencies() {
+    dev.log("Reader changedDep ${chapter.varName}");
+
     super.didChangeDependencies();
   }
 

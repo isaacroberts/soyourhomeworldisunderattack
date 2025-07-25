@@ -46,6 +46,7 @@ dependencies:
 #  intl:
   shared_preferences: ^2.5.3
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -95,15 +96,15 @@ flutter:
      - family: Palatino
        fonts:
          - asset: cargoship/builtin_fonts/Palatino_roman.ttf
-           weight: 400
+           weight: 500
            style: normal
          - asset: cargoship/builtin_fonts/Palatino_italic.ttf
            style: italic
-           weight: 400
+           weight: 500
          - asset: cargoship/builtin_fonts/Palatino_bold.ttf
-           weight: 900
+           weight: 800
          - asset: cargoship/builtin_fonts/Palatino_bolditalic.ttf
-           weight: 900
+           weight: 800
            style: italic
      - family: Rubik
        fonts:

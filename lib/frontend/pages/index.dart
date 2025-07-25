@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../backend/book.dart';
+import '../../backend/chapter.dart';
 import '../book_waiter.dart';
 import '../elements/scaffold.dart';
 import '../extra_styles.dart';
@@ -36,6 +37,7 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const SearchIndexPage();
     return const McScaffold(
         source: 'index', child: StdBookWaiter(child: IndexWidget()));
   }
@@ -71,23 +73,80 @@ class SearchIndexWidget extends StatefulWidget {
 }
 
 class _SearchIndexWidgetState extends State<SearchIndexWidget> {
-  late final TextEditingController controller;
-  String? currentSearchTerm;
+  // late final TextEditingController controller;
+  // String? currentSearchTerm;
+  late final SearchController controller;
   @override
   void initState() {
     super.initState();
-    currentSearchTerm = widget.searchTerm;
-    controller = TextEditingController(text: widget.searchTerm);
+    controller = SearchController();
+    controller.text = widget.searchTerm ?? '';
+    // currentSearchTerm = widget.searchTerm;
+    // controller = TextEditingController(text: widget.searchTerm);
   }
 
-  void onTextChange(String? text) {
-    setState(() {
-      currentSearchTerm = controller.text;
-    });
+  // void onTextChange(String? text) {
+  //   setState(() {
+  //     currentSearchTerm = controller.text;
+  //   });
+  // }
+
+  Iterable<ChapterHolder> suggestions(SearchController controller) sync* {
+    Book? book = Book.maybeOf(context);
+    if (book == null) {
+      return;
+    }
+    for (ChapterHolder chapter in book.chapters) {
+      if (chapter.displayName.contains(controller.text)) {
+        yield chapter;
+      }
+    }
+  }
+
+  Iterable<Widget> suggestionBuilder(
+      BuildContext context, SearchController controller) {
+    return suggestions(controller).map((ChapterHolder chapter) =>
+        _SearchedChapter(chapter: chapter.info, searchTerm: controller.text));
+  }
+
+  Iterable<Widget> items(BuildContext context) sync* {
+    Book book = Book.of(context);
+    for (ChapterHolder chapter in book.chapters) {
+      yield _SearchedChapter(
+          chapter: chapter.info, searchTerm: controller.text);
+    }
+  }
+
+  Widget barBuilder(BuildContext context, SearchController controller) {
+    return SearchBar(
+      controller: controller,
+      onTap: controller.openView,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    return Column(children: [
+      SearchAnchor(
+        // isFullScreen: true,
+        // barHintText: 'Chapter titles',
+        builder: barBuilder,
+        suggestionsBuilder: suggestionBuilder,
+        // viewLeading: Text("Search widget"),
+        viewTrailing: items(context),
+
+        // builder: (context, controller) => SearchedIndexWidget(
+        //       key: const Key('SearchWidget'),
+        //       searchTerm: controller.text,
+        //     ),
+      ),
+      Expanded(
+          child: SearchedIndexWidget(
+        key: const Key('SearchWidget'),
+        searchTerm: controller.text,
+      )),
+    ]);
+    /*
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       SearchBar(
         key: const Key("IndexSearchBar"),
@@ -101,6 +160,8 @@ class _SearchIndexWidgetState extends State<SearchIndexWidget> {
         searchTerm: currentSearchTerm,
       )),
     ]);
+
+     */
   }
 }
 
@@ -138,12 +199,47 @@ class SearchedIndexWidget extends StatelessWidget {
   }
 }
 
+class _SearchedChapter extends StatelessWidget {
+  final ChapterInfo chapter;
+  final String? searchTerm;
+  const _SearchedChapter(
+      {super.key, required this.chapter, required this.searchTerm});
+
+  void goto(BuildContext context) {
+    context.go('/scroll/${chapter.id}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+        // key: Key('SearchIndexChp$ix'),
+        title: Text(chapter.displayName),
+        // title: SearchedText(
+        //   text: chapter.displayName,
+        //   searchTerm: searchTerm,
+        // ),
+        leading: SizedBox.shrink(),
+        trailing: Icon(Icons.book_online, size: 25),
+        onTap: () => goto(context)
+        // context.goNamed('/scroll',
+        //     pathParameters: {'chid': ix.toString()});
+        );
+  }
+}
+
 class SearchedText extends StatelessWidget {
   final String? searchTerm;
   final String text;
   static const Color highlightColor = boring4;
 
-  const SearchedText({super.key, required this.searchTerm, required this.text});
+  late final String? before, match, after;
+
+  SearchedText({super.key, this.searchTerm, required this.text}) {
+    var tup = splitMatch();
+    before = tup.$1;
+    match = tup.$2;
+    after = tup.$3;
+  }
 
   Widget highlightedSpan(context, String text) {
     return Text(text,
@@ -170,8 +266,47 @@ class SearchedText extends StatelessWidget {
     );
   }
 
+  (String?, String?, String?) splitMatch() {
+    String? searchTerm = this.searchTerm?.toLowerCase();
+    String searchText = text.toLowerCase();
+    if (searchTerm == null || searchTerm.isEmpty) {
+      return (text, null, null);
+    }
+    if (searchTerm == searchText || searchTerm.contains(searchText)) {
+      return (null, text, null);
+    }
+    if (searchText.contains(searchTerm)) {
+      int ix0 = searchText.indexOf(searchTerm);
+      if (ix0 == 0 || searchText[ix0 - 1] == ' ') {
+        String before = text.substring(0, ix0);
+        String match = text.substring(ix0, ix0 + searchTerm.length);
+        String after = text.substring(ix0 + searchTerm.length);
+        return (before, match, after);
+      }
+    }
+    if (searchText[0] == searchTerm[0]) {
+      int ixMatch = 0;
+      while (ixMatch < searchText.length &&
+          ixMatch < searchTerm.length &&
+          searchText[ixMatch] == searchTerm[ixMatch]) {
+        ixMatch++;
+      }
+      String match = text.substring(0, ixMatch);
+      String after = text.substring(ixMatch);
+      return (null, match, after);
+    }
+    return (text, null, null);
+  }
+
   @override
   Widget build(BuildContext context) {
+    return SizedBox(
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        child: element(context));
+  }
+
+  Widget element(BuildContext context) {
     String? searchTerm = this.searchTerm?.toLowerCase();
     if (searchTerm == null || searchTerm.isEmpty) {
       return Text(text);

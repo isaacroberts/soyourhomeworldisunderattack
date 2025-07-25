@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import PIL.ImageFont
 
-import objects.fonts
+import objects.font_obj
 
 import os
 import sys
@@ -200,7 +200,7 @@ class FontFile():
             print('Style opts:', self.styleOpts)
             si = 0
             while si < len(self.styleOpts):
-                w, match = objects.fonts.try_every_word_for_weight(self.styleOpts[si])
+                w, match = objects.font_obj.try_every_word_for_weight(self.styleOpts[si])
                 if w is not None:
                     # if not variable axis
                     if self.weight is not None:

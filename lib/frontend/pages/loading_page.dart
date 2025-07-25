@@ -10,22 +10,10 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return McScaffold(
-        source: null,
-        child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              // const CircularProgressIndicator(),
-              TriWizardLoader(
-                text: message,
-              ),
-              if (message.isNotEmpty)
-                Text(
-                  message,
-                  textAlign: TextAlign.center,
-                )
-            ])));
+      source: null,
+      child: TriWizardLoader(
+        message: message,
+      ),
+    );
   }
 }

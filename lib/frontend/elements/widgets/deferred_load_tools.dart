@@ -46,9 +46,10 @@ class DeferredWidget extends StatelessWidget {
     } else if (libSnapshot.connectionState == ConnectionState.done) {
       return builder(context);
     } else {
-      return const TriWizardLoader(
-        text: 'Loading lib',
-      );
+      return const Center(
+          child: TriWizardLoader(
+        message: 'Loading lib',
+      ));
     }
   }
 }

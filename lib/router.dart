@@ -20,14 +20,25 @@ import 'package:soyourhomeworld/frontend/pages/redirect_page.dart'
     deferred as redirect_lib;
 
 import 'backend/error_handler.dart';
+// import 'frontend/pages/games/valinor_website/valinor_website.dart'
+//     deferred as valinor_lib;
 import 'frontend/pages/index.dart' deferred as index_lib;
 import 'frontend/pages/scrollers/scroller_door.dart';
-import 'frontend/pages/server_error_page.dart';
+import 'frontend/pages/server_error_page.dart' deferred as error_page_lib;
+import 'frontend/pages/title/title.dart' deferred as title_lib;
+
+Page _errorPageBuilder(BuildContext context, GoRouterState state) {
+  return MaterialPage(
+      child: DeferredPage(
+          loader: error_page_lib.loadLibrary,
+          builder: (context) => error_page_lib.errorPageBuilder(
+              context, state.error, state.extra)));
+}
 
 GoRouter router() {
   return GoRouter(
-      errorPageBuilder: serverErrorPageBuilder,
-      initialLocation: kDebugMode ? '/' : '/',
+      errorPageBuilder: _errorPageBuilder,
+      initialLocation: kDebugMode ? '/dev_page/' : '/',
       debugLogDiagnostics: true,
       redirect: redirector,
       routes: routes());
@@ -36,7 +47,11 @@ GoRouter router() {
 List<GoRoute> routes() {
   return [
     //Book
-    GoRoute(path: '/', builder: (context, state) => const ScrollDoor()),
+    GoRoute(
+        path: '/',
+        builder: (context, state) => DeferredPage(
+            loader: title_lib.loadLibrary,
+            builder: (c) => title_lib.TitlePage())),
     // GoRoute(path: '/home', builder: (context, state) => const ScrollDoor()),
 
     GoRoute(
@@ -49,8 +64,8 @@ List<GoRoute> routes() {
 
             int? number = int.tryParse(numStr);
             dev.log('Go parsed $number');
-            return ScrollDoor(
-              startChapter: number ?? 0,
+            return ScrollDoor.nullSafe(
+              startChapter: number,
             );
           } catch (exception) {
             dev.log("Exception!");
@@ -78,9 +93,10 @@ List<GoRoute> routes() {
           }
         }),
 
+    // GoRoute(name: 'Valinor', path: '/valinor', builder: valinorWebsiteBuilder),
     GoRoute(
-        name: 'ticketstogreenland',
-        path: '/ticketstogreenland',
+        name: 'Tickets to Valinor',
+        path: '/valinortickets',
         builder: greenlandPageBuilder),
     GoRoute(
         name: 'redirect',

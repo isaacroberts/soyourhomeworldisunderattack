@@ -10,6 +10,8 @@ const List<(String, String?)> drawerItems = [
   ('Home', 'home'),
   ("Index", 'index'),
   ('Shop', 'search/tshirts/'),
+  ('Valinor', 'valinor'),
+  ('Valinor Tickets', 'valinortickets'),
   ("Error logger", 'logger'),
   ('Dev: Test Widget', 'dev_page'),
   ('Dev: Icons', 'dev_icons'),

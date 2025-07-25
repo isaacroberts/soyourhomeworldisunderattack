@@ -3,9 +3,10 @@
 log/
 temp/
 backup/
-hosted_fonts/
 song_data/
 rpg_awesome_icons/
+stock_photos/
+backup/
 
 # ============ Flutter ============
 

@@ -9,12 +9,14 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/ballot_screen.dart
     deferred as ballot_screen_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/character_selection.dart'
     deferred as character_selection_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/columns_holder.dart'
+    deferred as columns_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
     deferred as goto_button_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
-import 'package:soyourhomeworld/frontend/elements/custom_code/title.dart'
-    deferred as title_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
+    deferred as signs_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/tweet.dart'
     deferred as tweet_lib;
 import 'package:soyourhomeworld/frontend/elements/widgets/ad_human_jacks.dart'
@@ -23,6 +25,8 @@ import 'package:soyourhomeworld/frontend/elements/widgets/andy_thumbnail.dart'
     deferred as andy_thumbnail_lib;
 //TODO: Remove
 import 'package:soyourhomeworld/frontend/icons.dart';
+import 'package:soyourhomeworld/frontend/pages/title/title.dart'
+    deferred as title_lib;
 
 import '../../../backend/binary_utils/buffer_ptr.dart';
 import '../holders/future_holder.dart';
@@ -30,6 +34,7 @@ import '../holders/holder_base.dart';
 import '../holders/span_holding_code.dart';
 import '../holders/textholders.dart';
 import 'ad_widget.dart' deferred as ad_widget_lib;
+import 'art.dart' deferred as art_lib;
 import 'misc_code_elements.dart' deferred as misc_code_lib;
 
 // ========= Routers =============
@@ -132,14 +137,19 @@ Future<Holder> _instantiateCodeBlock(
   dev.log("Cls: $cls");
 
   if (cls == 'Art') {
-    await misc_code_lib.loadLibrary();
-    return misc_code_lib.ArtHolder(spans: spans);
-  } else if (cls == 'SHIRT') {
+    await art_lib.loadLibrary();
+    return art_lib.ArtHolder(spans: spans);
+  } else if (cls == 'SHIRT' || cls == 'PRINTEXACTSHIRT') {
     await shirts_lib.loadLibrary();
     //TODO: Convert params to an object
     double? width = readDoubleParam(params, 'width');
     double? height = readDoubleParam(params, 'width');
 
+    return shirts_lib.Shirt(spans: spans, width: width, height: height);
+  } else if (cls == 'CHAPTERSHIRT') {
+    await shirts_lib.loadLibrary();
+    double width = 800;
+    double height = 1000;
     return shirts_lib.Shirt(spans: spans, width: width, height: height);
   } else if (cls == 'BUMPERSTICKER') {
     await shirts_lib.loadLibrary();
@@ -151,8 +161,8 @@ Future<Holder> _instantiateCodeBlock(
     await tweet_lib.loadLibrary();
     return tweet_lib.TweetHolder(spans);
   } else if (cls == 'SIGN') {
-    await misc_code_lib.loadLibrary();
-    return misc_code_lib.Sign(spans: spans);
+    await signs_lib.loadLibrary();
+    return signs_lib.Sign(spans: spans);
   } else if (cls == 'BG') {
     String? bg = params.isNotEmpty ? params[0] : null;
     await misc_code_lib.loadLibrary();
@@ -213,11 +223,11 @@ Future<Holder> _parseParsedBlock(
   dev.log("ParsedBlock: $cls");
   if (cls == 'COLUMNS') {
     // return UnhandledCodeElement(cls, "Columns");
-    await misc_code_lib.loadLibrary();
-    return misc_code_lib.Columns.parse(bin);
+    await columns_lib.loadLibrary();
+    return columns_lib.Columns.parse(bin);
   } else if (cls == 'SIGNCOLUMNS') {
-    await misc_code_lib.loadLibrary();
-    return misc_code_lib.Sign2Cols.parse(bin);
+    await columns_lib.loadLibrary();
+    return columns_lib.Sign2Cols.parse(bin);
   } else {
     dev.log("Missed ParsedBlock '$cls'");
   }

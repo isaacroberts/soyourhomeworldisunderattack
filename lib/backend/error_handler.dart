@@ -158,6 +158,10 @@ class ExceptionElement extends StatelessWidget {
   const ExceptionElement(
       {super.key, required this.exception, required this.stackTrace});
 
+  ExceptionElement.fromHolder({super.key, required ExceptionHolder holder})
+      : exception = holder.exception,
+        stackTrace = holder.stackTrace;
+
   @override
   Widget build(BuildContext context) {
     String type = exception.runtimeType.toString();
@@ -174,10 +178,13 @@ class ExceptionElement extends StatelessWidget {
               // backgroundColor: e,
               iconColor: errorSecondary,
               collapsedIconColor: errorColor,
-              leading: DeferredWidget(
-                  loader: error_icon_lib.loadLibrary,
-                  builder: (context) => error_icon_lib.ErrorIcon(
-                      exceptionType: exception.runtimeType.toString())),
+              leading: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: DeferredWidget(
+                      loader: error_icon_lib.loadLibrary,
+                      builder: (context) => error_icon_lib.ErrorIcon(
+                          exceptionType: exception.runtimeType.toString()))),
 
               shape: const RoundedRectangleBorder(
                   side: BorderSide(color: errorColor, width: 5)),

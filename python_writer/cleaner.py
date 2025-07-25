@@ -251,7 +251,12 @@ import font_lookup as fldb
 
 def convert_to_sized_newline(i):
     assert isinstance(spans[i], NewLine)
-    height = fldb.get_total_font_height(spans[i].font)
+    font = spans[i].font
+    i_size = int(round(font.size / 12))
+    palatino_height = 40
+    height = palatino_height * i_size
+
+    # height = fldb.get_total_font_height(spans[i].font)
     # print(height, type(height))
     spans[i] = NewLineSized(height)
 
@@ -260,6 +265,7 @@ def convert_to_sized_box(i):
     width = fldb.get_box_width(spans[i].text, spans[i]._font)
     # We want this to be the same value as the rest of the text
     height = fldb.get_total_font_height(spans[i]._font)
+
     spans[i].width = width
     spans[i].height = height
     # Unceremoniously remove text

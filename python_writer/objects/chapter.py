@@ -13,6 +13,7 @@ class ChapterStart:
         # self.index=None
         assert headline_text is not None
         self.headline_text = headline_text
+        self.part = None 
         # self.id = ChapterStart.create_var_name(self.headline_text)
         # self.display_name = ChapterStart.abbrev_name(headline_text.strip(), ChapterStart.DisplayMaxLen)
         # self.next = None

@@ -222,6 +222,7 @@ def get_total_font_height(font):
     # Remove Npy type
     fam_height = float(fam_height)
     height = font.size/3 * fam_height
+
     return height
 
 def get_box_width(boxtext, font):

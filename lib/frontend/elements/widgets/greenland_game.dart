@@ -1,21 +1,40 @@
+import 'dart:async';
+import 'dart:core';
 import 'dart:developer' as dev;
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soyourhomeworld/frontend/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
+import 'package:soyourhomeworld/frontend/icons.dart';
 
 import '../../../backend/utils.dart';
-import '../../base_text_theme.dart';
-import '../../text_theme.dart';
+import 'greenland_ticket.dart';
+
+/*
+
+
+[Hello developer. It’s me, developer.
+
+The game should be a forgery game.
+Drag to place rounded rectangles, drag numbers, etcetera.
+
+Copying off a ticket.
+
+ */
 
 class GreenlandGamePage extends StatelessWidget {
   const GreenlandGamePage({super.key});
 
+  void submit() {}
+
   @override
   Widget build(BuildContext context) {
     return const McScaffold(
-        source: 'ticketstogreenland', child: GreenlandGame());
+        source: 'ticketstogreenland',
+        child: GreenlandGame(
+          key: Key('greenland_game'),
+        ));
   }
 }
 
@@ -26,302 +45,317 @@ class GreenlandGame extends StatefulWidget {
   State<GreenlandGame> createState() => _GreenlandGameState();
 }
 
-const List<String> warnings = [
-  "Imagine spinning a bottle to point at a random star in the sky.",
-  "Like getting struck by lightning.",
-  "Like picking your street number on excel.",
-  "If you work hard, you can get there.",
-  "It’s sort of down to politics who gets a ticket.",
-  "Families and such.",
-  "Did you buy one?",
-  "What can you offer Peter Thiel?",
-  'Which we are.'
-];
-
 class _GreenlandGameState extends State<GreenlandGame> {
-  int curWarning = 0;
-  bool won = false;
+  bool submittable = false;
+  int seed = 0;
+  late final Timer timer;
+
+  late GreenlandTicket ticket;
+  late GreenlandTicket reference;
 
   @override
   void initState() {
+    seed = _newSeed();
+    ticket = GreenlandTicket.standard(seed: seed);
+    reference = GreenlandTicket.standard(seed: seed);
+    ticket.randomize();
+    reference.stylize();
     super.initState();
-    won = false;
-    curWarning = 0;
-  }
-
-  bool lastWarning() {
-    return curWarning == warnings.length - 1;
-  }
-
-  void onHit() {
-    setState(() {
-      won = true;
-    });
-  }
-
-  void onMissed() {
-    setState(() {
-      curWarning += 1;
-    });
-  }
-
-  void goHome() {
-    if (mounted) {
-      context.go('/search/wontickets');
-    }
-  }
-
-  void reset() {
-    setState(() {
-      curWarning = 0;
-      won = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (won) {
-      return Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 48,
-          ),
-          const Text(
-            'Only high IQ geniuses like us are getting to Greenland.',
-            style: bodyFont,
-          ),
-          const SizedBox(
-              height: 240,
-              child: Text(
-                "Here's your ticket",
-                style: bodyFont,
-              )),
-          FilledButton.tonal(
-            onPressed: goHome,
-            child: const Text(
-              "Take",
-              style: bodyFont,
-            ),
-          ),
-          FilledButton.tonal(
-            onPressed: reset,
-            child: const Text(
-              "Reset",
-              style: bodyFont,
-            ),
-          )
-        ],
-      ));
-    }
-    return Align(
-        alignment: Alignment.topCenter,
-        child: SizedBox(
-            width: 600,
-            child: SingleChildScrollView(
-                child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 48,
-                ),
-                const Text(
-                  'Only the lucky few will get a Greenland ticket.',
-                  style: bodyFont,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                const Text(
-                  "Odds:",
-                  style: boldBodyFont,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 240),
-                    child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          warnings[curWarning],
-                          maxLines: 5,
-                          style: bodyFont,
-                        ))),
-                const SizedBox(height: 12),
-                SizedBox(
-                    height: 400,
-                    child: _SlotAndButton(
-                        onMissed: onMissed,
-                        onHit: onHit,
-                        warningLevel: curWarning))
-              ],
-            ))));
-  }
-}
-
-class _SlotAndButton extends StatefulWidget {
-  final int warningLevel;
-  final VoidCallback onMissed;
-  final VoidCallback onHit;
-  const _SlotAndButton(
-      {super.key,
-      required this.onMissed,
-      required this.onHit,
-      required this.warningLevel});
-
-  @override
-  State<_SlotAndButton> createState() => _SlotAndButtonState();
-}
-
-class _SlotAndButtonState extends State<_SlotAndButton>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController controller;
-  bool rolling = false;
-  bool goingToWin = false;
-
-  @override
-  void initState() {
-    controller = AnimationController(vsync: this);
-    super.initState();
-    printOdds();
-  }
-
-  int get curWarning => widget.warningLevel;
-
-  num getOdds() {
-    int attemptsRemaining = warnings.length - curWarning - 2;
-    num odds = math.pow(10, -(attemptsRemaining * attemptsRemaining) * .05);
-    return odds;
-  }
-
-  void printOdds() {
-    dev.log("Level: ${warnings.length - curWarning}");
-    dev.log("Odds: ${getOdds()}");
-  }
-
-  void tryLuck() {
-    if (mounted) {
-      bool willWin = roll();
-      dev.log("Odds: ${getOdds()}. win=$willWin");
-      setState(() {
-        goingToWin = willWin;
-        rolling = true;
-      });
-      Future.delayed(const Duration(seconds: _SlotMachine.seconds), afterRoll);
-    }
-  }
-
-  bool roll() {
-    if (curWarning >= warnings.length - 1) {
-      //The last should be 100%
-      return true;
-    }
-    num odds = getOdds();
-    return (rNG.nextDouble() < odds);
-  }
-
-  void afterRoll() {
-    if (goingToWin) {
-      widget.onHit();
-    } else {
-      widget.onMissed();
-    }
-    setState(() {
-      rolling = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _SlotMachine(
-          goingToWin: goingToWin,
-          warningLevel: curWarning,
-        ),
-        FilledButton.tonal(
-            onPressed: rolling ? null : tryLuck,
-            child: const Text("Try your luck"))
-      ],
-    );
-  }
-}
-
-class _SlotMachine extends StatefulWidget {
-  final int warningLevel;
-  final bool goingToWin;
-  const _SlotMachine(
-      {super.key, required this.warningLevel, required this.goingToWin});
-
-  static const int seconds = 3;
-
-  @override
-  State<_SlotMachine> createState() => _SlotMachineState();
-}
-
-class _SlotMachineState extends State<_SlotMachine>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController controller;
-  late final Animation<double> animation;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(vsync: this);
-
-    animation = Tween<double>(begin: 0, end: 1).animate(controller);
-    controller.reset();
-    controller.animateTo(1,
-        duration: const Duration(seconds: _SlotMachine.seconds));
+    timer = Timer.periodic(const Duration(milliseconds: 500), checkValidity);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    timer.cancel();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(animation: animation, builder: builder);
+  int _newSeed() => rNG.nextInt(1 + 30000000);
+
+  void checkValidity(t) {
+    if (mounted) {
+      bool valid = ticket.meetsGuidelines();
+      if (valid != submittable) {
+        setState(() {
+          submittable = valid;
+        });
+      }
+    }
   }
 
-  Widget builder(BuildContext context, Widget? previous) {
-    return _SlotRow(
-        animationValue: animation.value, goingToWin: widget.goingToWin);
+  void submit() {
+    if (mounted && submittable) {
+      context.go('/search/wontickets');
+    }
+  }
+
+  void reroll() {
+    if (mounted) {
+      setState(() {
+        seed = _newSeed();
+        ticket = GreenlandTicket.standard(seed: seed);
+        reference = GreenlandTicket.standard(seed: seed);
+        ticket.randomize();
+        reference.stylize();
+        dev.log('Seed $seed');
+      });
+    }
+  }
+
+  Widget submitButton(BuildContext context) {
+    return FilledButton(
+        onPressed: submittable ? submit : null,
+        child: const Text(
+          'Submit',
+        ));
+  }
+
+  Widget seedButton(BuildContext context) {
+    return FilledButton(onPressed: reroll, child: const Text('Randomize'));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Positioned.fill(
+            child: FittedBox(
+                child: Column(
+          children: [
+            _SingleTicket(
+              key: Key('Mod_$seed'),
+              modifiable: true,
+              ticket: ticket,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            _SingleTicket(
+              key: Key('TicketReference_$seed'),
+              modifiable: false,
+              ticket: reference,
+            )
+          ],
+        ))),
+        // buttonPlacement(seedButton(context), 1),
+        buttonPlacement(seedButton(context), 1),
+        buttonPlacement(submitButton(context), 0),
+      ],
+    );
+  }
+
+  Widget buttonPlacement(Widget child, int n) {
+    return Align(
+        alignment: Alignment.bottomRight,
+        child: Padding(
+            padding:
+                EdgeInsets.only(right: 16, bottom: 86 + 16 + (16 + 52.0) * n),
+            child: SizedBox(width: 104, height: 52, child: child)));
   }
 }
 
-class _SlotRow extends StatelessWidget {
-  // final Animation animation;
-  final double animationValue;
-  final bool goingToWin;
-  const _SlotRow(
-      {super.key, required this.animationValue, required this.goingToWin});
+class _SingleTicket extends StatefulWidget {
+  final bool modifiable;
+  final GreenlandTicket ticket;
+  const _SingleTicket(
+      {super.key, required this.modifiable, required this.ticket});
 
-  String randInt() {
-    return rNG.nextInt(9).toString();
+  @override
+  State<_SingleTicket> createState() => _SingleTicketState();
+}
+
+class _SingleTicketState extends State<_SingleTicket> {
+  // late final GreenlandTicket ticket;
+  GreenlandTicket get ticket => widget.ticket;
+  @override
+  void initState() {
+    // ticket = GreenlandTicket.standard(seed: widget.seed);
+    // if (widget.modifiable) {
+    //   ticket.randomize();
+    // } else {
+    //   ticket.stylize();
+    // }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double value = animationValue;
-    // Animation<Offset> offset = Tween<Offset>(Offset(0, 2000), Offset(0,0)).animate(animation);
-    return Row(children: [
-      Transform.translate(
-          offset: Offset(0, 1 * value),
-          child: Text(goingToWin ? '7' : randInt())),
-      Transform.translate(
-          offset: Offset(0, -1 * value),
-          child: Text(goingToWin ? '7' : randInt())),
-      Transform.translate(
-          offset: Offset(0, 1.5 * value),
-          child: Text(goingToWin ? '7' : randInt())),
-    ]);
+    List<Widget> children = [];
+
+    //Put in elements in type order
+
+    for (ElementType type in ElementType.values) {
+      //First type first
+      for (int n = 0; n < ticket.objects.length; ++n) {
+        if (ticket.objects[n].type == type) {
+          children.add(DraggableTicket(
+            key: Key('DrgTicket$n'),
+            object: ticket.objects[n],
+            modifiable: widget.modifiable,
+          ));
+        }
+      }
+    }
+
+    return Center(
+        child: Container(
+            color: ticketPalette[0],
+            width: 800,
+            height: 400,
+            alignment: Alignment.center,
+            child: Stack(
+              fit: StackFit.expand,
+              children: children,
+            )));
+  }
+}
+
+class DraggableTicket extends StatefulWidget {
+  final bool modifiable;
+  final GreenlandObject object;
+
+  const DraggableTicket({
+    super.key,
+    required this.object,
+    required this.modifiable,
+  });
+
+  @override
+  State<StatefulWidget> createState() {
+    return _DraggableTicketState();
+  }
+}
+
+class _DraggableTicketState extends State<DraggableTicket> {
+  // late Offset _position;
+
+  @override
+  void initState() {
+    ;
+    super.initState();
+  }
+
+  Widget _visElement(BuildContext context, GreenlandObject object) {
+    return _TicketElement(
+        object: object, key: Key("element${object.hashCode}"));
+  }
+
+  bool get modifiable => widget.modifiable;
+  Offset get position => widget.object.offset;
+  GreenlandObject get object => widget.object;
+
+  set position(Offset set) {
+    if (position != set) {
+      setState(() {
+        widget.object.offset = set;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!modifiable) {
+      return Positioned(
+          left: position.dx,
+          top: position.dy,
+          child: _visElement(context, object));
+    }
+    return AnimatedPositioned(
+        key: Key('ticket_elemAnimPos_${object.hashCode}'),
+        left: position.dx,
+        top: position.dy,
+        duration: const Duration(milliseconds: 30),
+        child: Draggable(
+            maxSimultaneousDrags: 1,
+            dragAnchorStrategy: childDragAnchorStrategy,
+            onDragUpdate: (details) {
+              position = position + details.delta;
+            },
+            // onDragEnd: (d) => onDragEnd(d, card),
+            childWhenDragging: _visElement(context, object),
+            feedback: const SizedBox.shrink(),
+            // feedback: CardHole(),
+            child: _visElement(context, object)));
+  }
+}
+
+class _TicketElement extends StatelessWidget {
+  final GreenlandObject object;
+  const _TicketElement({super.key, required this.object});
+
+  void onPressed() {}
+
+  @override
+  Widget build(BuildContext context) {
+    if (object.type == ElementType.rect) {
+      return Container(
+        decoration: BoxDecoration(
+          color: ticketPalette[object.color],
+          border: Border.all(color: borderColor),
+        ),
+        alignment: Alignment.center,
+        width: 400,
+        height: 100,
+      );
+    } else if (object.type == ElementType.divider) {
+      return SizedBox(
+          height: 50,
+          child: Center(
+              child: Container(
+            decoration: const BoxDecoration(
+              color: borderColor,
+            ),
+            alignment: Alignment.center,
+            width: 400,
+            height: 5,
+          )));
+    } else if (object.type == ElementType.icon) {
+      Color iconColor = ticketPalette[0];
+      return Container(
+        width: 75,
+        height: 75,
+        decoration: BoxDecoration(
+            color: ticketPalette[object.color],
+            border: Border.all(color: borderColor),
+            shape: BoxShape.circle),
+        alignment: Alignment.center,
+        child: Icon(
+          RpgAwesome.anchor,
+          size: 50,
+          color: iconColor,
+        ),
+      );
+    } else if (object.type == ElementType.letter) {
+      return Container(
+        decoration: BoxDecoration(
+          color: ticketPalette[0],
+          border: Border.all(color: borderColor),
+        ),
+        // width: 30,
+        // height: 50,
+        padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
+        alignment: Alignment.bottomCenter,
+        child: Text("T",
+            style: bodyFont.copyWith(
+                color: ticketPalette[2], height: 1.2, fontSize: 48)),
+      );
+    } else if (object.type == ElementType.text) {
+      return Container(
+        decoration: BoxDecoration(
+          color: ticketPalette[3],
+          border: Border.all(color: borderColor),
+        ),
+        // width: 30,
+        // height: 50,
+        padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
+        alignment: Alignment.bottomCenter,
+        child: Text("Testimoney Element Concept",
+            style: bodyFont.copyWith(
+                color: ticketPalette[2], height: 1.2, fontSize: 24)),
+      );
+    }
+    assert(false);
+    return const Placeholder();
   }
 }

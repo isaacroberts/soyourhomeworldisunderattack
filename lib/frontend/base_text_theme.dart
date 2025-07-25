@@ -14,9 +14,9 @@ const TextStyle bodyFont = TextStyle(
 );
 
 const TextStyle headerFont = TextStyle(
-  fontFamily: 'Rubik',
+  fontFamily: 'Palatino',
   fontSize: 24 * fontScale,
-  color: textColor,
+  color: Color(0x44ffffff),
   fontWeight: FontWeight.w800,
 );
 

@@ -1,6 +1,6 @@
 
-import objects.fonts as FONTS
-from objects.fonts import Font
+import objects.font_obj as FONTS
+from objects.font_obj import Font
 from objects.text_obj import *
 
 import font_lookup

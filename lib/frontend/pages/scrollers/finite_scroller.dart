@@ -88,6 +88,7 @@ class _PagingScrollerState extends State<PagingScroller> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ReaderScreen(
+                key: Key("FinScr_Reader_${chp.id}"),
                 chapter: chp,
                 scrollController: _scrollController,
               ),

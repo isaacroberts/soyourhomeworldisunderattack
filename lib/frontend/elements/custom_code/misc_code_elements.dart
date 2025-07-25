@@ -2,10 +2,8 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/backend/chapter_parser.dart';
 import 'package:soyourhomeworld/frontend/colors.dart';
 
-import '../../../backend/binary_utils/buffer_ptr.dart';
 import '../../icons.dart';
 import '../holders/holder_base.dart';
 import '../holders/span_holding_code.dart';
@@ -59,26 +57,6 @@ class BGCodeElement extends SpanHoldingCode {
   static BGCodeElement fromString(String? str, {required List<Holder> spans}) {
     // Color? c = namedColors(str);
     return BGCodeElement(spans: spans, color: null);
-  }
-}
-
-class ArtHolder extends SpanHoldingCode {
-  const ArtHolder({required super.spans});
-
-  @override
-  Widget element(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return ConstrainedBox(
-        constraints: BoxConstraints(
-            minWidth: size.width, minHeight: size.height, maxWidth: size.width),
-        child: Container(
-            decoration: BoxDecoration(border: Border.all()),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: renderSpans(context)),
-            )));
   }
 }
 
@@ -145,150 +123,6 @@ class WHLAd extends Holder {
 }
 
 */
-class Columns extends Holder {
-  /// Hacky as shit.
-  /// Currently only supporting 2 columns
-  final List<List<Holder>> cols;
-  // final int cols;
-  const Columns({required this.cols});
-
-  static Columns parse(BufferPtr bin) {
-    // b += pack_untyped_uint(len(self.columns))
-    int lenCols = bin.consumeUint32();
-    int numSpans = bin.consumeUint8();
-
-    // b += pack_literal('[')
-    bin.assertConsume('[', debugId: 'columns');
-    List<List<Holder>> cols = [];
-    while (bin.hasMore() && bin.getChar(0) == 'c') {
-      // # c  len(col):uint   [spans...]
-      // b += pack_untyped_char('c')
-      bin.assertConsume('c', debugId: 'columns');
-      // b += pack_untyped_uint(len(col))
-      int lenThisCol = bin.consumeUint32();
-      // b += pack_literal('[')
-      bin.assertConsume('[', debugId: 'columns');
-      // for span in col:
-      List<Holder> col = [];
-
-      // b += typedLine(span)
-      ChapterParser parser = ChapterParser(debugId: 'Columns_obj', ptr: bin);
-      while (bin.hasMore() && bin.getChar(0) != ']') {
-        Holder holder = parser.readOneHolder();
-
-        col.add(holder);
-      }
-      bin = parser.ptr;
-      // b += pack_literal(']')
-      bin.warnConsume(']');
-      cols.add(col);
-      // b += typedLine(span)
-    }
-    // b += pack_literal('];')
-    bin.warnConsume(']');
-    bin.warnConsume(';');
-
-    return Columns(cols: cols);
-  }
-
-  // Helper function
-  Widget renderCol(BuildContext context,
-      {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-      required List<Holder> spans}) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: crossAxisAlignment,
-        children: [for (Holder s in spans) s.element(context)]);
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    // TODO: implement element
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        for (List<Holder> col in cols)
-          Flexible(child: renderCol(context, spans: col))
-      ],
-    );
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return IsFallbackProvider(showFonts: false, child: element(context));
-  }
-}
-
-class _SignWidget extends StatelessWidget {
-  final Widget? child;
-  const _SignWidget({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 400,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: const Color(0xff595145), border: Border.all(width: 2)),
-        child: child);
-  }
-}
-
-class Sign extends SpanHoldingCode {
-  const Sign({required super.spans});
-
-  @override
-  Widget element(BuildContext context) {
-    return _SignWidget(
-        key: Key('Sign$hashCode'), child: super.element(context));
-  }
-}
-
-class Sign2Cols extends Columns {
-  const Sign2Cols({required super.cols});
-
-  static Sign2Cols parse(BufferPtr bin) {
-    Columns col = Columns.parse(bin);
-    assert(col.cols.length == 2);
-    return Sign2Cols(cols: col.cols);
-  }
-
-  // Helper function
-  @override
-  Widget renderCol(BuildContext context,
-      {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-      required List<Holder> spans}) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: crossAxisAlignment,
-        children: [for (Holder s in spans) s.element(context)]);
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    // TODO: implement element
-
-    return _SignWidget(
-        child: Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Flexible(
-            child: renderCol(context,
-                spans: cols[0], crossAxisAlignment: CrossAxisAlignment.end)),
-        Flexible(
-            child: renderCol(context,
-                spans: cols[1], crossAxisAlignment: CrossAxisAlignment.start))
-      ],
-    ));
-  }
-}
 
 class Audio extends Holder {
   final String file;

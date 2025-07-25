@@ -142,18 +142,26 @@ def get_font_info_post():
     # print('Font info:', id)
     return fonts.get_id(id)
 
-#TODO: Now it needs to serve the font files
-@app.route('/font/<string:url>', methods=['GET'])
+@app.route('/hosted_fonts/<string:url>', methods=['GET'])
 def get_font(url):
     # print('Font serve:', url)
     fname = url.split('/')[-1]
     # print('Font:', fname)
     try:
         # print('sending', fname)
-        return send_from_directory('fonts', fname)
+        return send_from_directory('hosted_fonts', fname)
         # return send_file(f'/fonts/{url}',
         #     mimetype='font/ttf',
         #     attachment_name = fname)
+    except FileNotFoundError as e:
+        return json_response(error=str(e), status_code=404)
+
+@app.route('/images/<string:url>', methods=['GET'])
+def get_image(url):
+    # TODO: Accept size as parameter
+    fname = url.split('/')[-1]
+    try:
+        return send_from_directory('images', fname)
     except FileNotFoundError as e:
         return json_response(error=str(e), status_code=404)
 
@@ -162,7 +170,7 @@ def submit_feedback():
     data = request.get_json(force=True)
     chapter=data['chapter']
     line = data['line']
-    feedback=data['feedback']
+    feedback=data['feconstedback']
     feedback_db.add_obj(feedback)
     return json_response()
 
@@ -178,7 +186,7 @@ def show_feedback():
 
 if __name__=="__main__":
 
-    ON_SERVER = False 
+    ON_SERVER = False
     app.debug = True
     print("go to http://localhost:5000/ to view the page.")
     app.run()    # app.run() #go to http://localhost:5000/ to view the page.

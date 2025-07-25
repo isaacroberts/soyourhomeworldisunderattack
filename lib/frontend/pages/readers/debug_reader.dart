@@ -17,10 +17,7 @@ class DebugReaderScreen extends StatelessWidget {
   Widget mapFunc(BuildContext context, Holder t, bool isFallback) {
     //Don't wrap code elements in expensive viewers
     if (t is SpanHoldingCode) {
-      if (isFallback) {
-        return t.fallback(context);
-      }
-      return t.element(context);
+      return CodeDebugWrap(elem: t, isFallback: isFallback);
     }
     return DebugHolderWrap(elem: t, isFallback: isFallback);
   }
@@ -90,5 +87,39 @@ class _DebugHolderWrapState extends State<DebugHolderWrap> {
                   ? widget.elem.fallback(context)
                   : widget.elem.element(context),
             )));
+  }
+}
+
+class CodeDebugWrap extends StatelessWidget {
+  final bool isFallback;
+  final Holder elem;
+  const CodeDebugWrap(
+      {super.key, required this.elem, required this.isFallback});
+
+  String tooltipMessage() {
+    String msg = elem.runtimeType.toString();
+    return msg;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (elem is UnhandledSpanHoldingCode) {
+      return Container(
+          decoration: BoxDecoration(
+              // color: errorBg.withAlpha(128),
+              border: Border.all(color: errorColor, width: 5)),
+          padding: const EdgeInsets.all(15),
+          child: Tooltip(
+
+              // waitDuration: const Duration(milliseconds: 10),
+              message:
+                  'Unhandled: ${(elem as UnhandledSpanHoldingCode).clsname}',
+              child:
+                  isFallback ? elem.fallback(context) : elem.element(context)));
+    }
+    return Tooltip(
+        // waitDuration: const Duration(milliseconds: 10),
+        message: tooltipMessage(),
+        child: isFallback ? elem.fallback(context) : elem.element(context));
   }
 }

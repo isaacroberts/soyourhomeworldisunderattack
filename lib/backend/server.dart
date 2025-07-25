@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 
 import 'error_handler.dart';
 
+//TODO: Try multiple URLs
+
 String getURL() {
   if (kDebugMode) {
     return 'http://127.0.0.1:5000';
@@ -17,7 +19,12 @@ String getURL() {
 }
 
 String fontUrl(String filename) {
-  return "${getURL()}/font/$filename";
+  return "${getURL()}/hosted_fonts/$filename";
+}
+
+String imageUrl(String filename) {
+  filename = filename.replaceAll('.', '_phone.');
+  return "${getURL()}/images/$filename";
 }
 
 String _stripLeadingSlashes(String endpoint) {

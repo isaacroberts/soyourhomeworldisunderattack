@@ -1,4 +1,4 @@
-from objects.fonts import Font
+from objects.font_obj import Font
 
 class TextSpan:
     def __init__(self, font, text, align):

@@ -12,7 +12,9 @@ class ReaderScreen extends StatelessWidget {
   final Chapter chapter;
   final ScrollController scrollController;
   const ReaderScreen(
-      {super.key, required this.chapter, required this.scrollController});
+      {required super.key,
+      required this.chapter,
+      required this.scrollController});
 
   Widget itemBuilder(BuildContext context, Holder holder, bool showFonts) {
     return holder.elementOrFallback(context, showFonts);
@@ -36,14 +38,18 @@ class ReaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? header = this.header(context);
+
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: ReaderBuilder(
-          key: Key('RdrBldr_Chp${chapter.id}'),
-          chapter: chapter,
-          itemBuilder: itemBuilder,
-          leadItems: [if (header != null) header],
-          scrollController: scrollController,
-        ));
+        child: Center(
+            child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: ReaderBuilder(
+                  key: Key('RdrBldr_Chp${chapter.id}'),
+                  chapter: chapter,
+                  itemBuilder: itemBuilder,
+                  leadItems: [if (header != null) header],
+                  scrollController: scrollController,
+                ))));
   }
 }

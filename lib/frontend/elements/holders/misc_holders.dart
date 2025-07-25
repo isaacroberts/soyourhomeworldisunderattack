@@ -98,6 +98,19 @@ class ColoredBoxFrag extends FragOfText {
   }
 }
 
+class HiddenTextElement extends Holder {
+  const HiddenTextElement();
+  @override
+  Widget element(BuildContext context) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  Widget fallback(BuildContext context) {
+    return const SizedBox.shrink();
+  }
+}
+
 class PageBreakOfText extends Holder {
   const PageBreakOfText();
 

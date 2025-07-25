@@ -3,18 +3,43 @@ import 'package:soyourhomeworld/frontend/icons.dart';
 
 //ThreeRotatingDots from https://pub.dev/packages/loading_animation_widget
 
-class TriWizardLoader extends StatefulWidget {
+class TriWizardLoader extends StatelessWidget {
+  final String message;
+  const TriWizardLoader({super.key, required this.message});
   static const double size = 100;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+          // const CircularProgressIndicator(),
+          _TriWizardLoader(
+            text: message,
+          ),
+          if (message.isNotEmpty)
+            Text(
+              message,
+              textAlign: TextAlign.center,
+            )
+        ]));
+  }
+}
+
+class _TriWizardLoader extends StatefulWidget {
   static const Color color = Colors.white;
   final String? text;
 
-  const TriWizardLoader({super.key, required this.text});
+  const _TriWizardLoader({super.key, required this.text});
 
   @override
-  State<TriWizardLoader> createState() => _TriWizardLoaderState();
+  State<_TriWizardLoader> createState() => _TriWizardLoaderState();
 }
 
-class _TriWizardLoaderState extends State<TriWizardLoader>
+class _TriWizardLoaderState extends State<_TriWizardLoader>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
@@ -71,7 +96,7 @@ class _TriWizardLoaderState extends State<TriWizardLoader>
             children: <Widget>[
               _BuildDot.first(
                 key: const Key("Dot1"),
-                color: TriWizardLoader.color,
+                color: _TriWizardLoader.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -83,7 +108,7 @@ class _TriWizardLoaderState extends State<TriWizardLoader>
 
               _BuildDot.first(
                 key: const Key("Dot2"),
-                color: TriWizardLoader.color,
+                color: _TriWizardLoader.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -95,7 +120,7 @@ class _TriWizardLoaderState extends State<TriWizardLoader>
 
               _BuildDot.first(
                 key: const Key("Dot3"),
-                color: TriWizardLoader.color,
+                color: _TriWizardLoader.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -104,6 +129,7 @@ class _TriWizardLoaderState extends State<TriWizardLoader>
                 interval: firstDotsInterval,
                 index: wrap(2),
               ),
+              // if (widget.text != null) Text(widget.text!)
 
               /// Next 3 dots
             ],

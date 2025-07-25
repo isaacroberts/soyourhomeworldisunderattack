@@ -3,7 +3,7 @@ import copy
 import json
 import jsonpickle
 
-from objects.fonts import *
+from objects.font_obj import *
 from objects.code_objects import CodeMarker
 from objects.text_obj import *
 

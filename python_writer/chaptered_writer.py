@@ -23,7 +23,8 @@ logger_start('fmt_writer')
 
 change_log_file('spans')
 
-chapters, fonts = cf.read_spans_and_fonts('chapters.json', 'fonts_cleaned.json')
+chapters, fonts = cf.read_chapters_and_fonts('chapters.json', 'fonts_cleaned.json')
+
 
 # Read book info
 f= open('temp/book.json', 'r')

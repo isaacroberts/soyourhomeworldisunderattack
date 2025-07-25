@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
               source: null,
               child: Center(
                   child: TriWizardLoader(
-                text: 'Loading router',
+                message: 'Loading router',
               ))));
     }
   }

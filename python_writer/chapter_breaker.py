@@ -72,6 +72,20 @@ print('Resolving keywords')
 
 def remove_invisible_headline(chapter):
     print("Removing InvisibleHeadline.")
+
+    only_headline = None
+    for i in range(len(chapter.spans)):
+        if isinstance(chapter.spans[i], Header):
+            if only_headline is not None:
+                only_headline = None
+                break
+            else:
+                only_headline = i
+
+    if only_headline is not None:
+        chapter.spans.pop(i)
+        return i
+
     for i in range(len(chapter.spans)):
         if isinstance(chapter.spans[i], Header):
             print(chapter.spans[i])
@@ -212,7 +226,7 @@ for chapter in chapters:
                     if rmvd < i:
                         i -= 1
                 # Delete keyword
-            if obj in ['Audio', 'UnskippableAudio', 'CopSting']:
+            elif obj in ['Audio', 'UnskippableAudio', 'CopSting']:
                 # TODO: Match audio to URL
                 if obj == 'CopSting':
                     audio = 'copsting.wav'
@@ -224,8 +238,15 @@ for chapter in chapters:
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
-            if obj == 'EndOfBook':
+            elif obj == 'EndOfBook':
                 raise NotImplementedError('EndOfBook')
+                # Delete keyword
+                chapter.spans.pop(i)
+                i-=1
+            elif obj == 'Part':
+                partname = span.params[0]
+                chapter.part = partname
+                print("Part:", partname)
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
@@ -256,6 +277,11 @@ for chapter in chapters:
             assert False, f'Unhandled Keyword: "{obj}"'
         i += 1
 
+
+# Prevent recursion in nexts
+for chapter in chapters:
+    if chapter.next is not None:
+        chapter.next = chapter.next.id 
 
 pst.print_and_save_responses('data/chapterbreaker_responses')
 

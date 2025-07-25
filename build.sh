@@ -3,11 +3,13 @@ source ~/.profile
 shopt -s expand_aliases
 
 src_root='/web/'
-local_folder='server/web'
+local_folder='server/web/'
 
 echo "Making directories"
-rm -rf 'server/web_backup'
-mv $local_folder 'server/web_backup'
+backup_directory='backup/web_backup/'
+mkdir -p 'backup/'
+rm -rf $backup_directory
+mv $local_folder $backup_directory
 # rm -r $local_folder
 # mkdir $local_folder
 
@@ -17,7 +19,7 @@ echo "Building"
 #     flutter clean
 # fi
 
-flutter build web --profile --base-href=$src_root &&
+flutter build web --release --base-href=$src_root &&
 echo "Moving" &&
 mv ./build/web/ $local_folder &&
 

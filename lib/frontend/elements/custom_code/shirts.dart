@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../icons.dart';
+import '../holders/holder_base.dart';
 import '../holders/span_holding_code.dart';
 import '../holders/textholders.dart';
 
 class Shirt extends SpanHoldingCode {
   late final Color color;
-  final bool printExact;
   final double width;
   final double height;
-  Shirt(
-      {required super.spans,
-      double? width,
-      double? height,
-      this.printExact = false})
+  Shirt({required super.spans, double? width, double? height})
       : width = width ?? 500,
         height = height ?? 600 {
     color = firstHilite() ?? Colors.white;
@@ -32,19 +26,68 @@ class Shirt extends SpanHoldingCode {
   }
 
   @override
+  Widget renderSpans(BuildContext context,
+      {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
+    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
+
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          for (Holder s in spans)
+            showFonts ? s.element(context) : s.fallback(context)
+        ]);
+  }
+
+  Widget neck(BuildContext context) {
+    return ColoredBox(
+        color: color, child: SizedBox(height: 10, width: width / 5));
+  }
+
+  Widget textAndSleeve(BuildContext context) {
+    return SizedBox(
+        width: width + 200,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            torso(context),
+            sleeves(context),
+            Positioned.fill(
+                child: Align(
+                    alignment: Alignment(0, -.5), child: shirtText(context)))
+            // shirtText(context),
+          ],
+        ));
+  }
+
+  Widget shirtText(BuildContext context) {
+    return FittedBox(
+        child: SizedBox(width: width, child: renderSpans(context)));
+  }
+
+  Widget sleeves(BuildContext context) {
+    return ColoredBox(
+        color: color, child: SizedBox(height: 200, width: width + 200));
+  }
+
+  Widget torso(BuildContext context) {
+    return ColoredBox(
+        color: color,
+        child: SizedBox(
+          height: 650,
+          width: width,
+        ));
+  }
+
+  @override
   Widget element(BuildContext context) {
-    return Center(
-        child: Transform.scale(
-            scale: .75,
-            child: ColoredBox(
-                color: color,
-                child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minWidth: width,
-                        maxWidth: width * 2,
-                        minHeight: height),
-                    child: super.renderSpans(context,
-                        crossAxisAlignment: CrossAxisAlignment.center)))));
+    double screenWidth = MediaQuery.of(context).size.width;
+    return SizedBox(
+        width: screenWidth,
+        height: 800,
+        child: Center(child: FittedBox(child: textAndSleeve(context))));
+    // columns(context));
   }
 }
 
@@ -76,47 +119,26 @@ class BumperSticker extends SpanHoldingCode {
 
   @override
   Widget element(BuildContext context) {
-    return Center(
-        child: Container(
-            color: color,
-            height: 300,
-            width: 800,
-            alignment: Alignment.center,
-            child: super.renderSpans(context,
-                crossAxisAlignment: CrossAxisAlignment.center)));
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 50),
+        child: Center(
+            child: FittedBox(
+                child: Container(
+                    color: color,
+                    height: 300,
+                    width: 800,
+                    alignment: Alignment.center,
+                    child: super.renderSpans(context,
+                        crossAxisAlignment: CrossAxisAlignment.center)))));
   }
 }
 
 class ChapterShirt extends Shirt {
   final String? link;
-  ChapterShirt({required this.link, required super.spans, super.printExact});
+  ChapterShirt({required this.link, required super.spans});
 
   @override
   Widget element(BuildContext context) {
     return super.element(context);
-    return Stack(
-      alignment: Alignment.center,
-      fit: StackFit.passthrough,
-      children: [
-        Container(
-            color: color,
-            height: 600,
-            width: 400,
-            child: const SizedBox.expand()),
-        const Align(
-            alignment: Alignment.bottomRight,
-            child: Icon(
-              RpgAwesome.shield,
-              color: Color(0xffffffff),
-              size: 24,
-            )),
-        Center(
-            child: MaterialButton(
-                color: color,
-                onPressed: () => context.go('/search/$link'),
-                child: super.renderSpans(context,
-                    crossAxisAlignment: CrossAxisAlignment.center)))
-      ],
-    );
   }
 }

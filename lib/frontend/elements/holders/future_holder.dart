@@ -28,7 +28,7 @@ class FutureHolder extends Holder {
       return const SizedBox(
           height: 150,
           child: TriWizardLoader(
-            text: 'Getting code element',
+            message: 'Getting code element',
           ));
     }
   }
@@ -52,7 +52,7 @@ class FutureHolder extends Holder {
       return const SizedBox(
           height: 150,
           child: TriWizardLoader(
-            text: 'Getting code element (fallback)',
+            message: 'Getting code element (fallback)',
           ));
     }
   }
