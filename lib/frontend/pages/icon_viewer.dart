@@ -2,9 +2,9 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:soyourhomeworld/frontend/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
+import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 class _RpgIconDisplay extends StatelessWidget {
   final int ix;

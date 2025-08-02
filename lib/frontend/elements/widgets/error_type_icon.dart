@@ -3,7 +3,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 
 import '../../icons.dart';
-import '../../styles.dart';
+import '../../theme/styles.dart';
 
 class ErrorIcon extends StatelessWidget {
   final String exceptionType;

@@ -76,6 +76,53 @@ class FontFile {
     }
   }
 
+  static Future<FontFile> fromFamily(String family) async {
+    // var response;
+    // try {
+    //   var response = await sendGet('font_info/$id');
+    // } catch (excep, trace) {
+    //   ErrorList.showError(excep, trace);
+    //   return FontFile.err();
+    // }
+    var response = await send('get_font_id_post', {'family': family});
+    // dev.log("Sending for Font:$id");
+    if (response.statusCode != 200) {
+      dev.log("Font get error: $family");
+      dev.log(response.body);
+
+      throw FontException(
+          'Font error code=${response.statusCode}: ${response.reasonPhrase}',
+          family: null);
+    } else {
+      var data = json.decode(response.body);
+
+      if (data == null) {
+        throw FontException("Null Data from server.", family: family);
+      }
+      dev.log('data: $data');
+      List<dynamic>? files = data['file'];
+      //Ensure they're all strings
+
+      int? id = data['id'];
+      dev.log("Font: [id]:$id [family]:$family [url]:$files");
+
+      if (files == null || id == null) {
+        throw FontException(
+            "Null url/id received. family=$family id = $id, url=$files",
+            family: family);
+      }
+//Convert to strings
+      List<String> urls =
+          files.map((e) => e.toString()).toList(growable: false);
+      //Convert to URLs
+      for (int n = 0; n < files.length; ++n) {
+        urls[n] = fontUrl(urls[n]);
+      }
+      // dev.log("Got font info: $url");
+      return FontFile(id: id, urls: urls, family: family);
+    }
+  }
+
   FontFile.builtin({required this.id, required this.family})
       : _status = _LoadStatus.loaded,
         urls = const <String>[];
@@ -161,12 +208,22 @@ class FontCache {
   Then we can store whether it's loaded, store the future, etc.
    */
 
-  String? builtinFontFamilies(int id) {
+  String? checkBuiltinFontFamilies(int id) {
     switch (id) {
       case 0:
         return 'Palatino';
       case 1:
         return 'Rubik';
+    }
+    return null;
+  }
+
+  int? builtinFontFamiliesToId(String family) {
+    switch (family) {
+      case 'Palatino':
+        return 0;
+      case 'Rubik':
+        return 1;
     }
     return null;
   }
@@ -190,12 +247,43 @@ class FontCache {
         files[id] = f;
         return f;
       } else {
-        String? family = builtinFontFamilies(id);
+        String? family = checkBuiltinFontFamilies(id);
         family!;
         FontFile f = FontFile.builtin(id: id, family: family);
         dev.log("(Font) Fetched builtin name $id= $family");
         assert(f.id == id);
         files[id] = f;
+        return f;
+      }
+    }
+  }
+
+  FontFile? _checkForExistingFamily(String family) {
+    for (FontFile? file in files.values) {
+      if (file?.family == family) {
+        return file;
+      }
+    }
+    return null;
+  }
+
+  Future<FontFile?> getFontFileFromFamily(String family) async {
+    FontFile? existing = _checkForExistingFamily(family);
+    if (existing != null) {
+      return existing;
+    } else {
+      if (builtinFontFamilies.contains(family)) {
+        assert(false, "Don't use FontFile overhead for Palatino/Rubik");
+        return FontFile.builtin(
+            id: builtinFontFamiliesToId(family) ?? 0, family: family);
+      }
+      //TODO: This will not work until the server is hosted
+      else {
+        FontFile f = await FontFile.fromFamily(family);
+        assert(f.family == family);
+        //Purely to debug whether we had to fetch that
+        assert(!files.containsKey(f.id));
+        files[f.id] = f;
         return f;
       }
     }

@@ -13,6 +13,7 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/columns_holder.dar
     deferred as columns_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
     deferred as goto_button_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/image_holder.dart';
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
@@ -35,6 +36,7 @@ import '../holders/span_holding_code.dart';
 import '../holders/textholders.dart';
 import 'ad_widget.dart' deferred as ad_widget_lib;
 import 'art.dart' deferred as art_lib;
+import 'elven_chorus.dart' deferred as elven_chorus_lib;
 import 'misc_code_elements.dart' deferred as misc_code_lib;
 
 // ========= Routers =============
@@ -53,26 +55,26 @@ Future<Holder> _instantiateCodeTag(String cls, List<String> params) async {
     await misc_code_lib.loadLibrary();
     return misc_code_lib.IconHolder(
         iconIndex ?? RpgAwesome.errorIconIndex, params.sublist(1));
+  } else if (cls == 'IMAGE') {
+    late String? url;
+    if (params.isNotEmpty) {
+      url = params[0];
+    } else {
+      url = null;
+    }
+    return ImageHolder(url: url);
+  } else if (cls == 'ELVENCHORUS') {
+    dev.log("Elven Chorus");
+    int? speed = _readIntParam(params, 'Speed');
+    await elven_chorus_lib.loadLibrary();
+    return elven_chorus_lib.ElvenChorusHolder(speed: speed);
   } else {
     dev.log("Missed CodeTag '$cls'");
   }
   return UnhandledCodeElement(cls, 'CodeTag');
 }
 
-double? readDoubleParam(List<String> params, String key) {
-  String? p = readParam(params, key);
-  if (p != null) {
-    double? d = double.tryParse(p);
-    if (d == null) {
-      ErrorList.showError(BookCodeException('Failed to read double param: $p'));
-    }
-    return null;
-  } else {
-    return null;
-  }
-}
-
-String? readParam(List<String> params, String key) {
+String? _readParam(List<String> params, String key) {
   for (String line in params) {
     if (line.startsWith(key)) {
       line = line.substring(key.length);
@@ -87,8 +89,21 @@ String? readParam(List<String> params, String key) {
   return null;
 }
 
-bool? readBool(List<String> params, String key) {
-  String? bs = readParam(params, key);
+double? _readDoubleParam(List<String> params, String key) {
+  String? p = _readParam(params, key);
+  if (p != null) {
+    double? d = double.tryParse(p);
+    if (d == null) {
+      ErrorList.showError(BookCodeException('Failed to read double param: $p'));
+    }
+    return null;
+  } else {
+    return null;
+  }
+}
+
+bool? _readBoolParam(List<String> params, String key) {
+  String? bs = _readParam(params, key);
   if (bs == '1') {
     return true;
   } else if (bs == '0') {
@@ -97,12 +112,21 @@ bool? readBool(List<String> params, String key) {
   return null;
 }
 
-List<String>? readLinks(List<String> params, String key) {
-  String? links = readParam(params, 'links');
+int? _readIntParam(List<String> params, String key) {
+  String? s = _readParam(params, key);
+  if (s != null) {
+    return int.tryParse(s);
+  } else {
+    return null;
+  }
+}
+
+List<String>? _readLinks(List<String> params, String key) {
+  String? links = _readParam(params, 'links');
   return links?.split(',');
 }
 
-Map<String, String> stripKnownParams(List<String> params) {
+Map<String, String> _stripKnownParams(List<String> params) {
   if (params.isEmpty) {
     return {};
   } else {
@@ -132,7 +156,7 @@ FutureHolder instantiateCodeBlock(
 
 Future<Holder> _instantiateCodeBlock(
     String cls, List<String> params, List<Holder> spans) async {
-  Map<String, String> knownParams = stripKnownParams(params);
+  Map<String, String> knownParams = _stripKnownParams(params);
 
   dev.log("Cls: $cls");
 
@@ -142,8 +166,8 @@ Future<Holder> _instantiateCodeBlock(
   } else if (cls == 'SHIRT' || cls == 'PRINTEXACTSHIRT') {
     await shirts_lib.loadLibrary();
     //TODO: Convert params to an object
-    double? width = readDoubleParam(params, 'width');
-    double? height = readDoubleParam(params, 'width');
+    double? width = _readDoubleParam(params, 'width');
+    double? height = _readDoubleParam(params, 'width');
 
     return shirts_lib.Shirt(spans: spans, width: width, height: height);
   } else if (cls == 'CHAPTERSHIRT') {
@@ -153,8 +177,8 @@ Future<Holder> _instantiateCodeBlock(
     return shirts_lib.Shirt(spans: spans, width: width, height: height);
   } else if (cls == 'BUMPERSTICKER') {
     await shirts_lib.loadLibrary();
-    double? width = readDoubleParam(params, 'width');
-    double? height = readDoubleParam(params, 'width');
+    double? width = _readDoubleParam(params, 'width');
+    double? height = _readDoubleParam(params, 'width');
 
     return shirts_lib.BumperSticker(spans: spans, width: width, height: height);
   } else if (cls == 'TWEET') {
@@ -186,20 +210,26 @@ Future<Holder> _instantiateCodeBlock(
     await ad_widget_lib.loadLibrary();
     return ad_widget_lib.AdElementHolder(spans: spans, color: null);
   } else if (cls == 'BALLOT') {
-    bool hasExtra = readBool(params, 'extra') ?? false;
+    bool hasExtra = _readBoolParam(params, 'extra') ?? false;
+    bool enabled = _readBoolParam(params, 'on') ?? true;
+
     // List<String> links = readLinks(params, 'links') ?? [];
     await ballot_screen_lib.loadLibrary();
-    return ballot_screen_lib.BallotHolder(isExtended: hasExtra);
+    return ballot_screen_lib.BallotHolder(
+        isExtended: hasExtra, enabled: enabled);
   } else if (cls == "GOTOBUTTON") {
     String? link;
     if (params.isNotEmpty) {
       link = params[0];
     }
-    bool? isChapter = readBool(params, 'IsChapter') ?? true;
+    bool? isChapter = _readBoolParam(params, 'IsChapter') ?? true;
+
+    String? dest = _readParam(params, 'Dest');
     dev.log("Goto: $link $isChapter; \n\tparams = $params");
     await goto_button_lib.loadLibrary();
+
     return goto_button_lib.GotoButtonHolder(
-        link: link, spans: spans, isChapter: isChapter);
+        link: link, dest: dest, spans: spans, isChapter: isChapter);
   } else if (cls == 'CHARACTERSELECTIONSCREEN') {
     await character_selection_lib.loadLibrary();
     return character_selection_lib.CharacterSelectionHolder();

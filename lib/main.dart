@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //Checked imports
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
@@ -12,13 +13,36 @@ import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 //Deferred load
 import 'backend/error_handler.dart';
-import 'frontend/text_theme.dart';
+import 'frontend/theme/theme.dart';
 import 'router.dart' as router_lib;
 
 Future<void> main() async {
-  // if (kDebugMode) {
-  //   runApp(const MyStatefulApp());
-  // } else {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    //details.silent = whether error should be silent in release mode
+    if (!(details.silent && kReleaseMode)) {
+      dev.log('\n\n');
+      dev.log(" -!- FlutterError (${details.library}) -!- ");
+      dev.log(details.exceptionAsString());
+      dev.log('-');
+      dev.log(details.exception.toString());
+      if (details.stack != null) {
+        dev.log(' --- Stack Trace ---');
+        dev.log(details.stack.toString());
+      }
+      dev.log('\n\n');
+      ErrorList.showError(details.exception, details.stack);
+    }
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    dev.log('\n\n');
+    dev.log(' -!- Platform Error -!- ');
+    dev.log(error.toString());
+    dev.log(' --- Stack Trace ---');
+    dev.log(stack.toString());
+    dev.log('\n\n');
+    ErrorList.showError(error, stack);
+    return true;
+  };
   runApp(const MyApp());
   // }
 

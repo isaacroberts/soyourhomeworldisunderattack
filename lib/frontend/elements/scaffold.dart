@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../backend/error_handler.dart';
 import '../pages/drawer.dart';
-import '../text_theme.dart';
+import '../theme/theme.dart';
 
 // final talker = Talker();
 
@@ -23,13 +24,22 @@ class McScaffold extends StatefulWidget {
 
 class _McScaffoldState extends State<McScaffold>
     with SingleTickerProviderStateMixin {
-  late final Timer timer;
+  Timer? timer;
   @override
   void initState() {
     super.initState();
     //For ErrorSnackbars
+
+    //Avoid showing ErrorSnackbar immediately upon open
+    Future.delayed(
+        const Duration(seconds: kDebugMode ? 1 : 10), startErrorChecking);
+    ViewSettings.instance.infiniteScrollNotifier
+        .addListener(rebuildViewSettings);
+  }
+
+  void startErrorChecking() {
+    //For ErrorSnackbars
     timer = Timer.periodic(const Duration(seconds: 1), checkScaffold);
-    ViewSettings.instance.addListener(rebuildViewSettings);
   }
 
   void rebuildViewSettings() {
@@ -38,8 +48,9 @@ class _McScaffoldState extends State<McScaffold>
 
   @override
   dispose() {
-    ViewSettings.instance.removeListener(rebuildViewSettings);
-    timer.cancel();
+    ViewSettings.instance.infiniteScrollNotifier
+        .removeListener(rebuildViewSettings);
+    timer?.cancel();
     super.dispose();
   }
 

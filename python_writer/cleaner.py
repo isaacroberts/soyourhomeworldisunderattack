@@ -21,6 +21,7 @@ if __name__=="__main__":
 
 
 REDACT=False
+# TODO: This required some extra maintenance
 COLORED_BOXES=False
 
 spans, fonts = cf.read_spans_and_fonts('spans_raw.json', 'fonts_cleaned.json')
@@ -73,7 +74,7 @@ while i < len(spans):
     prev = spans[i]
     # pi+=1
     i+=1
-
+"""
 print()
 print ("Disabling Repeated Headers")
 
@@ -105,7 +106,7 @@ while i < len(spans):
             recentHeader = None
     # pi+=1
     i+=1
-
+"""
 print()
 print('Deleting empty headers')
 
@@ -282,7 +283,6 @@ health_inspection()
 
 fldb.end_step()
 
-# exit(0)
 print("Joining Newlines")
 # TODO: Do some actual cleaning, and straighten some of the lines
 # TODO: Give flutter actual size of fonts
@@ -439,8 +439,8 @@ def span_check(span0, next):
     elif t == 'ColoredBoxSpan':
         # TODO: This will eventually be limiting
         # if next.pos == 'tail':
-        #     return 'last'
-        return True
+        # return 'last'
+        return False
     else:
         # Multispan?
         return False
@@ -506,6 +506,18 @@ while i0 < len(spans):
                 spans[i0] = multi.spans[0]
 
     i0 += 1
+
+print("Checking MultiSpans for empty Frags")
+
+for span in spans:
+    if span is MultiSpan:
+        i=0
+        while i < len(span.spans):
+            if hasattr(span.spans[i], 'text'):
+                if len(span.spans[i].text)==0:
+                    print("Removing span", i, 'from', span)
+                    span.spans.pop(i)
+                    i-=1
 
 # print ("Joining multi spans")
 

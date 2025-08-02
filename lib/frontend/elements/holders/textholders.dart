@@ -1,13 +1,23 @@
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/font_interm.dart';
-import '../../base_text_theme.dart';
+import '../../../backend/text_utils.dart';
+import '../../theme/base_text_theme.dart';
 // import '../custom_code/code_holders.dart';
 
 import 'holder_base.dart';
 
 export 'misc_holders.dart';
 export 'span_holders.dart';
+
+bool _hyphenatorInitialized = false;
+Future initHyphenator() async {
+  if (!_hyphenatorInitialized) {
+    return initHyphenation();
+  }
+  return null;
+}
 
 const double k = 12;
 
@@ -88,18 +98,44 @@ class CustomFontText extends FontWanterTextHolder {
   final TextAlign align;
   final int tabs;
   const CustomFontText(super.font,
-      {required super.text, this.align = TextAlign.left, this.tabs = 0});
+      {required super.text, this.align = TextAlign.justify, this.tabs = 0});
+
+  @override
+  Future load() async {
+    await initHyphenation();
+    return font.load();
+  }
+
+  @override
+  bool isLoaded() {
+    // dev.log("Isloaded: ${font.family}");
+    return _hyphenatorInitialized && font.isLoaded();
+  }
+
+  Widget textElement(BuildContext context) {
+    double screenWidth = MediaQuery.sizeOf(context).width;
+    if (font.size > 20) {
+      if (screenWidth < 500) {
+        return AutoHyphenatingText(
+          text,
+          style: font.instance(),
+          selectable: true,
+          textAlign: align,
+        );
+      }
+      //Large fonts should use word wrap
+    }
+    //Otherwise use regular text
+    return Text(
+      text,
+      style: font.instance(),
+      textAlign: align,
+    );
+  }
 
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(
-        tabs,
-        align,
-        Text(
-          text,
-          style: font.instance(),
-          textAlign: align,
-        ));
+    return wrapInTabs(tabs, align, textElement(context));
   }
 
   @override
@@ -127,20 +163,60 @@ class HiliteFontText extends FontWanterTextHolder {
 
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(
-        tabs,
-        align,
-        Text(('\t' * tabs) + text,
-            style: font.instanceWithColor(color), textAlign: align));
+    return wrapInTabs(tabs, align,
+        Text(text, style: font.instanceWithColor(color), textAlign: align));
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return wrapInTabs(
-        tabs,
-        align,
-        Text(('\t' * tabs) + text,
-            style: font.fallbackWithColor(color), textAlign: align));
+    return wrapInTabs(tabs, align,
+        Text(text, style: font.fallbackWithColor(color), textAlign: align));
+  }
+}
+
+class SubSuperFontText extends FontWanterTextHolder {
+  ///Covers all complex cases
+  final TextAlign align;
+  final Color color;
+  final int tabs;
+  final SubSuper subSuper;
+  const SubSuperFontText(super.font,
+      {required super.text,
+      required this.color,
+      this.align = TextAlign.left,
+      this.tabs = 0,
+      required this.subSuper});
+
+  Widget scriptAlign(BuildContext context) {
+    if (subSuper == SubSuper.superscript) {
+      TextStyle style = font.instanceWithColor(color);
+      style = style.copyWith(
+        fontSize: style.fontSize! / 2,
+        height: 2,
+      );
+      return Align(
+          alignment: Alignment.topLeft,
+          child: Text(text, style: style, textAlign: align));
+    } else if (subSuper == SubSuper.subscript) {
+      TextStyle style = font.instanceWithColor(color);
+      style = style.copyWith(fontSize: style.fontSize! / 2, height: 2);
+      return Align(
+          alignment: Alignment.bottomLeft,
+          child: Text(text, style: style, textAlign: align));
+    } else {
+      return Text(text, style: font.instanceWithColor(color), textAlign: align);
+    }
+  }
+
+  @override
+  Widget element(BuildContext context) {
+    return wrapInTabs(tabs, align, scriptAlign(context));
+  }
+
+  @override
+  Widget fallback(BuildContext context) {
+    return wrapInTabs(tabs, align,
+        Text(text, style: font.fallbackWithColor(color), textAlign: align));
   }
 }
 

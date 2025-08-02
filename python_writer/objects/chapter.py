@@ -13,16 +13,16 @@ class ChapterStart:
         # self.index=None
         assert headline_text is not None
         self.headline_text = headline_text
-        self.part = None 
+        self.part = None
         # self.id = ChapterStart.create_var_name(self.headline_text)
         # self.display_name = ChapterStart.abbrev_name(headline_text.strip(), ChapterStart.DisplayMaxLen)
         # self.next = None
 
     def leadingTitleChapter():
         c= ChapterStart('Title')
-        c.index=0
-        c.display_name='>'
-        c.id='title'
+        # c.index=0
+        # c.display_name='>'
+        # c.id='title'
         return c
 
     # TODO: Delete
@@ -50,7 +50,10 @@ class ChapterStart:
         s = [c for c in text if c.isalpha()]
         s = ''.join(s)
         if len(s)==0:
-            return 'Sym'
+            # Convert symbols to text
+            import text_utils
+            spelled_text = text_utils.spell_out_symbols(text)
+            return spelled_text
         return s
 
     def align(self):
@@ -84,14 +87,14 @@ class Chapter:
         self.spans = spans
         self.index = None
         self.next = None
+        self.part = False
+        self.hidepart=False
         self.audio=None
         self.id = self.create_var_name(self.headline_text)
         self.bookmarks = [self.id]
         self.display_name = self.abbrev_name()
 
     def matches_bookmark(self, tag):
-        if tag == self.bookmark:
-            return True
         if tag in self.bookmarks:
             return True
 
@@ -104,10 +107,15 @@ class Chapter:
 
 
     # ======= Text Formatting ==================
-    def set_id(self, id):
-        id = self.create_var_name(id)
+    def set_id(self, orig_id):
+        id = self.create_var_name(orig_id)
         self.id = id
-        self.bookmarks.insert(0, self.id)
+        self.bookmarks.append(orig_id)
+        if id != orig_id:
+            self.bookmarks.append(id)
+
+    def add_id(self, id):
+        self.bookmarks.append(id)
     def filename(self):
         ixstr = f"{self.index}_" if self.index is not None else ""
         return f"part_{ixstr}{self.id}.bin"
@@ -197,6 +205,12 @@ class Chapter:
             bin += fmt.pack_none()
         else:
             bin += fmt.pack_int(self.next.index)
+
+        if self.part:
+            if self.hidepart:
+                bin += 'v'
+            else:
+                bin += '^'
 
         bin += '*'
 

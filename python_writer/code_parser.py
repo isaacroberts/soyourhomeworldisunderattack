@@ -36,7 +36,7 @@ if not any_code_tags:
     print('No code tags. Done.')
     common.save_spans(spans, 'spans_coded.json')
     print("TODO: You can't exit because you need to do chapters")
-    exit(0)
+    exit(1)
 else:
     pst.click()
     print('Has anything changed?')

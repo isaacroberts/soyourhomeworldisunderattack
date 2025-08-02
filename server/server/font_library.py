@@ -11,7 +11,7 @@ class FontLibrary:
             self.df = self.df.drop(columns=['path'])
         print(self.df)
 
-    def get_id(self, id):
+    def get_font_info(self, id):
         if id not in self.df.index:
             print('Missing font:', id)
             return json_response(error='Font not found', status_code=404)
@@ -38,6 +38,17 @@ class FontLibrary:
             if not isinstance(family, str):
                 family = str(family)
 
-            dic = {'id': id, 'family': family, 'file':file}
+            dict = {'id': id, 'family': family, 'file':file}
             # print('Returning FontInfo:"',dic, "'")
-            return dic
+            return dict
+    def family_to_id(self, family):
+        match = self.df['family']==family
+        print("family matches:")
+        match = self.df[match]
+        print(match)
+
+        # TODO: This doesn't help if there are multiple matches
+        row = match
+        dict = {'id': int(row.index[0]), 'family': family, 'file':row['file']}
+        print('Matched', family, 'to id:', dict)
+        return dict

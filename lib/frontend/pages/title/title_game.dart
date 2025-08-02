@@ -30,7 +30,8 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
   late final List<Offset> points;
   late final List<_Vel> vels;
 
-  late final timer;
+  late final Timer flameTimer;
+  late final Timer pointsTimer;
   int flameCt = 4;
 
   @override
@@ -40,20 +41,33 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
     super.initState();
     points = getPoints();
     vels = List.generate(points.length, (i) => _Vel.rand());
-    timer = Timer.periodic(const Duration(seconds: 1), timerCallback);
+    flameTimer = Timer.periodic(const Duration(seconds: 2), timerCallback);
+    pointsTimer = Timer.periodic(const Duration(milliseconds: 20), modPoints);
   }
 
   void timerCallback(Timer t) {
-    if (animationController.value > fireStart) {
-      setState(() {
-        flameCt += 1;
-      });
+    if (mounted) {
+      addFlame();
+    }
+  }
+
+  void addFlame() {
+    if (mounted) {
+      if (animationController.value > fireStart) {
+        if (flameCt < 10) {
+          setState(() {
+            flameCt += 1;
+          });
+        }
+      }
     }
   }
 
   @override
   void dispose() {
     animationController.dispose();
+    flameTimer.cancel();
+    pointsTimer.cancel();
     super.dispose();
   }
 
@@ -95,19 +109,21 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
     return true;
   }
 
-  void modPoints() {
-    for (int n = 0; n < points.length; ++n) {
-      double kcx = points[n].dx - widget.width / 2;
-      double kcy = points[n].dy - widget.height / 2;
-      //LMAO - the vels aren't updating
-      double dx = vels[n].dx;
-      double dy = vels[n].dy;
-      dx -= (kcx) * .005;
-      dy -= (kcy) * .005;
-      // vels[n].dx -= dx;
-      // vels[n].dy -= dy;
+  void modPoints(Timer timer) {
+    if (mounted) {
+      for (int n = 0; n < points.length; ++n) {
+        double kcx = points[n].dx - widget.width / 2;
+        double kcy = points[n].dy - widget.height / 2;
+        //LMAO - the vels aren't updating
+        double dx = vels[n].dx;
+        double dy = vels[n].dy;
+        dx -= (kcx) * .005;
+        dy -= (kcy) * .005;
+        // vels[n].dx -= dx;
+        // vels[n].dy -= dy;
 
-      points[n] = Offset(points[n].dx + dx, points[n].dy + dy);
+        points[n] = Offset(points[n].dx + dx, points[n].dy + dy);
+      }
     }
   }
 
@@ -119,10 +135,16 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
   bool get fireShowing => animationController.value >= fireStart;
 
   void firePressed() {
-    if (flameCt > 0 && flameCt < 20) {
-      setState(() {
-        flameCt -= 1;
-      });
+    if (flameCt > 0) {
+      if (flameCt > 10) {
+        setState(() {
+          flameCt = 10;
+        });
+      } else {
+        setState(() {
+          flameCt -= 1;
+        });
+      }
     }
   }
 
@@ -131,7 +153,6 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
   }
 
   Widget builder(BuildContext builder, Widget? previous) {
-    //TODO: You're supposed to do this off the graphics thread
     Size size = Size(widget.width, widget.height);
     Widget? button;
     if (flameCt == 0) {
@@ -140,10 +161,11 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
           onPressed: continueOn,
           child: const Text('Continue'));
     } else if (fireShowing) {
-      button = FilledButton(
-          key: const Key('putitout'),
-          onPressed: firePressed,
-          child: const Text('wtf put it out'));
+      button = FireButton(key: const Key("fireButton"), onPressed: firePressed);
+      // button = FilledButton(
+      //     key: const Key('putitout'),
+      //     onPressed: firePressed,
+      //     child: const Text('wtf put it out'));
     }
     // button ??= button = const FilledButton(
     //     key: const Key('blank'), onPressed: null, child: const Text('Blank'));
@@ -157,7 +179,6 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
             size: size,
             child: button);
 
-    modPoints();
     return SizedBox(
         width: widget.width,
         height: widget.height,
@@ -196,4 +217,55 @@ class _Vel {
 
 double _nrm(double x, double y) {
   return math.sqrt((x * x) + (y * y));
+}
+
+class FireButton extends StatefulWidget {
+  final VoidCallback? onPressed;
+  const FireButton({super.key, required this.onPressed});
+
+  @override
+  State<FireButton> createState() => _FireButtonState();
+}
+
+class _FireButtonState extends State<FireButton> {
+  bool orange = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    toggle();
+  }
+
+  void toggle() {
+    if (mounted) {
+      setState(() {
+        orange = !orange;
+      });
+      if (orange) {
+        Future.delayed(const Duration(milliseconds: 500), toggle);
+      } else {
+        Future.delayed(const Duration(milliseconds: 500), toggle);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (orange) {
+      return FilledButton(
+          style: Theme.of(context).filledButtonTheme.style?.copyWith(
+              backgroundColor: const WidgetStatePropertyAll(Color(0xfff6900a)),
+              foregroundColor: const WidgetStatePropertyAll(Colors.white)),
+          key: const Key('putitout_o'),
+          onPressed: widget.onPressed,
+          child: const Text('wtf put it out'));
+    } else {
+      return FilledButton(
+
+          key: const Key('putitout_n'),
+          onPressed: widget.onPressed,
+          child: const Text('wtf put it out'));
+    }
+  }
 }

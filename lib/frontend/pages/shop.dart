@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 
-import '../base_text_theme.dart';
 import '../icons.dart';
-import '../styles.dart';
+import '../theme/base_text_theme.dart';
+import '../theme/color_scheme.dart';
 
 class ShopItem {
   final String itemName;

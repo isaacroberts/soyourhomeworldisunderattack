@@ -125,8 +125,9 @@ class _TestRigScrollerState extends State<TestRigScroller> {
 
     return scaffold(
       context,
-      child: DebugReaderScreen(
-          key: Key('DbgRdr_chp${chapter.id}'), chapter: chapter),
+      child: SingleChildScrollView(
+          child: DebugReaderScreen(
+              key: Key('DbgRdr_chp${chapter.id}'), chapter: chapter)),
     );
   }
 }

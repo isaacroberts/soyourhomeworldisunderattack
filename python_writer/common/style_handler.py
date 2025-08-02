@@ -115,7 +115,6 @@ class StyleHandler:
             pass
         else:
             print(textprop.attrs)
-            other_tags = {'font-name': 'font-family'}
 
             for att in textprop.attrs:
                 parts = att.split(':')
@@ -127,13 +126,21 @@ class StyleHandler:
                     value = textprop.attrs[att]
                     font.set_value(tag, value)
                     print('set', tag, value, font)
-                elif tag in other_tags:
-                    meaning = other_tags[tag]
+                elif tag in RDR_ATTRIBUTES:
+                    # Attribute needs to be routed to different one
+                    meaning = RDR_ATTRIBUTES[tag]
                     value = textprop.attrs[att]
-                    font.set_value(meaning, value)
+                    if value is not None and len(value)>0:
+                        font.set_value(meaning, value)
                     print('set', tag, '('+meaning+')',value, font)
+                elif tag in UNWANTED_ATTRIBUTES:
+                    pass
                 else:
-                    UNHANDLED.add(att)
+                    value = textprop.attrs[att]
+                    print('Unhandled Att:')
+                    print(tag, ':', value, 'Attribute:', att)
+                    exit(1)
+                    UNHANDLED.add(tag)
 
         # Change Palatino Linotype -> Palatino
         if font.family == 'Palatino Linotype':
@@ -518,5 +525,6 @@ class StyleHandler:
             f.write(strr)
 
     def log(self):
-        # print UNHANDLED to logfile
-        pass
+        if (len(UNHANDLED)>0):
+            print("Unhandled attributes:")
+            print(UNHANDLED)

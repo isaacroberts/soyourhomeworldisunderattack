@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/colors.dart';
 import 'package:soyourhomeworld/frontend/elements/common_blocks.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/error_page_button.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 import 'package:soyourhomeworld/frontend/pages/base_error_page.dart';
+import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 class FourOhFourPage extends StatelessWidget {
   final String? whatsMissing;

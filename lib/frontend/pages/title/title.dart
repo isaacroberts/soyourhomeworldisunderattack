@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/colors.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/pages/title/title_copy.dart';
 import 'package:soyourhomeworld/frontend/pages/title/title_game.dart';
+import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 import '../../elements/holders/holder_base.dart';
+
+const bool showOnDebug = true;
 
 class TitlePage extends StatelessWidget {
   const TitlePage({super.key});
@@ -34,15 +37,18 @@ class TitleHolder extends Holder {
 class TitleWidget extends StatelessWidget {
   const TitleWidget({super.key});
 
-  Widget builder(BuildContext context, BoxConstraints constraints) {
+  @override
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    if (size.width < 600) {
-      //Put author name at the bottom of the screen
-      return SplashBgWidget(
-        width: size.width,
-        height: size.height,
-        key: const Key("SplashBGWidget"),
-      );
+
+    //My CPU is STRUGGLING
+    if (kDebugMode && !showOnDebug) {
+      return SizedBox(
+          width: size.width,
+          height: size.height,
+          child: const TitleFallbackWidget(
+            key: Key('TitleLowCPU'),
+          ));
     } else {
       //Standard Title & AUthor name
       return SplashBgWidget(
@@ -51,11 +57,6 @@ class TitleWidget extends StatelessWidget {
         key: const Key("SplashBGWidget"),
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: builder);
   }
 }
 

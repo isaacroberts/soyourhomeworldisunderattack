@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../backend/utils.dart';
-import '../../human_jack_theme.dart';
+import '../../theme/human_jack_theme.dart';
 import '../custom_code/ad_widget.dart';
 
 class HumanJackPartyStillGoing extends StatelessWidget {

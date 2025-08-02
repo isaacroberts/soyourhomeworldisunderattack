@@ -2,7 +2,7 @@
 shopt -s expand_aliases
 source ~/.profile
 
-if [ $# -eq 0 ]
+if [[ $# -eq 0 ]];
   then
     echo "No arguments supplied"
     echo "Must provide input ODT"
@@ -10,10 +10,12 @@ if [ $# -eq 0 ]
 fi
 
 
-dir= pwd
-if [ $dir -ne "/home/titzak/Documents/McKinsey Plan/webapp/python_writer" ]
+dir=`pwd`
+
+if [[ $dir != "/home/titzak/Documents/McKinsey Plan/soyourhomeworldisunderattack/python_writer" ]];
 then
   echo "Must be in python_writer directory!"
+  echo "You are in: $dir"
   exit 1
 fi
 
@@ -23,7 +25,7 @@ echo cp "$odt_file" temp/
 cp "$odt_file" temp/
 odt_file=temp/${odt_file##*/}
 echo "$odt_file"
-# exit 0
+
 
 # Remove ext
 dir="${odt_file%.*}"
@@ -32,15 +34,13 @@ dir="${odt_file%.*}"
 rm -r log/
 mkdir log/
 
-# Generated folder
-mkdir -p generated
-
 # Remove existing unzipped book
 rm -r "$dir" #2>/dev/null
 mkdir -p "$dir"
 
 # Unzip BookTitle.odt
 unzip "$odt_file" -d "$dir" &&
+
 # BookTitle/**
 python reader.py "$dir" &&
 # spans_raw.json && fonts_raw.json
@@ -66,7 +66,7 @@ python chaptered_writer.py &&
 echo "Fmt runner done" &&
 
 ./move.sh &&
-echo "Moved" && 
+echo "Moved" &&
 
 notify
 

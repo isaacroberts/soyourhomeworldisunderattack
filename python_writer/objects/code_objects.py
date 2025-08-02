@@ -294,8 +294,6 @@ class CodeMarker: # Inherits: Font
         return False
     def isZombie(self):
         return False
-    def isBodyMinusAlign(self):
-        return False
     def isBodyMinusColor(self):
         return False
     def hasColor(self):

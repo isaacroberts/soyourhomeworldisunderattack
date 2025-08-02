@@ -126,13 +126,14 @@ class _ScrollerPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: ViewSettings.instance, builder: builder);
+        listenable: ViewSettings.instance.infiniteScrollNotifier,
+        builder: builder);
   }
 
   Widget builder(BuildContext context, Widget? child) {
     ViewSettings settings = ViewSettings.instance;
     dev.log("Rebuilding scroller door");
-    if (settings.useTestRig) {
+    if (settings.useTestRig && !settings.useInfiniteScroll) {
       return DeferredPage(
           loader: () => rig_lib.loadLibrary(),
           builder: (context) => rig_lib.TestRigScroller(
@@ -149,6 +150,7 @@ class _ScrollerPicker extends StatelessWidget {
                 startChapter: startChapter,
               ));
     } else {
+      //TODO: Put DebugReader on PagingScroller
       return McScaffold(
           source: 'scroll',
           key: Key("!ScrollEntry${book.id}_$startChapter"),

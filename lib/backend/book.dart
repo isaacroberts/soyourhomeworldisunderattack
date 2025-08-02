@@ -44,6 +44,7 @@ class Book {
   final String title;
   final Color color;
   final List<ChapterHolder> chapters;
+  Iterable<ChapterHolder> get parts => chapters.where((p) => p.isPart);
   final String byline;
 
   Book(

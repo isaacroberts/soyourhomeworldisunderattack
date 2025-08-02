@@ -1,59 +1,12 @@
-import 'dart:developer' as dev;
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/binary_utils/binary.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/backend/font_interm.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
+import 'package:soyourhomeworld/backend/text_utils.dart';
+import 'package:soyourhomeworld/frontend/theme/styles.dart';
 
-import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/buffer_ptr.dart';
-
-class Wousi {
-  late final int weight;
-  late final bool italic;
-  late final bool underline;
-  late final bool overline;
-  //TODO: Needs sub/superscript
-  late final bool strikethrough;
-
-  Wousi.basic()
-      : weight = 500,
-        italic = false,
-        underline = false,
-        overline = false,
-        strikethrough = false;
-
-  bool isBasic() {
-    return weight == 500 &&
-        !italic &&
-        !underline &&
-        !overline &&
-        !strikethrough;
-  }
-
-  Wousi.fromByte(int byte) {
-    if (byte < 15) {
-      // throw FontException("Invalid Wousi byte: Weight=0. (byte=$byte)",
-      //     family: '?');
-      dev.log("Invalid Wousi byte: Weight=0. (byte=$byte)");
-      //Invalid Weight
-      weight = 500;
-      italic = false;
-      overline = false;
-      underline = false;
-      strikethrough = false;
-    } else {
-      italic = (byte & 0x1) > 0;
-      strikethrough = (byte & 0x2) > 0;
-      underline = (byte & 0x4) > 0;
-      overline = (byte & 0x8) > 0;
-      weight = math.max(math.min(byte ~/ 16, 9), 1) * 100;
-    }
-  }
-}
 
 class LiveFont {
   // FontInterm? font;
@@ -69,14 +22,17 @@ class LiveFont {
   double? size;
 
   Color? bgCol, fontCol;
-  Wousi? wousi;
+  WousiByte? wousi;
+
+  SubSuper subSuper = SubSuper.normal;
 
   bool isBody() {
     return (fontId == 0) &&
         (size == null || size == 12) &&
         (bgCol == null) &&
         (fontCol == null) &&
-        (wousi?.isBasic() ?? true);
+        (wousi?.isBasic() ?? true) &&
+        (subSuper.isNormal);
   }
 
   bool isStandardHeader() {
@@ -84,16 +40,19 @@ class LiveFont {
         (size == null || size == 24) &&
         (bgCol == null) &&
         (fontCol == null) &&
-        (wousi?.isBasic() ?? true);
+        (wousi?.isBasic() ?? true) &&
+        (subSuper.isNormal);
   }
 
-  Wousi parseWousiByte(int byte) {
+  WousiByte parseWousiByte(int byte) {
     //Weight Overline Underline Strikethru Italic
-    return Wousi.fromByte(byte);
+    return WousiByte(byte);
+    // return Wousi.fromByte(byte);
   }
 
   void setWousiByte(int byte) {
-    wousi = parseWousiByte(byte);
+    wousi = WousiByte(byte);
+    // wousi = parseWousiByte(byte);
   }
 
   void setAlignFromChar(String char, int debugPos) {
@@ -113,6 +72,7 @@ class LiveFont {
     }
   }
 
+//TODO: Move parser to separate file from Wousi (which is needed for all text display)
   BufferPtr parseFont(BufferPtr ptr) {
     // dev.log('Font = ${ptr.start} ${ptr.getChar()}');
     if (ptr.getChar() == ';') {
@@ -120,14 +80,70 @@ class LiveFont {
       // family = "Palatino";
       fontId = 0;
       size = 12;
-      wousi = Wousi.basic();
+      wousi = const WousiByte.basic();
       return ptr;
     } else {
-      fontId = ptr.consumeTypedInt()!;
+      ptr.assertConsume('f', debugId: 'font');
+      fontId = ptr.consumeUint32();
+      ptr.assertConsume('s', debugId: 'font');
       size = ptr.consumeFloat32();
+      ptr.assertConsume('w', debugId: 'font');
       int wousiByte = ptr.consumeUint8();
       wousi = parseWousiByte(wousiByte);
+      String char = ptr.getChar(0);
+      //Sub/super script
+      if (char == '^') {
+        subSuper = SubSuper.superscript;
+        ptr.consume(1);
+      } else if (char == 'v') {
+        subSuper = SubSuper.subscript;
+        ptr.consume(1);
+      } else {
+        subSuper = SubSuper.normal;
+      }
       return ptr;
+    }
+  }
+
+  void parseFragFont(BufferPtr data) {
+    // b += '('
+    //already parsed
+
+    // b += pack_font {
+    // b += pack_text(font.family)
+    // family = data.consumeText(leadingQuoteAlreadyParsed: false);
+    // b += pack_untyped_uint(ffid)
+    data.assertConsume('f', debugId: 'font');
+    fontId = data.consumeUint32();
+    // b += pack_untyped_float(font.size)
+    data.assertConsume('s', debugId: 'font');
+    size = data.consumeFloat32();
+    // b += pack_wousi(font)
+    data.assertConsume('w', debugId: 'font');
+    wousi = parseWousiByte(data.consumeUint8());
+
+    //Sub/super
+    if (data.getChar() == '^') {
+      subSuper = SubSuper.superscript;
+      data.consume(1);
+    } else if (data.getChar() == 'v') {
+      subSuper = SubSuper.subscript;
+      data.consume(1);
+    }
+
+    //   if font.hasBgCol():
+    //   b += '&'
+    if (data.consumeIf(Codes.AMPERSAND)) {
+      //   b += pack_hex(font.bgCol)
+      bgCol = data.consumeColor(throwOnFail: false);
+      //     if font.hasColor():
+      if (data.consumeIf(Codes.AMPERSAND)) {
+        //     b += '&'
+
+        //     b += pack_hex(font.fontCol)
+        fontCol = data.consumeColor();
+        // dev.log("(Bin) Read Frag.FontCol: $fontCol");
+      }
     }
   }
 
@@ -190,42 +206,11 @@ class LiveFont {
     }
   }
 
-  void parseFragFont(BufferPtr data) {
-    // b += '('
-    //already parsed
-
-    // b += pack_font {
-    // b += pack_text(font.family)
-    // family = data.consumeText(leadingQuoteAlreadyParsed: false);
-    // b += pack_untyped_uint(ffid)
-    fontId = data.consumeTypedInt();
-    // b += pack_untyped_float(font.size)
-    size = data.consumeFloat32();
-    // b += pack_wousi(font)
-    wousi = parseWousiByte(data.consumeUint8());
-
-    //   if font.hasBgCol():
-    //   b += '&'
-    if (data.consumeIf(Codes.AMPERSAND)) {
-      //   b += pack_hex(font.bgCol)
-      bgCol = data.consumeColor(throwOnFail: false);
-      //     if font.hasColor():
-      if (data.consumeIf(Codes.AMPERSAND)) {
-        //     b += '&'
-
-        //     b += pack_hex(font.fontCol)
-        fontCol = data.consumeColor();
-        // dev.log("(Bin) Read Frag.FontCol: $fontCol");
-      }
-    }
-  }
-
   FontInterm convertToFontInterm() {
     return FontInterm(
         fileId: fontId ?? 0,
         size: size ?? 12,
-        italic: wousi?.italic ?? false,
-        weight: wousi?.weight,
+        wousi: wousi ?? const WousiByte.basic(),
         color: fontCol);
   }
 }
@@ -239,7 +224,7 @@ class LiveTextHolder {
 
   // @override
   // Widget element(BuildContext context) {
-  //   return const CircularProgressIndicator();
+  //   return const TriWizardLoader();
   // }
 
   BufferPtr parseFont(BufferPtr data) {
@@ -248,6 +233,14 @@ class LiveTextHolder {
 
   TextHolder instantiate() {
     // a function that matches param amounts to object types
+    // dev.log("Holder SubSuper = ${font.subSuper}");
+    if (!font.subSuper.isNormal) {
+      return SubSuperFontText(font.convertToFontInterm(),
+          text: text,
+          color: font.bgCol ?? Colors.transparent,
+          subSuper: font.subSuper);
+    }
+
     if (font.isBody()) {
       if (font.changedAlign || font.tabs > 0) {
         return AlignedBodyText(text: text, align: font.align, tabs: font.tabs);
@@ -277,30 +270,39 @@ class LiveTextHolder {
   }
 }
 
-class LiveFragment extends FragOfText {
+class LiveFragment {
   String text = '';
   LiveFont font = LiveFont();
 
-  @override
-  InlineSpan span(BuildContext context) {
-    return const WidgetSpan(child: CircularProgressIndicator());
-  }
+  LiveFragment();
 
   FragOfText convert() {
-    if (font.isBody()) {
+    if (!font.subSuper.isNormal) {
+      return FragSubSuper(text, font.convertToFontInterm(),
+          color: font.bgCol, subSuper: font.subSuper);
+    } else if (font.isBody()) {
       return FragBody(text);
     } else {
       FontInterm f = font.convertToFontInterm();
-      return FragCustom(text, f, color: font.bgCol);
+      return FragCustom(text, f, bgColor: font.bgCol);
     }
   }
 }
 
+class FragWrapper extends LiveFragment {
+  ///Wrapped to reduce polymorphism in LiveFragment
+  final FragOfText frag;
+
+  FragWrapper(this.frag);
+  @override
+  FragOfText convert() {
+    return frag;
+  }
+}
+
 //Assumed to be a paragraph.
-//TODO: I don't think this needs to extend Holder
-// It may not need to be an object.
-class LiveSpanOfText extends Holder {
-  List<FragOfText> lines;
+class LiveSpanOfText {
+  List<LiveFragment> lines;
   TextAlign align;
   int tabs;
   LiveSpanOfText()
@@ -311,11 +313,7 @@ class LiveSpanOfText extends Holder {
 
   Iterable<FragOfText> mapFunc() sync* {
     for (var frag in lines) {
-      if (frag is LiveFragment) {
-        yield frag.convert();
-      } else {
-        yield frag;
-      }
+      yield frag.convert();
     }
   }
 
@@ -325,15 +323,5 @@ class LiveSpanOfText extends Holder {
 
   SpanOfText convert() {
     return SpanOfText(spans: convertLines(), align: align, tabs: tabs);
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    return const CircularProgressIndicator();
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return const CircularProgressIndicator();
   }
 }

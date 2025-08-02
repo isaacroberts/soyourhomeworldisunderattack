@@ -8,7 +8,7 @@ import 'package:soyourhomeworld/frontend/elements/widgets/ad_human_jacks.dart';
 
 import '../../../backend/utils.dart';
 import '../../elements/custom_code/ad_widget.dart';
-import '../../human_jack_theme.dart';
+import '../../theme/human_jack_theme.dart';
 
 class AdServeWidget extends StatefulWidget {
   const AdServeWidget({super.key});

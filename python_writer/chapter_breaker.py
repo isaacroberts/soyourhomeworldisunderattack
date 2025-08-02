@@ -12,7 +12,12 @@ pst.DEBUG=False
 pst.use_logger(print)
 logger_start('chapter_breaker')
 
+"""
+Handles splitting spans into chapters,
+programmatic keywords, bookmarks, links, etc
 
+
+"""
 pst.click()
 print('Have chapters changed?')
 r= pst.response('y/n')
@@ -104,16 +109,48 @@ def remove_invisible_headline(chapter):
             elif r=='d':
                 return None
 
-user_inputted_bookmarks = {}
+# user_inputted_bookmarks = {}
 
 def silent_match_chapter(bookmark):
-    if bookmark in user_inputted_bookmarks:
-        return user_inputted_bookmarks[bookmark]
+    # if bookmark in user_inputted_bookmarks:
+    #     return user_inputted_bookmarks[bookmark]
     # Try all bookmarks
     for chapter in chapters:
-        if bookmark in chapter.bookmarks:
+        if chapter.matches_bookmark(bookmark):
             return chapter
     return None
+
+
+def manually_select_bookmark_match(bookmark):
+
+    print('Looking for:', bookmark)
+    correction = None
+
+    for i in range(len(chapters)):
+        print(i, chapters[i].bookmarks)
+
+    while correction is None:
+        r = pst.saveable_response("Select", bookmark, 'id')
+        if r=='x':
+            exit(1)
+        elif r=='p':
+            for i in range(len(chapters)):
+                print(i, chapters[i].bookmarkS)
+
+        else:
+            try:
+                ix = int(r)
+                if ix < len(chapters):
+                    correction = chapters[ix].bookmark
+                else:
+                    print('Ix out of range:', ix, '/', len(chapters))
+            except:
+                correction = silent_match_chapter(r)
+                if correct is None:
+                    print("Not found.")
+
+    # Give up
+    raise ValueError(f"Bookmark: {bookmark} not found in chapter bookmarks")
 
 
 # Adds expanded searching
@@ -156,34 +193,7 @@ def chapter_from_bookmark(bookmark):
                 if r=='y':
                     return chapter
 
-        print('Looking for:', bookmark)
-        correction = None
-
-        for i in range(len(chapters)):
-            print(i, chapters[i].bookmarks)
-
-        while correction is None:
-            r = pst.saveable_response("Select", bookmark, 'id')
-            if r=='x':
-                exit(1)
-            elif r=='p':
-                for i in range(len(chapters)):
-                    print(i, chapters[i].bookmarkS)
-
-            else:
-                try:
-                    ix = int(r)
-                    if ix < len(chapters):
-                        correction = chapters[ix].bookmark
-                    else:
-                        print('Ix out of range:', ix, '/', len(chapters))
-                except:
-                    correction = silent_match_chapter(r)
-                    if correct is None:
-                        print("Not found.")
-
-        # Give up
-        raise ValueError(f"Bookmark: {bookmark} not found in chapter bookmarks")
+        return manually_select_bookmark_match(bookmark)
 
 
 print('Adding labels:')
@@ -211,6 +221,17 @@ for chapter in chapters:
         i += 1
 
 print("Misc Keywords")
+
+def read_param(params, key):
+    for param in params:
+        if param.startswith(key):
+            value = param.replace(key, '')
+            value = value.strip()
+            if value.startswith('='):
+                value = value[1:]
+                value = value.strip()
+            return value
+    return None
 
 for chapter in chapters:
     i=0
@@ -244,9 +265,15 @@ for chapter in chapters:
                 chapter.spans.pop(i)
                 i-=1
             elif obj == 'Part':
-                partname = span.params[0]
-                chapter.part = partname
-                print("Part:", partname)
+                chapter.part = True
+                hide = read_param(span.params, 'Hide')
+                if hide is None:
+                    hide = False
+                elif hide=='1':
+                    hide = True
+                else:
+                    hide = False
+                chapter.hidepart = hide
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
@@ -277,11 +304,35 @@ for chapter in chapters:
             assert False, f'Unhandled Keyword: "{obj}"'
         i += 1
 
+# Ensure varname uniqueness
+print("Checking varname uniqueness")
+varnames = set()
 
-# Prevent recursion in nexts
+def resolve_varname(varname):
+    if varname in varnames:
+
+        # Add numbers
+        i=2
+        while True:
+            try_var = varname+str(i)
+            if try_var not in varnames:
+                print("Renamed Chapter", varname, 'to', try_var)
+                return try_var
+            i+=1
+    else:
+        return varname
+
+# Collect varnames
+for chapter in chapters:
+    chapter.id = resolve_varname(chapter.id)
+    varnames.add(chapter.id)
+
+print("Preparing for pickle")
+
+# Prevent pickling recursion in nexts
 for chapter in chapters:
     if chapter.next is not None:
-        chapter.next = chapter.next.id 
+        chapter.next = chapter.next.id
 
 pst.print_and_save_responses('data/chapterbreaker_responses')
 

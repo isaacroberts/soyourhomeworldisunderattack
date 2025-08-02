@@ -5,8 +5,9 @@ import '../../backend/book.dart';
 import '../../backend/chapter.dart';
 import '../book_waiter.dart';
 import '../elements/scaffold.dart';
-import '../extra_styles.dart';
+import '../theme/extra_styles.dart';
 
+/*
 class IndexWidget extends StatelessWidget {
   const IndexWidget({super.key});
 
@@ -21,25 +22,26 @@ class IndexWidget extends StatelessWidget {
           if (ix >= book.chapterAmt) {
             return null;
           }
+          ChapterHolder chapter = book.chapters[ix];
           return ListTile(
-              title: Text(book.getChapterName(ix)),
+              leading: Checkbox(value: chapter.isPart, onChanged: null),
+              title: Text(chapter.displayName),
               onTap: () {
                 context.go('/scroll/$ix');
-                // context.goNamed('/scroll',
-                //     pathParameters: {'chid': ix.toString()});
               });
         });
   }
 }
-
+*/
 class IndexPage extends StatelessWidget {
   const IndexPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return const PartedSearchIndexWidget(searchTerm: null);
     return const SearchIndexPage();
-    return const McScaffold(
-        source: 'index', child: StdBookWaiter(child: IndexWidget()));
+    // return const McScaffold(
+    //     source: 'index', child: StdBookWaiter(child: IndexWidget()));
   }
 }
 
@@ -49,6 +51,10 @@ class SearchIndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return McScaffold(
+        source: 'search',
+        child: StdBookWaiter(
+            child: PartedSearchIndexWidget(searchTerm: searchTerm)));
     return McScaffold(
         source: 'search',
         child: StdBookWaiter(child: SearchIndexWidget(searchTerm: searchTerm)));
@@ -165,6 +171,131 @@ class _SearchIndexWidgetState extends State<SearchIndexWidget> {
   }
 }
 
+class PartedSearchIndexWidget extends StatefulWidget {
+  /*
+      The index, but with a searched term that was not found
+
+      Also uses parts
+
+      [SearchIcon]  _desert_____
+
+      1. Rachel
+      2. Sarah
+      3. Nevada [Desert]
+   */
+  final String? searchTerm;
+
+  const PartedSearchIndexWidget({super.key, required this.searchTerm});
+
+  @override
+  State<PartedSearchIndexWidget> createState() =>
+      _PartedSearchIndexWidgetState();
+}
+
+class _PartedSearchIndexWidgetState extends State<PartedSearchIndexWidget> {
+  // late final TextEditingController controller;
+  // String? currentSearchTerm;
+  late final SearchController controller;
+  late final List<PartListTile> listTiles;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = SearchController();
+    controller.text = widget.searchTerm ?? '';
+    // listTiles = splitParts(Book.of(context));
+  }
+
+  @override
+  void didChangeDependencies() {
+    listTiles = splitParts(Book.of(context));
+    super.didChangeDependencies();
+  }
+
+  Iterable<ChapterHolder> suggestions(SearchController controller) sync* {
+    Book? book = Book.maybeOf(context);
+    if (book == null) {
+      return;
+    }
+    for (PartListTile part in listTiles) {
+      if (part.chapter.matchesSearchTerm(controller.text)) {
+        yield part.chapter;
+      } else {
+        // for (ChapterHolder chapter in book.chapters) {
+        //   if (chapter.displayName.contains(controller.text)) {
+        //     yield chapter;
+        //   }
+        // }
+      }
+    }
+  }
+
+  Iterable<Widget> suggestionBuilder(
+      BuildContext context, SearchController controller) {
+    return suggestions(controller).map((ChapterHolder chapter) =>
+        _SearchedChapter(chapter: chapter.info, searchTerm: controller.text));
+  }
+
+  Iterable<Widget> blankSuggestions(
+      BuildContext context, SearchController controller) {
+    return [];
+  }
+
+  Widget barBuilder(BuildContext context, SearchController controller) {
+    return SearchAnchor.bar(
+      suggestionsBuilder: blankSuggestions,
+      // controller: controller,
+      onTap: controller.openView,
+      isFullScreen: true,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            key: const Key('index_main_col'),
+            children: [
+          SearchAnchor.bar(
+            isFullScreen: true,
+            barHintText: 'Search chapters',
+
+            // barHintText: 'Chapter titles',
+
+            // builder: barBuilder,
+            suggestionsBuilder: blankSuggestions,
+            // viewLeading: Text("Search widget"),
+            // viewTrailing: listTiles,
+          ),
+          Expanded(
+              key: const Key('index_expanded'),
+              child: ListView(
+                key: const Key('SearchWidget'),
+                children: listTiles,
+              )),
+        ]));
+    /*
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      SearchBar(
+        key: const Key("IndexSearchBar"),
+        controller: controller,
+        leading: const Icon(Icons.search),
+        onChanged: onTextChange,
+      ),
+      Expanded(
+          child: SearchedIndexWidget(
+        key: const Key('SearchWidget'),
+        searchTerm: currentSearchTerm,
+      )),
+    ]);
+
+     */
+  }
+}
+
 class SearchedIndexWidget extends StatelessWidget {
   final String? searchTerm;
   const SearchedIndexWidget({super.key, this.searchTerm});
@@ -178,10 +309,12 @@ class SearchedIndexWidget extends StatelessWidget {
     if (ix >= book.chapterAmt) {
       return null;
     }
+    ChapterHolder chapter = book.chapters[ix];
     return ListTile(
         // key: Key('SearchIndexChp$ix'),
+        leading: Checkbox(value: chapter.isPart, onChanged: null),
         title: SearchedText(
-          text: book.getChapterName(ix),
+          text: chapter.displayName,
           searchTerm: searchTerm,
         ),
         onTap: () => goto(context, ix)
@@ -218,12 +351,100 @@ class _SearchedChapter extends StatelessWidget {
         //   text: chapter.displayName,
         //   searchTerm: searchTerm,
         // ),
-        leading: SizedBox.shrink(),
-        trailing: Icon(Icons.book_online, size: 25),
+        leading: const SizedBox.shrink(),
+        trailing: const Icon(Icons.book_online, size: 25),
         onTap: () => goto(context)
         // context.goNamed('/scroll',
         //     pathParameters: {'chid': ix.toString()});
         );
+  }
+}
+
+List<PartListTile> splitParts(Book book) {
+  ChapterHolder? lastPart;
+  int lastIx = 0;
+  List<PartListTile> parts = [];
+
+  for (int n = 0; n < book.chapterAmt; ++n) {
+    if (book.chapters[n].isPart) {
+      if (lastPart != null) {
+        parts.add(PartListTile(
+            key: Key('Part_${lastPart.id}'),
+            chapter: lastPart,
+            subChapters: book.chapters.sublist(lastIx + 1, n)));
+      }
+      lastPart = book.chapters[n];
+      lastIx = n;
+    }
+  }
+  if (lastPart != null) {
+    parts.add(PartListTile(
+        key: Key('Part_${lastPart.id}'),
+        chapter: lastPart,
+        subChapters: book.chapters.sublist(lastIx + 1)));
+  }
+  //Remove hidden parts
+  parts = parts.where((e) => !e.chapter.info.hidePart).toList(growable: false);
+
+  return parts;
+}
+
+class PartListTile extends StatefulWidget {
+  final ChapterHolder chapter;
+  final List<ChapterHolder> subChapters;
+  const PartListTile(
+      {super.key, required this.chapter, required this.subChapters});
+
+  @override
+  State<PartListTile> createState() => _PartListTileState();
+}
+
+class _PartListTileState extends State<PartListTile> {
+  ChapterHolder get chapter => widget.chapter;
+
+  Widget subTile(ChapterHolder sub) {
+    return ListTile(
+        key: Key('subChapterTile_${sub.id}'),
+        leading: const SizedBox(
+          width: 25,
+        ),
+        onTap: () => context.go('/scroll/${sub.id}'),
+        title: Text(
+          sub.displayName,
+        ));
+  }
+
+  void gotoPart() {
+    context.go('/scroll/${chapter.id}');
+  }
+
+  Widget goButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: gotoPart,
+      child: const Text('Read'),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    assert(chapter.isPart);
+
+    return ExpansionTile(
+      key: const Key('partExpansionTile'),
+      title: Text(widget.chapter.displayName),
+      // leading: SizedBox.shrink(),
+      internalAddSemanticForOnTap: true,
+
+// controller: ExpansibleController(),
+      controlAffinity: ListTileControlAffinity.leading,
+      // trailing: const Icon(
+      //     key: Key('partLeadingIcon'), RpgAwesome.bottom_right, size: 25),
+      trailing: goButton(context),
+      children: widget.subChapters.map(subTile).toList(growable: false),
+      // onTap: () => goto(context)
+      // context.goNamed('/scroll',
+      //     pathParameters: {'chid': ix.toString()});
+    );
   }
 }
 

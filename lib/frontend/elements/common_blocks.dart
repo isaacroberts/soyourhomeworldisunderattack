@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/colors.dart';
+import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
-import '../base_text_theme.dart';
 import '../icons.dart';
-import '../styles.dart';
+import '../theme/base_text_theme.dart';
+import '../theme/styles.dart';
 
 Widget blankHeader(BuildContext context) {
   return const Text('...', style: headerFont);

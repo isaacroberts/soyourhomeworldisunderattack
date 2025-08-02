@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../base_text_theme.dart';
+import '../../theme/base_text_theme.dart';
 
-const String titleText = "Help! My Home Planet is under Attack!";
+const String titleText = "Help! My Home World is under Attack!";
 const String authorText = "by Joseph Silverstein";
 
 class TitleTextWide extends StatelessWidget {

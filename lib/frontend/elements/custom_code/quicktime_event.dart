@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/styles.dart';
 
-import '../../base_text_theme.dart';
+import '../../theme/base_text_theme.dart';
 import '../holders/span_holding_code.dart';
 
 class QuicktimeEvent extends SpanHoldingCode {

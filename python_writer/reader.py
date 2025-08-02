@@ -63,7 +63,7 @@ sub_styles = content_soup.find_all('style:style')
 
 print(len(master_styles),'styles')
 # styles = styles[:60]
-# exit(0)
+
 style_handler = StyleHandler()
 
 #
@@ -369,9 +369,11 @@ print("Finding files")
 style_handler.find_files()
 
 print(style_handler.fonts)
-# exit(0)
 
 style_handler.write('fonts_raw.json')
+
+print("Log style handler:")
+style_handler.log()
 
 print('Writing')
 change_log_file('writing')

@@ -161,7 +161,7 @@ class InteractiveMatchingStep():
                         """
                         w = add ParsedBlock, a=add CustomBlock, z=add tag,
                         k = convert to keyword,
-                        d=delete, t=convert to mono_text, b=convert_to_body,
+                        d=delete, m=convert to mono_text, b=convert_to_body,
                         p=print, x=exit
                         """
 
@@ -169,7 +169,7 @@ class InteractiveMatchingStep():
                         if r=='p':
                             self.print_range(0, len(self.spans))
                             r = pst.saveable_response(prompt)
-                        if r=='t':# convert to mono text
+                        if r=='m':# convert to mono text
                             self.convert_to_text(i)
                             caught=True
                         elif r=='b': # convert to body
@@ -180,9 +180,6 @@ class InteractiveMatchingStep():
                             self.decrement()
                             caught=True
                         elif r=='a': # add CustomBlock
-                            # self._close_custom_block_if_open()
-                            # self.i = i
-                            # self._open_custom_block(i)
                             self.add_class(obj, 'b')
                             classType = 'b'
                         elif r=='k':
@@ -278,7 +275,7 @@ class InteractiveMatchingStep():
                                 assert False
                             if r=='p':
                                 self.print_range(0, len(self.spans))
-                                exit(0)
+                                exit(1)
                     else:
                         # No open BO
                         self._open_custom_block(i)

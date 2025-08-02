@@ -2,7 +2,7 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/colors.dart';
+import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 import '../../icons.dart';
 import '../holders/holder_base.dart';

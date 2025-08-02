@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../styles.dart';
-import '../../text_theme.dart';
+import '../../theme/styles.dart';
+import '../../theme/text_theme.dart';
 import '../holders/holder_base.dart';
 
 const List<String> _classes = [

@@ -1,66 +1,84 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ViewSettings extends ChangeNotifier {
+class ViewSettings {
   static ViewSettings instance = ViewSettings.defaultsThenLoad();
 
-  bool get useInfiniteScroll => _useInfiniteScroll;
+  bool get useInfiniteScroll => _useInfiniteScroll.value;
+  bool get useTestRig => _useTestRig.value;
+  bool get showFonts => _showFonts.value;
 
-  bool get useTestRig => _useTestRig;
-  bool get showFonts => _showFonts;
+  ValueNotifier<bool> get infiniteScrollNotifier => _useInfiniteScroll;
+  ValueNotifier<bool> get testRigNotifier => _useTestRig;
+  ValueNotifier<bool> get showFontsNotifier => _showFonts;
 
   set useInfiniteScroll(bool? set) {
     if (set != null && set != _useInfiniteScroll) {
-      _useInfiniteScroll = set;
-      notifyListeners();
+      _useInfiniteScroll.value = set;
       setAllSharedPrefs();
     }
   }
 
   set useTestRig(bool? set) {
-    if (set != null && set != _useTestRig) {
-      _useTestRig = set;
-      notifyListeners();
+    if (set != null && set != _useTestRig.value) {
+      _useTestRig.value = set;
       setAllSharedPrefs();
     }
   }
 
   set showFonts(bool? set) {
-    if (set != null && set != _showFonts) {
-      _showFonts = set;
-      notifyListeners();
+    if (set != null && set != _showFonts.value) {
+      _showFonts.value = set;
       setAllSharedPrefs();
     }
   }
 
-  bool _useInfiniteScroll;
-  bool _useTestRig;
-  bool _showFonts;
-
-  @override
-  void notifyListeners() {
-    dev.log("Notifying viewsettings change ${toString()}");
-    super.notifyListeners();
-  }
+  final ValueNotifier<bool> _useInfiniteScroll;
+  final ValueNotifier<bool> _useTestRig;
+  final ValueNotifier<bool> _showFonts;
 
   // ViewSettings.defaults()
   //     : _useInfiniteScroll = true,
   //       _useTestRig = false,
   //       _showFonts = true;
   ViewSettings.defaultsThenLoad()
-      : _useInfiniteScroll = true,
-        _useTestRig = false,
-        _showFonts = true {
+      : _useInfiniteScroll = ValueNotifier<bool>(true),
+        _useTestRig = ValueNotifier<bool>(false),
+        _showFonts = ValueNotifier<bool>(true) {
     getFromSharedPrefs();
   }
 
   ViewSettings.values(
       {bool? useInfiniteScroll, bool? useTestRig, bool? showFonts})
-      : _useInfiniteScroll = useInfiniteScroll ?? true,
-        _useTestRig = useTestRig ?? false,
-        _showFonts = showFonts ?? true;
+      : _useInfiniteScroll = ValueNotifier<bool>(useInfiniteScroll ?? true),
+        _useTestRig = ValueNotifier<bool>(useTestRig ?? false),
+        _showFonts = ValueNotifier<bool>(showFonts ?? true);
+
+  void subscribeToListeners(VoidCallback listener,
+      {bool? testRig, bool? infiniteScroll, bool? showFonts}) {
+    if (testRig ?? false) {
+      _useTestRig.addListener(listener);
+    }
+    if (infiniteScroll ?? false) {
+      _useInfiniteScroll.addListener(listener);
+    }
+    if (showFonts ?? false) {
+      _showFonts.addListener(listener);
+    }
+  }
+
+  void unsubscribeFromListeners(VoidCallback listener,
+      {bool? testRig, bool? infiniteScroll, bool? showFonts}) {
+    if (testRig ?? false) {
+      _useTestRig.removeListener(listener);
+    }
+    if (infiniteScroll ?? false) {
+      _useInfiniteScroll.removeListener(listener);
+    }
+    if (showFonts ?? false) {
+      _showFonts.removeListener(listener);
+    }
+  }
 
   @override
   String toString() {
@@ -72,21 +90,14 @@ class ViewSettings extends ChangeNotifier {
     bool? inf = prefs.getBool('inf');
     bool? rig = prefs.getBool('rig');
     bool? fonts = prefs.getBool('_showFonts');
-    bool changed = false;
-    if (inf != null && inf != _useInfiniteScroll) {
-      _useInfiniteScroll = inf;
-      changed = true;
+    if (inf != null && inf != useInfiniteScroll) {
+      _useInfiniteScroll.value = inf;
     }
-    if (rig != null && rig != _useTestRig) {
-      _useTestRig = rig;
-      changed = true;
+    if (rig != null && rig != useTestRig) {
+      _useTestRig.value = rig;
     }
-    if (fonts != null && fonts != _showFonts) {
-      _showFonts = fonts;
-      changed = true;
-    }
-    if (changed) {
-      notifyListeners();
+    if (fonts != null && fonts != showFonts) {
+      _showFonts.value = fonts;
     }
   }
 
@@ -100,27 +111,14 @@ class ViewSettings extends ChangeNotifier {
 
   void setAllSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('inf', _useInfiniteScroll);
-    prefs.setBool('rig', _useTestRig);
-    prefs.setBool('_showFonts', _showFonts);
+    prefs.setBool('inf', _useInfiniteScroll.value);
+    prefs.setBool('rig', _useTestRig.value);
+    prefs.setBool('_showFonts', _showFonts.value);
   }
 
   static bool staticUpdateShouldNotify(ViewSettings a, ViewSettings b) {
     return a.useTestRig != b.useTestRig ||
         a.useInfiniteScroll != b.useInfiniteScroll ||
         a.showFonts != b.showFonts;
-  }
-}
-
-class ViewSettingsWrapper extends StatelessWidget {
-  final Widget child;
-  const ViewSettingsWrapper({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-        listenable: ViewSettings.instance, builder: (context, w) => child);
-    // return ChangeNotifierProvider<ViewSettings>(
-    //     create: (context) => ViewSettings.instance, child: child);
   }
 }

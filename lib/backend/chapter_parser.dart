@@ -24,7 +24,7 @@ class ChapterParser {
   BufferPtr ptr;
 
   ChapterParser({required this.debugId, required this.ptr});
-
+/*
   Future<Chapter> parseChapter({required String filename}) async {
     dev.log("Parsing $filename (parse)");
     if (!ptr.hasMore()) {
@@ -35,7 +35,7 @@ class ChapterParser {
     Stream<Holder> spans = parseBody();
     return Chapter.fromChapterInfoAndStream(info, spans);
   }
-
+*/
   Future<Chapter> parseWithExistingChapterInfo(ChapterInfo info,
       {required bool handleErrors}) async {
     dev.log("Parsing ${info.varName} (fromExisting)");
@@ -80,6 +80,19 @@ class ChapterParser {
     ptr.assertConsume('>', debugId: varName);
     int? nextId = ptr.consumeTypedInt();
 
+    late bool isPart;
+    late bool hidePart;
+    if (ptr.consumeIf('^')) {
+      isPart = true;
+      hidePart = false;
+    } else if (ptr.consumeIf('v')) {
+      isPart = true;
+      hidePart = true;
+    } else {
+      isPart = false;
+      hidePart = false;
+    }
+
     // ptr += '*'
     ptr.assertConsume('*', debugId: varName);
     // ptr += pack_untyped_uint(file_size)
@@ -95,9 +108,12 @@ class ChapterParser {
         displayName: displayName ?? '[$varName]',
         filename: filename,
         varName: varName,
-        next: nextId);
+        next: nextId,
+        isPart: isPart,
+        hidePart: hidePart);
   }
 
+/*
   Future<ChapterInfo> parseHeader({required String filename}) async {
     ptr.assertConsume('\$', debugId: debugId);
     int index = ptr.consumeInt32();
@@ -126,7 +142,7 @@ class ChapterParser {
         filename: filename,
         next: null);
   }
-
+*/
   void skipToHeaderSeparator() {
     const String endHeaderToken = 'zoinks&';
     // consume Z first. If not, continue eating ampersands.
@@ -358,7 +374,7 @@ Elements:
 
   // ================ Spans ===========================
 
-  FragOfText? parseSpanFragment(LiveSpanOfText span, {BufferPtr? ptr}) {
+  LiveFragment? parseSpanFragment(LiveSpanOfText span, {BufferPtr? ptr}) {
     //TODO: Return codes would be nice for this
     ptr ??= this.ptr;
     if (printVerbose) {
@@ -370,7 +386,7 @@ Elements:
         dev.log('Parsing span fragment ${ptr.getChar()} ${ptr.start}');
       }
       if (ptr.consumeIf('b')) {
-        return parseFragColoredBox();
+        return FragWrapper(parseFragColoredBox());
       } else if (ptr.consumeIf('{')) {
         // dev.log('Fragging!');
         BufferPtr textBin = ptr.consumeUntil(Codes.RBRACE.code);

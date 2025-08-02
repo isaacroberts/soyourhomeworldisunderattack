@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/text_utils.dart';
 
-import '../frontend/base_text_theme.dart';
-import '../frontend/styles.dart';
+import '../frontend/theme/base_text_theme.dart';
+import '../frontend/theme/styles.dart';
 import 'font_cache.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +17,15 @@ class FontInterm {
   final int fileId;
   final double size;
   // final bool? bold;
-  final bool italic;
-  final int? weight;
+  // final bool italic;
+  // final int? weight;
+  bool get italic => wousi.italic;
+  bool get strikethrough => wousi.strikethrough;
+  bool get underline => wousi.underline;
+  bool get overline => wousi.overline;
+  int get weight => wousi.weight;
+  final WousiByte wousi;
+
   final Color? color;
 
   FontFile? file;
@@ -28,8 +36,9 @@ class FontInterm {
   FontInterm(
       {required this.fileId,
       required this.size,
-      required this.italic,
-      this.weight,
+      required this.wousi,
+      // required this.italic,
+      // this.weight,
       this.color});
 
   @override
@@ -59,53 +68,61 @@ class FontInterm {
   bool isFailed() => file?.failed() ?? false;
 
   FontWeight? get fontWeight {
-    if (weight == null) {
-      return null;
-    }
     if (fileId == 0) {
-      return FontCache.intToWeight(weight! - 100);
+      return FontCache.intToWeight(weight - 100);
     } else {
       return FontCache.intToWeight(weight);
     }
   }
 
   TextStyle instance() {
-    // dev.log("Color=$color");
     return TextStyle(
-        fontSize: size * fontScale,
-        fontWeight: fontWeight,
-        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color ?? textColor,
-        fontFamily: family);
+      fontFamily: family,
+      fontSize: size * fontScale,
+      fontWeight: fontWeight,
+      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+      color: color ?? textColor,
+      decoration: wousi.textDecoration(),
+      decorationColor: color ?? textColor,
+    );
   }
 
   TextStyle fallback() {
     return TextStyle(
-        fontSize: size * fontScale,
-        fontWeight: fontWeight,
-        color: color ?? fallbackTextColor,
-        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        fontFamily: fallbackFamily);
+      fontFamily: fallbackFamily,
+      fontSize: size * fontScale,
+      fontWeight: fontWeight,
+      color: color ?? fallbackTextColor,
+      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+      decoration: wousi.textDecoration(),
+      decorationColor: color ?? fallbackTextColor,
+    );
   }
 
-  TextStyle instanceWithColor(Color bgColor) {
+  TextStyle instanceWithColor(Color? bgColor) {
     return TextStyle(
-        fontSize: size * fontScale,
-        fontWeight: fontWeight,
-        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color ?? textColor,
-        fontFamily: family,
-        backgroundColor: bgColor);
+      fontFamily: family,
+      fontSize: size * fontScale,
+      fontWeight: fontWeight,
+      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+      color: color ?? textColor,
+      backgroundColor: bgColor,
+      decoration: wousi.textDecoration(),
+      decorationColor: color ?? textColor,
+    );
   }
 
-  TextStyle fallbackWithColor(Color bgColor) {
+  TextStyle fallbackWithColor(Color? bgColor) {
     return TextStyle(
-        fontSize: size * fontScale,
-        fontWeight: fontWeight,
-        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color ?? fallbackTextColor,
-        fontFamily: 'Rubik',
-        backgroundColor: bgColor);
+      fontSize: size * fontScale,
+      fontWeight: fontWeight,
+      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+      color: color ?? fallbackTextColor,
+      fontFamily: 'Rubik',
+      backgroundColor: bgColor,
+      decoration: wousi.textDecoration(),
+      decorationColor: color ?? fallbackTextColor,
+    );
   }
 
   //==== Internals ============
@@ -114,6 +131,38 @@ class FontInterm {
   Future<FontFile?> getFontFile() async {
     if (file == null) {
       return FontCache.getInstance().getFontFile(fileId);
+    }
+    return file;
+  }
+}
+
+class FontPremadeInterm {
+  final TextStyle style;
+  FontFile? file;
+
+  String get family => style.fontFamily!;
+
+  FontPremadeInterm({required this.style}) : assert(style.fontFamily != null);
+
+  String loadStatus() =>
+      file?.loadStatus() ?? (file == null ? "Null file" : 'Unfetched/Default');
+
+  Future load() async {
+    file ??= await getFontFile();
+    await file!.load();
+    return file!;
+  }
+
+  bool isLoaded() => file?.isLoaded() ?? false;
+
+  bool isDoneLoading() => file?.doneLoading() ?? true;
+
+  bool isFailed() => file?.failed() ?? false;
+
+  //TODO: Save this Future I think
+  Future<FontFile?> getFontFile() async {
+    if (file == null) {
+      return FontCache.getInstance().getFontFileFromFamily(family);
     }
     return file;
   }

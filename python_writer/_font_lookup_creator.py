@@ -60,7 +60,7 @@ class FontFile():
             print(self.family)
             print(e)
             print("!!!")
-            exit(0)
+            exit(1)
             return
         try:
             axes = font.get_variation_axes()
@@ -291,7 +291,7 @@ def read_table():
                 print('Bad font')
                 print('file:', font.file)
                 print('family:', font.family)
-                exit(0)
+                exit(1)
                 font=None
             else:
                 print(font)

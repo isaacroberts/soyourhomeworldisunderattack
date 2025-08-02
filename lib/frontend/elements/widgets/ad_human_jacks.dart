@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/wave_background.dart';
-import 'package:soyourhomeworld/frontend/human_jack_theme.dart';
+import 'package:soyourhomeworld/frontend/theme/human_jack_theme.dart';
 
 import '../../../backend/utils.dart';
 import '../custom_code/ad_widget.dart';

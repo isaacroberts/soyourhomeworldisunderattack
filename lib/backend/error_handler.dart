@@ -6,10 +6,10 @@ import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.da
 import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart'
     deferred as error_icon_lib;
 
-import '../frontend/base_text_theme.dart';
 import '../frontend/elements/holders/holder_base.dart';
-import '../frontend/styles.dart';
-import '../frontend/text_theme.dart';
+import '../frontend/theme/base_text_theme.dart';
+import '../frontend/theme/styles.dart';
+import '../frontend/theme/text_theme.dart';
 
 class ErrorList {
   static ErrorList instance = ErrorList();
@@ -81,13 +81,13 @@ class ErrorList {
 
   // === Snackbar ================
 
-  void _onSnackbarPressed(BuildContext context) {
-    context.go('error_page');
+  void _onSnackBarPressed(BuildContext context) {
+    context.go('/logger');
   }
 
-  SnackBar _errorSnackBar(BuildContext context, ExceptionHolder exep) {
-    String txt = exep.exception.toString();
-    String rt = exep.exception.runtimeType.toString();
+  SnackBar _errorSnackBar(BuildContext context, ExceptionHolder exception) {
+    String txt = exception.exception.toString();
+    String rt = exception.exception.runtimeType.toString();
     if (rt != 'String') {
       txt = '$rt:$txt';
     }
@@ -96,9 +96,9 @@ class ErrorList {
     }
     return SnackBar(
         action: SnackBarAction(
-            label: 'View', onPressed: () => _onSnackbarPressed(context)),
+            label: 'View', onPressed: () => _onSnackBarPressed(context)),
         backgroundColor: errorBg,
-        content: Text(txt, style: monoFont));
+        content: Text(txt, maxLines: 2, style: monoFont));
   }
 
   bool firstErrorOfType(ExceptionHolder exec) {

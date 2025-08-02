@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/font_interm.dart';
-import 'package:soyourhomeworld/frontend/colors.dart';
 import 'package:soyourhomeworld/frontend/elements/custom_code/ad_widget.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
-import '../base_text_theme.dart';
+import '../theme/base_text_theme.dart';
 import 'holders/holder_base.dart';
 import 'holders/span_holding_code.dart';
 import 'holders/textholders.dart';
+
+const Color debugColor = Color(0xff259f56);
+const Color debugDark = Color(0xff255137);
+const Color debugGrey = Color(0xff49715b);
 
 const TextStyle debugFont = TextStyle(
     fontFamily: 'Andale Mono', fontSize: 12, fontWeight: FontWeight.w300);
@@ -58,17 +61,19 @@ class KeyValueInspectorRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Flexible(
-                flex: 1,
                 child: Text(
-                  '$varKey ($type):',
-                  maxLines: 1,
-                  overflow: TextOverflow.visible,
-                  style: debugFont,
-                )),
+              varKey,
+              maxLines: 1,
+              overflow: TextOverflow.visible,
+              style: debugFont,
+            )),
             Flexible(
-              flex: 3,
-              child: valueDisplay(),
-            )
+                child: Text('($type):',
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                    style: debugFont.copyWith(color: const Color(0x8fffffff)),
+                    textAlign: TextAlign.left)),
+            Flexible(flex: 2, child: valueDisplay()),
           ],
         ));
   }
@@ -153,25 +158,43 @@ class TextInspectorRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: const Color(0x80ffffff), width: 1)),
-      height: 24 * 3,
-      child: SingleChildScrollView(
-          child: Text(
-        "'$text'",
-        style: debugFont,
-      )),
-    );
+    if (text.length > 50) {
+      return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: const Color(0x80ffffff), width: 1)),
+        height: 24 * 3,
+        child: SizedBox.expand(
+            child: SingleChildScrollView(
+                child: Text(
+          '"$text"',
+          //
+          style: bodyFont.copyWith(fontSize: 12),
+        ))),
+      );
+    } else {
+      return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: const Color(0x80ffffff), width: 1)),
+        height: 24,
+        child: SizedBox.expand(
+            child: Text(
+          '"$text"',
+          style: bodyFont.copyWith(fontSize: 12),
+        )),
+      );
+    }
   }
 }
 
 class ExpandoInspector extends StatefulWidget {
   final Widget unexpanded;
   final List<Widget> expanded;
-  // final expanded;
+  final bool startExpanded;
   const ExpandoInspector(
-      {super.key, required this.unexpanded, required this.expanded});
+      {required super.key,
+      required this.unexpanded,
+      required this.expanded,
+      required this.startExpanded});
 
   @override
   State<ExpandoInspector> createState() => _ExpandoInspectorState();
@@ -179,6 +202,13 @@ class ExpandoInspector extends StatefulWidget {
 
 class _ExpandoInspectorState extends State<ExpandoInspector> {
   bool expanded = false;
+
+  @override
+  void initState() {
+    expanded = widget.startExpanded;
+    super.initState();
+  }
+
   void _expand() {
     if (!expanded) {
       setState(() {
@@ -199,26 +229,38 @@ class _ExpandoInspectorState extends State<ExpandoInspector> {
   Widget build(BuildContext context) {
     if (!expanded) {
       return MaterialButton(
-        color: errorColor,
+        key: const Key('ExpandToggle'),
+        color: debugDark,
         padding: EdgeInsets.zero,
         onPressed: _expand,
         child: widget.unexpanded,
       );
     } else {
-      return MaterialButton(
-          padding: EdgeInsets.zero,
-          onPressed: _shrink,
-          child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: errorColor,
-                      width: 2,
-                      strokeAlign: BorderSide.strokeAlignOutside)),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: widget.expanded)));
+      List<Widget> children = [];
+      children.add(MaterialButton(
+        key: const Key('ExpandToggle'),
+        color: debugColor,
+        padding: EdgeInsets.zero,
+        onPressed: _shrink,
+        child: widget.unexpanded,
+      ));
+      for (Widget expand in widget.expanded) {
+        children.add(Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6), child: expand));
+      }
+
+      return Container(
+          decoration: BoxDecoration(
+              color: const Color(0x20000000),
+              border: Border.all(
+                  color: debugGrey,
+                  width: 2,
+                  strokeAlign: BorderSide.strokeAlignOutside)),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: children));
     }
   }
 }
@@ -230,6 +272,8 @@ class FontInspectorRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpandoInspector(
+        key: Key('Expando_Font${font.hashCode}'),
+        startExpanded: true,
         unexpanded: KeyValueInspectorRow(varKey: 'Font', value: font.family),
         expanded: [
           KeyValueInspectorRow(varKey: 'Family', value: font.family),
@@ -238,38 +282,17 @@ class FontInspectorRow extends StatelessWidget {
           KeyValueInspectorRow(varKey: 'Load Status', value: font.loadStatus()),
           KeyValueInspectorRow(varKey: 'Size', value: font.size),
           KeyValueInspectorRow(varKey: 'Color', value: font.color),
+          KeyValueInspectorRow(
+              varKey: 'Wousi', value: font.wousi.byte.toRadixString(16)),
           KeyValueInspectorRow(varKey: 'Weight', value: font.weight),
+          KeyValueInspectorRow(varKey: 'Overline', value: font.overline),
+          KeyValueInspectorRow(varKey: 'Underline', value: font.underline),
+          KeyValueInspectorRow(varKey: 'Strike', value: font.strikethrough),
           KeyValueInspectorRow(varKey: 'Italic', value: font.italic),
         ]);
   }
 }
 
-/*
-class StyleInspectorRow extends StatelessWidget {
-  final StyleType style;
-  const StyleInspectorRow({super.key, required this.style});
-
-  @override
-  Widget build(BuildContext context) {
-    TextStyle? font = styleTypeToStyle(style, context);
-    if (font == null) {
-      return KeyValueInspectorRow(varkey: 'StyleType', value: style.name);
-    }
-
-    return ExpandoInspector(
-        unexpanded:
-            KeyValueInspectorRow(varkey: 'StyleType', value: style.name),
-        expanded: [
-          KeyValueInspectorRow(varkey: 'StyleType', value: style.name),
-          KeyValueInspectorRow(varkey: 'Family', value: font.fontFamily),
-          KeyValueInspectorRow(varkey: 'Size', value: font.fontSize),
-          KeyValueInspectorRow(varkey: 'Color', value: font.color),
-          KeyValueInspectorRow(varkey: 'Weight', value: font.fontWeight),
-          KeyValueInspectorRow(varkey: 'Italic', value: font.fontStyle),
-        ]);
-  }
-}
-*/
 class FragInspector extends StatelessWidget {
   final FragOfText frag;
   const FragInspector(this.frag, {super.key});
@@ -291,6 +314,15 @@ class FragInspector extends StatelessWidget {
         TextInspectorRow(text: frag.text),
         FontInspectorRow(font: frag.font),
       ];
+    } else if (frag is FragSubSuper) {
+      return [
+        TextInspectorRow(text: frag.text),
+        FontInspectorRow(font: frag.font),
+        KeyValueInspectorRow(
+            varKey: 'SubSuper',
+            //Remove "SubSuper." from typename
+            value: frag.subSuper.toString().split('.').last)
+      ];
     } else if (frag is ColoredBoxFrag) {
       return [
         KeyValueInspectorRow(varKey: 'width', value: frag.width),
@@ -306,6 +338,8 @@ class FragInspector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpandoInspector(
+        key: Key('Expando_Frag${frag.hashCode}'),
+        startExpanded: false,
         unexpanded: KeyValueInspectorRow(
             varKey: 'Frag', value: frag.runtimeType.toString()),
         expanded: fuckoffIfLadder());
@@ -447,6 +481,7 @@ class _HolderInspectorState extends State<HolderInspector> {
         backgroundColor: HarveyColor.shade3,
         child: Container(
             width: 580,
+            margin: const EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
               color: const Color(0xff111111),
               border: Border.all(color: Colors.black),
@@ -461,8 +496,13 @@ class _HolderInspectorState extends State<HolderInspector> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(type, style: headerFont),
-                    // HeaderRow(header: HeaderOfText(type), readingLength: 1),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          type,
+                          maxLines: 1,
+                          style: headerFont,
+                        )),
                     Expanded(child: HolderInspectorNested(widget.holder))
                   ],
                 ))));
@@ -495,11 +535,12 @@ class HolderDebugDialog extends PopupRoute {
     return Align(
         alignment: Alignment(1 - nestLevel * .1, 0 + nestLevel * .1),
         child: FractionallySizedBox(
-            widthFactor: .5,
+            widthFactor: .75,
             child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                child: HolderInspector(holder: holder))));
+                child: AutomaticKeepAlive(
+                    child: HolderInspector(holder: holder)))));
   }
 
   @override

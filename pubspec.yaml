@@ -46,6 +46,8 @@ dependencies:
 #  intl:
   shared_preferences: ^2.5.3
 
+  # Needs an engine to properly do word wrap
+  auto_hyphenating_text: ^0.3.1
 
 dev_dependencies:
   flutter_test:

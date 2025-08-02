@@ -12,14 +12,14 @@ import sys
 sys.path.append("/home/titzak/scripts/")
 import python_script_tools as pst
 
-pst.use_logger(print)
-
-from common.fmt_writer_functions import *
-
 if __name__=="__main__":
     pst.DEBUG=False
 
 logger_start('fmt_writer')
+
+pst.use_logger(print)
+
+from common.fmt_writer_functions import *
 
 change_log_file('spans')
 
@@ -57,6 +57,7 @@ for chapter in chapters:
             print("Header", span.get_text())
             chapter.output += headerElement(span)
         elif span.isCode():
+            print("Code:", span)
             chapter.output += code_element(span)
         else:
             chapter.output += typedLine(span)

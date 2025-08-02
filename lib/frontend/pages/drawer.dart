@@ -56,25 +56,38 @@ class MenuDrawer extends StatelessWidget {
         listTiles.add(widget);
       }
     }
-    dev.log("ViewSettings values: ${ViewSettings.instance.toString()}");
-    listTiles.add(SwitchListTile(
-        title: const Text('Dev Rig'),
-        value: ViewSettings.instance.useTestRig,
-        onChanged: (b) => ViewSettings.instance.useTestRig = b));
-    // listTiles.add(SwitchListTile(
-    //     title: const Text('Infinite scroll'),
-    //     value: useInfiniteScroll,
-    //     onChanged: (b) => useInfiniteScroll = b));
-    listTiles.add(SwitchListTile(
-        title: const Text('Fonts'),
-        value: ViewSettings.instance.showFonts,
-        onChanged: (b) => ViewSettings.instance.showFonts = b));
-    //Drawer
+    listTiles.add(NotifiedSwitch(
+      label: 'Dev Rig',
+      value: ViewSettings.instance.testRigNotifier,
+    )); // listTiles.add(SwitchListTile(
+    listTiles.add(NotifiedSwitch(
+      label: 'Fonts',
+      value: ViewSettings.instance.showFontsNotifier,
+    )); //Drawer
     return Drawer(
         key: const ValueKey('MenuDrawer'),
         child: ListView(
           children: listTiles,
         ));
+  }
+}
+
+class NotifiedSwitch extends StatelessWidget {
+  final String label;
+  final ValueNotifier<bool> value;
+
+  const NotifiedSwitch({super.key, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(listenable: value, builder: builder);
+  }
+
+  Widget builder(BuildContext context, Widget? orig) {
+    return SwitchListTile(
+        title: Text(label),
+        value: value.value,
+        onChanged: (b) => value.value = b);
   }
 }
 

@@ -57,6 +57,7 @@ def block_objects():
     """
     return [
 # Single Lines
+
         'EndWithLine','LineThenText',
         'PollScreen',
         'FullBgAd',
@@ -97,6 +98,10 @@ def single_line_objects():
         Four score and several years ago
     """
     return ['WHLAd',
+                'ElvenChorus',
+
+        'Image',
+        'CustomGoto',
         'Divider',
         'BackButton',
         'HumanJacksAd',

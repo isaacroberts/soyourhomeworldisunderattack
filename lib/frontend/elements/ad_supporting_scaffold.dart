@@ -6,7 +6,7 @@ import 'package:soyourhomeworld/frontend/elements/widgets/app_cta_overlay.dart';
 
 import '../pages/drawer.dart';
 import '../pages/scrollers/adserve.dart';
-import '../text_theme.dart';
+import '../theme/theme.dart';
 
 class AdSupportingScaffold extends StatefulWidget {
   final String? source;

@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../styles.dart';
-import '../../text_theme.dart';
+import '../../theme/styles.dart';
+import '../../theme/text_theme.dart';
 import '../holders/holder_base.dart';
 
 const List<String> _candidates = [
-  'Communist Association',
-  'Anarchist Food Not Bombs',
   'Human Jack',
+  'Anarchist Affinity Group (Christian Jones, Eric Green, Sophie Lichterman, Devonte Washington, Vashra Bhattacharyal, Tristen Pensicola)',
   'Bugs Bunny',
   'Grok AI',
   'Pot Hol',
 ];
 const List<String> _candidateLinks = [
-  'CommunistsWin',
-  'AnarchistsWin',
   'HumanJack',
+  'AnarchistsWin',
   'TransgenderRabbit',
   'AIWinsElection',
   'PotHol',
@@ -24,8 +22,9 @@ const List<String> _candidateLinks = [
 
 class BallotHolder extends Holder {
   final bool isExtended;
+  final bool enabled;
   // final List<String> links;
-  const BallotHolder({required this.isExtended});
+  const BallotHolder({required this.isExtended, required this.enabled});
 
   @override
   Widget element(BuildContext context) {
@@ -84,7 +83,8 @@ class _BallotScreenState extends State<BallotScreen> {
             style: ElevatedButton.styleFrom(
                 backgroundColor:
                     Theme.of(context).colorScheme.primaryContainer),
-            onPressed: value == null ? null : submitted,
+            onPressed:
+                (widget.holder.enabled && value != null) ? submitted : null,
             child: const Padding(
                 padding: EdgeInsets.all(15),
                 child: Text(
@@ -97,7 +97,7 @@ class _BallotScreenState extends State<BallotScreen> {
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
     for (int n = 0;
-        n < (widget.holder.isExtended ? _candidates.length : 3);
+        n < (widget.holder.isExtended ? _candidates.length : 2);
         n++) {
       widgets.add(listTile(context, n));
     }

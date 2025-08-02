@@ -1,7 +1,7 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/colors.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../backend/chapter.dart';
@@ -39,20 +39,21 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   //Displays only N holders
   int itemsToDisplay = 0;
   bool _showFonts = true;
-
-  bool get showFonts => _showFonts && ViewSettings.instance.showFonts;
+//TODO: PUt back
+//   bool get showFonts => _showFonts && ViewSettings.instance.showFonts;
+  bool get showFonts => ViewSettings.instance.showFonts;
 
   @override
   void initState() {
     super.initState();
-    dev.log("Reader init ${chapter.varName}");
+    // dev.log("Reader init ${chapter.varName}");
     widget.chapter.addListener(_chapterUpdated);
     loadAndDisplayThread();
   }
 
   @override
   void didChangeDependencies() {
-    dev.log("Reader changedDep ${chapter.varName}");
+    // dev.log("Reader changedDep ${chapter.varName}");
 
     super.didChangeDependencies();
   }
@@ -137,7 +138,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
         //Now that we're done, update to maximum
         if (this.itemsToDisplay < maxLength) {
           setState(() {
-            dev.log('(Font) Font loading finished- set to max (chp=$_debugId)');
+            // dev.log('(Font) Font loading finished- set to max (chp=$_debugId)');
             this.itemsToDisplay = maxLength;
           });
         }
@@ -160,8 +161,8 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     return const SizedBox(
       height: 300,
       child: Center(
-          child: CircularProgressIndicator(
-        color: rachelDarkColor,
+          child: TriWizardLoader(
+        message: 'Loading...',
       )),
     );
   }
@@ -194,7 +195,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
           height: 400,
           child: Center(
             //Loading Icon
-            child: CircularProgressIndicator(),
+            child: TriWizardLoader(message: 'Loading chapter...'),
           ),
         ),
       ),

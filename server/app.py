@@ -133,14 +133,32 @@ def not_found(e):
 @app.route('/font_info/<int:id>', methods=['GET'])
 def get_font_info(id):
     # print('Font info:',id, '(GET)')
-    return fonts.get_id(id)
+    return fonts.get_font_info(id)
 
 @app.route('/font_post_info/', methods=['POST'])
 def get_font_info_post():
     data = request.get_json(force=True)
     id = data['id']
     # print('Font info:', id)
-    return fonts.get_id(id)
+    return fonts.get_font_info(id)
+
+@app.route('/get_font_id/<string:family>', methods=['GET'])
+def get_font_id(family):
+    """
+    Get from family name instead of from ID.
+    For customElements that use a named font & need to load it.
+    """
+    return fonts.family_to_id(family)
+
+@app.route('/get_font_id_post/', methods=['POST'])
+def get_font_id_post():
+    """
+    Get from family name instead of from ID.
+    For custom elements that use a named font & need to load it.
+    """
+    data = request.get_json(force=True)
+    family = data['family']
+    return fonts.family_to_id(family)
 
 @app.route('/hosted_fonts/<string:url>', methods=['GET'])
 def get_font(url):

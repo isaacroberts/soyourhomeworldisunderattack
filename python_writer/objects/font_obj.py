@@ -23,7 +23,17 @@ class Font:
         self.fontCol = fontCol
         self.bgCol = bgCol
         self.mono = mono
-        self._strikethrough = False
+
+        # These need to be None so traits can fall through
+        self._strikethrough = None
+        self._underline=None
+        self._overline=None
+
+        #Unimplemented
+        self._small_caps = None
+
+        # nrm / sub / sup
+        self._subSuper = None
         # TODO: Add superscript / subscript
 
         # self.align = 'left'
@@ -71,7 +81,6 @@ class Font:
         f = Font(tag, '', None, None, None, mono=None)
         # f.align = None
         f.isHeading = None
-        f._strikethrough = None
         f.isSub = True
         return f
 
@@ -88,12 +97,9 @@ class Font:
 
     def isZombie(self):
         return self.family == '' and self.size is None and self.italic is None and self.bold is None and self._strikethrough is None \
+            and self._overline is None and self._underline is None \
+            and self._subSuper is None \
             and self.fontCol is None and self.bgCol is None
-
-    def isBodyMinusAlign(self):
-        # TODO: Refactor out
-        # Made redundant by removing align
-        return self.isBody()
 
     def isBodyMinusColor(self):
         if Font.static_body is None:
@@ -125,7 +131,24 @@ class Font:
         if self._strikethrough is None:
             return False
         return self._strikethrough
-
+    def underline(self):
+        if self._underline is None:
+            return False
+        return self._underline
+    def overline(self):
+        if self._overline is None:
+            return False
+        return self._overline
+    def subSuper(self):
+        if self._subSuper is None:
+            return 'nrm'
+        else:
+            return self._subSuper
+    def small_caps(self):
+        if self._small_caps is None:
+            return False
+        else:
+            return self._small_caps
     def getWeight(self):
         if self.bold == 'normal':
             return 500
@@ -143,47 +166,9 @@ class Font:
             print(self.bold)
             assert False, 'Unrecognized font weight:'
 
-    def toFlutterCode(self):
-        ital = str(self.italic).lower()
-
-        boldP = ''
-        # TODO: Consider always using weight
-        if self.bold == 'normal':
-            boldP = 'bold: false'
-        elif self.bold == 'bold':
-            boldP = 'bold: true'
-        elif self.bold[0] == 'w':
-            boldP = 'weight: '+self.bold[1:]
-
-        sparams = ''
-
-        if self.hasColor():
-            col = self.fontCol
-            if col[0] == '#':
-                col = col[1:]
-            sparams += ', color: 0xff'+col
-        return f"FontInterm('{self.family}', {self.size}, {ital}, {boldP} {sparams})"
-
     def varName(self):
         t = self.defined if self.defined is not None else self.tag
         return flutter_tools.flutterize_style_tag(t)
-
-    def toTextStyle(self):
-        s = f"const TextStyle {self.varName()}Font = TextStyle("
-        s += f"fontFamily: '{self.family}', fontSize: {self.size} * fontScale, "
-        if self.hasColor():
-            col = self.fontCol
-            if col[0] == '#':
-                col = col[1:]
-            s += f'color: Color(0xff{col}), '
-        else:
-            s += f'color: textColor, '
-        if self.italic:
-            s += 'fontStyle: FontStyle.italic,'
-        weight = self.getWeight()
-        s += f'fontWeight: FontWeight.w{weight},'
-        s += ');'
-        return s
 
     def toJson(self):
         import json
@@ -198,7 +183,9 @@ class Font:
         Fill None values with parent's attributes
         """
         vars = ['family', 'size', 'italic', 'bold',
-                'fontCol', 'bgCol', 'mono']  # , 'align']
+                'fontCol', 'bgCol', 'mono',
+                 '_strikethrough', '_underline', '_overline',
+                 '_subSuper', '_small_caps']  # , 'align']
         # Heading-ness needs to propagate, because i mess with the fonts on the headings
         if self.isHeading:
             print('\t Heading')
@@ -222,27 +209,24 @@ class Font:
                 return ''
             else:
                 return str(var)
-
+        def bin(var):
+            if var is None:
+                return 'n'
+            elif var:
+                return '1'
+            else:
+                return '0'
         col = self.fontCol if self.hasColor() else ''
         s = self.family + '_'+str(self.size) + 'I' if self.italic else 'r' + \
-            self.bold + '_'+col+'_'+bif(self.bgCol)  # + self.align[0]
+            self.bold + '_'+col+'_'+bif(self.bgCol) \
+            + bin(self._strikethrough) + bin(self._underline)+bin(self._overline)+ bif(self._subSuper)
         # t= s.encode()
         #
         # print('t', t, type(t))
         # return int(t)
         return hash(s)
 
-    def __eq__(self, other):
-        if self is None:
-            return False
-        if other is None:
-            return False
-        if not isinstance(other, Font):
-            return False
-
-        # CodeMarker
-        if type(other).__name__ != "Font":
-            return False
+    def base_atts_equal(self, other):
         if self.family != other.family:
             # print(f"\t\tf: '{self.family}', '{other.family}'")
             return False
@@ -255,12 +239,34 @@ class Font:
         if self.bold != other.bold:
             # print('\t\tbold', self.bold, other.bold)
             return False
-        # TODO: Add similar hasColor
-        if self.bgCol != other.bgCol:
+        return True
+    def decorations_equal(self, other):
+        #TODO: This function is not useful because of lack of purpose-clarity
+        if self.strikethrough() != other.strikethrough():
+            return False
+        if self.underline() != other.underline():
+            return False
+        if self.overline() != other.overline():
+            return False
+        if self.subSuper() != other.subSuper():
+            return False
+        if self.small_caps() != other.small_caps():
+            return False
+        return True
+    def colors_equal(self, other):
+        shc = self.hasBgCol()
+        ohc = other.hasBgCol()
+
+        if shc != ohc:
             # print('\t\tbgCol')
             return False
+        if shc:
+            if self.bgCol != other.bgCol:
+                return False
+
         shc = self.hasColor()
         ohc = other.hasColor()
+
         if shc != ohc:
             # print('\t\tcol mismatch', shc, ohc, self.fontCol, other.fontCol)
             return False
@@ -268,32 +274,41 @@ class Font:
             if self.fontCol != other.fontCol:
                 # print('\t\tCol', self.fontCol, other.fontCol)
                 return False
-
-        if self.strikethrough() != other.strikethrough():
-            # print('\t\tstrike')
-            return False
-        # print ('\t\t==')
         return True
-
-    def equal_minus_color(self, other):
-        # TODO: Refactor to equal_minus_color
+    def __eq__(self, other):
         if self is None:
             return False
         if other is None:
             return False
         if not isinstance(other, Font):
             return False
-        if self.family != other.family:
+        # CodeMarker
+        if type(other).__name__ != "Font":
             return False
-        if self.size != other.size:
+        if not self.base_atts_equal(other):
             return False
-        if self.italic != other.italic:
+        if not self.colors_equal(other):
             return False
-        if self.bold != other.bold:
-            return False
-        if self.strikethrough() != other.strikethrough():
+        if not self.decorations_equal(other):
             return False
         return True
+
+    def equal_minus_color(self, other):
+        if self is None:
+            return False
+        if other is None:
+            return False
+        if not isinstance(other, Font):
+            return False
+        # CodeMarker
+        if type(other).__name__ != "Font":
+            return False
+        if not self.base_atts_equal(other):
+            return False
+        if not self.decorations_equal(other):
+            return False
+        return True
+
 
     def __str__(self):
         if self.isHeading:
@@ -312,16 +327,21 @@ class Font:
             ps = str(self.size)
 
         s = '['+pre+self.family + ' ' + ps
-        if self.strikethrough():
-            s += ' Struck'
+
         if self.italic:
             s += ' Italic'
-        # if self.weight is not None:
-        #     s += ' w'+ str(int(self.weight))
         if self.bold is not None and self.bold != 'normal':
             s += ' '+self.bold
-        # if self.align and self.align != 'left':
-        #     s += ' ['+self.align+']'
+        if self.strikethrough():
+            s += ' Struck'
+        if self.underline():
+            s += ' Underline'
+        if self.overline():
+            s += ' Overline'
+        if self._subSuper is not None:
+            s += ' '+self._subSuper
+        if self._small_caps:
+            s += " SMALL_CAPS"
         if self.bgCol:
             s += ' bg='+self.bgCol
         if self.fontCol:
@@ -344,17 +364,7 @@ class Font:
             else:
                 assert False, 'new situation'
         self.size = size
-    # def set_align(self, value):
-    #     if value=='start':
-    #         self.align = 'left'
-    #     elif value == 'end':
-    #         self.align = 'right'
-    #     elif value in ['center', 'justify']:
-    #         self.align = value
-    #     else:
-    #         print('Unusual align value:', value)
-    #         print(self)
-    #         exit(1)
+
 
     def set_value(self, name, value):
         """
@@ -395,24 +405,106 @@ class Font:
                 self.bold = 'w'+value
         elif name == 'monospace':
             self.mono = True
-        elif name == 'line-through':
-            self.strikethrough = True
-        # elif name=='text-align':
-        #     self.align = value
         elif name == 'color':
             self.fontCol = value
         elif name == 'background-color':
             self.bgCol = value
+        elif name == 'line-through':
+            self._strikethrough = True
+            print("Got strikethrough!")
+            # exit (0)
+        elif name == 'text-position':
+            # sub 58%
+            if value.startswith('sub'):
+                self._subSuper = 'sub'
+            elif value.startswith('super'):
+                self._subSuper='sup'
+            elif value.startswith('0%'):
+                self._subSuper='nrm'
+                # idk what this is
+                pass
+            else:
+                print('TextPosition: ', value)
+                t = input('U see this shit? (y/n)')
+            # exit(0)
+        elif name == 'text-underline-style':
+            self._underline=True
+        elif name == 'font-variant':
+            if value=='small-caps':
+                self._small_caps = True
+            else:
+                print('!!! Unrecognized font-variant', value)
+                exit(1)
         else:
-            print('!!! Unrecognized stype value', name)
+            print('!!! Unrecognized style value', name)
+            exit(1)
             # Prints missed values at end of script
             # missed_style_values.add(name)
 
 
 WANTED_ATTRIBUTES = [
     'font-size', 'font-family', 'font-style', 'font-weight', 'color', 'background-color',
+    'line-through','text-underline-style',
+    'text-position', 'font-variant',
     # 'text-align'
 ]
+
+#Redirect to wanted_attribute
+RDR_ATTRIBUTES = {
+    'font-name': 'font-family',
+    'font-family-complex': 'font-family',
+    'font-name-complex': 'font-family',
+'font-size-complex': 'font-size',
+'font-style-complex': 'font-style',
+'font-weight-complex': 'font-weight',
+
+'text-line-through-style': 'line-through',
+'text-line-through-type': 'line-through',
+
+}
+
+UNWANTED_ATTRIBUTES = [
+    #Could be used to give fallbacks.
+    # "serif", "sans-serif", "cursive", "fantasy", "monospace".
+'font-family-generic',
+# Regular
+'font-style-name',
+# Width (?) of monospace fonts
+'font-pitch',
+# International
+'font-name-asian',
+'font-family-asian',
+'font-family-generic-asian',
+'font-pitch-asian',
+'font-size-asian',
+'font-style-asian',
+'font-weight-asian',
+# TODO: The complex might be important
+'font-family-generic-complex',
+'font-pitch-complex',
+'font-style-name-complex',
+# TODO: Save letter spacing
+'letter-spacing',
+'letter-kerning',
+
+# TODO: Save to Color
+'opacity',
+
+# Eh
+'text-underline-width',
+'text-underline-color',
+
+
+#libreOffice shit
+'use-window-font-color',
+'char-shading-value',
+#???
+'rsid',
+'paragraph-rsid',
+
+]
+
+
 BOOLEAN_TAGS = [
     'monospace', 'line-through'
 ]

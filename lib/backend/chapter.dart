@@ -21,6 +21,8 @@ class ChapterInfo {
   final String displayName;
   final String filename;
   final String varName;
+  final bool isPart;
+  final bool hidePart;
   final int? next;
 
   const ChapterInfo(
@@ -28,7 +30,9 @@ class ChapterInfo {
       required this.varName,
       required this.displayName,
       required this.filename,
-      required this.next});
+      required this.next,
+      required this.isPart,
+      required this.hidePart});
 
   // ChapterInfo.blank()
   //     : id = 0,
@@ -203,6 +207,7 @@ class ChapterHolder {
   String get varName => info.varName;
   String get displayName => info.displayName;
   String get filename => info.filename;
+  bool get isPart => info.isPart;
   ChapterKey? get next => info.next;
 
   ChapterHolder(this.info);
@@ -223,6 +228,33 @@ class ChapterHolder {
           await parser.parseWithExistingChapterInfo(info, handleErrors: true);
     }
     return chapter!;
+  }
+
+  bool matchesSearchTerm(String searchTerm) {
+    //TODO: A ranking might be smarter
+    if (displayName.contains(searchTerm)) {
+      return true;
+    }
+    if (searchTerm.contains(displayName)) {
+      return true;
+    }
+    if (varName.contains(searchTerm)) {
+      return true;
+    }
+    if (searchTerm.contains(varName)) {
+      return true;
+    }
+    String? headerText = chapter?.header?.text;
+    if (headerText != null && headerText.isNotEmpty) {
+      if (headerText.contains(searchTerm)) {
+        return true;
+      }
+      if (searchTerm.contains(headerText)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 

@@ -5,12 +5,14 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:soyourhomeworld/backend/book.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/chapter_end.dart';
+import 'package:soyourhomeworld/frontend/pages/readers/debug_reader.dart';
 import 'package:soyourhomeworld/frontend/pages/readers/reader.dart';
 import 'package:soyourhomeworld/frontend/pages/title/title.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';
-import '../../base_text_theme.dart';
+import '../../theme/base_text_theme.dart';
+import '../../view_settings.dart';
 import '../loading_page.dart';
 
 class MasterScroller extends StatefulWidget {
@@ -41,29 +43,29 @@ class _MasterScrollerState extends State<MasterScroller> {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+
+    ViewSettings.instance.testRigNotifier.addListener(testRigChanged);
   }
 
   @override
-  void didUpdateWidget(covariant MasterScroller oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    // if (widget.startChapter != oldWidget.st)
-    // _pagingController.nextPageKey = widget.startChapter;
+  void dispose() {
+    ViewSettings.instance.testRigNotifier.removeListener(testRigChanged);
+    super.dispose();
+  }
+
+  void testRigChanged() {
+    setState(() {});
   }
 
   void scrollToChapter() {
-    // _scrollController.
+    //TODO:
   }
 
   @override
   Widget build(BuildContext context) {
-    // dev.log("Start chapter = ${widget.startChapter}");
     return McScaffold(
         key: const ValueKey('InfScrollScaffold!'),
         source: 'Scroll',
-        // showAppCTA: false,
-        // showAppCTA: widget.startChapter == 0,
-        // showAds: false,
         child: ScrollConfiguration(
             behavior:
                 ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -103,6 +105,13 @@ class _MasterScrollerState extends State<MasterScroller> {
         key: Key("title"),
       );
     }
+    if (ViewSettings.instance.useTestRig) {
+      return DebugReaderScreen(
+        chapter: chapter,
+        key: Key("DebugReader_${chapter.id}"),
+      );
+    }
+
     return ReaderScreen(
         key: Key("Reader_${chapter.id}"),
         scrollController: _scrollController,
@@ -112,7 +121,7 @@ class _MasterScrollerState extends State<MasterScroller> {
   Future<void> _fetchPage(int pageKey) async {
     // dev.log('fetch $pageKey');
 
-    dev.log("Getting page $pageKey");
+    // dev.log("Getting page $pageKey");
     if (widget.book.hasKey(pageKey)) {
       try {
         Chapter chap = await widget.book.getAndLoadChapter(pageKey);
@@ -121,7 +130,7 @@ class _MasterScrollerState extends State<MasterScroller> {
         // TODO: You could do funky navigation with the nextPageKey here.
         // final nextPageKey = pageKey + 1;
         final nextPageKey = chap.nextId;
-        dev.log("Next key: $nextPageKey");
+        // dev.log("Next key: $nextPageKey");
         _pagingController.appendPage([chap], nextPageKey);
       } catch (exception, stackTrace) {
         dev.log(exception.toString(), stackTrace: stackTrace);

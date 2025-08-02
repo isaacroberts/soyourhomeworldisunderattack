@@ -49,48 +49,62 @@ Have 3 Font Categories
 
 def pack_wousi(font):
     b = BinList("wousi")
-    weight = font.getWeight()//10
-    # TODO: Get overline / underline / strikethrough
-    o = False
-    u = False
+    # OUS= overline / underline / strikethrough
+    o = font.overline()
+    u = font.underline()
     s = font.strikethrough()
     i = font.italic
-    wousi = weight
-    wousi = wousi << 1
+    weight = font.getWeight()//100
+    # wousi = weight
+    wousi = weight * 16
     wousi += int(o) * 8
     wousi += int(u) * 4
     wousi += int(s) * 2
     wousi += int(i) * 1
-    print(wousi)
     return struct.pack('!B', wousi)
 
 def pack_font(font):
-    if font.isBodyMinusAlign():
+    if font.isBody():
         return
-    assert font is not CodeTag
+    assert not font.isCodeMarker()
     print('pack header font font=', font, 'type=',type(font))
     b = BinList('pack_font')
     # TODO: Move the parenthesis here for clarity
     if not hasattr(font, 'fileId'):
         font.fileId = fl.get_font_id(font.family)
-    b += pack_typed_uint(font.fileId)
+    b+='f'
+    b += pack_untyped_uint(font.fileId)
+    b+='s'
     b += pack_untyped_float(font.size)
-
+    b += 'w'
     b += pack_wousi(font)
+    print("SubSuper = ", font.subSuper())
+    if font.subSuper()=='sub':
+        b += 'v'
+    elif font.subSuper()=='sup':
+        b += '^'
     return b
 
 def pack_header_font(font):
     # TODO: If header has been modified
-    assert font is not CodeTag
+    assert not font.isCodeMarker()
 
     b = BinList('pack_header_font')
     b += '('
     if not hasattr(font, 'fileId'):
         font.fileId = fl.get_font_id(font.family)
+    b+='f'
     b += pack_typed_uint(font.fileId)
+    b+='s'
     b += pack_untyped_float(font.size)
-
+    b+='w'
     b += pack_wousi(font)
+
+    if font.subSuper()=='sub':
+        b += 'v'
+    elif font.subSuper()=='sup':
+        b += '^'
+
     b += ')'
     return b
 
@@ -110,6 +124,7 @@ def pack_ta_only(span):
         alignb = pack_untyped_char(align)
         return  '(', tabb, alignb, ')'
 
+
 def pack_font_section(span):
     tab_amt = span.tabs if hasattr(span, 'tabs') else 0
     align = get_align(span)
@@ -124,14 +139,14 @@ def pack_font_section(span):
     b = BinList('pack_font_section')
 
     # Align is already handled
-    if font.isBodyMinusAlign():
+    if font.isBody():
         if tab_amt==0 and align=='l':
             return None
         else:
             return b.add('(', tabb, alignb, ')')
     else:
         fb = pack_font(font)
-
+        assert len(fb)>0
         if font.hasBgCol():
             color = flutter_tools.flutterColor(font.bgCol)
             bgB = pack_hex(color)
@@ -185,7 +200,7 @@ def fragText(span):
 
     b += pack_text(span.text)
     font = span.font
-    if font.isBodyMinusAlign():
+    if font.isBody():
         # Align is already handled
         b += ';'
         return b
@@ -200,6 +215,7 @@ def fragText(span):
                 b += '&'
                 b += pack_hex(font.fontCol)
         elif font.hasColor():
+            b += '&'
             b += pack_none()
             b += '&'
             b += pack_hex(font.fontCol)
@@ -313,7 +329,7 @@ def pack_code_font_section(marker):
     tab_amt = span.tabs if hasattr(span, 'tabs') else 0
 
     # Align is already handled
-    if font.isBodyMinusAlign():
+    if font.isBody():
         if tab_amt==0 and marker.align=='l':
             return None
         else:
@@ -328,15 +344,8 @@ def code_tag_element(span):
     assert isinstance(span, code_objects.CodeTag)
 
     obj = span.obj
-    print('Obj:', obj)
+    print('CodeTag Obj:', obj)
     assert ':' not in obj
-
-    try:
-        text = text.encode('ascii')
-    except:
-        print ("Text can't be Ascii encoded. ")
-        print (f'"{obj}"')
-        return []
 
     b = BinList('code_tag_element')
 
@@ -352,6 +361,11 @@ def code_tag_element(span):
             b += '>'
 
     b += ';'
+    print('CodeTag written')
+    print("Binary: ")
+    print(b)
+
+    # r = input('Respond.')
     return b
 
 def parsed_binary_element(span):
@@ -422,10 +436,14 @@ def code_span_element(span):
 def code_element(span):
     print(span.__class__.__bases__)
     if isinstance(span, code_objects.ParsedCodeBlockBase):
+        print("ParsedBlock:", span)
         return parsed_binary_element(span)
     elif isinstance(span, code_objects.CodeTag):
+        print("CodeTag:", span)
+        # i = input('l')
         return code_tag_element(span)
     elif isinstance(span, code_objects.CodeSection):
+        print("CodeSection:", span)
         return code_span_element(span)
     else:
         assert False, f'Unrecognized code_object {type(span)}'

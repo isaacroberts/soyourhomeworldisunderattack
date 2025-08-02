@@ -27,6 +27,8 @@ import 'frontend/pages/scrollers/scroller_door.dart';
 import 'frontend/pages/server_error_page.dart' deferred as error_page_lib;
 import 'frontend/pages/title/title.dart' deferred as title_lib;
 
+const bool devLoadToMain = true;
+
 Page _errorPageBuilder(BuildContext context, GoRouterState state) {
   return MaterialPage(
       child: DeferredPage(
@@ -38,7 +40,7 @@ Page _errorPageBuilder(BuildContext context, GoRouterState state) {
 GoRouter router() {
   return GoRouter(
       errorPageBuilder: _errorPageBuilder,
-      initialLocation: kDebugMode ? '/dev_page/' : '/',
+      initialLocation: (kDebugMode && !devLoadToMain) ? '/dev_page/' : '/',
       debugLogDiagnostics: true,
       redirect: redirector,
       routes: routes());
@@ -48,18 +50,20 @@ List<GoRoute> routes() {
   return [
     //Book
     GoRoute(
-        path: 'title',
-        builder: (context, state) => DeferredPage(
-            loader: title_lib.loadLibrary,
-            builder: (c) => title_lib.TitlePage())),
-    // GoRoute(path: '/home', builder: (context, state) => const ScrollDoor()),
-    GoRoute(
+        name: 'Home',
         path: '/',
         builder: (context, state) => const ScrollDoor(
               key: Key("RootScroll"),
             )),
     GoRoute(
-        name: 'scroll',
+        name: 'Title',
+        path: '/title',
+        builder: (context, state) => DeferredPage(
+            loader: title_lib.loadLibrary,
+            builder: (c) => title_lib.TitlePage())),
+    // GoRoute(path: '/home', builder: (context, state) => const ScrollDoor()),
+    GoRoute(
+        name: 'Reader',
         // path: '/scroll',
         path: '/scroll/:chid',
         builder: (context, state) {
@@ -79,7 +83,7 @@ List<GoRoute> routes() {
           }
         }),
     GoRoute(
-        name: 'search',
+        name: 'Chapter Search',
         // path: '/scroll',
         path: '/search/:term',
         builder: (context, state) {
@@ -116,6 +120,7 @@ List<GoRoute> routes() {
         }),
 
     GoRoute(
+        name: 'Index',
         path: '/index',
         builder: (context, state) => DeferredPage(
             loader: () => index_lib.loadLibrary(),
@@ -137,6 +142,7 @@ List<GoRoute> routes() {
             loader: () => downloads_page_lib.loadLibrary(),
             builder: (context) => downloads_page_lib.DownloadsPage())),
     GoRoute(
+        name: '(Dev) Error Logger',
         path: '/logger',
         builder: (context, state) => ErrorList.instance.page(context)),
   ];

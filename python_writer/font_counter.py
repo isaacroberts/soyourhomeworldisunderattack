@@ -90,8 +90,14 @@ for font in fonts.values():
         if file == '-':
             pkg = (font.family, font.italic)
             missed_files.append(pkg)
-            font.file = '-'
-            font.fileId = -1
+            print("Missed file: ", pkg)
+
+            # Default to Palatino
+            font.family = 'Palatino'
+            # Get file
+            file = font_lookup.find_font_file(font)
+            font.fileId = 0
+            # exit(1)
         else:
             path = file
             file = file.split('/')[-1]
@@ -120,6 +126,8 @@ for font_file in font_files.values():
     s = file_pretty(font_file.family)
     print(space_row(s, 15)+' '+space_row(font_file.file, 30) + space_row(font_file.id, 8)+ space_row(font_file.count, 4))
 
+change_log_file('missed_files')
+
 print('.')
 missed_files = set(missed_files)
 missed_files = list(missed_files)
@@ -134,6 +142,9 @@ import pandas as pd
 # self.path = path
 # self.file = basename
 # self.count = 1
+
+change_log_file('files')
+
 font_file_df = pd.DataFrame([ff.as_dict() for ff in font_files.values()])
 
 print(font_file_df)

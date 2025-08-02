@@ -2,9 +2,27 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/styles.dart';
 
 import '../../../backend/utils.dart';
+
+const Color begin = Color(0x8afad906);
+// const Color charcoal = Color(0x5a121212);
+// const Color ash = Color(0xff6A6A6A);
+const Color dirt = Color(0xff432a18);
+
+const Color midColor = Color(0xff054e07);
+const Color brighter = Color(0xff056112);
+
+const Color end = Color(0xff027c12);
+final TweenSequence<Color?> tween = TweenSequence<Color?>([
+  TweenSequenceItem(tween: ColorTween(begin: begin, end: dirt), weight: .15),
+  // TweenSequenceItem(tween: ColorTween(begin: charcoal, end: ash), weight: .05),
+  TweenSequenceItem(tween: ColorTween(begin: dirt, end: midColor), weight: .15),
+  TweenSequenceItem(
+      tween: ColorTween(begin: midColor, end: brighter), weight: .15),
+  TweenSequenceItem(tween: ColorTween(begin: brighter, end: end), weight: .6),
+]);
 
 class SplashPainter extends CustomPainter {
   final List<Offset> points;
@@ -12,12 +30,23 @@ class SplashPainter extends CustomPainter {
   SplashPainter({required this.points, required this.anim});
 
   Color greenLines(double colorPt) {
-    Color midColor = const Color(0xff0a7e0f);
-    if (colorPt < .5) {
-      return Color.lerp(const Color(0xfffad906), midColor, colorPt * 2)!;
+    return tween.transform(colorPt) ?? Colors.transparent;
+
+/*
+    Color charcoal = const Color(0xff053507);
+
+    Color midColor = const Color(0xff053507);
+    if (colorPt < .25) {
+      return Color.lerp(const Color(0x66fad906), charcoal, colorPt * 2)!;
+    }
+      else if (colorPt < .5) {
+      return Color.lerp( charcoal, midColor, colorPt * 2)!;
+
     } else {
       return Color.lerp(midColor, const Color(0xff027c12), (colorPt - .5) * 2)!;
     }
+
+ */
   }
 
   @override
@@ -26,7 +55,7 @@ class SplashPainter extends CustomPainter {
     const double seaLength = .75;
 
     double colorPt = math.min(1, anim * 2 / 3);
-
+    canvasColor;
     Color sky =
         Color.lerp(const Color(0xffc12121), const Color(0xFF1C1C43), colorPt)!;
     //canvasColor = 0xFF060615
@@ -34,7 +63,7 @@ class SplashPainter extends CustomPainter {
         Color.lerp(const Color(0xfff6900a), const Color(0xFF060615), colorPt)!;
     Color lines = greenLines(colorPt);
     //0xff192d7c
-    Color earthColor = Color.lerp(primary, const Color(0xFF1D1D67),
+    Color earthColor = Color.lerp(canvasColor, const Color(0xFF1D1D67),
         math.min(1, math.max(0, (anim - seaStart) / (seaLength))))!;
 
     Paint bg = Paint()
@@ -63,13 +92,13 @@ class SplashPainter extends CustomPainter {
 
     double stroke =
         math.max(1, math.min(5, (anim - (seaStart + seaLength)) * 200));
-    stroke = 1;
+    stroke = 2;
     //Draw all together
     Paint paint = Paint()
       ..color = lines
       ..strokeWidth = stroke
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
+      ..strokeCap = StrokeCap.square
+      ..strokeJoin = StrokeJoin.bevel;
 
     canvas.drawPoints(ui.PointMode.lines, points, paint);
   }
