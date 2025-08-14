@@ -429,12 +429,19 @@ class Font:
             # exit(0)
         elif name == 'text-underline-style':
             self._underline=True
+        elif name == 'text-shadow':
+            pass
         elif name == 'font-variant':
             if value=='small-caps':
                 self._small_caps = True
             else:
                 print('!!! Unrecognized font-variant', value)
                 exit(1)
+        elif name == 'text-outline':
+            value = bool(value)
+            self.isHeading=value
+            self.markedNotHeading=not value
+
         else:
             print('!!! Unrecognized style value', name)
             exit(1)
@@ -446,6 +453,8 @@ WANTED_ATTRIBUTES = [
     'font-size', 'font-family', 'font-style', 'font-weight', 'color', 'background-color',
     'line-through','text-underline-style',
     'text-position', 'font-variant',
+    'text-outline',
+    'text-shadow',
     # 'text-align'
 ]
 
@@ -487,8 +496,9 @@ UNWANTED_ATTRIBUTES = [
 'letter-spacing',
 'letter-kerning',
 
-# TODO: Save to Color
+# Maybe TODO: Save to Color
 'opacity',
+'font-relief',
 
 # Eh
 'text-underline-width',

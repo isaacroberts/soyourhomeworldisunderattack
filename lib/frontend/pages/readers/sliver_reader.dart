@@ -9,7 +9,7 @@ import 'reader_builder.dart';
 class SliverReader extends StatefulWidget {
   final ChapterHolder? chapterHolder;
 
-  const SliverReader({super.key, required this.chapterHolder});
+  const SliverReader({required super.key, required this.chapterHolder});
 
   Chapter? get chapter => chapterHolder?.chapter;
 
@@ -31,7 +31,10 @@ class _SliverReaderState extends State<SliverReader> {
   }
 
   Widget header(BuildContext context) {
-    return SliverHeader(chapter: widget.chapterHolder, header: chapter?.header);
+    return SliverHeader(
+        key: const Key("header"),
+        chapter: widget.chapterHolder,
+        header: chapter?.header);
   }
 
   @override

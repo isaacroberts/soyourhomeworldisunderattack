@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
@@ -9,6 +10,8 @@ import '../../../backend/book.dart';
 import '../../../backend/chapter_holder.dart';
 import '../../../backend/error_handler.dart';
 import '../../elements/chapter_heading/heading_data.dart';
+import '../../icons.dart';
+import '../../theme/colors.dart';
 import '../title/title.dart';
 import 'slivers/chapter_holder_sliver.dart';
 
@@ -18,17 +21,17 @@ class SliverScrollerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool showFab = MediaQuery.of(context).size.width > 800;
     return McScaffold(
+        key: const Key("SliverScaffold"),
         source: 'scroll',
-        showFAB: false,
+        showFAB: showFab,
         child: SliverScroller(
           key: const Key("SliverScroll"),
           startChapter: startChapter,
         ));
   }
 }
-
-const int amountChaptersToPreload = 2;
 
 class SliverScroller extends StatefulWidget {
   // final Book book;
@@ -44,16 +47,206 @@ class _SliverScrollerState extends State<SliverScroller> {
   late Book book;
 
   // List<ChapterHolder> currentChapters = [];
+  //
+  // set currentChapters(List<ChapterHolder> s) {}
+  List<ChapterHolder> get currentChapters =>
+      kDebugMode ? book.chapters.sublist(0, 20) : book.chapters;
 
-  set currentChapters(List<ChapterHolder> s) {}
-  List<ChapterHolder> get currentChapters => book.chapters.sublist(0, 20);
+  ChapterHolder? currentChapter;
+  Map<ChapterHolder, double> chapterPositions = {};
+
+  final ScrollController controller = ScrollController(
+      //TODO: Initial scroll offset, scroll-up dectector
+      // initialScrollOffset: 500,
+      debugLabel: 'SliverScrollController',
+      keepScrollOffset: true);
+
+  @override
+  void initState() {
+    // controller.position.addListener(scrollNotification);
+
+    controller.addListener(scrollNotification);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    //This is where InheritedWidgets update
+    book = Book.of(context);
+
+    populate();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(SliverScroller oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void populate() async {
+    if (currentChapters.isNotEmpty) {
+      return;
+    }
+    currentChapter = book.chapters[widget.startChapter ?? 0];
+    currentChapter!.load();
+
+    RenderObject? scrollTo =
+        currentChapter!.globalKey.currentContext?.findRenderObject();
+    if (scrollTo != null) {
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        Scrollable.maybeOf(context)?.position.ensureVisible(scrollTo);
+      });
+    }
+  }
+
+  DateTime lastScrollNotification = DateTime.fromMillisecondsSinceEpoch(0);
+  void scrollNotification() {
+    //If it has been less than 1 second since the last notification
+    if (DateTime.now()
+        .isBefore(lastScrollNotification.add(const Duration(seconds: 1)))) {
+      return;
+    }
+    lastScrollNotification = DateTime.now();
+
+    ///TODO: Does main do anything?
+    chapterBecomesMain(getMainChapter(controller.offset));
+  }
+
+  void chapterPositionSet(ChapterHolder? chapter, double position) {
+    if (chapter != null) {
+      chapterPositions[chapter] = position;
+    }
+  }
+
+  ChapterHolder? getMainChapter(double scrollPosition) {
+    // ChapterHolder? below;
+    ChapterHolder? above;
+    double abovePosition = -1;
+    // double? belowPosition;
+    // dev.log("Scroll: $scrollPosition poses=${chapterPositions}");
+    for (var mapEntry in chapterPositions.entries) {
+      if (mapEntry.value > abovePosition && mapEntry.value < scrollPosition) {
+        above = mapEntry.key;
+        abovePosition = mapEntry.value;
+      }
+    }
+    return above;
+  }
+
+  void chapterBecomesMain(ChapterHolder? chapter) {
+    if (chapter != currentChapter) {
+      dev.log("Main: ${chapter?.varName}");
+      if (chapter != null) {
+        chapter.load();
+        currentChapter = chapter;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> slivers = [];
+
+    if (currentChapters.isEmpty) {
+      slivers.add(const ChapterLoadSliver(chapterTitle: 'Chapters'));
+    } else {
+      slivers.addAll(
+          currentChapters.map<Widget>(itemMapper).toList(growable: false));
+    }
+
+    slivers.add(const _FillRemaining(key: Key("fillRemaining")));
+
+    return ChapterHeadingData(
+        key: const Key("headingData"),
+        onChapterBecomesMain: chapterPositionSet,
+        child: CustomScrollView(
+          key: const Key("SliverCustomScrollView"),
+          // center: nullableKey(doScroll),
+          // reverse: true,
+          shrinkWrap: false,
+
+          // physics: AlwaysScrollableScrollPhysics(),
+          controller: controller,
+          slivers: slivers,
+        ));
+  }
+
+  Widget itemMapper(ChapterHolder chapter) {
+    if (chapter.id == 0) {
+      // It'll display through the sliver but it won't animate
+      return const SliverToBoxAdapter(
+          child: TitleWidget(
+        key: Key("Title"),
+      ));
+    }
+    return ChapterHolderSliver(key: chapter.globalKey, chapter: chapter);
+  }
+}
+
+class _FillRemaining extends StatelessWidget {
+  const _FillRemaining({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverFillRemaining(
+        key: const Key("FillRemaining"),
+        child: Container(
+            key: const Key("fillRemCt"),
+            color: Primary.shade4,
+            alignment: Alignment.center,
+            child: const Column(
+                key: Key("fillRemCol"),
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                      key: Key("fillRmText"),
+                      "End.",
+                      style: TextStyle(
+                          fontFamily: 'Palatino',
+                          fontSize: 18,
+                          color: Primary.shadea)
+                      // bodyFont.copyWith(
+                      //     fontSize: 18, color: Primary.shadea)),
+                      ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Icon(
+                    key: Key("fillRmIcon"),
+                    RpgAwesome.burning_meteor,
+                    color: Primary.shadea,
+                    size: 48,
+                  ),
+                ])));
+  }
+}
+//============ Debug ======================
+
+const int amountChaptersToPreload = 2;
+
+class DebugSliverScroller extends StatefulWidget {
+  // final Book book;
+  final int? startChapter;
+
+  const DebugSliverScroller({super.key, this.startChapter});
+
+  @override
+  State<DebugSliverScroller> createState() => _DebugSliverScrollerState();
+}
+
+class _DebugSliverScrollerState extends State<DebugSliverScroller> {
+  late Book book;
+
+  List<ChapterHolder> currentChapters = [];
 
   ChapterHolder? currentChapter;
   Map<ChapterHolder, double> chapterPositions = {};
 
   bool blockAdditions = false;
-
-  double anchor = 0;
 
   final ScrollController controller = ScrollController(
       //TODO: Initial scroll offset, scroll-up dectector
@@ -80,7 +273,7 @@ class _SliverScrollerState extends State<SliverScroller> {
   }
 
   @override
-  void didUpdateWidget(SliverScroller oldWidget) {
+  void didUpdateWidget(DebugSliverScroller oldWidget) {
     // if (oldWidget.startChapter != widget.startChapter) {
     //   populate();
     // }
@@ -98,11 +291,6 @@ class _SliverScrollerState extends State<SliverScroller> {
     currentChapters = [currentChapter!];
 
     addChapter();
-  }
-
-  double get estimateHeight {
-    //# Chapters * Page height * 2.5 pages/chapter
-    return currentChapters.length * MediaQuery.sizeOf(context).height * 2.5;
   }
 
   DateTime lastScrollNotification = DateTime.fromMillisecondsSinceEpoch(0);
@@ -157,7 +345,6 @@ class _SliverScrollerState extends State<SliverScroller> {
   }
 
   bool addChapter({bool atStart = false, int? startChapter}) {
-    return false;
     if (blockAdditions) {
       return false;
     }
@@ -184,7 +371,7 @@ class _SliverScrollerState extends State<SliverScroller> {
   }
 
   bool _addChapter({atStart = false, int? startChapter}) {
-    return false;
+    // return false;
     ChapterHolder? chapter;
     if (currentChapters.isEmpty) {
       chapter = book.chapters[startChapter ?? widget.startChapter ?? 0];
@@ -257,7 +444,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     setState(() {});
     await Future.delayed(const Duration(milliseconds: 300));
     if (mounted && chp != null) {
-      BuildContext? ctx = itemKey(chp).currentContext;
+      BuildContext? ctx = chp.globalKey.currentContext;
       if (ctx != null) {
         if (ctx.mounted) {
           Scrollable.ensureVisible(ctx);
@@ -283,37 +470,16 @@ class _SliverScrollerState extends State<SliverScroller> {
       slivers.addAll(
           currentChapters.map<Widget>(itemMapper).toList(growable: false));
     }
-    // slivers.add(SliverFillRemaining(
-    //     child: Container(
-    //   color: const Color(0xff000006),
-    //   child: const Icon(
-    //     RpgAwesome.burning_meteor,
-    //     color: Color(0xff555565),
-    //     size: 48,
-    //   ),
-    // )));
 
-    //It's surfing on the BoxAdaptor
-    // slivers.add(const SliverToBoxAdapter(
-    //     child: SizedBox(
-    //   height: 200,
-    //   // color: const Color(0xff000006),
-    //   child: Icon(
-    //     RpgAwesome.burning_meteor,
-    //     color: Color(0xff555565),
-    //     size: 48,
-    //   ),
-    // )));
+    slivers.add(const _FillRemaining(key: Key("fillRemaining")));
 
     return ChapterHeadingData(
+        key: const Key("HeadingData"),
         onChapterBecomesMain: chapterPositionSet,
         child: refreshWrap(
             child: CustomScrollView(
-          // center: nullableKey(doScroll),
-          // reverse: true,
+          key: const Key("DebugSliverCustomScrollView"),
           shrinkWrap: false,
-
-          // physics: AlwaysScrollableScrollPhysics(),
           controller: controller,
           slivers: slivers,
         )));
@@ -327,30 +493,10 @@ class _SliverScrollerState extends State<SliverScroller> {
     } else {
       //The refresh indicator is breaking the scrollview!
       return RefreshIndicator(
-
-          // refreshTriggerPullDistance: 100,
-
+          key: const Key("refreshIndicator"),
           onRefresh: onPullToRefresh,
           edgeOffset: 100,
           child: child);
-    }
-  }
-
-  GlobalKey itemKey(ChapterHolder chapter) {
-    return chapter.globalKey;
-    //This must be standardized for the customScrollView
-    // if (chapter.id == 0) {
-    //   return const Key("Title");
-    // } else {
-    //   return Key("Chp_${chapter.id}");
-    // }
-  }
-
-  GlobalKey? nullableKey(ChapterHolder? chapter) {
-    if (chapter == null) {
-      return null;
-    } else {
-      return itemKey(chapter);
     }
   }
 
@@ -362,6 +508,6 @@ class _SliverScrollerState extends State<SliverScroller> {
         key: Key("Title"),
       ));
     }
-    return ChapterHolderSliver(key: itemKey(chapter), chapter: chapter);
+    return ChapterHolderSliver(key: chapter.globalKey, chapter: chapter);
   }
 }

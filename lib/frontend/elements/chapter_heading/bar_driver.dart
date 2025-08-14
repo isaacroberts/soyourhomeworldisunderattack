@@ -6,7 +6,7 @@ class AppBarSizeDriver extends StatefulWidget {
   /// Shows second row when FlexibleSpace expands
   /// Unused
   const AppBarSizeDriver({
-    super.key,
+    required super.key,
     required this.minExtent,
     required this.maxExtent,
     required this.builder,

@@ -11,14 +11,33 @@ import '../frontend/elements/holders/textholders.dart';
 import 'chapter_info.dart';
 
 //TODO: I think remove the ChangeNotifier, since that's on the Holder now
+class ChapterExtra {
+  final String? subtitle;
+  final String? where;
+  final String? when;
+  final String? audioUrl;
+  const ChapterExtra(
+      {required this.subtitle,
+      required this.where,
+      required this.when,
+      this.audioUrl});
+}
+
 class Chapter extends ChangeNotifier {
   /// Stores the spans themselves, and can notify listeners while unpacking
   ///
   final ChapterInfo info;
+  final ChapterExtra extra;
+
+  String? get subtitle => extra.subtitle;
+  String? get where => extra.where;
+  String? get when => extra.when;
+
   final List<Holder> lines = [];
   HeaderOfText? header; // = const HeaderOfText('Loading...');
 
   // ====  Ids ======
+  String get key => info.id.toString();
   ChapterKey get id => info.id;
   String get varName => info.varName;
   String get displayTitle => info.displayName;
@@ -27,9 +46,10 @@ class Chapter extends ChangeNotifier {
 
   // Constructors
 
-  Chapter.fromChapterInfo(this.info);
+  Chapter.fromChapterInfo(this.info, {required this.extra});
 
-  Chapter.fromChapterInfoAndStream(this.info, Stream<Holder> stream) {
+  Chapter.fromChapterInfoAndStream(this.info, Stream<Holder> stream,
+      {required this.extra}) {
     stream.listen(_addHolderFromStream,
         onDone: postLoadCleanup,
         onError: addAndRegisterError,

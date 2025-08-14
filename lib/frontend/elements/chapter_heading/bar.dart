@@ -11,7 +11,8 @@ import 'heading_data.dart';
 class SliverHeader extends StatelessWidget {
   final ChapterHolder? chapter;
   final HeaderOfText? header;
-  const SliverHeader({super.key, required this.chapter, required this.header});
+  const SliverHeader(
+      {required super.key, required this.chapter, required this.header});
 
   Widget animBuilder(BuildContext context, Animation<double> anim) {
     return DrivenAppBar(
@@ -38,6 +39,7 @@ class SliverHeader extends StatelessWidget {
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           flexibleSpace: AppBarSizeDriver(
+              key: const Key('appBarDriver'),
               minExtent: collapsedHeight,
               maxExtent: expandedHeight,
               builder: animBuilder),

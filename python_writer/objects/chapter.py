@@ -86,13 +86,20 @@ class Chapter:
         self.headline_text = chapterStart.headline_text
         self.spans = spans
         self.index = None
-        self.next = None
-        self.part = False
-        self.hidepart=False
-        self.audio=None
+        # info
         self.id = self.create_var_name(self.headline_text)
         self.bookmarks = [self.id]
         self.display_name = self.abbrev_name()
+        # Ordering
+        self.next = None
+        self.part = False
+        self.hidepart=False
+        # Details (text string)
+        self.subtitle = None
+        self.where = None
+        self.when = None
+        # fx
+        self.audio=None
 
     def matches_bookmark(self, tag):
         if tag in self.bookmarks:
@@ -156,6 +163,18 @@ class Chapter:
         self.header += pack_text(id)
         self.header += '/'
         self.header += pack_text(self.display_name)
+        self.header += '/'
+        def textornull(s):
+            if s is None:
+                return pack_text('')
+            return pack_text(s)
+        self.header += '('
+        self.header += textornull(self.subtitle)
+        self.header += ','
+        self.header += textornull(self.where)
+        self.header += ','
+        self.header += textornull(self.when)
+        self.header += ')'
         self.header += '/'
         if self.audio is None:
             self.header += '_'

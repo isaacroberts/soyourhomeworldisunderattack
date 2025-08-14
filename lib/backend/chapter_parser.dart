@@ -45,14 +45,15 @@ class ChapterParser {
       throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
           debugId: debugId);
     }
-    skipToHeaderSeparator();
+    ChapterExtra extra = await parseHeader(filename: info.filename);
+    // skipToHeaderSeparator();
     Stream<Holder> spans;
     if (handleErrors) {
       spans = parseBodyAndCatchErrors();
     } else {
       spans = parseBody();
     }
-    return Chapter.fromChapterInfoAndStream(info, spans);
+    return Chapter.fromChapterInfoAndStream(info, spans, extra: extra);
   }
 
   Future<ChapterAndStream> getChapterAndStream(ChapterInfo info,
@@ -62,14 +63,15 @@ class ChapterParser {
       throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
           debugId: debugId);
     }
-    skipToHeaderSeparator();
+    ChapterExtra extra = await parseHeader(filename: info.filename);
+    // skipToHeaderSeparator();
     Stream<Holder> spans;
     if (handleErrors) {
       spans = parseBodyAndCatchErrors();
     } else {
       spans = parseBody();
     }
-    return (Chapter.fromChapterInfoAndStream(info, spans), spans);
+    return (Chapter.fromChapterInfoAndStream(info, spans, extra: extra), spans);
   }
 
   Future<ChapterInfo?> parseBookHeader(int index) async {
@@ -132,8 +134,7 @@ class ChapterParser {
         hidePart: hidePart);
   }
 
-/*
-  Future<ChapterInfo> parseHeader({required String filename}) async {
+  Future<ChapterExtra> parseHeader({required String filename}) async {
     ptr.assertConsume('\$', debugId: debugId);
     int index = ptr.consumeInt32();
     ptr.warnConsume('=', consumeOnMiss: true);
@@ -141,6 +142,15 @@ class ChapterParser {
     ptr.warnConsume('/', consumeOnMiss: true);
     String? display = ptr.consumeText();
     ptr.warnConsume('/', consumeOnMiss: true);
+
+    ptr.assertConsume('(', debugId: id);
+    String? subtitle = ptr.consumeText();
+    ptr.assertConsume(',', debugId: id);
+    String? where = ptr.consumeText();
+    ptr.assertConsume(',', debugId: id);
+    String? when = ptr.consumeText();
+    ptr.assertConsume(')', debugId: id);
+
     //Some chapters have audio
     String? audioUrl;
     if (ptr.getChar() == '_') {
@@ -154,14 +164,24 @@ class ChapterParser {
     if (printVerbose) {
       dev.log('/Read header $debugId');
     }
-    return ChapterInfo(
-        id: index,
-        varName: id,
-        displayName: display ?? '_$id',
-        filename: filename,
-        next: null);
+
+    String? cleanForNull(String? s) {
+      //TODO: Catch dashes in writer
+      if (s == null || s.isEmpty || s == '-') {
+        return null;
+      }
+      return s;
+    }
+
+    subtitle = cleanForNull(subtitle);
+    when = cleanForNull(when);
+    where = cleanForNull(where);
+    audioUrl = cleanForNull(audioUrl);
+
+    return ChapterExtra(
+        subtitle: subtitle, when: when, where: where, audioUrl: audioUrl);
   }
-*/
+
   void skipToHeaderSeparator() {
     const String endHeaderToken = 'zoinks&';
     // consume Z first. If not, continue eating ampersands.

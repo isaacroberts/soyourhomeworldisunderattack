@@ -1,8 +1,9 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/components/marquee_text.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/subtitle.dart';
+import 'package:soyourhomeworld/frontend/elements/chapter_heading/title.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
-import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 import '../../../backend/chapter_holder.dart';
 import '../../theme/colors.dart';
@@ -12,7 +13,7 @@ class DrivenAppBar extends StatefulWidget {
   final HeaderOfText? header;
   final Animation<double> animation;
   const DrivenAppBar(
-      {super.key,
+      {required super.key,
       required this.chapter,
       required this.header,
       required this.animation});
@@ -29,6 +30,19 @@ class _DrivenAppBarState extends State<DrivenAppBar> {
   bool get partiallyExpanded => animation.value > 0;
   bool get fullyExpanded => animation.value >= 1;
 
+  @override
+  void initState() {
+    chapter?.loadNotifier.addListener(chapterUpdated);
+    super.initState();
+  }
+
+  void chapterUpdated() {
+    if (mounted) {
+      // dev.log("(Bar) Chapter updated: ${chapter?.varName}");
+      setState(() {});
+    }
+  }
+
   Widget column(BuildContext context) {
     return Column(
       key: const Key("col"),
@@ -44,11 +58,14 @@ class _DrivenAppBarState extends State<DrivenAppBar> {
                 //Row
 
                 child: HeadingTitleRow(
-                    header: chapter?.chapter?.header, chapter: chapter))),
+                    key: Key("Title${chapter?.key}"),
+                    header: chapter?.chapter?.header,
+                    chapter: chapter))),
         //Replaces divider with color change
         // const SizedBox(height: 6),
 
         Container(
+            key: const Key("SubtitleBG"),
             height: 60,
             //Other 6 px of divider
             // padding: const EdgeInsets.only(top: 8),
@@ -61,7 +78,7 @@ class _DrivenAppBarState extends State<DrivenAppBar> {
             //Only render child on expanded
             alignment: Alignment.center,
             child: ChapterHeadingSubtitle(
-                key: const Key("Subtitle"), chapter: chapter)),
+                key: Key("Subtitle${chapter?.key}"), chapter: chapter)),
       ],
 
       //Bookmark Button
@@ -70,87 +87,7 @@ class _DrivenAppBarState extends State<DrivenAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        key: const Key("Switcher"),
-        child:
-            _OverflowWrap(key: const Key('overflow'), child: column(context)));
-  }
-}
-
-class HeadingTitleRow extends StatelessWidget {
-  const HeadingTitleRow({
-    super.key,
-    required this.chapter,
-    required this.header,
-  });
-
-  final ChapterHolder? chapter;
-  final HeaderOfText? header;
-
-  @override
-  Widget build(BuildContext context) {
-    late final Color headerColor;
-    late final TextStyle headerStyle;
-    HeaderOfText? header = this.header;
-    if (header is CustomHeaderOfText) {
-      headerColor = header.font.color ?? textColor;
-
-      //TODO: Figure out Rubik headers issue
-      // Then Use Holder element so CustomHeaders can be shown
-      //TODO: Fallback instancing?
-      // headerStyle = header.font.instance();
-      //TODO: This is disabling header styles
-      headerStyle = headerFont;
-    } else {
-      headerColor = textColor;
-      headerStyle = headerFont;
-    }
-    double screenWidth = MediaQuery.sizeOf(context).width;
-
-    Widget title = MarqueeText.lazy(
-      key: const Key("MarqueeText"),
-      text: header?.text ?? '...',
-      style: headerStyle,
-      alignment: Alignment.center,
-    );
-
-    if (screenWidth < 400) {
-      return SizedBox(
-          height: 60,
-          child: Center(
-            child: title,
-          ));
-    }
-
-    return Row(
-      key: const Key("headerRow"),
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-            key: const Key('bkmk_sb'),
-            width: 60,
-            child: Align(
-                key: const Key("bkmk_align"),
-                alignment: Alignment.center,
-                child: Padding(
-                    key: const Key("bkmk_pad_elem"),
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: Text(
-                      '${chapter?.id}.',
-                      style:
-                          bodyFont.copyWith(fontSize: 18, color: headerColor),
-                    )))),
-        // _BookmarkPadding(
-        //     key: const Key('bkmk_pad'),
-        //     chapter: chapter,
-        //     headerColor: headerColor),
-        Expanded(child: Center(child: title)),
-        //Ensure header centers
-        const SizedBox(width: 60),
-      ],
-    );
+    return _OverflowWrap(key: const Key('overflow'), child: column(context));
   }
 }
 

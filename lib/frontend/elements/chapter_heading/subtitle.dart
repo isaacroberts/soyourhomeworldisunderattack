@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/length_summary_widget.dart';
@@ -6,6 +8,7 @@ import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter_holder.dart';
+import '../../../backend/error_handler.dart';
 import '../../../backend/server.dart';
 import '../../theme/color_scheme.dart';
 
@@ -14,7 +17,7 @@ const Color _subtitleDark = canvasSlightElevation;
 
 class ChapterHeadingSubtitle extends StatelessWidget {
   final ChapterHolder? chapter;
-  const ChapterHeadingSubtitle({super.key, required this.chapter});
+  const ChapterHeadingSubtitle({required super.key, required this.chapter});
 
   bool get center => false;
 
@@ -29,29 +32,7 @@ class ChapterHeadingSubtitle extends StatelessWidget {
                 key: const Key("heading_pad"),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                child: Row(
-                  key: const Key("heading_row"),
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //Placeholder for BookmarkButton
-                    // const SizedBox(
-                    //   width: 96,
-                    // ),
-                    BookmarkButton(
-                        key: const Key("bookmark"),
-                        chapter: chapter,
-                        color: Primary.shadee.withAlpha(128)),
-                    _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
-                    // const SizedBox(
-                    //   width: 6,
-                    // ),
-                    _VarnameChip(
-                        key: Key('varname_chip_${chapter?.varName}'),
-                        chapter: chapter),
-                  ],
-                ))));
+                child: _SubtitleRow(key: const Key("row"), chapter: chapter))));
   }
 
   Widget chapterNumber(BuildContext context) {
@@ -64,22 +45,6 @@ class ChapterHeadingSubtitle extends StatelessWidget {
             child: Chip(
                 // avatar: Icon(RpgAwesome.book),
                 label: Text('Chapter ${chapter?.id ?? '-'}'))));
-
-    return Tooltip(
-        message: tooltip,
-        child: Container(
-            width: 120,
-            height: 30,
-            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: _subtitleDark, borderRadius: BorderRadius.circular(6)),
-            child: Text(
-              'Chapter ${chapter?.id ?? '-'}',
-              style: style,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-            )));
   }
 
   Widget textButton(BuildContext context) {
@@ -92,9 +57,100 @@ class ChapterHeadingSubtitle extends StatelessWidget {
   }
 }
 
+class _SubtitleRow extends StatelessWidget {
+  const _SubtitleRow({
+    super.key,
+    required this.chapter,
+  });
+
+  final ChapterHolder? chapter;
+  Widget futuresRow(BuildContext context) {
+    ///For waiting on chapter
+    return Row(
+        key: const Key("heading_row"),
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          BookmarkButton(key: const Key("bookmark"), chapter: chapter),
+          FutureChip(
+              key: const Key("Subtitle"),
+              value: chapter?.awaitSubtitle(),
+              label: 'Subtitle',
+              icon: null),
+          FutureChip(
+              key: const Key("Where"),
+              value: chapter?.awaitWhere(),
+              label: 'Where',
+              icon: Icons.public),
+          FutureChip(
+              key: const Key("When"),
+              value: chapter?.awaitWhen(),
+              label: 'When',
+              icon: Icons.access_time),
+          _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
+        ]);
+  }
+
+  Widget completedRow(BuildContext context) {
+    ///No waiting on futures
+    return Row(
+      key: const Key("heading_row"),
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        BookmarkButton(key: const Key("bookmark"), chapter: chapter),
+        CurrentChip(
+            key: const Key("Subtitle"),
+            value: chapter!.chapter!.subtitle,
+            label: 'Subtitle',
+            icon: null),
+        CurrentChip(
+            key: const Key("Where"),
+            value: chapter!.chapter!.where,
+            label: 'Where',
+            icon: Icons.public),
+        CurrentChip(
+            key: const Key("When"),
+            value: chapter!.chapter!.when,
+            label: 'When',
+            icon: Icons.access_time),
+        _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (chapter == null) {
+      return nullChapterRow(context);
+    } else if (chapter?.chapter == null) {
+      return nullChapterRow(context);
+      //These futures are causing every chapter to load at once
+      return futuresRow(context);
+    } else {
+      return completedRow(context);
+    }
+  }
+
+  Widget nullChapterRow(BuildContext context) {
+    ///Empty
+    return const Row(
+        key: Key("heading_row"),
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          BookmarkButton(key: Key("bookmark"), chapter: null),
+          _LengthSummaryWrap(key: Key("lsw"), chapter: null),
+        ]);
+  }
+}
+
 class _VarnameChip extends StatelessWidget {
   const _VarnameChip({
-    super.key,
+    required super.key,
     required this.chapter,
   });
 
@@ -103,7 +159,7 @@ class _VarnameChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Tooltip(
             message: chapter?.filename ?? '-',
             child: Chip(
@@ -119,7 +175,7 @@ class _VarnameChip extends StatelessWidget {
 
 class _LengthSummaryWrap extends StatelessWidget {
   const _LengthSummaryWrap({
-    super.key,
+    required super.key,
     required this.chapter,
   });
 
@@ -127,16 +183,18 @@ class _LengthSummaryWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-        key: const Key("LSW_Chip"),
-        label: SizedBox(
-            width: 24,
-            height: 20,
-            child: LengthSummaryWidget(
-              numDots: chapter?.chapter?.readingLength ?? 3,
-              dotSize: .5,
-              color: Primary.shadee,
-            )));
+    return Padding(
+        padding: const EdgeInsets.only(right: 12),
+        child: Chip(
+            key: const Key("LSW_Chip"),
+            label: SizedBox(
+                width: 16,
+                height: 20,
+                child: LengthSummaryWidget(
+                  numDots: chapter?.chapter?.readingLength ?? 3,
+                  dotSize: .5,
+                  color: Primary.shadee,
+                ))));
     return Container(
       width: 36,
       height: 36,
@@ -158,10 +216,8 @@ class _LengthSummaryWrap extends StatelessWidget {
 
 class BookmarkButton extends StatelessWidget {
   final ChapterHolder? chapter;
-  final Color? color;
-  const BookmarkButton(
-      {super.key, required this.chapter, this.color = _subtitleColor});
-
+  const BookmarkButton({required super.key, required this.chapter});
+  Color get color => Primary.shadee.withAlpha(128);
   String get url => '$displayURL/search/${chapter?.varName}';
 
   @override
@@ -181,5 +237,104 @@ class BookmarkButton extends StatelessWidget {
               color: color ?? _subtitleColor,
               size: 24,
             )));
+  }
+}
+
+class CurrentChip extends StatelessWidget {
+  final String? value;
+  final String label;
+  final IconData? icon;
+
+  const CurrentChip(
+      {required super.key,
+      required this.value,
+      required this.label,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    if (value == null) {
+      return const SizedBox.shrink();
+    } else {
+      return Padding(
+          key: const Key("lpad"),
+          padding: const EdgeInsets.only(right: 12),
+          child: Tooltip(
+              key: const Key("tooltip"),
+              message: label,
+              child: Chip(
+                  key: const Key("chip"),
+                  avatar: icon != null ? Icon(icon) : null,
+                  label: Text(value!))));
+    }
+  }
+}
+
+class FutureChip extends StatelessWidget {
+  final Future<String?>? value;
+  final String label;
+  final IconData? icon;
+  const FutureChip(
+      {required super.key,
+      required this.value,
+      required this.label,
+      required this.icon});
+
+  Widget buildChip(BuildContext context, String value) {
+    return CurrentChip(
+        key: const Key('currentChpi'), value: value, label: label, icon: icon);
+  }
+
+  Widget buildNoData(BuildContext context) {
+    return const SizedBox.shrink();
+  }
+
+  Widget buildError(BuildContext context, String error) {
+    return Padding(
+        key: const Key("lpad"),
+        padding: const EdgeInsets.only(right: 12),
+        child: Tooltip(
+            key: const Key("tooltip"),
+            message: error,
+            child: Chip(
+                key: const Key("chip"),
+                avatar: icon != null ? const Icon(Icons.error_outline) : null,
+                label: const Text('   '))));
+  }
+
+  Widget buildWaiting(BuildContext context) {
+    return Padding(
+        key: const Key("lpad"),
+        padding: const EdgeInsets.only(right: 12),
+        child: Chip(
+            key: const Key("chip"),
+            avatar: icon != null ? const Icon(Icons.hourglass_empty) : null,
+            label: const Text(' ')));
+  }
+
+  Widget futureBuilder(BuildContext context, AsyncSnapshot<String?> snapshot) {
+    if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.hasData) {
+        return buildChip(context, snapshot.data!);
+      } else {
+        return buildNoData(context);
+      }
+    } else if (snapshot.hasError) {
+      ErrorList.logError(snapshot.error!, snapshot.stackTrace);
+      return buildError(context, snapshot.error!.toString());
+    } else {
+      return buildWaiting(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (value == null) {
+      return buildNoData(context);
+    }
+    return FutureBuilder<String?>(
+        key: const Key("futureBuilder"),
+        future: value!,
+        builder: futureBuilder);
   }
 }

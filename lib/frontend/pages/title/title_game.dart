@@ -12,7 +12,7 @@ class SplashBgWidget extends StatefulWidget {
   final double width;
   final double height;
   const SplashBgWidget({
-    super.key,
+    required super.key,
     required this.width,
     required this.height,
   });
@@ -191,16 +191,24 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
             size: size,
             child: button);
 
+    if (fireShowing) {
+      child = CustomPaint(
+          key: const Key("FirePainter"),
+          isComplex: false,
+          size: Size(widget.width, widget.height),
+          willChange: true,
+          painter: fireShowing
+              ? FirePainter(
+                  anim: math.min(1, (animationController.value * 3) - 1),
+                  flameCt: flameCt)
+              : null,
+          child: child);
+    }
     return CustomPaint(
         key: const Key("TitlePainter"),
         isComplex: true,
         size: Size(widget.width, widget.height),
         willChange: true,
-        foregroundPainter: fireShowing
-            ? FirePainter(
-                anim: math.min(1, (animationController.value * 3) - 1),
-                flameCt: flameCt)
-            : null,
         painter: SplashPainter(
           points: points,
           anim: animationController.value * 3,
@@ -230,7 +238,7 @@ double _nrm(double x, double y) {
 
 class FireButton extends StatefulWidget {
   final VoidCallback? onPressed;
-  const FireButton({super.key, required this.onPressed});
+  const FireButton({required super.key, required this.onPressed});
 
   @override
   State<FireButton> createState() => _FireButtonState();

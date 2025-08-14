@@ -45,11 +45,11 @@ class RenderChapterSliver extends RenderProxySliver {
 
   @override
   void performLayout() {
-    if (height == 0) {
-      height = viewportMainAxisExtent;
-    }
     if (belowScreen()) {
-      dev.log("Below ${chapter.id}");
+      if (height == 0) {
+        height = viewportMainAxisExtent;
+      }
+      // dev.log("Below ${chapter.id}");
       offscreenLayout();
     } else {
       performReaderLayout();
@@ -281,14 +281,14 @@ class RenderChapterSliver extends RenderProxySliver {
       if ((desiredHeight > height)) {
         //White = text clipped
         drawEdgeHilite(context,
-            offset: offset, start: Primary.shadec.withAlpha(128));
+            offset: offset, start: Primary.shadee.withAlpha(200));
       }
 
       //Dark halo to show it wants to shorten
       if ((desiredHeight < height)) {
         // Red = mild error
         drawEdgeHilite(context,
-            offset: offset, start: Primary.shade7.withAlpha(128));
+            offset: offset, start: Primary.shade7.withAlpha(200));
       }
     }
   }
@@ -299,22 +299,22 @@ class RenderChapterSliver extends RenderProxySliver {
   // bool get alwaysNeedsCompositing => true;
   void drawEdgeHilite(PaintingContext context,
       {required Offset offset, required Color start}) {
-    double drawline = offset.dy + drawnHeight;
+    double drawLine = offset.dy + drawnHeight;
     //Don't draw along bottom
-    // dev.log("Drawling: $drawline viewport: $viewportMainAxisExtent");
-
     if (!touchingBottom()) {
       Paint grad = Paint()
-        ..shader = ui.Gradient.linear(Offset(0, drawline - 100),
-            Offset(0, drawline), [start.withAlpha(0), start]);
+        ..shader = ui.Gradient.linear(Offset(0, drawLine - 100),
+            Offset(0, drawLine), [start.withAlpha(0), start]);
       context.canvas.drawRect(
-          Rect.fromLTRB(0, drawline - 100, crossAxisExtent, drawline), grad);
-    } else if (touchingBottom()) {
+          Rect.fromLTRB(0, drawLine - 100, crossAxisExtent, drawLine), grad);
+    } else {
+      //Draw overlap below screen
       double offset = -remainingPaintExtent + height;
-      // dev.log("Draw halo: $offset");
+      //If overlap < 100px
       if (offset < 100) {
-        double bot = drawline + offset;
-        double top = drawline + offset - 100;
+        //Shift drawn line
+        double bot = drawLine + offset;
+        double top = drawLine + offset - 100;
         Paint grad = Paint()
           ..shader = ui.Gradient.linear(
               Offset(0, top), Offset(0, bot), [start.withAlpha(0), start]);
@@ -342,7 +342,19 @@ class RenderChapterSliver extends RenderProxySliver {
   @override
   bool hitTestSelf(
       {required double mainAxisPosition, required double crossAxisPosition}) {
-    //This sliver does not need to accept clicks
+    //TODO: If user clicks on halo
+    // if (desiredHeight < height) {
+    //   dev.log("Clicked: $mainAxisPosition");
+    //
+    //   dev.log("Height ready to expand");
+    //   if (mainAxisPosition > height - 100) {
+    //     //Expand
+    //     height = desiredHeight;
+    //     markNeedsLayout();
+    //     markNeedsPaint();
+    //     return true;
+    //   }
+    // }
     return false;
   }
 

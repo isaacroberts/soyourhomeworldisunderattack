@@ -98,7 +98,8 @@ class _ChapterHolderSliverState extends State<ChapterHolderSliver> {
             key: const Key("ChapterSliver"),
             chapter: chapter!,
             child: SliverReader(
-                key: const Key("SliverReader"), chapterHolder: chapter))
+                key: Key("SliverReader_${chapter?.key}"),
+                chapterHolder: chapter))
       ]);
     }
   }

@@ -292,6 +292,24 @@ for chapter in chapters:
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
+            elif obj == 'Subtitle':
+                value = chapter.spans[i].params[0]
+                chapter.subtitle = value
+                # Delete keyword
+                chapter.spans.pop(i)
+                i-=1
+            elif obj == 'When':
+                value = chapter.spans[i].params[0]
+                chapter.when = value
+                # Delete keyword
+                chapter.spans.pop(i)
+                i-=1
+            elif obj == 'Where':
+                value = chapter.spans[i].params[0]
+                chapter.where = value 
+                # Delete keyword
+                chapter.spans.pop(i)
+                i-=1
         i += 1
 
 # All Keywords should be fixed

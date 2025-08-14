@@ -77,14 +77,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
         width: 600,
         // child: Theme(
         //     data: bookTheme,
-        child: Tooltip(
-            richMessage: tooltip(context),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24), color: itineraryBg),
-
-            // message: 'Destination: ${dest ?? 'Unknown'}',
-            waitDuration: const Duration(milliseconds: 1500),
-            child: card(context)));
+        child: _GotoTooltip(holder: widget.holder, child: card(context)));
   }
 
   Widget explanationText(BuildContext context) {
@@ -154,7 +147,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
         );
   }
 
-  static const Color itineraryBg = Color(0xaafafcdf);
+  static const Color itineraryBg = Primary.shade5;
 
   Future<_ChapterTooltip> chapterInfo() async {
     if (link == null) {
@@ -165,9 +158,15 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
     // Book.of(context).chapters[]
     return ('ChapterName', 'ChapterInfo');
   }
+}
+
+class _GotoTooltip extends StatelessWidget {
+  final GotoButtonHolder holder;
+  final Widget child;
+  const _GotoTooltip({super.key, required this.holder, required this.child});
 
   InlineSpan tooltip(BuildContext context) {
-    if (link == null) {
+    if (holder.link == null) {
       return const TextSpan(text: '(No Destination)');
     }
     return WidgetSpan(
@@ -177,7 +176,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 6),
             child: Column(
               children: [
-                Text('Destination: $destination'),
+                Text('Destination: ${holder.destination}'),
                 const Divider(),
 
                 //TODO: Get chapter
@@ -186,8 +185,20 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
 
                 const Divider(),
 
-                Text('Link: $linkText'),
+                Text('Link: ${holder.linkText}'),
               ],
             )));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+        richMessage: tooltip(context),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24), color: Primary.shade5),
+
+        // message: 'Destination: ${dest ?? 'Unknown'}',
+        waitDuration: const Duration(milliseconds: 1500),
+        child: child);
   }
 }

@@ -24,9 +24,13 @@ def code_tag_replacements():
 # These are all top-level. For low-level Keywords, you'll have to add another classtype
 def chapter_keywords():
     return ['Chapter', 'Section', 'Label',
+        # info
+'Subtitle', 'When', 'Where',
+        #other
         'Part',
          'Next',
          'EndOfBook',
+         # fx
           "InvisibleHeadline",
       'Audio', 'UnskippableAudio', 'CopSting',
 
@@ -68,6 +72,10 @@ def block_objects():
         'TicketsToGreenlandGame',
         'CharacterSelectionScreen',
         'HJLogo','SRABusinessCard1',
+
+# Wrappers
+    'Flyer', 'Facebook', 'AdOffer',
+    #Letter
 
 # Regular
         'GotoButton',

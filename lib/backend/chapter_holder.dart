@@ -27,6 +27,7 @@ class ChapterHolder {
   ChapterLoadNotifier loadNotifier = ChapterLoadNotifier();
 
   // =Headers
+  String get key => info.id.toString();
   ChapterKey get id => info.id;
   String get varName => info.varName;
   String get displayName => info.displayName;
@@ -120,5 +121,42 @@ class ChapterHolder {
     }
 
     return false;
+  }
+
+  Future<String?> awaitSubtitle() async {
+    ///Future for Subtitle. Technically might not return
+    if (needsLoad) {
+      await load();
+      return chapter?.subtitle;
+    } else if (chapter != null) {
+      return chapter!.subtitle;
+    } else {
+      await startedStream;
+      return chapter?.subtitle;
+    }
+  }
+
+  Future<String?> awaitWhere() async {
+    if (needsLoad) {
+      await load();
+      return chapter?.where;
+    } else if (chapter != null) {
+      return chapter!.where;
+    } else {
+      await startedStream;
+      return chapter?.where;
+    }
+  }
+
+  Future<String?> awaitWhen() async {
+    if (needsLoad) {
+      await load();
+      return chapter?.when;
+    } else if (chapter != null) {
+      return chapter!.when;
+    } else {
+      await startedStream;
+      return chapter?.when;
+    }
   }
 }
