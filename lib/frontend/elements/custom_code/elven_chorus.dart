@@ -8,7 +8,7 @@ import 'package:soyourhomeworld/backend/font_interm.dart';
 
 import '../holders/holder_base.dart';
 
-//TODO: Check if this should extend a code object
+//TODO: This should extend a code object, once JSON is added
 class ElvenChorusHolder extends Holder {
   final int? speed;
   const ElvenChorusHolder({required this.speed});
@@ -16,6 +16,11 @@ class ElvenChorusHolder extends Holder {
   @override
   Widget element(BuildContext context) {
     return ElvenChorus(speed: speed ?? 1);
+  }
+
+  @override
+  String toText() {
+    return chorus;
   }
 
   @override
@@ -109,7 +114,7 @@ class _ElvenChorusState extends State<ElvenChorus>
       Duration(milliseconds: (totalOffset * speedMultiplier * 3).toInt());
   void checkScroll(t) {
     if (mounted && controller.hasClients && initted) {
-      dev.log("Scroll @: ${controller.offset} / ${totalOffset}");
+      dev.log("Scroll @: ${controller.offset} / $totalOffset");
       if (controller.offset == 0) {
         dev.log("Animate forward");
         Curve curve = Curves.linear;
@@ -213,7 +218,6 @@ class _ElvenChorusState extends State<ElvenChorus>
   }
 
   List<Widget> text() {
-    //TODO: Chorus in larger font
     List<Widget> widgets = [];
     //
     // widgets.add(SizedBox(

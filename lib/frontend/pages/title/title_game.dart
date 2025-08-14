@@ -36,7 +36,10 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this);
+    animationController = AnimationController(
+        debugLabel: 'TitleAnim',
+        animationBehavior: AnimationBehavior.preserve,
+        vsync: this);
     animationController.animateTo(1, duration: const Duration(seconds: 60));
     super.initState();
     points = getPoints();
@@ -129,7 +132,15 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(animation: animationController, builder: builder);
+    return SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: ClipRect(
+            clipBehavior: Clip.hardEdge,
+            child: AnimatedBuilder(
+                key: const Key("TitleAnimBuilder"),
+                animation: animationController,
+                builder: builder)));
   }
 
   bool get fireShowing => animationController.value >= fireStart;
@@ -153,6 +164,7 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
   }
 
   Widget builder(BuildContext builder, Widget? previous) {
+    // dev.log("Builder: ${animationController.value}");
     Size size = Size(widget.width, widget.height);
     Widget? button;
     if (flameCt == 0) {
@@ -179,24 +191,21 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
             size: size,
             child: button);
 
-    return SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: ClipRect(
-          child: CustomPaint(
-              size: Size(widget.width, widget.height),
-              willChange: true,
-              foregroundPainter: fireShowing
-                  ? FirePainter(
-                      anim: math.min(1, (animationController.value * 3) - 1),
-                      flameCt: flameCt)
-                  : null,
-              painter: SplashPainter(
-                points: points,
-                anim: animationController.value * 3,
-              ),
-              child: child),
-        ));
+    return CustomPaint(
+        key: const Key("TitlePainter"),
+        isComplex: true,
+        size: Size(widget.width, widget.height),
+        willChange: true,
+        foregroundPainter: fireShowing
+            ? FirePainter(
+                anim: math.min(1, (animationController.value * 3) - 1),
+                flameCt: flameCt)
+            : null,
+        painter: SplashPainter(
+          points: points,
+          anim: animationController.value * 3,
+        ),
+        child: child);
   }
 }
 
@@ -262,7 +271,6 @@ class _FireButtonState extends State<FireButton> {
           child: const Text('wtf put it out'));
     } else {
       return FilledButton(
-
           key: const Key('putitout_n'),
           onPressed: widget.onPressed,
           child: const Text('wtf put it out'));

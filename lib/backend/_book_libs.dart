@@ -9,7 +9,7 @@ import 'package:soyourhomeworld/backend/server.dart';
 
 import 'binary_utils/buffer_ptr.dart';
 import 'book.dart';
-import 'chapter.dart';
+import 'chapter_info.dart';
 import 'error_handler.dart';
 
 Future<Book?> loadBookLoader(BookLoader that) async {
@@ -115,7 +115,7 @@ Future<void> parseBookIndex(BookLoader that) async {
   while (ptr.hasMore() && ptr.getChar() == '(') {
     ChapterInfo? chapter = await parser.parseBookHeader(that.chapters.length);
     if (chapter != null) {
-      that.chapters.add(ChapterHolder(chapter));
+      that.chapters.add(chapter);
     }
   }
   ptr.assertConsume(';', debugId: that.id);

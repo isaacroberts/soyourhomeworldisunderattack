@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../theme/styles.dart';
+import '../../theme/colors.dart';
 import '../../theme/text_theme.dart';
 import '../holders/holder_base.dart';
 
@@ -34,6 +34,11 @@ class BallotHolder extends Holder {
   @override
   Widget fallback(BuildContext context) {
     return element(context);
+  }
+
+  @override
+  String toText() {
+    return '[Ballot code element]';
   }
 }
 

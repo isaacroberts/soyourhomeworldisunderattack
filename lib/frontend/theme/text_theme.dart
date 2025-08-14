@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/theme/theme.dart';
 
 import 'base_text_theme.dart';
-import 'color_scheme.dart';
 
 //TODO: Consider finding sans serif version of palatino
 const appFontFamily = 'Rubik';
@@ -205,8 +205,7 @@ TextTheme bookTextTheme = const TextTheme(
 );
 
 //TODO: Move
-final ThemeData bookTheme = ThemeData.from(
-    colorScheme: colorScheme, useMaterial3: true, textTheme: bookTextTheme);
+final ThemeData bookTheme = theme.copyWith(textTheme: bookTextTheme);
 
 const TextStyle boldBodyFont = TextStyle(
   fontFamily: 'Palatino',
@@ -234,32 +233,4 @@ const TextStyle siliconeValleyFont = TextStyle(
   fontSize: 24 * fontScale,
   color: textColor,
   fontWeight: FontWeight.w500,
-);
-
-const TextStyle pollingMachineHeader = TextStyle(
-  fontFamily: 'Andale Mono',
-  fontSize: 12 * fontScale,
-  color: textColor,
-  fontWeight: FontWeight.w700,
-);
-
-const TextStyle pollingMachineLabel = TextStyle(
-  fontFamily: 'Palatino',
-  fontSize: 12 * fontScale,
-  color: textColor,
-  fontWeight: FontWeight.w900,
-);
-const TextStyle pollingMachineBody = TextStyle(
-  fontFamily: 'Palatino',
-  fontSize: 12 * fontScale,
-  color: textColor,
-  fontWeight: FontWeight.w500,
-);
-
-//MK Ultra Witches
-const TextStyle spookyErrorFont = TextStyle(
-  fontFamily: 'Anonymous Pro',
-  fontSize: 24 * fontScale,
-  color: Color(0xb0000000),
-  fontWeight: FontWeight.w800,
 );

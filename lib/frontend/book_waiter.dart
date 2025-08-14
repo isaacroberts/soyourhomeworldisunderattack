@@ -15,7 +15,7 @@ class BookWaiter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Must be under a scaffold
-    assert(Scaffold.maybeOf(context) != null);
+    // assert(Scaffold.maybeOf(context) != null);
     //Check if Book is already present
     if (Book.maybeOf(context) != null) {
       return child;

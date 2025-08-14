@@ -1,14 +1,14 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
 //Deferred
-import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart'
-    deferred as error_icon_lib;
+import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/theme/base_text_theme.dart';
-import '../frontend/theme/styles.dart';
+import '../frontend/theme/colors.dart';
 import '../frontend/theme/text_theme.dart';
 
 class ErrorList {
@@ -23,6 +23,8 @@ class ErrorList {
   // ===  Errors =======
   static void showErrorNow(BuildContext context, Object e,
       [StackTrace? trace]) {
+    printError(e, trace);
+
     ExceptionHolder holder =
         ExceptionHolder(exception: e, stackTrace: trace ?? StackTrace.current);
     instance.list.add(holder);
@@ -30,6 +32,8 @@ class ErrorList {
   }
 
   static void showError(Object e, [StackTrace? trace]) {
+    printError(e, trace);
+
     ExceptionHolder holder =
         ExceptionHolder(exception: e, stackTrace: trace ?? StackTrace.current);
     instance.list.add(holder);
@@ -37,17 +41,36 @@ class ErrorList {
   }
 
   static void logError(Object e, [StackTrace? trace]) {
+    printError(e, trace);
     instance.list.add(
         ExceptionHolder(exception: e, stackTrace: trace ?? StackTrace.current));
   }
 
   static void logWarning(Object warning, [StackTrace? trace]) {
+    dev.log("Warning: $warning");
+    if (trace != null) {
+      dev.log("Trace:");
+      dev.log(trace.toString());
+    }
     instance.list.add(ExceptionHolder.warning(warning,
         stackTrace: trace ?? StackTrace.current));
   }
 
   static void logErrorHolder(ExceptionHolder e) {
+    printError(e.exception, e.stackTrace);
+
     instance.list.add(e);
+  }
+
+  static void printError(Object exception, Object? trace) {
+    dev.log('\n\n');
+    dev.log(' -!- Exception -!- ');
+    dev.log(exception.toString());
+    if (trace != null) {
+      dev.log(' --- Stack Trace ---');
+      dev.log(trace.toString());
+    }
+    dev.log('\n\n');
   }
 
   // ==== Main Page ====
@@ -149,6 +172,11 @@ class ExceptionHolder extends Holder {
   Widget fallback(BuildContext context) {
     return ExceptionElement(exception: exception, stackTrace: stackTrace);
   }
+
+  @override
+  String toText() {
+    return '[Exception: $exception]';
+  }
 }
 
 class ExceptionElement extends StatelessWidget {
@@ -176,15 +204,13 @@ class ExceptionElement extends StatelessWidget {
               // backgroundColor: errorSecondary,
               collapsedBackgroundColor: errorBg,
               // backgroundColor: e,
-              iconColor: errorSecondary,
+              iconColor: errorMinor,
               collapsedIconColor: errorColor,
               leading: SizedBox(
                   width: 50,
                   height: 50,
-                  child: DeferredWidget(
-                      loader: error_icon_lib.loadLibrary,
-                      builder: (context) => error_icon_lib.ErrorIcon(
-                          exceptionType: exception.runtimeType.toString()))),
+                  child: ErrorIcon(
+                      exceptionType: exception.runtimeType.toString())),
 
               shape: const RoundedRectangleBorder(
                   side: BorderSide(color: errorColor, width: 5)),

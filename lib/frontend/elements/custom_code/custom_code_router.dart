@@ -68,6 +68,11 @@ Future<Holder> _instantiateCodeTag(String cls, List<String> params) async {
     int? speed = _readIntParam(params, 'Speed');
     await elven_chorus_lib.loadLibrary();
     return elven_chorus_lib.ElvenChorusHolder(speed: speed);
+  } else if (cls == "CUSTOMGOTO") {
+    String? link = _readParam(params, 'Link');
+    String? dest = _readParam(params, 'Dest');
+    await goto_button_lib.loadLibrary();
+    return goto_button_lib.GotoButtonHolder(link: link, dest: dest, spans: []);
   } else {
     dev.log("Missed CodeTag '$cls'");
   }
@@ -122,7 +127,7 @@ int? _readIntParam(List<String> params, String key) {
 }
 
 List<String>? _readLinks(List<String> params, String key) {
-  String? links = _readParam(params, 'links');
+  String? links = _readParam(params, key);
   return links?.split(',');
 }
 
@@ -283,6 +288,11 @@ class UnhandledCodeElement extends Holder {
       text: classname.toLowerCase(),
       extra: "[Needs code element: $classname ($category)]",
     );
+  }
+
+  @override
+  String toText() {
+    return '[CodeElementNotFound: $classname]';
   }
 
   @override

@@ -32,6 +32,11 @@ class IconHolder extends Holder {
   }
 
   @override
+  String toText() {
+    return '[Icon]';
+  }
+
+  @override
   Widget element(BuildContext context) {
     return Icon(icon, size: 30, color: const Color(0x80000000));
   }
@@ -88,6 +93,11 @@ class EndAudio extends Holder {
   }
 
   @override
+  String toText() {
+    return '';
+  }
+
+  @override
   Widget fallback(BuildContext context) {
     return const SizedBox.shrink();
   }
@@ -128,6 +138,11 @@ class Audio extends Holder {
   final String file;
 
   const Audio({required this.file});
+
+  @override
+  String toText() {
+    return '(Audio: $file)\n';
+  }
 
   @override
   Widget element(BuildContext context) {

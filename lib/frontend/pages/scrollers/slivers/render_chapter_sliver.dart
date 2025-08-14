@@ -1,0 +1,432 @@
+import 'dart:developer' as dev;
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
+
+import '../../../../backend/chapter_holder.dart';
+import '../../../theme/colors.dart';
+
+const bool squashForever = kDebugMode && false;
+
+class RenderChapterSliver extends RenderProxySliver {
+  /// The idea is that this sliver is moved through the tree
+  /// ChapterSliver(key: Chapter5, pos: next)
+  /// -> ChapterSliver(key: Chapter5, pos: current)
+
+  final ChapterHolder chapter;
+
+  // double height = 0;
+
+  RenderChapterSliver({required this.chapter, this.height = 0}) {
+    // chapter.startedStream?.then(onStreamComplete);
+    // dev.log("New RenderChapterSliver: $isLoader");
+  }
+  double scrollExtent = 0;
+
+  double height = 0;
+  double desiredHeight = 0;
+
+  //paintExtent
+  double drawnHeight = 0;
+
+  //I don't think slivers are allowed to change their maxPaintExtent
+  static const double _maxPaintExtent = 20000;
+
+  double get scrollOffset => constraints.scrollOffset;
+  double get precedingScrollExtent => constraints.precedingScrollExtent;
+  double get overlap => constraints.overlap;
+  double get remainingPaintExtent => constraints.remainingPaintExtent;
+  double get crossAxisExtent => constraints.crossAxisExtent;
+  double get viewportMainAxisExtent => constraints.viewportMainAxisExtent;
+  double get remainingCacheExtent => constraints.remainingCacheExtent;
+  double get cacheOrigin => constraints.cacheOrigin;
+
+  @override
+  void performLayout() {
+    if (height == 0) {
+      height = viewportMainAxisExtent;
+    }
+    if (belowScreen()) {
+      dev.log("Below ${chapter.id}");
+      offscreenLayout();
+    } else {
+      performReaderLayout();
+    }
+  }
+
+  void performReaderLayout() {
+    final double origHeight = height;
+
+    SliverConstraints childConstraints = SliverConstraints(
+        axisDirection: constraints.axisDirection,
+        growthDirection: constraints.growthDirection,
+        userScrollDirection: constraints.userScrollDirection,
+        scrollOffset: constraints.scrollOffset,
+        precedingScrollExtent: constraints.precedingScrollExtent,
+        overlap: constraints.overlap,
+        remainingPaintExtent: height,
+        crossAxisExtent: constraints.crossAxisExtent,
+        crossAxisDirection: constraints.crossAxisDirection,
+        viewportMainAxisExtent: constraints.viewportMainAxisExtent,
+        remainingCacheExtent: constraints.remainingCacheExtent,
+        cacheOrigin: constraints.cacheOrigin);
+
+    child!.layout(childConstraints, parentUsesSize: true);
+
+    //Size to what child wants
+    desiredHeight = child!.geometry!.maxPaintExtent;
+    //Offscreen elements show as zero
+    // if (desiredHeight == 0) {
+    //   //Restore to previous number
+    //   desiredHeight = height;
+    // } else if (height == 0) {
+    //   desiredHeight = math.max(desiredHeight, viewportMainAxisExtent);
+    //   //If height not set, set to desired height
+    //   height = desiredHeight;
+    // } else {
+    desiredHeight = math.max(desiredHeight, viewportMainAxisExtent);
+    // }
+
+    if (!squashForever) {
+      if ((height - desiredHeight).abs() > 1) {
+        // if (fillingScreen()) {
+        //   dev.log("Chp${chapter.id} Filling");
+        if (touchingBottom()) {
+          dev.log("Chp${chapter.id} Bottom");
+        } else if (belowScreen()) {
+          dev.log("Chp${chapter.id} Below");
+        }
+        if (touchingBottom() || belowScreen()) {
+          // dev.log(
+          //     "Chp${chapter.id} ${chapter.varName} ${desiredHeight.toInt()} -> ${height.toInt()}  Filling ${fillingScreen()} Above ${aboveScreen()} Below ${belowScreen()} TouchingBottom ${touchingBottom()}");
+          height = desiredHeight;
+        } else {
+          // dev.log(
+          //     "Chp${chapter.id} ${chapter.varName}  wants ${desiredHeight.toInt()} -> ${height.toInt()}");
+        }
+      }
+    }
+    scrollExtent = height;
+
+    final double paintedChildSize =
+        calculatePaintOffset(constraints, from: 0, to: height);
+    //Overscrolling
+    // final double paintedChildSize = calculateOverscrollPaintExtent(
+    //     from: 0.0, to: height, overscroll: overscroll);
+
+    //Save for draw layer
+    drawnHeight = paintedChildSize;
+
+    final double cacheExtent =
+        calculateCacheOffset(constraints, from: 0.0, to: height);
+
+    //If sliver within cache range
+    if (cacheExtent > 0) {
+      //If needs load
+      if (chapter.needsLoad) {
+        chapter.load();
+      }
+    }
+
+    assert(paintedChildSize.isFinite);
+    assert(paintedChildSize >= 0.0);
+
+    //TODO: Cache if within cache range
+
+    geometry = SliverGeometry(
+      scrollExtent: scrollExtent,
+      paintExtent: paintedChildSize,
+      layoutExtent: paintedChildSize,
+      cacheExtent: cacheExtent,
+      maxPaintExtent: _maxPaintExtent,
+      hitTestExtent: paintedChildSize,
+      visible: onScreen(),
+      //TODO: !fillingScreen
+      hasVisualOverflow: desiredHeight > height ||
+          height > constraints.remainingPaintExtent ||
+          constraints.scrollOffset > 0.0,
+    );
+
+    if (origHeight != height) {
+      dev.log("Chp${chapter.id} ${chapter.varName} $origHeight -> $height");
+    }
+
+    child!.parentData = SliverPhysicalParentData();
+    // (child!.parentData as SliverPhysicalParentData).paintOffset =
+    //     Offset(0, -y);
+  }
+
+  void offscreenLayout() {
+    geometry = SliverGeometry(
+      scrollExtent: viewportMainAxisExtent,
+      paintExtent: 0,
+      layoutExtent: 0,
+      cacheExtent: 0,
+      maxPaintExtent: _maxPaintExtent,
+      visible: false,
+      //TODO: !fillingScreen
+      hasVisualOverflow: desiredHeight > height ||
+          height > constraints.remainingPaintExtent ||
+          constraints.scrollOffset > 0.0,
+    );
+  }
+
+  bool aboveScreen() {
+    //Confirmed right
+    return constraints.scrollOffset > height;
+  }
+
+  bool onScreen() {
+    return constraints.remainingPaintExtent > 0 && !aboveScreen();
+  }
+
+  bool fillingScreen() {
+    //TODO: WRONG!
+    //When the sliver is above the screen, this will be > viewportExtent
+    return scrollOffset < height &&
+        constraints.remainingPaintExtent >=
+            constraints.viewportMainAxisExtent &&
+        !aboveScreen();
+  }
+
+  bool belowScreen() {
+    //Confirmed right
+    return constraints.scrollOffset == 0 &&
+        constraints.remainingPaintExtent == 0;
+  }
+
+  bool touchingBottom() {
+    //Right
+    return scrollOffset <= height - viewportMainAxisExtent &&
+        remainingPaintExtent > 0 &&
+        !aboveScreen();
+  }
+
+  bool nearBottom(double range) {
+    return scrollOffset <= height - viewportMainAxisExtent + range &&
+        remainingPaintExtent > range &&
+        !aboveScreen();
+  }
+
+  bool oob() {
+    return false;
+  }
+
+  bool scrollingDown() {
+    return constraints.userScrollDirection == ScrollDirection.reverse;
+  }
+
+  bool scrollingUp() {
+    return constraints.userScrollDirection == ScrollDirection.forward;
+  }
+
+  double calculateOverscrollPaintExtent(
+      {required double from, required double to, required double overscroll}) {
+    //Overscroll algorithm
+    final double a = constraints.scrollOffset;
+    final double b =
+        constraints.scrollOffset + constraints.remainingPaintExtent;
+    // the clamp on the next line is to avoid floating point rounding errors
+    return ui.clampDouble(
+      ui.clampDouble(to + overscroll, a, b) - ui.clampDouble(from, a, b),
+      0.0,
+      constraints.remainingPaintExtent,
+    );
+  }
+
+  @override
+  void applyPaintTransform(RenderObject child, Matrix4 transform) {
+    assert(child == this.child);
+    final SliverPhysicalParentData childParentData =
+        child.parentData! as SliverPhysicalParentData;
+    // transform.add(Matrix4.translationValues(50, 100, 0));
+    childParentData.applyPaintTransform(transform);
+  }
+
+  Rect calculateClipRect() {
+    // double drawnHeight =
+    // calculatePaintOffset(constraints, from: 0, to: height);
+    return Rect.fromLTWH(0, math.max(0, geometry!.paintOrigin),
+        constraints.crossAxisExtent, drawnHeight);
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    if (child == null) {
+      return;
+    } else {
+      //Fill BG to remove transparency
+      Rect rect = calculateClipRect();
+      Paint bg = Paint()..color = canvasColor;
+      context.canvas.drawRect(rect, bg);
+
+      if (isRepaintBoundary) {
+        //This won't clip
+        context.paintChild(child!, offset);
+      } else {
+        layer = context.pushClipRect(
+          true,
+          offset,
+          rect,
+          (context, offset) {
+            //This allows animations
+            context.paintChild(child!, offset);
+          },
+        );
+      }
+
+      //Halo to show extra content
+      if ((desiredHeight > height)) {
+        //White = text clipped
+        drawEdgeHilite(context,
+            offset: offset, start: Primary.shadec.withAlpha(128));
+      }
+
+      //Dark halo to show it wants to shorten
+      if ((desiredHeight < height)) {
+        // Red = mild error
+        drawEdgeHilite(context,
+            offset: offset, start: Primary.shade7.withAlpha(128));
+      }
+    }
+  }
+
+  @override
+  ui.Rect get semanticBounds => calculateClipRect();
+  // @override // TODO: implement alwaysNeedsCompositing
+  // bool get alwaysNeedsCompositing => true;
+  void drawEdgeHilite(PaintingContext context,
+      {required Offset offset, required Color start}) {
+    double drawline = offset.dy + drawnHeight;
+    //Don't draw along bottom
+    // dev.log("Drawling: $drawline viewport: $viewportMainAxisExtent");
+
+    if (!touchingBottom()) {
+      Paint grad = Paint()
+        ..shader = ui.Gradient.linear(Offset(0, drawline - 100),
+            Offset(0, drawline), [start.withAlpha(0), start]);
+      context.canvas.drawRect(
+          Rect.fromLTRB(0, drawline - 100, crossAxisExtent, drawline), grad);
+    } else if (touchingBottom()) {
+      double offset = -remainingPaintExtent + height;
+      // dev.log("Draw halo: $offset");
+      if (offset < 100) {
+        double bot = drawline + offset;
+        double top = drawline + offset - 100;
+        Paint grad = Paint()
+          ..shader = ui.Gradient.linear(
+              Offset(0, top), Offset(0, bot), [start.withAlpha(0), start]);
+        context.canvas
+            .drawRect(Rect.fromLTRB(0, top, crossAxisExtent, bot), grad);
+      }
+    }
+  }
+
+  @override
+  bool hitTestChildren(SliverHitTestResult result,
+      {required double mainAxisPosition, required double crossAxisPosition}) {
+    Rect clipRect = calculateClipRect();
+    return child != null &&
+        child!.geometry!.hitTestExtent > 0 &&
+        mainAxisPosition > (geometry!.paintOrigin) &&
+        mainAxisPosition < (geometry!.paintOrigin + clipRect.height) &&
+        child!.hitTest(
+          result,
+          mainAxisPosition: mainAxisPosition,
+          crossAxisPosition: crossAxisPosition,
+        );
+  }
+
+  @override
+  bool hitTestSelf(
+      {required double mainAxisPosition, required double crossAxisPosition}) {
+    //This sliver does not need to accept clicks
+    return false;
+  }
+
+  @override
+  bool paintsChild(covariant RenderObject child) {
+    return onScreen();
+  }
+
+  @override
+  double childCrossAxisPosition(covariant RenderObject child) {
+    return 0;
+  }
+
+  @override
+  double childMainAxisPosition(covariant RenderObject child) {
+    return 0;
+  }
+
+  @override
+  ui.Size getAbsoluteSize() {
+    return ui.Size(crossAxisExtent, height);
+  }
+
+  // @override
+  // ui.Rect get paintBounds => calculateClipRect();
+
+  @override
+  double? childScrollOffset(covariant RenderObject child) {
+    return 0;
+  }
+
+  void copyChapter() {
+    chapter.chapter?.copyText();
+  }
+
+  @override
+  //Ensures accessibility I think
+  bool get ensureSemantics => true;
+
+  @override
+  void describeSemanticsConfiguration(SemanticsConfiguration config) {
+    super.describeSemanticsConfiguration(config);
+    config.headingLevel = 1;
+    config.isReadOnly = true;
+    //Americans only
+    //I guess this may fuck up the hebrew
+    config.textDirection = TextDirection.ltr;
+    // config.textSelection = TextSelection.(baseOffset: baseOffset, extentOffset: extentOffset)
+    config.label = 'Chapter ${chapter.varName}';
+    config.onCopy = copyChapter;
+    config.onCut = copyChapter;
+  }
+
+  @override // TODO: implement alwaysNeedsCompositing
+  bool get alwaysNeedsCompositing => child?.alwaysNeedsCompositing ?? false;
+  @override
+  // TODO: implement needsCompositing
+  bool get needsCompositing => child?.needsCompositing ?? false;
+
+  @override
+  //Must be false - otherwise the repaintBoundary throws assertions on Clip
+  bool get isRepaintBoundary => false;
+
+  @override
+  void reassemble() {
+    //Marks as needing a total relayout
+    // height = 0;
+    desiredHeight = 0;
+    // scrollExtent = 0;
+    drawnHeight = 0;
+    super.reassemble();
+  }
+
+  @override
+  void adoptChild(RenderObject child) {
+    desiredHeight = 0;
+    drawnHeight = 0;
+    super.adoptChild(child);
+  }
+
+  @override
+  void dropChild(RenderObject child) {
+    desiredHeight = 0;
+    drawnHeight = 0;
+    super.dropChild(child);
+  }
+}

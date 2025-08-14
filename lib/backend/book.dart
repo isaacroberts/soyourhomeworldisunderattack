@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import '_book_libs.dart' deferred as book_lib;
 import 'chapter.dart';
+import 'chapter_holder.dart';
+import 'chapter_info.dart';
 import 'error_handler.dart';
 
 const String defaultBook = 'SoYourHomeworld';
@@ -102,7 +104,7 @@ class Book {
         return ix;
       }
     }
-//Oops! Now check
+    //Oops! Now check other methods
     for (int ix = 0; ix < chapters.length; ++ix) {
       if (chapters[ix].varName.toLowerCase() == name) {
         return ix;
@@ -118,8 +120,9 @@ class Book {
     return (key >= 0 && key < chapters.length);
   }
 
-  Future<Chapter> getAndLoadChapter(ChapterKey key) {
-    return chapters[key].getOrLoadChapter();
+  Future<Chapter> getAndLoadChapter(ChapterKey key) async {
+    var tup = await chapters[key].getOrLoadChapter();
+    return tup.$1;
   }
 
   Chapter? getChapterIfLoaded(ChapterKey key) {
@@ -158,9 +161,9 @@ class BookLoader {
   // There can be only one McKinsey Plan.
 
   static BookLoader? _instance;
-  static get instance {
+  static BookLoader get instance {
     _instance ??= BookLoader._mckinsey();
-    return _instance;
+    return _instance!;
   }
 
   ///
@@ -172,15 +175,41 @@ class BookLoader {
   //Loaded
   String title = '';
   Color color = const Color(0xff888888);
-  List<ChapterHolder> chapters = [];
+  List<ChapterInfo> chapters = [];
   String byline = '';
 
   BookLoader(this.id);
   BookLoader._mckinsey() : id = defaultBook;
 
   Book convert() {
+    List<ChapterHolder> chapterHolders = [];
+    //Add objects
+    for (ChapterInfo info in chapters) {
+      chapterHolders.add(ChapterHolder(info));
+    }
+    //Match nexts
+    for (int n = 0; n < chapterHolders.length; ++n) {
+      int? nextId = chapters[n].next;
+      if (nextId != null) {
+        chapterHolders[n].next = chapterHolders[nextId];
+      }
+    }
+//Set previous where modified
+    for (int n = 0; n < chapterHolders.length; ++n) {
+      chapterHolders[n].next?.previous = chapterHolders[n];
+    }
+//Fill defaults with n-1
+    //Starting at 1
+    for (int n = 1; n < chapterHolders.length; ++n) {
+      chapterHolders[n].previous ??= chapterHolders[n - 1];
+    }
+
     return Book(
-        id: id, title: title, color: color, chapters: chapters, byline: byline);
+        id: id,
+        title: title,
+        color: color,
+        chapters: chapterHolders,
+        byline: byline);
   }
 
   bool wellFormed() {

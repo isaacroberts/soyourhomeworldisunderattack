@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/text_utils.dart';
 
 import '../frontend/theme/base_text_theme.dart';
-import '../frontend/theme/styles.dart';
+import '../frontend/theme/colors.dart';
 import 'font_cache.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
@@ -57,8 +57,8 @@ class FontInterm {
 
   Future load() async {
     file ??= await getFontFile();
-    await file!.load();
-    return file!;
+    await file?.load();
+    return file;
   }
 
   bool isLoaded() => file?.isLoaded() ?? false;

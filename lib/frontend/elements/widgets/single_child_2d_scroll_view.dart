@@ -203,12 +203,12 @@ class _SingleChild2DScrollView extends TwoDimensionalScrollView {
   const _SingleChild2DScrollView({
     required super.verticalDetails,
     required super.horizontalDetails,
-    required TwoDimensionalChildDelegate delegate,
+    required super.delegate,
     super.primary,
     super.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     super.clipBehavior = Clip.hardEdge,
     super.diagonalDragBehavior,
-  }) : super(delegate: delegate);
+  });
 
   @override
   Widget buildViewport(

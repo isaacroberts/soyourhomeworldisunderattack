@@ -32,6 +32,11 @@ class TitleHolder extends Holder {
   Widget fallback(BuildContext context) {
     return const TitleFallbackWidget();
   }
+
+  @override
+  String toText() {
+    return '$titleText\n$authorText\n';
+  }
 }
 
 class TitleWidget extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
-import 'package:soyourhomeworld/frontend/theme/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
 import '../../theme/base_text_theme.dart';
 import '../holders/span_holding_code.dart';
@@ -63,6 +63,7 @@ class _QuicktimeEventWidgetState extends State<QuicktimeEventWidget> {
     super.initState();
 
     _timer = Timer.periodic(const Duration(seconds: 1), _timerCallback);
+    _timer.isActive;
   }
 
   void _timerCallback(timer) {

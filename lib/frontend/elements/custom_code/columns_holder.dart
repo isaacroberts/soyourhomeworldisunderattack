@@ -12,6 +12,11 @@ class Columns extends Holder {
   // final int cols;
   const Columns({required this.cols});
 
+  @override
+  String toText() {
+    return cols.map((c) => c.map((h) => h.toText())).join('\n');
+  }
+
   static Columns parse(BufferPtr bin) {
     // b += pack_untyped_uint(len(self.columns))
     int lenCols = bin.consumeUint32();

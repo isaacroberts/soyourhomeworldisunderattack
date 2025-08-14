@@ -1,7 +1,8 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/backend/chapter.dart';
+
+import '../../../backend/chapter_info.dart';
 
 /// This is for the DebugReader.
 ///
@@ -41,7 +42,10 @@ class _ChapterSelectorState extends State<ChapterSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return _TextSquare(chapterNo: currentChapter, onPressed: openDialog);
+    return _TextSquare(
+        key: Key("TextSquare_$currentChapter"),
+        chapterNo: currentChapter,
+        onPressed: openDialog);
   }
 }
 

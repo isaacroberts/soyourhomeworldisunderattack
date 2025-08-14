@@ -11,6 +11,11 @@ class SpanHoldingCode extends Holder {
   const SpanHoldingCode({required this.spans});
 
   @override
+  String toText() {
+    return spans.map((s) => s.toText()).join();
+  }
+
+  @override
   Future load() async {
     for (Holder span in spans) {
       if (!span.isLoaded()) {

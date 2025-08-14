@@ -58,17 +58,18 @@ class _PagingScrollerState extends State<PagingScroller> {
     setChapter(currentChapterIx + 1);
   }
 
-  Widget buttonIcon() => const Icon(
-        key: Key('ChapterNextIcon'),
-        Icons.add,
-        size: 50,
-        color: Colors.white,
-      );
-
-  Widget chapterButton() => IconButton(
-      key: Key("Chapter$currentChapter NextButton"),
-      onPressed: incrementChapter,
-      icon: buttonIcon());
+  Widget chapterButton() => SizedBox(
+      height: 200,
+      child: Center(
+          child: IconButton(
+              key: const Key("Chapter NextButton"),
+              onPressed: incrementChapter,
+              icon: const Icon(
+                key: Key('ChapterNextIcon'),
+                Icons.arrow_forward,
+                size: 50,
+                color: Colors.white,
+              ))));
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +91,12 @@ class _PagingScrollerState extends State<PagingScroller> {
               ReaderScreen(
                 key: Key("FinScr_Reader_${chp.id}"),
                 chapter: chp,
-                scrollController: _scrollController,
+                // scrollController: _scrollController,
               ),
               Center(child: chapterButton()),
-              const SizedBox(
-                height: 250,
-              ),
+              // const SizedBox(
+              //   height: 250,
+              // ),
             ],
           ));
     }

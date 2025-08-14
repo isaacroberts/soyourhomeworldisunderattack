@@ -1,8 +1,11 @@
+import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 Random rNG = Random(13846268498318);
+
+enum LoaderColorMode { normal, grey }
 
 enum DeviceSize {
   phone,
@@ -26,4 +29,22 @@ void checkDeviceSize(BuildContext context) {
 Color randomColor() {
   return Color.fromARGB(
       255, rNG.nextInt(255), rNG.nextInt(255), rNG.nextInt(255));
+}
+
+class SizeMeasuringBox extends StatelessWidget {
+  const SizeMeasuringBox({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: builder);
+  }
+
+  Widget builder(BuildContext context, BoxConstraints constraints) {
+    return Container(
+        height:
+            math.max(constraints.maxHeight, MediaQuery.of(context).size.height),
+        color: const Color(0xaacccc66),
+        alignment: Alignment.topRight,
+        child: Text('${constraints.maxHeight}'));
+  }
 }

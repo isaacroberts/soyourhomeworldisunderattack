@@ -3,7 +3,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 
 import '../../icons.dart';
-import '../../theme/styles.dart';
+import '../../theme/colors.dart';
 
 class ErrorIcon extends StatelessWidget {
   final String exceptionType;
@@ -24,6 +24,10 @@ class ErrorIcon extends StatelessWidget {
       return RpgAwesome.hand;
     } else if (exceptionType == '_Exception') {
       return RpgAwesome.gear_hammer;
+    } else if (exceptionType == '_AssertionError') {
+      return RpgAwesome.crown;
+    } else if (exceptionType == 'FlutterError') {
+      return RpgAwesome.bird_claw;
     }
 
     dev.log("Un-Iconed- exception: $exceptionType");

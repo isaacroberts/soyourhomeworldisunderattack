@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/styles.dart';
+import '../../theme/colors.dart';
 
 void _goHome(BuildContext context) {}
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/theme/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
 class ButtonBackgroundColorProperty extends WidgetStateProperty<Color> {
   final Color color;

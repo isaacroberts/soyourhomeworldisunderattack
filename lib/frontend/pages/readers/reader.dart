@@ -10,11 +10,10 @@ import '../../elements/holders/textholders.dart';
 
 class ReaderScreen extends StatelessWidget {
   final Chapter chapter;
-  final ScrollController scrollController;
-  const ReaderScreen(
-      {required super.key,
-      required this.chapter,
-      required this.scrollController});
+
+  //NOt being used
+  // final ScrollController? scrollController;
+  const ReaderScreen({required super.key, required this.chapter});
 
   Widget itemBuilder(BuildContext context, Holder holder, bool showFonts) {
     return holder.elementOrFallback(context, showFonts);
@@ -39,17 +38,14 @@ class ReaderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget? header = this.header(context);
 
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Center(
-            child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 800),
-                child: ReaderBuilder(
-                  key: Key('RdrBldr_Chp${chapter.id}'),
-                  chapter: chapter,
-                  itemBuilder: itemBuilder,
-                  leadItems: [if (header != null) header],
-                  scrollController: scrollController,
-                ))));
+    return ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: ReaderBuilder(
+          useSliverProtocol: false,
+          key: Key('RdrBldr_Chp${chapter.id}'),
+          chapter: chapter,
+          itemBuilder: itemBuilder,
+          leadItems: [if (header != null) header],
+        ));
   }
 }

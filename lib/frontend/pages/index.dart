@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../backend/book.dart';
-import '../../backend/chapter.dart';
+import '../../backend/chapter_holder.dart';
+import '../../backend/chapter_info.dart';
 import '../book_waiter.dart';
 import '../elements/scaffold.dart';
 import '../theme/extra_styles.dart';
@@ -39,9 +40,6 @@ class IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PartedSearchIndexWidget(searchTerm: null);
-    return const SearchIndexPage();
-    // return const McScaffold(
-    //     source: 'index', child: StdBookWaiter(child: IndexWidget()));
   }
 }
 
@@ -112,14 +110,19 @@ class _SearchIndexWidgetState extends State<SearchIndexWidget> {
   Iterable<Widget> suggestionBuilder(
       BuildContext context, SearchController controller) {
     return suggestions(controller).map((ChapterHolder chapter) =>
-        _SearchedChapter(chapter: chapter.info, searchTerm: controller.text));
+        _SearchedChapter(
+            key: Key('searched_${chapter.id}'),
+            chapter: chapter.info,
+            searchTerm: controller.text));
   }
 
   Iterable<Widget> items(BuildContext context) sync* {
     Book book = Book.of(context);
     for (ChapterHolder chapter in book.chapters) {
       yield _SearchedChapter(
-          chapter: chapter.info, searchTerm: controller.text);
+          key: Key('searched_${chapter.id}'),
+          chapter: chapter.info,
+          searchTerm: controller.text);
     }
   }
 
@@ -233,7 +236,10 @@ class _PartedSearchIndexWidgetState extends State<PartedSearchIndexWidget> {
   Iterable<Widget> suggestionBuilder(
       BuildContext context, SearchController controller) {
     return suggestions(controller).map((ChapterHolder chapter) =>
-        _SearchedChapter(chapter: chapter.info, searchTerm: controller.text));
+        _SearchedChapter(
+            key: Key('searched_${chapter.id}'),
+            chapter: chapter.info,
+            searchTerm: controller.text));
   }
 
   Iterable<Widget> blankSuggestions(
@@ -419,7 +425,7 @@ class _PartListTileState extends State<PartListTile> {
   }
 
   Widget goButton(BuildContext context) {
-    return ElevatedButton(
+    return FilledButton(
       onPressed: gotoPart,
       child: const Text('Read'),
     );

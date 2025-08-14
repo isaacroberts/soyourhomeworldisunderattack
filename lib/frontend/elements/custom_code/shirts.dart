@@ -55,7 +55,8 @@ class Shirt extends SpanHoldingCode {
             sleeves(context),
             Positioned.fill(
                 child: Align(
-                    alignment: Alignment(0, -.5), child: shirtText(context)))
+                    alignment: const Alignment(0, -.5),
+                    child: shirtText(context)))
             // shirtText(context),
           ],
         ));
@@ -136,9 +137,4 @@ class BumperSticker extends SpanHoldingCode {
 class ChapterShirt extends Shirt {
   final String? link;
   ChapterShirt({required this.link, required super.spans});
-
-  @override
-  Widget element(BuildContext context) {
-    return super.element(context);
-  }
 }

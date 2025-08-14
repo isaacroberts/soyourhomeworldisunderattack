@@ -65,11 +65,18 @@ class SpanOfText extends Holder {
           ]),
         ));
   }
+
+  @override
+  String toText() {
+    return spans.map((e) => e.toText()).join();
+  }
 }
 
 abstract class FragOfText {
   const FragOfText();
   InlineSpan span(BuildContext context);
+
+  String toText();
 
   Future load() async {
     return null;
@@ -86,6 +93,11 @@ class FragBody extends FragOfText {
   const FragBody(this.text);
 
   @override
+  String toText() {
+    return text;
+  }
+
+  @override
   InlineSpan span(BuildContext context) {
     return TextSpan(text: text, style: bodyFont);
   }
@@ -96,6 +108,11 @@ class FragCustom extends FragOfText {
   final String text;
   final Color? bgColor;
   const FragCustom(this.text, this.font, {this.bgColor});
+
+  @override
+  String toText() {
+    return text;
+  }
 
   @override
   Future load() async {
@@ -123,6 +140,11 @@ class FragSubSuper extends FragOfText {
   final SubSuper subSuper;
   const FragSubSuper(this.text, this.font,
       {this.color, required this.subSuper});
+
+  @override
+  String toText() {
+    return text;
+  }
 
   @override
   Future load() async {
@@ -170,7 +192,6 @@ class FragSubSuper extends FragOfText {
           alignment: PlaceholderAlignment.bottom,
           baseline: TextBaseline.alphabetic,
           style: style);
-      return TextSpan(text: text, style: style);
     } else {
       throw Exception('Wrong usage of subSuperSpan function');
     }
@@ -200,6 +221,11 @@ class FragColoredBox extends FragOfText {
   final Color color;
   const FragColoredBox(
       {required this.width, required this.height, required this.color});
+
+  @override
+  String toText() {
+    return ' ';
+  }
 
   @override
   InlineSpan span(BuildContext context) {

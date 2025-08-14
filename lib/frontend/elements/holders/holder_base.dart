@@ -1,6 +1,45 @@
 import 'package:flutter/material.dart';
 // ============ Base ============================
 
+abstract class Holder {
+  const Holder();
+
+  Widget elementOrFallback(BuildContext context, bool showFonts) {
+    if (showFonts) {
+      return element(context);
+    } else {
+      return fallback(context);
+    }
+  }
+
+  Widget elementCheckingFallback(BuildContext context) {
+    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
+    if (showFonts) {
+      return element(context);
+    } else {
+      return fallback(context);
+    }
+  }
+
+  String toText();
+  Widget element(BuildContext context);
+  Widget fallback(BuildContext context);
+
+  Future load() async {
+    return null;
+  }
+
+  bool isLoaded() {
+    return true;
+  }
+
+  //Visual utilities
+
+  static Widget fallbackWrap(Widget child) {
+    return child;
+  }
+}
+
 class IsFallbackProvider extends InheritedWidget {
   final bool showFonts;
   const IsFallbackProvider(
@@ -25,43 +64,5 @@ class IsFallbackProvider extends InheritedWidget {
     } else {
       return true;
     }
-  }
-}
-
-abstract class Holder {
-  const Holder();
-
-  Widget elementOrFallback(BuildContext context, bool showFonts) {
-    if (showFonts) {
-      return element(context);
-    } else {
-      return fallback(context);
-    }
-  }
-
-  Widget elementCheckingFallback(BuildContext context) {
-    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
-    if (showFonts) {
-      return element(context);
-    } else {
-      return fallback(context);
-    }
-  }
-
-  Widget element(BuildContext context);
-  Widget fallback(BuildContext context);
-
-  Future load() async {
-    return null;
-  }
-
-  bool isLoaded() {
-    return true;
-  }
-
-  //Visual utilities
-
-  static Widget fallbackWrap(Widget child) {
-    return child;
   }
 }

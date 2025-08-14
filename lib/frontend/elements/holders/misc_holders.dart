@@ -12,6 +12,11 @@ class NewlineElement extends Holder {
   const NewlineElement({required this.height});
 
   @override
+  String toText() {
+    return '\n';
+  }
+
+  @override
   Widget element(BuildContext context) {
     return SizedBox(height: height);
   }
@@ -28,6 +33,11 @@ class ColoredBoxHolder extends Holder {
   final Color color;
   const ColoredBoxHolder(
       {required this.width, required this.height, required this.color});
+
+  @override
+  String toText() {
+    return ' ';
+  }
 
   @override
   Widget element(BuildContext context) {
@@ -61,6 +71,11 @@ class ColoredBoxFrag extends FragOfText {
   final Color color;
   const ColoredBoxFrag(
       {required this.width, required this.height, required this.color});
+
+  @override
+  String toText() {
+    return ' ';
+  }
 
   Widget _element(BuildContext context) {
     //Mark for debugging
@@ -100,6 +115,12 @@ class ColoredBoxFrag extends FragOfText {
 
 class HiddenTextElement extends Holder {
   const HiddenTextElement();
+
+  @override
+  String toText() {
+    return '';
+  }
+
   @override
   Widget element(BuildContext context) {
     return const SizedBox.shrink();
@@ -113,6 +134,11 @@ class HiddenTextElement extends Holder {
 
 class PageBreakOfText extends Holder {
   const PageBreakOfText();
+
+  @override
+  String toText() {
+    return '';
+  }
 
   @override
   Widget element(BuildContext context) {

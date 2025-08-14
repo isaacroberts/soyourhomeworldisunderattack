@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/theme/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
 import '../../../backend/utils.dart';
 
@@ -53,7 +53,7 @@ class SplashPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     const double seaStart = .25;
     const double seaLength = .75;
-
+    // dev.log("Painting");
     double colorPt = math.min(1, anim * 2 / 3);
     canvasColor;
     Color sky =

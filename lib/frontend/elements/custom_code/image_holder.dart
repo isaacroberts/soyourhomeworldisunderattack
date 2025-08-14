@@ -12,6 +12,11 @@ class ImageHolder extends Holder {
   }
 
   @override
+  String toText() {
+    return '(Image: $url)\n';
+  }
+
+  @override
   Widget element(BuildContext context) {
     if (url == null) {
       return placeholder();

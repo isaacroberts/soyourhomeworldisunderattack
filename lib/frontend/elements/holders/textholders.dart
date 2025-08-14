@@ -1,4 +1,4 @@
-import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
+// import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/font_interm.dart';
@@ -14,7 +14,8 @@ export 'span_holders.dart';
 bool _hyphenatorInitialized = false;
 Future initHyphenator() async {
   if (!_hyphenatorInitialized) {
-    return initHyphenation();
+    // return initHyphenation();
+    _hyphenatorInitialized = true;
   }
   return null;
 }
@@ -27,6 +28,11 @@ abstract class TextHolder extends Holder {
   /// Has text which can be extracted
   final String text;
   const TextHolder({required this.text});
+
+  @override
+  String toText() {
+    return text;
+  }
 }
 
 class BodyTextElement extends TextHolder {
@@ -102,7 +108,7 @@ class CustomFontText extends FontWanterTextHolder {
 
   @override
   Future load() async {
-    await initHyphenation();
+    // await initHyphenation();
     return font.load();
   }
 
@@ -116,10 +122,10 @@ class CustomFontText extends FontWanterTextHolder {
     double screenWidth = MediaQuery.sizeOf(context).width;
     if (font.size > 20) {
       if (screenWidth < 500) {
-        return AutoHyphenatingText(
+        return Text(
           text,
           style: font.instance(),
-          selectable: true,
+          // selectable: true,
           textAlign: align,
         );
       }
@@ -227,21 +233,22 @@ class HeaderOfText extends TextHolder {
 
   @override
   Widget element(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: headerFont.color!))),
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: headerFont,
-          // style: font.instance(),
-          textAlign: TextAlign.center,
-        ));
+    return Text(
+      text,
+      style: headerFont,
+      // style: font.instance(),
+      textAlign: TextAlign.center,
+    );
   }
 
   @override
   Widget fallback(BuildContext context) {
     return element(context);
+  }
+
+  @override
+  String toText() {
+    return '\n$text\n';
   }
 }
 
@@ -253,6 +260,13 @@ class CustomHeaderOfText extends HeaderOfText {
 
   @override
   Widget element(BuildContext context) {
+    return Align(
+        alignment: textAlignToHoriz(align),
+        child: Text(
+          text,
+          style: font.instance(),
+          textAlign: align,
+        ));
     return Container(
         decoration: BoxDecoration(
             border: Border(

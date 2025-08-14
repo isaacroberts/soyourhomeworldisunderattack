@@ -9,14 +9,19 @@ import 'package:http/http.dart' as http;
 import 'error_handler.dart';
 
 //TODO: Try multiple URLs
+String get displayURL {
+  return 'homeworld.nfshost.com';
+}
 
 String getURL() {
-  if (kDebugMode) {
+  if (kDebugMode || kProfileMode) {
     return 'http://127.0.0.1:5000';
   } else {
     return 'https://homeworld.nfshost.com/';
   }
 }
+
+String get serverUrl => getURL();
 
 String fontUrl(String filename) {
   return "${getURL()}/hosted_fonts/$filename";

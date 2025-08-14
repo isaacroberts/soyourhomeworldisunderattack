@@ -114,7 +114,7 @@ class _MasterScrollerState extends State<MasterScroller> {
 
     return ReaderScreen(
         key: Key("Reader_${chapter.id}"),
-        scrollController: _scrollController,
+        // scrollController: _scrollController,
         chapter: chapter);
   }
 

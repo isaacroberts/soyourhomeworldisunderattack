@@ -38,6 +38,7 @@ Page _errorPageBuilder(BuildContext context, GoRouterState state) {
 }
 
 GoRouter router() {
+  //TODO: I think this needs error handling
   return GoRouter(
       errorPageBuilder: _errorPageBuilder,
       initialLocation: (kDebugMode && !devLoadToMain) ? '/dev_page/' : '/',
@@ -150,7 +151,7 @@ List<GoRoute> routes() {
 
 FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
   String path = state.uri.path;
-  dev.log("Redirector $path} $state");
+  dev.log("Redirector $path} ${state.path}");
   if (path == '/home') {
     return '/scroll/0';
   } else if (path == '/humanjacks') {

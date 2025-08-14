@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/pages/readers/reader_builder.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
-import 'package:soyourhomeworld/frontend/theme/styles.dart';
+import 'package:soyourhomeworld/frontend/theme/colors.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../../backend/chapter.dart';
@@ -82,7 +82,7 @@ class DebugReaderScreen extends StatelessWidget {
             child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 800),
                 child: ReaderBuilder(
-                  scrollController: null,
+                  useSliverProtocol: false,
                   key: Key('DbgRdrBldr_Chp${chapter.id}'),
                   chapter: chapter,
                   itemBuilder: mapFunc,
@@ -118,7 +118,9 @@ class _DebugHolderWrapState extends State<DebugHolderWrap> {
 
   void tap() async {
     await inspector_lib.loadLibrary();
-    inspector_lib.showHolderInspectorDialog(context, widget.elem);
+    if (mounted) {
+      inspector_lib.showHolderInspectorDialog(context, widget.elem);
+    }
   }
 
   @override

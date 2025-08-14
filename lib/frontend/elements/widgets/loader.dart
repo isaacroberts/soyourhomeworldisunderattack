@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 
+import '../../theme/colors.dart';
+
 //ThreeRotatingDots from https://pub.dev/packages/loading_animation_widget
+
+enum LoaderColorMode { normal, grey }
 
 class TriWizardLoader extends StatelessWidget {
   final String message;
-  const TriWizardLoader({super.key, required this.message});
+  final LoaderColorMode colorMode;
+  const TriWizardLoader(
+      {super.key,
+      required this.message,
+      this.colorMode = LoaderColorMode.normal});
   static const double size = 100;
 
   @override
@@ -18,6 +26,7 @@ class TriWizardLoader extends StatelessWidget {
             children: [
           // const CircularProgressIndicator(),
           _TriWizardLoader(
+            key: Key("Loader($message)"),
             text: message,
           ),
           if (message.isNotEmpty)
@@ -30,10 +39,21 @@ class TriWizardLoader extends StatelessWidget {
 }
 
 class _TriWizardLoader extends StatefulWidget {
-  static const Color color = Colors.white;
+  // static const Color color = Colors.white;
+  Color get color {
+    switch (colorMode) {
+      case LoaderColorMode.normal:
+        return Primary.white;
+      case LoaderColorMode.grey:
+        return const Color(0xff777777);
+    }
+  }
+
+  final LoaderColorMode colorMode;
   final String? text;
 
-  const _TriWizardLoader({super.key, required this.text});
+  const _TriWizardLoader(
+      {super.key, required this.text, this.colorMode = LoaderColorMode.normal});
 
   @override
   State<_TriWizardLoader> createState() => _TriWizardLoaderState();
@@ -96,7 +116,7 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
             children: <Widget>[
               _BuildDot.first(
                 key: const Key("Dot1"),
-                color: _TriWizardLoader.color,
+                color: widget.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -108,7 +128,7 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
 
               _BuildDot.first(
                 key: const Key("Dot2"),
-                color: _TriWizardLoader.color,
+                color: widget.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -120,7 +140,7 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
 
               _BuildDot.first(
                 key: const Key("Dot3"),
-                color: _TriWizardLoader.color,
+                color: widget.color,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -199,6 +219,7 @@ class _BuildDot extends StatelessWidget {
   Widget buildIcon() {
     switch (index) {
       case 0:
+        //TODO: Deferred Icon
         return Icon(
           Icons.public,
           size: size,

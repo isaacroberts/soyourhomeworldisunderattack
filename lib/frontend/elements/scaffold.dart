@@ -15,7 +15,12 @@ import '../theme/theme.dart';
 class McScaffold extends StatefulWidget {
   final String? source;
   final Widget child;
-  const McScaffold({super.key, required this.source, required this.child})
+  final bool showFAB;
+  const McScaffold(
+      {super.key,
+      required this.source,
+      this.showFAB = true,
+      required this.child})
       : assert(child is! McScaffold);
 
   @override
@@ -63,7 +68,7 @@ class _McScaffoldState extends State<McScaffold>
 
             // backgroundColor: const Color(0xfff2ce9f),
             // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-            floatingActionButton: const McFAB(),
+            floatingActionButton: widget.showFAB ? const McFAB() : null,
             body: widget.child));
   }
 

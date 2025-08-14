@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/elements/custom_code/elven_chorus.dart';
+import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/ad_list.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/greenland_game.dart';
 import 'package:soyourhomeworld/frontend/pages/review_page.dart';
+import 'package:soyourhomeworld/frontend/pages/scrollers/sliver_scroller.dart';
 
 import '../elements/custom_code/goto_button.dart';
 import '../elements/holders/holder_base.dart';
@@ -30,8 +31,10 @@ class DevPage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (routerState.pathParameters.isNotEmpty) {}
 
-    return const PageWrap(child: ElvenChorus(speed: 1));
-
+    return const StdBookWaiter(
+        child: SliverScrollerPage(
+      startChapter: 1,
+    ));
     const Holder holder = GotoButtonHolder(
         link: 'ValinorTickets',
         dest: 'Greenland',

@@ -8,7 +8,7 @@ import 'package:soyourhomeworld/frontend/theme/text_theme.dart';
 
 import '../../../backend/book.dart';
 import '../../theme/button_state_property.dart';
-import '../../theme/styles.dart';
+import '../../theme/colors.dart';
 import '../holders/holder_utils.dart';
 
 // final TextTheme gotoButtonTextTheme = bookTextTheme;
@@ -34,7 +34,7 @@ class GotoButtonHolder extends SpanHoldingCode {
 
   @override
   Widget element(BuildContext context) {
-    return _GotoButtonWidget(holder: this);
+    return _GotoButtonWidget(key: Key('goto_widget_$hashCode'), holder: this);
   }
 }
 
@@ -182,9 +182,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
 
                 //TODO: Get chapter
 
-                Text("Chapter 36"),
-
-                Text("Nick Goes to Home"),
+                const Text("..."),
 
                 const Divider(),
 

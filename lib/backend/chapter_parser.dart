@@ -9,6 +9,8 @@ import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/binary.dart';
 import 'binary_utils/buffer_ptr.dart';
 import 'chapter.dart';
+import 'chapter_holder.dart';
+import 'chapter_info.dart';
 import 'error_handler.dart';
 import 'live_text_holder.dart';
 
@@ -51,6 +53,23 @@ class ChapterParser {
       spans = parseBody();
     }
     return Chapter.fromChapterInfoAndStream(info, spans);
+  }
+
+  Future<ChapterAndStream> getChapterAndStream(ChapterInfo info,
+      {required bool handleErrors}) async {
+    dev.log("Parsing ${info.varName} (fromExisting)");
+    if (!ptr.hasMore()) {
+      throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
+          debugId: debugId);
+    }
+    skipToHeaderSeparator();
+    Stream<Holder> spans;
+    if (handleErrors) {
+      spans = parseBodyAndCatchErrors();
+    } else {
+      spans = parseBody();
+    }
+    return (Chapter.fromChapterInfoAndStream(info, spans), spans);
   }
 
   Future<ChapterInfo?> parseBookHeader(int index) async {

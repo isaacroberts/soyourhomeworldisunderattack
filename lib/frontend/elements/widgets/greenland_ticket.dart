@@ -84,7 +84,7 @@ class GreenlandObject extends ChangeNotifier {
 
   GreenlandObject.randomize({required math.Random rng, required this.offset})
       : _type = randomElementType(rng: rng),
-        color = 1 + rng.nextInt(ticketPalette.length - 1) {}
+        color = 1 + rng.nextInt(ticketPalette.length - 1);
 
   ElementType get type => _type;
   Rect get rect => Rect.fromLTWH(offset.dx, offset.dy, type.width, type.height);

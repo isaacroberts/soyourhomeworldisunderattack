@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
+import 'package:soyourhomeworld/frontend/pages/scrollers/slivers/load_sliver.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../backend/chapter.dart';
@@ -15,18 +16,18 @@ class ReaderBuilder extends StatefulWidget {
   /// TODO: This is causing jumps, when scrolling up.
   /// I think the previous chapter is getting reloaded, and has a smaller height
   final Chapter chapter;
-  final ScrollController? scrollController;
 
   final Widget Function(BuildContext, Holder, bool) itemBuilder;
   final List<Widget> leadItems;
   final List<Widget> endItems;
   final Widget? waitingWidget;
+  final bool useSliverProtocol;
 
   const ReaderBuilder(
       {required super.key,
       required this.chapter,
       required this.itemBuilder,
-      required this.scrollController,
+      required this.useSliverProtocol,
       this.leadItems = const [],
       this.endItems = const [],
       this.waitingWidget});
@@ -42,6 +43,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
 //TODO: PUt back
 //   bool get showFonts => _showFonts && ViewSettings.instance.showFonts;
   bool get showFonts => ViewSettings.instance.showFonts;
+  bool get useSliverProtocol => widget.useSliverProtocol;
 
   @override
   void initState() {
@@ -158,6 +160,16 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   }
 
   Widget endWaitingWidget(BuildContext context) {
+    if (useSliverProtocol) {
+      return const SliverToBoxAdapter(
+          child: SizedBox(
+        height: 300,
+        child: Center(
+            child: TriWizardLoader(
+          message: 'Loading...',
+        )),
+      ));
+    }
     return const SizedBox(
       height: 300,
       child: Center(
@@ -183,21 +195,38 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     }
   }
 
+  Widget? sliverBuilder(BuildContext context, int index) {
+    if (index < widget.leadItems.length) {
+      return widget.leadItems[index];
+    }
+    index -= widget.leadItems.length;
+    if (index >= 0 && index < itemsToDisplay) {
+      return widget.itemBuilder(context, chapter.lines[index], showFonts);
+    }
+    index -= chapter.lines.length;
+    if (doneLoading) {
+      if (index >= 0 && index < widget.endItems.length) {
+        return widget.endItems[index];
+      }
+    } else {
+      //Janky
+      // if (index == 0) {
+      //   return widget.waitingWidget ?? endWaitingWidget(context);
+      // }
+    }
+    return null;
+  }
+
   Widget unloadedBuilder(BuildContext context) {
     //Shows basic loading screen
+    if (useSliverProtocol) {
+      return ChapterLoadSliver(chapterTitle: chapter.displayTitle);
+    }
     return const SizedBox(
-      //Takes up all space on PageBuilder
-      height: 2000,
-      child: Align(
-        alignment: Alignment.topCenter,
-        //Centers horizontally within screen
-        child: SizedBox(
-          height: 400,
-          child: Center(
-            //Loading Icon
-            child: TriWizardLoader(message: 'Loading chapter...'),
-          ),
-        ),
+      height: 400,
+      child: Center(
+        //Loading Icon
+        child: TriWizardLoader(message: 'Loading chapter...'),
       ),
     );
   }
@@ -207,19 +236,34 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     // if (!chapter.loaded) {
     //   return unloadedBuilder(context);
     // }
+    if (useSliverProtocol) {
+      if (!doneLoading) {
+        return ChapterLoadSliver(chapterTitle: chapter.displayTitle);
+      }
 
-    return IsFallbackProvider(
-        showFonts: showFonts,
-        child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-            child: SelectableRegion(
-                selectionControls: MaterialTextSelectionControls(),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    key: PageStorageKey('RdrBldrChp${widget.chapter.id}'),
-                    children: itemIterator(context).toList(growable: false)))));
+      return IsFallbackProvider(
+          showFonts: showFonts,
+          // child: ConstrainedBox(
+          //     constraints:
+          //         BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+          child: SliverMainAxisGroup(
+              key: Key('RdrSlvrChp${widget.chapter.id}'),
+              slivers: itemIterator(context).toList(growable: false)));
+    } else {
+      return IsFallbackProvider(
+          showFonts: showFonts,
+          // child: ConstrainedBox(
+          //     constraints:
+          //         BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+          child: SelectableRegion(
+              selectionControls: MaterialTextSelectionControls(),
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //TODO: Why a PageStorage Key?
+                  key: Key('RdrBldrChp${widget.chapter.id}'),
+                  children: itemIterator(context).toList(growable: false))));
+    }
   }
 }

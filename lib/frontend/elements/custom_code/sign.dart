@@ -37,7 +37,7 @@ class SignWidget extends StatelessWidget {
   Widget picket(BuildContext context) {
     return Container(
       color: const Color(0xff503626),
-      margin: EdgeInsets.only(top: 200),
+      margin: const EdgeInsets.only(top: 200),
       width: 70,
       height: 610,
     );

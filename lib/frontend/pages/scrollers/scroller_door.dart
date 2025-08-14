@@ -10,6 +10,7 @@ import 'package:soyourhomeworld/frontend/pages/scrollers/finite_scroller.dart'
     deferred as finite_lib;
 import 'package:soyourhomeworld/frontend/pages/scrollers/infinite_scroller.dart'
     deferred as infinite_lib;
+import 'package:soyourhomeworld/frontend/pages/scrollers/sliver_scroller.dart';
 import 'package:soyourhomeworld/frontend/pages/scrollers/test_rig_scroller.dart'
     deferred as rig_lib;
 import 'package:soyourhomeworld/frontend/pages/server_offline_error.dart'
@@ -132,32 +133,40 @@ class _ScrollerPicker extends StatelessWidget {
 
   Widget builder(BuildContext context, Widget? child) {
     ViewSettings settings = ViewSettings.instance;
-    dev.log("Rebuilding scroller door");
-    if (settings.useTestRig && !settings.useInfiniteScroll) {
-      return DeferredPage(
-          loader: () => rig_lib.loadLibrary(),
-          builder: (context) => rig_lib.TestRigScroller(
-                book: book,
-                startChapter: startChapter,
-              ));
-    }
-    if (settings.useInfiniteScroll) {
-      return DeferredPage(
-          loader: () => infinite_lib.loadLibrary(),
-          builder: (context) => infinite_lib.MasterScroller(
-                key: Key('Master!${book.id}_$startChapter'),
-                book: book,
-                startChapter: startChapter,
-              ));
-    } else {
-      //TODO: Put DebugReader on PagingScroller
-      return McScaffold(
-          source: 'scroll',
-          key: Key("!ScrollEntry${book.id}_$startChapter"),
-          child: DeferredWidget(
-              loader: () => finite_lib.loadLibrary(),
-              builder: (context) => finite_lib.PagingScroller(
-                  key: const Key("Pager!"), book: book)));
+
+    switch (settings.useInfiniteScroll) {
+      case ScrollMode.sliver:
+        //TODO: Defer load
+        return SliverScrollerPage(
+          key: const Key("slivScrollPage"),
+          startChapter: startChapter,
+        );
+      case (ScrollMode.infinitePackage):
+        if (settings.useTestRig) {
+          return DeferredPage(
+              loader: () => rig_lib.loadLibrary(),
+              builder: (context) => rig_lib.TestRigScroller(
+                    book: book,
+                    startChapter: startChapter,
+                  ));
+        } else {
+          return DeferredPage(
+              loader: () => infinite_lib.loadLibrary(),
+              builder: (context) => infinite_lib.MasterScroller(
+                    key: Key('Master!${book.id}_$startChapter'),
+                    book: book,
+                    startChapter: startChapter,
+                  ));
+        }
+      case (ScrollMode.paged):
+        //TODO: Put DebugReader on PagingScroller
+        return McScaffold(
+            source: 'scroll',
+            key: Key("!ScrollEntry${book.id}_$startChapter"),
+            child: DeferredWidget(
+                loader: () => finite_lib.loadLibrary(),
+                builder: (context) => finite_lib.PagingScroller(
+                    key: const Key("Pager!"), book: book)));
     }
   }
 }

@@ -236,12 +236,6 @@ class DraggableTicket extends StatefulWidget {
 class _DraggableTicketState extends State<DraggableTicket> {
   // late Offset _position;
 
-  @override
-  void initState() {
-    ;
-    super.initState();
-  }
-
   Widget _visElement(BuildContext context, GreenlandObject object) {
     return _TicketElement(
         object: object, key: Key("element${object.hashCode}"));

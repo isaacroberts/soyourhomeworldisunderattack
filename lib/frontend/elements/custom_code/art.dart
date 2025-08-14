@@ -43,7 +43,7 @@ class _ArtWidgetState extends State<ArtWidget> {
     return Hero(
         tag: 'art_art_$hashCode',
         child: AnimatedContainer(
-            duration: Duration(milliseconds: 300), child: art));
+            duration: const Duration(milliseconds: 300), child: art));
   }
 
   @override

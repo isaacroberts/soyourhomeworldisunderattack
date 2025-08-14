@@ -42,6 +42,11 @@ class TweetHolder extends Holder {
     return IsFallbackProvider(
         showFonts: false, child: TweetWidget(user: user, tweet: tweet));
   }
+
+  @override
+  String toText() {
+    return '(Tweet)\n@$user:\n$tweet\n';
+  }
 }
 
 const Color tweetColor = Color(0xff4da5e9);

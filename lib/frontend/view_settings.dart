@@ -1,19 +1,41 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+enum ScrollMode {
+  infinitePackage,
+  sliver,
+  paged,
+  ;
+
+  String get displayName {
+    switch (this) {
+      case ScrollMode.infinitePackage:
+        return 'Infinite Scroll (Stuttery)';
+      case ScrollMode.sliver:
+        return 'Sliver (experimental)';
+      case ScrollMode.paged:
+        return 'Paged';
+      // case ScrollMode.old_scroll:
+      //   return 'Old Scroll';
+    }
+  }
+
+  static const ScrollMode defaultScroll = sliver;
+}
 
 class ViewSettings {
   static ViewSettings instance = ViewSettings.defaultsThenLoad();
 
-  bool get useInfiniteScroll => _useInfiniteScroll.value;
+  ScrollMode get useInfiniteScroll => _useInfiniteScroll.value;
   bool get useTestRig => _useTestRig.value;
   bool get showFonts => _showFonts.value;
 
-  ValueNotifier<bool> get infiniteScrollNotifier => _useInfiniteScroll;
+  ValueNotifier<ScrollMode> get infiniteScrollNotifier => _useInfiniteScroll;
   ValueNotifier<bool> get testRigNotifier => _useTestRig;
   ValueNotifier<bool> get showFontsNotifier => _showFonts;
 
-  set useInfiniteScroll(bool? set) {
-    if (set != null && set != _useInfiniteScroll) {
+  set useInfiniteScroll(ScrollMode? set) {
+    if (set != null && set != _useInfiniteScroll.value) {
       _useInfiniteScroll.value = set;
       setAllSharedPrefs();
     }
@@ -33,7 +55,7 @@ class ViewSettings {
     }
   }
 
-  final ValueNotifier<bool> _useInfiniteScroll;
+  final ValueNotifier<ScrollMode> _useInfiniteScroll;
   final ValueNotifier<bool> _useTestRig;
   final ValueNotifier<bool> _showFonts;
 
@@ -42,15 +64,17 @@ class ViewSettings {
   //       _useTestRig = false,
   //       _showFonts = true;
   ViewSettings.defaultsThenLoad()
-      : _useInfiniteScroll = ValueNotifier<bool>(true),
+      : _useInfiniteScroll =
+            ValueNotifier<ScrollMode>(ScrollMode.defaultScroll),
         _useTestRig = ValueNotifier<bool>(false),
         _showFonts = ValueNotifier<bool>(true) {
     getFromSharedPrefs();
   }
 
   ViewSettings.values(
-      {bool? useInfiniteScroll, bool? useTestRig, bool? showFonts})
-      : _useInfiniteScroll = ValueNotifier<bool>(useInfiniteScroll ?? true),
+      {ScrollMode? useInfiniteScroll, bool? useTestRig, bool? showFonts})
+      : _useInfiniteScroll = ValueNotifier<ScrollMode>(
+            useInfiniteScroll ?? ScrollMode.defaultScroll),
         _useTestRig = ValueNotifier<bool>(useTestRig ?? false),
         _showFonts = ValueNotifier<bool>(showFonts ?? true);
 
@@ -87,11 +111,11 @@ class ViewSettings {
 
   void getFromSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? inf = prefs.getBool('inf');
+    int? inf = prefs.getInt('scroll');
     bool? rig = prefs.getBool('rig');
     bool? fonts = prefs.getBool('_showFonts');
-    if (inf != null && inf != useInfiniteScroll) {
-      _useInfiniteScroll.value = inf;
+    if (inf != null && inf != useInfiniteScroll.index) {
+      _useInfiniteScroll.value = ScrollMode.values[inf];
     }
     if (rig != null && rig != useTestRig) {
       _useTestRig.value = rig;
@@ -111,7 +135,7 @@ class ViewSettings {
 
   void setAllSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('inf', _useInfiniteScroll.value);
+    prefs.setInt('scroll', _useInfiniteScroll.value.index);
     prefs.setBool('rig', _useTestRig.value);
     prefs.setBool('_showFonts', _showFonts.value);
   }

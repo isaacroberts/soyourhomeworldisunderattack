@@ -51,9 +51,10 @@ class IconViewerPage extends StatelessWidget {
     return McScaffold(
         source: 'dev_icon',
         child: GridView.builder(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-          itemBuilder: (c, ix) => _RpgIconDisplay(ix: ix),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5),
+          itemBuilder: (c, ix) =>
+              _RpgIconDisplay(key: Key("iconDisplay$ix"), ix: ix),
           itemCount: RpgAwesome.values.length + 1,
         ));
   }

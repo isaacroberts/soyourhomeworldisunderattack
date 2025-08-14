@@ -29,7 +29,7 @@ class FontFile {
         _status = _LoadStatus.failed,
         cache = DynamicCachedFonts(url: 'null', fontFamily: 'Null');
 
-  static Future<FontFile> fromId(int id) async {
+  static Future<FontFile?> fromId(int id) async {
     // var response;
     // try {
     //   var response = await sendGet('font_info/$id');
@@ -43,6 +43,7 @@ class FontFile {
       dev.log("Font get error: $id");
       dev.log(response.body);
 
+      return null;
       throw FontException(
           'Font error code=${response.statusCode}: ${response.reasonPhrase}',
           family: null);
@@ -50,6 +51,7 @@ class FontFile {
       var data = json.decode(response.body);
 
       if (data == null) {
+        return null;
         throw FontException("Null Data from server.", family: id.toString());
       }
       dev.log('data: $data');
@@ -60,6 +62,7 @@ class FontFile {
       dev.log("Font: [id]:$id [family]:$family [url]:$files");
 
       if (files == null || family == null) {
+        return null;
         throw FontException(
             "Null url/family received. family=$family url=$files",
             family: family);
@@ -241,10 +244,12 @@ class FontCache {
       return files[id];
     } else {
       if (needsFontFile(id)) {
-        FontFile f = await FontFile.fromId(id);
-        dev.log("(Font) Fetched name $id = ${f.family}");
-        assert(f.id == id);
-        files[id] = f;
+        FontFile? f = await FontFile.fromId(id);
+        if (f != null) {
+          dev.log("(Font) Fetched name $id = ${f.family}");
+          assert(f.id == id);
+          files[id] = f;
+        }
         return f;
       } else {
         String? family = checkBuiltinFontFamilies(id);

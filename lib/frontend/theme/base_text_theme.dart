@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 const double fontScale = 2;
 
-const Color appTextColor = Color(0xffffffff);
-const Color textColor = Color(0xddffffff);
-const Color fallbackTextColor = Color(0xb2ffffff);
-const Color labelTextColor = Color(0x88ffffff);
+// const Color appTextColor = Color(0xffffffff);
+// const Color textColor = Color(0xddffffff);
+// const Color fallbackTextColor = Color(0xb2ffffff);
+// const Color labelTextColor = Color(0x88ffffff);
+const Color appTextColor = Primary.shaded;
+const Color textColor = Primary.shadef;
+const Color fallbackTextColor = Primary.shadee;
+const Color labelTextColor = Primary.shadec;
 
 const TextStyle bodyFont = TextStyle(
   fontFamily: 'Palatino',
@@ -18,9 +24,9 @@ const TextStyle bodyFont = TextStyle(
 
 const TextStyle headerFont = TextStyle(
   fontFamily: 'Palatino',
-  fontSize: 24 * fontScale,
+  fontSize: 12 * fontScale,
   color: textColor,
-  fontWeight: FontWeight.w800,
+  fontWeight: FontWeight.w500,
 );
 
 const TextStyle appFont = TextStyle(

@@ -1,54 +1,22 @@
 import 'dart:async';
 import 'dart:developer' as dev;
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
-import 'package:soyourhomeworld/backend/server.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/future_holder.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
-//Deferred loads
-import 'binary_utils/buffer_ptr.dart' deferred as buffer_lib;
-import 'chapter_parser.dart' deferred as parser_lib;
+import 'chapter_info.dart';
 
-typedef ChapterKey = int;
-
-class ChapterInfo {
-  /// Stores the information read from headers
-  final ChapterKey id;
-  final String displayName;
-  final String filename;
-  final String varName;
-  final bool isPart;
-  final bool hidePart;
-  final int? next;
-
-  const ChapterInfo(
-      {required this.id,
-      required this.varName,
-      required this.displayName,
-      required this.filename,
-      required this.next,
-      required this.isPart,
-      required this.hidePart});
-
-  // ChapterInfo.blank()
-  //     : id = 0,
-  //       varName = 'blank',
-  //       displayName = '-',
-  //       filename = '',
-  //       next = null;
-}
-
+//TODO: I think remove the ChangeNotifier, since that's on the Holder now
 class Chapter extends ChangeNotifier {
   /// Stores the spans themselves, and can notify listeners while unpacking
   ///
   final ChapterInfo info;
   final List<Holder> lines = [];
   HeaderOfText? header; // = const HeaderOfText('Loading...');
-  LoadStatus _loadStatus = LoadStatus.unloaded;
 
   // ====  Ids ======
   ChapterKey get id => info.id;
@@ -68,14 +36,6 @@ class Chapter extends ChangeNotifier {
         cancelOnError: false);
   }
 
-  // ==== Dev tool ====
-//For testing elements without having to add them in the book
-  void addGimme() {
-    if (lines.length >= 4) {
-      // lines.insert(4, NewHolder());
-    }
-  }
-
   /*  ================ Getters ===================  */
 
   Holder? operator [](int ix) {
@@ -93,9 +53,13 @@ class Chapter extends ChangeNotifier {
   bool get isTitle => varName == 'Title';
   // ====  Info ======
 
+  static String readingLengthDescriptor(int n) {
+    return "${n * 2}k chars";
+  }
+
   int get readingLength {
-    var x = lines.length.toDouble();
-    x /= 100;
+    double x = getText().length.toDouble();
+    x /= 2000;
     return x.ceil();
   }
 
@@ -106,11 +70,11 @@ class Chapter extends ChangeNotifier {
                                  Loading
    ======================================================================== */
 
-  LoadStatus get loadStatus => _loadStatus;
-  bool get loaded => _loadStatus == LoadStatus.loaded;
-  bool get loading => _loadStatus == LoadStatus.loading;
-  bool get readyToShow => _loadStatus.readyToShow();
-  bool get notYetLoaded => _loadStatus.notStartedLoading();
+  // LoadStatus get loadStatus => _loadStatus;
+  // bool get loaded => _loadStatus == LoadStatus.loaded;
+  // bool get loading => _loadStatus == LoadStatus.loading;
+  // bool get readyToShow => _loadStatus.readyToShow();
+  // bool get notYetLoaded => _loadStatus.notStartedLoading();
 
   String get debugId => varName;
   ChapterKey get cacheKey => id;
@@ -146,10 +110,6 @@ class Chapter extends ChangeNotifier {
       }
     }
     awaitFutures();
-    _loadStatus = LoadStatus.loaded;
-    if (kDebugMode) {
-      addGimme();
-    }
     notifyListeners();
   }
 
@@ -194,67 +154,29 @@ class Chapter extends ChangeNotifier {
   void onFileReadDone() {
     dev.log('File read done.');
   }
-}
 
-class ChapterHolder {
-  /// This one stores the chapter, as a cache.
-  /// ChapterInfo is more transient, and can be moved around
-  final ChapterInfo info;
-  Chapter? chapter;
-
-  // =Headers
-  ChapterKey get id => info.id;
-  String get varName => info.varName;
-  String get displayName => info.displayName;
-  String get filename => info.filename;
-  bool get isPart => info.isPart;
-  ChapterKey? get next => info.next;
-
-  ChapterHolder(this.info);
-
-  static const String bookId = 'SoYourHomeworld';
-
-  Future<Chapter> getOrLoadChapter() async {
-    if (chapter == null) {
-      String path = 'book_binary/${info.filename}';
-      dev.log("LOad path: $path");
-      ByteBuffer buffer = await getFileFromServer(path);
-      ByteData data = buffer.asByteData();
-      await buffer_lib.loadLibrary();
-      var ptr = buffer_lib.BufferPtr(data.buffer);
-      await parser_lib.loadLibrary();
-      var parser = parser_lib.ChapterParser(debugId: info.varName, ptr: ptr);
-      chapter =
-          await parser.parseWithExistingChapterInfo(info, handleErrors: true);
-    }
-    return chapter!;
+  String getText() {
+    /// All text in chapter.
+    // All holders
+    return lines
+        .map((l) =>
+            //Concatenate with line endings
+            l.toText())
+        .join('\n')
+        //Cut out extra line endings/spaces
+        .trim();
   }
 
-  bool matchesSearchTerm(String searchTerm) {
-    //TODO: A ranking might be smarter
-    if (displayName.contains(searchTerm)) {
-      return true;
-    }
-    if (searchTerm.contains(displayName)) {
-      return true;
-    }
-    if (varName.contains(searchTerm)) {
-      return true;
-    }
-    if (searchTerm.contains(varName)) {
-      return true;
-    }
-    String? headerText = chapter?.header?.text;
-    if (headerText != null && headerText.isNotEmpty) {
-      if (headerText.contains(searchTerm)) {
-        return true;
-      }
-      if (searchTerm.contains(headerText)) {
-        return true;
-      }
-    }
+  void copyText() {
+    String str = getText();
+    // str = str.trim();
+    Clipboard.setData(ClipboardData(text: str));
+  }
+}
 
-    return false;
+class ChapterLoadNotifier extends ChangeNotifier {
+  void notify() {
+    super.notifyListeners();
   }
 }
 

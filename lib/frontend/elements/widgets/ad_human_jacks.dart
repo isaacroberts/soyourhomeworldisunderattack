@@ -29,13 +29,13 @@ enum HumanJackAdType {
   Widget getWidget() {
     switch (this) {
       case HumanJackAdType.bannerShell:
-        return const _HumanJackBannerShell();
+        return const _HumanJackBannerShell(key: Key('hj_ad_shell'));
       case HumanJackAdType.banner5P:
-        return const _HumanJackBanner5P();
+        return const _HumanJackBanner5P(key: Key('hj_ad_5p'));
       case HumanJackAdType.bannerCares:
-        return const _HumanJackBannerCares();
+        return const _HumanJackBannerCares(key: Key('hj_ad_cares'));
       case HumanJackAdType.childrenFixIt:
-        return const _HumanJackChildrenFixIt();
+        return const _HumanJackChildrenFixIt(key: Key('hj_ad_fixit'));
 
       case HumanJackAdType.partyStillGoing:
         return const HumanJackPartyStillGoing();
@@ -101,6 +101,11 @@ class HumanJackAdHolder extends Holder {
   Widget fallback(BuildContext context) {
     //Choose not to dick them around on the fallback
     return IsFallbackProvider(showFonts: false, child: type.getWidget());
+  }
+
+  @override
+  String toText() {
+    return '(Ad: Try Human Jack\'s Plastic Snacks!)\n';
   }
 }
 

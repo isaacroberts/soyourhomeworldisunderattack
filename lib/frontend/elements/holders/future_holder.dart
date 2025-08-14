@@ -12,6 +12,11 @@ class FutureHolder extends Holder {
   const FutureHolder(this.holder, {this.displayName});
 
   @override
+  String toText() {
+    return "[Loading $displayName...]";
+  }
+
+  @override
   Widget element(BuildContext context) {
     return FutureBuilder(
         key: Key("FH_$hashCode"), future: holder, builder: futureBuilder);

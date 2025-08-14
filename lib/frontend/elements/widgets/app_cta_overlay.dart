@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/theme/colors.dart';
 import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
-import 'package:soyourhomeworld/frontend/theme/styles.dart';
 
 class McKinseyAppIcon extends StatelessWidget {
   const McKinseyAppIcon({

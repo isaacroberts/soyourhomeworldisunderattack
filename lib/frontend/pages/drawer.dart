@@ -56,6 +56,9 @@ class MenuDrawer extends StatelessWidget {
         listTiles.add(widget);
       }
     }
+    listTiles.add(ScrollModeDropdown(
+        label: 'Scroll mode',
+        value: ViewSettings.instance.infiniteScrollNotifier));
     listTiles.add(NotifiedSwitch(
       label: 'Dev Rig',
       value: ViewSettings.instance.testRigNotifier,
@@ -65,10 +68,45 @@ class MenuDrawer extends StatelessWidget {
       value: ViewSettings.instance.showFontsNotifier,
     )); //Drawer
     return Drawer(
+        // shape: RoundedRectangleBorder(),
+        // backgroundColor: canvasFade,
         key: const ValueKey('MenuDrawer'),
         child: ListView(
           children: listTiles,
         ));
+  }
+}
+
+class ScrollModeDropdown extends StatelessWidget {
+  final String label;
+  final ValueNotifier<ScrollMode> value;
+
+  const ScrollModeDropdown(
+      {super.key, required this.label, required this.value});
+
+  void onChanged(ScrollMode? mode) {
+    if (mode != null) {
+      value.value = mode;
+    }
+  }
+
+  DropdownMenuItem<ScrollMode> dropdownElement(ScrollMode mode) {
+    return DropdownMenuItem(
+        value: mode,
+        alignment: Alignment.centerLeft,
+        child: Text(mode.displayName));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.only(left: 15),
+        child: DropdownButton<ScrollMode>(
+            menuWidth: 300,
+            value: value.value,
+            items:
+                ScrollMode.values.map(dropdownElement).toList(growable: false),
+            onChanged: onChanged));
   }
 }
 
@@ -90,51 +128,3 @@ class NotifiedSwitch extends StatelessWidget {
         onChanged: (b) => value.value = b);
   }
 }
-
-/*
-
-class MenuPage extends StatefulWidget {
-  final String source;
-  const MenuPage({super.key, required this.source});
-
-  @override
-  State<MenuPage> createState() => _MenuPageState();
-}
-
-class _MenuPageState extends State<MenuPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('The McKinsey Plan'),
-      ),
-      body: Align(
-          alignment: Alignment.centerLeft,
-          child: ListView(children: [
-            ListTile(
-              title: const Text('Scroll'),
-              onTap: () => context.go('/scroll/r'),
-            ),
-            ListTile(
-              title: const Text('Index'),
-              onTap: () => context.go('/index'),
-            ),
-            ListTile(
-              title: const Text('Downloads'),
-              onTap: () => context.go('/downloads'),
-            ),
-            ListTile(
-              title: const Text('Error logger'),
-              onTap: () => context.go('/logger'),
-            )
-          ])),
-      // floatingActionButton: FloatingActionButton(
-      //   // onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-*/

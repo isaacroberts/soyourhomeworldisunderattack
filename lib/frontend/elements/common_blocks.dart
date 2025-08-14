@@ -3,7 +3,7 @@ import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 import '../icons.dart';
 import '../theme/base_text_theme.dart';
-import '../theme/styles.dart';
+import '../theme/colors.dart';
 
 Widget blankHeader(BuildContext context) {
   return const Text('...', style: headerFont);
