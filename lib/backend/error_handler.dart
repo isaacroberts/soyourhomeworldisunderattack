@@ -2,7 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
 //Deferred
 import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart';
 
@@ -10,6 +10,7 @@ import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/theme/base_text_theme.dart';
 import '../frontend/theme/colors.dart';
 import '../frontend/theme/text_theme.dart';
+import 'error_page.dart' deferred as error_lib_page;
 
 class ErrorList {
   static ErrorList instance = ErrorList();
@@ -73,33 +74,10 @@ class ErrorList {
     dev.log('\n\n');
   }
 
-  // ==== Main Page ====
   Widget page(BuildContext context) {
-    return McScaffold(source: 'Error', child: widget(context));
-  }
-
-  Widget widget(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Text('Errors:', style: headerFont),
-          if (list.isEmpty)
-            const Center(
-                child: Text(
-              "No errors!",
-              style: bodyFont,
-            )),
-          if (list.isNotEmpty)
-            Expanded(child: ListView.builder(itemBuilder: (context, index) {
-              if (index >= 0 && index < list.length) {
-                return list[list.length - index - 1].element(context);
-              } else {
-                return null;
-              }
-            }))
-        ]);
+    return DeferredPage(
+        loader: error_lib_page.loadLibrary,
+        builder: (c) => error_lib_page.ErrorPage(list: list));
   }
 
   // === Snackbar ================
@@ -276,23 +254,6 @@ class ExceptionBox extends StatelessWidget {
         alignment: Alignment.center,
         color: errorBg,
         child: SingleChildScrollView(child: holder.element(context)));
-  }
-}
-
-class ExceptionPage extends StatefulWidget {
-  final ExceptionHolder holder;
-  const ExceptionPage({super.key, required this.holder});
-
-  @override
-  State<ExceptionPage> createState() => _ExceptionPageState();
-}
-
-class _ExceptionPageState extends State<ExceptionPage> {
-  @override
-  Widget build(BuildContext context) {
-    return McScaffold(
-        source: 'error_page',
-        child: Center(child: ExceptionBox.fromHolder(widget.holder)));
   }
 }
 

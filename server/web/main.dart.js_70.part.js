@@ -1,154 +1,115 @@
 ((a,b,c)=>{a[b]=a[b]||{}
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_70",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var J,A,E,C,D,B={
-a73(d,e,f){var y=new B.Oj(f,d),x=J.lC(d)
-y.d=x.pr(d,f,e)
-y.b=e==null?x.ga1I(d):e
-return y},
-Oj:function Oj(d,e){var _=this
-_.a=d
-_.b=0
-_.c=e
-_.d=$},
-Rg:function Rg(d){this.a=d}},F
+$__dart_deferred_initializers__.current=function(a,b,c,$){var J,A,C,D,F,B={
+a5y(d){return B.b8u(d)},
+b8u(d){var x=0,w=A.M(y.g),v,u=2,t=[],s,r,q,p,o,n,m,l,k,j,i,h
+var $async$a5y=A.G(function(e,f){if(e===1){t.push(f)
+x=u}while(true)switch(x){case 0:l=d.b
+if(l!=null){v=l
+x=1
+break}j=E
+i=C.an
+h=J
+x=3
+return A.I(A.A0("book_binary/SoYourHomeworld.book"),$async$a5y)
+case 3:s=j.a74(i.gci(h.qb(f)),null,0)
+u=5
+l=s
+l.bs(".","SoYourHomeworld")
+l.bs(".","SoYourHomeworld")
+l.bs("\\","SoYourHomeworld")
+l.bs("/","SoYourHomeworld")
+l.bs(".","SoYourHomeworld")
+l.bs(".","SoYourHomeworld")
+l.jO()
+l.bs("T","SoYourHomeworld")
+l.bs(":","SoYourHomeworld")
+p=l.jO()
+if(p==null)A.ad(D.e_("Null title in book header","SoYourHomeworld"))
+else d.c=p
+l.bs("C","SoYourHomeworld")
+l.bs(":","SoYourHomeworld")
+o=l.ZL()
+if(o!=null)d.d=o
+l.bs("B","SoYourHomeworld")
+l.bs(":","SoYourHomeworld")
+n=l.jO()
+if(n!=null)d.f=n
+l.bs(">","SoYourHomeworld")
+l.bs("-","SoYourHomeworld")
+l.bs("*","SoYourHomeworld")
+l.bs("/","SoYourHomeworld")
+l.bs("\\","SoYourHomeworld")
+l.bs("*","SoYourHomeworld")
+l.bs("-","SoYourHomeworld")
+l.bs("<","SoYourHomeworld")
+C.c.a4(d.f,0,5)
+x=8
+return A.I(B.Ne(d),$async$a5y)
+case 8:if(d.c.length!==0&&d.e.length!==0){l=d.C2()
+d.b=l
+v=l
+x=1
+break}else{A.jS(new D.uH("Malformed book id=SoYourHomeworld title="+d.c+" chp.length="+d.e.length,"Book_SoYourHomeworld"),null)
+v=null
+x=1
+break}u=2
+x=7
+break
+case 5:u=4
+k=t.pop()
+r=A.ai(k)
+q=A.aB(k)
+A.o(r)
+A.jS(r,q)
+v=null
+x=1
+break
+x=7
+break
+case 4:x=2
+break
+case 7:case 1:return A.K(v,w)
+case 2:return A.J(t.at(-1),w)}})
+return A.L($async$a5y,w)},
+Ne(d){return B.b8I(d)},
+b8I(d){var x=0,w=A.M(y.f),v,u,t,s,r,q,p,o
+var $async$Ne=A.G(function(e,f){if(e===1)return A.J(f,w)
+while(true)switch(x){case 0:q=E
+p=C.an
+o=J
+x=2
+return A.I(A.A0("book_binary/SoYourHomeworld/index"),$async$Ne)
+case 2:r=q.a74(p.gci(o.qb(f)),null,0)
+x=3
+return A.I(A.cf("chapter_parser_lib",""),$async$Ne)
+case 3:A.ce("chapter_parser_lib")
+v=F.aMi("bookSoYourHomeworld",r)
+r.bs("+","SoYourHomeworld")
+u=d.e
+case 4:if(!!0){x=5
+break}if(r.b>0){t=r.d
+t===$&&A.a()
+t=A.dq(t.getUint8(0))==="("}else t=!1
+if(!t){x=5
+break}x=6
+return A.I(v.Na(u.length),$async$Ne)
+case 6:s=f
+if(s!=null)u.push(s)
+x=4
+break
+case 5:r.bs(";","SoYourHomeworld")
+return A.K(null,w)}})
+return A.L($async$Ne,w)}},E
 J=c[1]
 A=c[0]
-E=c[2]
-C=c[52]
-D=c[96]
-B=a.updateHolder(c[4],B)
-F=c[97]
-B.Oj.prototype={
-d7(){var y=this
-y.d=J.uk(y.c,y.a,y.b)},
-kO(){return this.b>0},
-FB(d,e){return B.a73(this.c,e,this.a+d)},
-EE(d,e){var y,x=this
-if(A.np(e)){y=x.d
-y===$&&A.a()
-return y.getUint8(d)===e}else if(typeof e=="string"){y=x.d
-y===$&&A.a()
-return y.getUint8(d)===e.charCodeAt(0)}else if(e instanceof C.iS){y=x.d
-y===$&&A.a()
-return y.getUint8(d)===e.c}else throw A.i(new B.Rg("Strange type in BufferPtr.typedCodeComparison("+A.o(e)+" "+J.Z(e).k(0)+") (pos="+x.a+")"))},
-fz(d){if(this.EE(0,d)){this.eW(1)
-return!0}return!1},
-bs(d,e){var y=this
-if(y.EE(0,d))y.eW(1)
-else throw A.i(C.e_("Expected "+A.o(d)+" in ChapterFormat (got "+y.ki()+" pos="+y.a+")",e))},
-EN(d,e){var y,x=this
-if(x.EE(0,d))x.eW(1)
-else{y=x.d
-y===$&&A.a()
-A.dq(y.getUint8(0))
-if(e)x.eW(1)}},
-Oo(d){return this.EN(d,!1)},
-Cw(){var y=this.d
-y===$&&A.a()
-if(y.getUint8(0)===41){this.mn()
-return!0}return!1},
-Lm(){var y=this.d
-y===$&&A.a()
-if(y.getUint8(0)===38){this.mn()
-return!0}return!1},
-n8(d){var y=this.d
-y===$&&A.a()
-return A.dq(y.getUint8(d))},
-ki(){return this.n8(0)},
-mn(){var y,x=this.d
-x===$&&A.a()
-y=x.getUint8(0)
-this.eW(1)
-return y},
-Kv(){var y,x=this.d
-x===$&&A.a()
-y=x.getInt32(0,!1)
-this.eW(4)
-return y},
-mm(){var y,x=this.d
-x===$&&A.a()
-y=x.getUint32(0,!1)
-this.eW(4)
-return y},
-avt(){var y=this.d
-y===$&&A.a()
-E.an.a4r(y,0)},
-pD(){var y,x=this.d
-x===$&&A.a()
-y=x.getFloat32(0,!1)
-this.eW(4)
-return y},
-tc(){var y,x=this.d
-x===$&&A.a()
-y=x.getUint8(0)
-this.eW(1)
-return A.dq(y)},
-ZN(){var y=this,x=y.tc()
-if(x==="B")return y.mn()
-else if(x==="i")return y.Kv()
-else if(x==="q")return y.avt()
-else if(x==="I")return y.mm()
-else if(x==="x")return null
-else throw A.i(C.e_("Unsupported int typechar "+x+" (pos="+y.a+")","?"))},
-avv(){var y=this.tc()
-if(y==="c")return this.tc()
-else if(y==="x")return null
-else throw A.i(C.e_("Unsupported character typechar "+y,"?"))},
-td(d){var y,x,w,v,u,t=this,s=t.tc()
-if(s==="H"){y=t.d
-y===$&&A.a()
-x=y.getUint8(0)
-w=t.d.getUint8(1)
-v=t.d.getUint8(2)
-u=t.d.getUint8(3)
-t.eW(4)
-return A.ah(x,w,v,u)}else if(s==="x"||s==="X")return null
-else{if(d)throw A.i(C.e_("Unexpected typechar in color ("+s+" "+t.a+")","?"))
-return null}},
-ZL(){return this.td(!1)},
-aE1(){return J.hk(this.c,this.a,this.b)},
-eW(d){this.a+=d
-this.b-=d
-this.d7()},
-Kx(d,e){var y,x,w,v,u,t,s=this
-for(y=0;x=s.b,y<x;){if(s.EE(y,d)){x=y+(e?1:0)
-w=s.c
-v=s.a
-u=new B.Oj(v,w)
-t=J.lC(w)
-u.d=t.pr(w,v,x)
-u.b=x
-x=y+1
-v=s.a+x
-s.a=v
-s.d=t.pr(w,v,s.b-=x)
-return u}++y}s.a=x
-s.b=0
-s.d7()
-throw A.i(C.e_("Run out of buffer on grabUntil","?"))},
-Kw(d){return this.Kx(d,!1)},
-ZM(d){var y
-if(d||this.fz(D.oc)){y=this.E5(D.od)
-y=A.iI(y,"@OQ!","{")
-return A.iI(y,"@CQ!","}")}return null},
-jO(){return this.ZM(!1)},
-avw(){var y=this.fz(D.oe)
-if(y)return this.E5(F.Hl)
-return null},
-E5(d){var y=this.Kx(d,!1)
-return E.ac.es(J.hk(y.c,y.a,y.b))},
-avs(d){var y,x,w
-for(y=d.length,x=0;x<y;++x){w=this.d
-w===$&&A.a()
-if(A.dq(w.getUint8(x))!==d[x])return!1}this.eW(y)
-return!0},
-gG(d){return this.b}}
-B.Rg.prototype={
-k(d){return"IdiotException (Unhandled dev error): "+this.a},
-$ibx:1}
-var z=a.updateTypes([]);(function inheritance(){var y=a.inheritMany
-y(A.y,[B.Oj,B.Rg])})()
-A.bL(b.typeUniverse,JSON.parse('{"Rg":{"bx":[]}}'));(function constants(){F.Hl=new C.iS(93,25,"RSQR")})()};
+C=c[2]
+D=c[53]
+F=c[5]
+B=a.updateHolder(c[3],B)
+E=c[4]
+var z=a.updateTypes([])
+var y={g:A.N("lL?"),f:A.N("~")}};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_70",e:"endPart",h:b})})($__dart_deferred_initializers__,"9khnEgb0BmFQVdJ8ijxzwkikrgY=");
+a.eventLog.push({p:"main.dart.js_70",e:"endPart",h:b})})($__dart_deferred_initializers__,"v/IvqKP8HqOXcXPoNJv3Ov8vfvo=");

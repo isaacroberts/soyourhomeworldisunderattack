@@ -124,8 +124,10 @@ class RenderChapterSliver extends RenderProxySliver {
 
     //If sliver within cache range
     if (cacheExtent > 0) {
+      // dev.log("(RenderChapter) CacheExtent $cacheExtent}");
       //If needs load
       if (chapter.needsLoad) {
+        // dev.log("\tLoad");
         chapter.load();
       }
     }

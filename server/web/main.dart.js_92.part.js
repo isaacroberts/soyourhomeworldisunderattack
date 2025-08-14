@@ -1,35 +1,37 @@
 ((a,b,c)=>{a[b]=a[b]||{}
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_92",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var B,E,C,F,A={
-aZ2(d){return new C.vo(new A.abc(d),D.LQ,null,null)},
-abc:function abc(d){this.a=d},
-b4F(){return B.cj("server_offline_lib.1","")},
-b7K(d,e,f){var y,x,w=null
-if(e==null)return C.aI6(D.Ld,e,"Null error!",F.qi,"(worst case!)",w)
-y=B.dB(B.x(e).a,w)
-if(y==="_ClientSocketException")return new B.eU(A.b95(),new A.aFS(e,f),w)
-x=e.a
-return C.aI6(A.aZ2(d),e,"GoException: "+x,w,"("+y+")",f)},
-aFS:function aFS(d,e){this.a=d
-this.b=e}},D
-B=c[0]
-E=c[6]
-C=c[47]
-F=c[93]
-A=a.updateHolder(c[10],A)
-D=c[92]
-var z=a.updateTypes(["aa<@>()"])
-A.abc.prototype={
-$0(){return null},
-$S:0}
-A.aFS.prototype={
-$1(d){B.ci("server_offline_lib.1")
-return E.aPB(this.a,this.b)},
-$S:214};(function installTearOffs(){var y=a._static_0
-y(A,"b95","b4F",0)})();(function inheritance(){var y=a.inherit
-y(A.abc,B.e1)
-y(A.aFS,B.e0)})();(function constants(){D.Ld=new C.vo(null,null,null,null)
-D.LQ=new B.f(58136,"MaterialIcons",null,!1)})()};
+$__dart_deferred_initializers__.current=function(a,b,c,$){var A,C,F,G,E,B={
+b_3(){return new B.rc(null)},
+u2:function u2(d,e){this.c=d
+this.a=e},
+rc:function rc(d){this.a=d},
+ae9:function ae9(){}},D
+A=c[0]
+C=c[2]
+F=c[60]
+G=c[70]
+E=c[40]
+B=a.updateHolder(c[17],B)
+D=c[87]
+B.u2.prototype={
+KD(){A.qt(new A.lS("RpgAwesome."+D.qZ[this.c]))},
+C(d){var x=null,w=this.c,v=495>w,u=v?D.qZ[w]:"null",t=A.dN(D.J0,-1,1),s=C.CX.wr(12)
+return A.cC(A.bw(x,A.ln(F.wk(A.fz(v?G.qY[w]:x,x,x,50),x,x,this.gavG(),x),D.F4,x,!1,x,C.x,x,u+" ("+w+")",x,s,x,C.ci),C.m,x,x,new A.bE(x,x,t,x,x,x,C.P),x,x,x,x,C.du,x,x,x),x,x)}}
+B.rc.prototype={
+C(d){return new A.fE("dev_icon",E.aNB(D.a2Z,new B.ae9(),496),!0,null)}}
+var z=a.updateTypes(["~()","u2(H,p)"])
+B.ae9.prototype={
+$2(d,e){return new B.u2(e,new A.Y("iconDisplay"+e,y.a))},
+$S:z+1};(function installTearOffs(){var x=a._instance_0u
+x(B.u2.prototype,"gavG","KD",0)})();(function inheritance(){var x=a.inheritMany,w=a.inherit
+x(A.R,[B.u2,B.rc])
+w(B.ae9,A.jM)})()
+A.bK(b.typeUniverse,JSON.parse('{"u2":{"R":[],"c":[]},"rc":{"R":[],"c":[]}}'))
+var y={a:A.N("Y<l>")};(function constants(){var x=a.makeConstList
+D.F4=new A.bE(C.l,null,null,null,null,null,C.P)
+D.J0=new A.n(0.5333333333333333,0.4,0.4,0.4,C.e)
+D.qZ=A.b(x(["acid","acorn","alien_fire","all_for_one","alligator_clip","ammo_bag","anchor","angel_wings","ankh","anvil","apple","aquarius","arcane_mask","archer","archery_target","arena","aries","arrow_cluster","arrow_flights","arson","aura","aware","axe_swing","axe","ball","barbed_arrow","barrier","bat_sword","battered_axe","batteries","battery_0","battery_25","battery_50","battery_75","battery_100","battery_black","battery_negative","battery_positive","battery_white","batwings","beam_wake","bear_trap","beer","beetle","bell","biohazard","bird_claw","bird_mask","blade_bite","blast","blaster","bleeding_eye","bleeding_hearts","bolt_shield","bomb_explosion","bombs","bone_bite","bone_knife","book","boomerang","boot_stomp","bottle_vapors","bottled_bolt","bottom_right","bowie_knife","bowling_pin","brain_freeze","brandy_bottle","bridge","broadhead_arrow","broadsword","broken_bone","broken_bottle","broken_heart","broken_shield","broken_skull","bubbling_potion","bullets","burning_book","burning_embers","burning_eye","burning_meteor","burst_blob","butterfly","campfire","cancel","cancer","candle_fire","candle","cannon_shot","capitol","capricorn","carrot","castle_emblem","castle_flag","cat","chain","cheese","chemical_arrow","chessboard","chicken_leg","circle_of_circles","circular_saw","circular_shield","cloak_and_dagger","clockwork","clover","clovers_card","clovers","cluster_bomb","coffee_mug","cog_wheel","cog","cold_heart","compass","corked_tube","crab_claw","cracked_helm","cracked_shield","croc_sword","crossbow","crossed_axes","crossed_bones","crossed_pistols","crossed_sabres","crossed_swords","crown_of_thorns","crown","crowned_heart","crush","crystal_ball","crystal_cluster","crystal_wand","crystals","cubes","cut_palm","cycle","daggers","daisy","dead_tree","death_skull","decapitation","defibrillate","demolish","dervish_swords","desert_skull","diamond","diamonds_card","diamonds","dice_five","dice_four","dice_one","dice_six","dice_three","dice_two","dinosaur","divert","diving_dagger","double_team","doubled","dragon_breath","dragon_wing","dragon","dragonfly","drill","dripping_blade","dripping_knife","dripping_sword","droplet_splash","droplet","droplets","duel","egg_pod","egg","eggplant","emerald","energise","explosion","explosive_materials","eye_monster","eye_shield","eyeball","fairy_wand","fairy","fall_down","falling","fast_ship","feather_wing","feathered_wing","fedora","fire_bomb","fire_breath","fire_ring","fire_shield","fire_symbol","fire","fireball_sword","fish","fizzing_flask","flame_symbol","flaming_arrow","flaming_claw","flaming_trident","flask","flat_hammer","flower","flowers","fluffy_swirl","focused_lightning","food_chain","footprint","forging","forward","fox","frost_emblem","frostfire","frozen_arrow","gamepad_cross","gavel","gear_hammer","gear_heart","gears","gecko","gem_pendant","gem","gemini","glass_heart","gloop","gold_bar","grappling_hook","grass_patch","grass","grenade","groundbreaker","guarded_tower","guillotine","halberd","hammer_drop","hammer","hand_emblem","hand_saw","hand","harpoon_trident","health_decrease","health_increase","health","heart_bottle","heart_tower","heartburn","hearts_card","hearts","heat_haze","heavy_fall","heavy_shield","helmet","help","hive_emblem","hole_ladder","honeycomb","hood","horn_call","horns","horseshoe","hospital_cross","hot_surface","hourglass","hydra_shot","hydra","ice_cube","implosion","incense","insect_jaws","interdiction","jetpack","jigsaw_piece","kaleidoscope","kettlebell","key_basic","key","kitchen_knives","knife_fork","knife","knight_helmet","kunai","lantern_flame","large_hammer","laser_blast","laser_site","lava","leaf","leo","level_four_advanced","level_four","level_three_advanced","level_three","level_two_advanced","level_two","lever","libra","light_bulb","lighthouse","lightning_bolt","lightning_storm","lightning_sword","lightning_trio","lightning","lion","lit_candelabra","load","locked_fortress","love_howl","maggot","magnet","mass_driver","match","meat_hook","meat","medical_pack","metal_gate","microphone","mine_wagon","mining_diamonds","mirror","monster_skull","montains","moon_sun","mp5","muscle_fat","muscle_up","musket","nails","nodular","noose","nuclear","ocarina","ocean_emblem","octopus","omega","on_target","ophiuchus","overhead","overmind","palm_tree","pawn","pawprint","perspective_dice_five","perspective_dice_four","perspective_dice_one","perspective_dice_random","perspective_dice_six_two","perspective_dice_six","perspective_dice_three","pill","pills","pine_tree","ping_pong","pisces","plain_dagger","player_despair","player_dodge","player_king","player_lift","player_pain","player_pyromaniac","player_shot","player_teleport","player_thunder_struck","player","podium","poison_cloud","potion","pyramids","queen_crown","quill_ink","rabbit","radar_dish","radial_balance","radioactive","raven","reactor","recycle","regeneration","relic_blade","repair","reverse","revolver","rifle","ringing_bell","roast_chicken","robot_arm","round_bottom_flask","round_shield","rss","rune_stone","sagittarius","sapphire","satellite","save","scorpio","scroll_unfurled","scythe","sea_serpent","seagull","shark","sheep","sheriff","shield","ship_emblem","shoe_prints","shot_through_the_heart","shotgun_shell","shovel","shuriken","sickle","sideswipe","site","skull_trophy","skull","slash_ring","small_fire","snail","snake","snorkel","snowflake","soccer_ball","spades_card","spades","spawn_node","spear_head","speech_bubble","speech_bubbles","spider_face","spikeball","spiked_mace","spiked_tentacle","spinning_sword","spiral_shell","splash","spray_can","sprout_emblem","sprout","stopwatch","suckered_tentacle","suits","sun_symbol","sun","sunbeams","super_mushroom","supersonic_arrow","surveillance_camera","syringe","target_arrows","target_laser","targeted","taurus","telescope","tentacle","tesla","thorn_arrow","thorny_vine","three_keys","tic_tac_toe","toast","tombstone","tooth","torch","tower","trail","trefoil_lily","trident","triforce","trophy","turd","two_dragons","two_hearts","uncertainty","underhand","unplugged","vase","venomous_snake","vest","vial","vine_whip","virgo","water_drop","wifi","wireless_signal","wolf_head","wolf_howl","wooden_sign","wrench","wyvern","x_mark","zebra_shield","zigzag_leaf"]),A.N("r<l>"))
+D.a2Z=new E.V3(0,0,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_92",e:"endPart",h:b})})($__dart_deferred_initializers__,"w8rCUSgX96Za3oTO9q+098LkkBY=");
+a.eventLog.push({p:"main.dart.js_92",e:"endPart",h:b})})($__dart_deferred_initializers__,"GsFecXvpySQcyhbL/cJs8/KLElo=");
