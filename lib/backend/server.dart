@@ -17,7 +17,7 @@ String getURL() {
   if (kDebugMode || kProfileMode) {
     return 'http://127.0.0.1:5000';
   } else {
-    return 'https://homeworld.nfshost.com/';
+    return 'https://homeworld.nfshost.com';
   }
 }
 

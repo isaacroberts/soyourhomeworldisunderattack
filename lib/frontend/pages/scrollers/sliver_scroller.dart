@@ -56,15 +56,10 @@ class _SliverScrollerState extends State<SliverScroller> {
   Map<ChapterHolder, double> chapterPositions = {};
 
   final ScrollController controller = ScrollController(
-      //TODO: Initial scroll offset, scroll-up dectector
-      // initialScrollOffset: 500,
-      debugLabel: 'SliverScrollController',
-      keepScrollOffset: true);
+      debugLabel: 'SliverScrollController', keepScrollOffset: true);
 
   @override
   void initState() {
-    // controller.position.addListener(scrollNotification);
-
     controller.addListener(scrollNotification);
     super.initState();
   }
@@ -99,14 +94,8 @@ class _SliverScrollerState extends State<SliverScroller> {
     }
   }
 
-  DateTime lastScrollNotification = DateTime.fromMillisecondsSinceEpoch(0);
   void scrollNotification() {
     //If it has been less than 1 second since the last notification
-    if (DateTime.now()
-        .isBefore(lastScrollNotification.add(const Duration(seconds: 1)))) {
-      return;
-    }
-    lastScrollNotification = DateTime.now();
 
     ///TODO: Does main do anything?
     chapterBecomesMain(getMainChapter(controller.offset));
@@ -140,6 +129,8 @@ class _SliverScrollerState extends State<SliverScroller> {
         chapter.load();
         currentChapter = chapter;
       }
+    } else if (chapter?.needsLoad ?? false) {
+      chapter?.load();
     }
   }
 
@@ -208,10 +199,7 @@ class _FillRemaining extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: 'Palatino',
                           fontSize: 18,
-                          color: Primary.shadea)
-                      // bodyFont.copyWith(
-                      //     fontSize: 18, color: Primary.shadea)),
-                      ),
+                          color: Primary.shadea)),
                   SizedBox(
                     height: 24,
                   ),

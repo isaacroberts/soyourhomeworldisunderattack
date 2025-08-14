@@ -45,15 +45,15 @@ class RenderChapterSliver extends RenderProxySliver {
 
   @override
   void performLayout() {
-    if (belowScreen()) {
-      if (height == 0) {
-        height = viewportMainAxisExtent;
-      }
-      // dev.log("Below ${chapter.id}");
-      offscreenLayout();
-    } else {
-      performReaderLayout();
-    }
+    // if (belowScreen()) {
+    //   if (height == 0) {
+    //     height = viewportMainAxisExtent;
+    //   }
+    //   // dev.log("Below ${chapter.id}");
+    //   offscreenLayout();
+    // } else {
+    performReaderLayout();
+    // }
   }
 
   void performReaderLayout() {

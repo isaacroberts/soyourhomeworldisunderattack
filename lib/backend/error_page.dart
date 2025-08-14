@@ -4,7 +4,7 @@ import '../frontend/elements/scaffold.dart';
 import '../frontend/theme/base_text_theme.dart';
 import 'error_handler.dart';
 
-const String buildNo = '0.0.0';
+const String buildNo = '0.0.2';
 
 class ExceptionPage extends StatefulWidget {
   final ExceptionHolder holder;

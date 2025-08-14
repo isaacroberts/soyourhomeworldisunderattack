@@ -12,6 +12,7 @@ import 'binary_utils/buffer_ptr.dart' deferred as buffer_lib;
 import 'chapter.dart';
 import 'chapter_info.dart';
 import 'chapter_parser.dart' deferred as parser_lib;
+import 'error_handler.dart';
 
 typedef ChapterAndStream = (Chapter, Stream<Holder>);
 
@@ -66,6 +67,7 @@ class ChapterHolder {
     }
     if (chapter == null) {
       _loading = true;
+      ErrorList.logWarning("Started Loading ${info.filename}", null);
       String path = 'book_binary/${info.filename}';
       dev.log("LOad path: $path");
       ByteBuffer buffer = await getFileFromServer(path);
@@ -84,6 +86,7 @@ class ChapterHolder {
         startedStream = null;
         loadNotifier.notify();
       });
+      ErrorList.logWarning("Finished Loading ${info.filename}", null);
       loadNotifier.notify();
       return startedStream!;
     } else {

@@ -2,8 +2,8 @@
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_70",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
 $__dart_deferred_initializers__.current=function(a,b,c,$){var J,A,C,D,F,B={
-a5y(d){return B.b8u(d)},
-b8u(d){var x=0,w=A.M(y.g),v,u=2,t=[],s,r,q,p,o,n,m,l,k,j,i,h
+a5y(d){return B.b8v(d)},
+b8v(d){var x=0,w=A.M(y.g),v,u=2,t=[],s,r,q,p,o,n,m,l,k,j,i,h
 var $async$a5y=A.G(function(e,f){if(e===1){t.push(f)
 x=u}while(true)switch(x){case 0:l=d.b
 if(l!=null){v=l
@@ -16,37 +16,37 @@ return A.I(A.A0("book_binary/SoYourHomeworld.book"),$async$a5y)
 case 3:s=j.a74(i.gci(h.qb(f)),null,0)
 u=5
 l=s
-l.bs(".","SoYourHomeworld")
-l.bs(".","SoYourHomeworld")
-l.bs("\\","SoYourHomeworld")
-l.bs("/","SoYourHomeworld")
-l.bs(".","SoYourHomeworld")
-l.bs(".","SoYourHomeworld")
+l.br(".","SoYourHomeworld")
+l.br(".","SoYourHomeworld")
+l.br("\\","SoYourHomeworld")
+l.br("/","SoYourHomeworld")
+l.br(".","SoYourHomeworld")
+l.br(".","SoYourHomeworld")
 l.jO()
-l.bs("T","SoYourHomeworld")
-l.bs(":","SoYourHomeworld")
+l.br("T","SoYourHomeworld")
+l.br(":","SoYourHomeworld")
 p=l.jO()
-if(p==null)A.ad(D.e_("Null title in book header","SoYourHomeworld"))
+if(p==null)A.ad(D.dZ("Null title in book header","SoYourHomeworld"))
 else d.c=p
-l.bs("C","SoYourHomeworld")
-l.bs(":","SoYourHomeworld")
+l.br("C","SoYourHomeworld")
+l.br(":","SoYourHomeworld")
 o=l.ZL()
 if(o!=null)d.d=o
-l.bs("B","SoYourHomeworld")
-l.bs(":","SoYourHomeworld")
+l.br("B","SoYourHomeworld")
+l.br(":","SoYourHomeworld")
 n=l.jO()
 if(n!=null)d.f=n
-l.bs(">","SoYourHomeworld")
-l.bs("-","SoYourHomeworld")
-l.bs("*","SoYourHomeworld")
-l.bs("/","SoYourHomeworld")
-l.bs("\\","SoYourHomeworld")
-l.bs("*","SoYourHomeworld")
-l.bs("-","SoYourHomeworld")
-l.bs("<","SoYourHomeworld")
+l.br(">","SoYourHomeworld")
+l.br("-","SoYourHomeworld")
+l.br("*","SoYourHomeworld")
+l.br("/","SoYourHomeworld")
+l.br("\\","SoYourHomeworld")
+l.br("*","SoYourHomeworld")
+l.br("-","SoYourHomeworld")
+l.br("<","SoYourHomeworld")
 C.c.a4(d.f,0,5)
 x=8
-return A.I(B.Ne(d),$async$a5y)
+return A.I(B.Nd(d),$async$a5y)
 case 8:if(d.c.length!==0&&d.e.length!==0){l=d.C2()
 d.b=l
 v=l
@@ -73,20 +73,20 @@ break
 case 7:case 1:return A.K(v,w)
 case 2:return A.J(t.at(-1),w)}})
 return A.L($async$a5y,w)},
-Ne(d){return B.b8I(d)},
-b8I(d){var x=0,w=A.M(y.f),v,u,t,s,r,q,p,o
-var $async$Ne=A.G(function(e,f){if(e===1)return A.J(f,w)
+Nd(d){return B.b8J(d)},
+b8J(d){var x=0,w=A.M(y.f),v,u,t,s,r,q,p,o
+var $async$Nd=A.G(function(e,f){if(e===1)return A.J(f,w)
 while(true)switch(x){case 0:q=E
 p=C.an
 o=J
 x=2
-return A.I(A.A0("book_binary/SoYourHomeworld/index"),$async$Ne)
+return A.I(A.A0("book_binary/SoYourHomeworld/index"),$async$Nd)
 case 2:r=q.a74(p.gci(o.qb(f)),null,0)
 x=3
-return A.I(A.cf("chapter_parser_lib",""),$async$Ne)
+return A.I(A.cf("chapter_parser_lib",""),$async$Nd)
 case 3:A.ce("chapter_parser_lib")
-v=F.aMi("bookSoYourHomeworld",r)
-r.bs("+","SoYourHomeworld")
+v=F.aMj("bookSoYourHomeworld",r)
+r.br("+","SoYourHomeworld")
 u=d.e
 case 4:if(!!0){x=5
 break}if(r.b>0){t=r.d
@@ -94,14 +94,14 @@ t===$&&A.a()
 t=A.dq(t.getUint8(0))==="("}else t=!1
 if(!t){x=5
 break}x=6
-return A.I(v.Na(u.length),$async$Ne)
+return A.I(v.N9(u.length),$async$Nd)
 case 6:s=f
 if(s!=null)u.push(s)
 x=4
 break
-case 5:r.bs(";","SoYourHomeworld")
+case 5:r.br(";","SoYourHomeworld")
 return A.K(null,w)}})
-return A.L($async$Ne,w)}},E
+return A.L($async$Nd,w)}},E
 J=c[1]
 A=c[0]
 C=c[2]
@@ -112,4 +112,4 @@ E=c[4]
 var z=a.updateTypes([])
 var y={g:A.N("lL?"),f:A.N("~")}};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_70",e:"endPart",h:b})})($__dart_deferred_initializers__,"v/IvqKP8HqOXcXPoNJv3Ov8vfvo=");
+a.eventLog.push({p:"main.dart.js_70",e:"endPart",h:b})})($__dart_deferred_initializers__,"Kfjc+no703E5+nUEhDZf/odJ1SY=");
