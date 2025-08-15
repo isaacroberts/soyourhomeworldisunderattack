@@ -24,7 +24,7 @@ Copying off a ticket.
  */
 
 class GreenlandGamePage extends StatelessWidget {
-  const GreenlandGamePage({super.key});
+  const GreenlandGamePage({required super.key});
 
   void submit() {}
 

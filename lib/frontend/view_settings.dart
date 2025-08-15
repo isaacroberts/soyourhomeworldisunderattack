@@ -2,21 +2,20 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum ScrollMode {
-  infinitePackage,
   sliver,
+  infinitePackage,
+
   paged,
   ;
 
   String get displayName {
     switch (this) {
-      case ScrollMode.infinitePackage:
-        return 'Infinite Scroll (Stuttery)';
       case ScrollMode.sliver:
-        return 'Sliver (experimental)';
+        return 'Sliver';
       case ScrollMode.paged:
-        return 'Paged';
-      // case ScrollMode.old_scroll:
-      //   return 'Old Scroll';
+        return 'Page';
+      case ScrollMode.infinitePackage:
+        return 'Legacy infinite scroll';
     }
   }
 

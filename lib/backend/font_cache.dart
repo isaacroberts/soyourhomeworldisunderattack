@@ -54,7 +54,7 @@ class FontFile {
         return null;
         throw FontException("Null Data from server.", family: id.toString());
       }
-      dev.log('data: $data');
+      // dev.log('data: $data');
       List<dynamic>? files = data['file'];
       //Ensure they're all strings
 
@@ -147,7 +147,7 @@ class FontFile {
   Future load() async {
     if (_status == _LoadStatus.unloaded) {
       _status = _LoadStatus.loading;
-      dev.log("Loading font $id: $family");
+      // dev.log("Loading font $id: $family");
 
       await cache?.load().then(_markLoaded, onError: _downloadError);
     }
@@ -155,7 +155,7 @@ class FontFile {
   }
 
   Future loadWithFuture() {
-    dev.log("Loading font $id: $family");
+    // dev.log("Loading font $id: $family");
     try {
       return cache!.load();
     } catch (exception) {
@@ -246,7 +246,7 @@ class FontCache {
       if (needsFontFile(id)) {
         FontFile? f = await FontFile.fromId(id);
         if (f != null) {
-          dev.log("(Font) Fetched name $id = ${f.family}");
+          // dev.log("(Font) Fetched name $id = ${f.family}");
           assert(f.id == id);
           files[id] = f;
         }
@@ -255,7 +255,7 @@ class FontCache {
         String? family = checkBuiltinFontFamilies(id);
         family!;
         FontFile f = FontFile.builtin(id: id, family: family);
-        dev.log("(Font) Fetched builtin name $id= $family");
+        // dev.log("(Font) Fetched builtin name $id= $family");
         assert(f.id == id);
         files[id] = f;
         return f;

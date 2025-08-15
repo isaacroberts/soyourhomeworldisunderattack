@@ -45,6 +45,9 @@ ThemeData get theme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
     tooltipTheme: TooltipThemeData(
       textStyle: appFont,
+      //Haptics seem like too much for an e-Reader
+      enableFeedback: false,
+      triggerMode: TooltipTriggerMode.longPress,
       waitDuration: const Duration(milliseconds: 500),
       padding: const EdgeInsets.only(top: 6, bottom: 6, left: 12, right: 12),
       decoration: BoxDecoration(

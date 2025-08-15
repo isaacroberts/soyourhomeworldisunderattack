@@ -155,6 +155,7 @@ class FirePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return anim > 0 && flameCt > 0;
+    //The point of the fire is that it's flickering
+    return true;
   }
 }

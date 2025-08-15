@@ -25,6 +25,7 @@ Widget errorPageBuilder(
   String errorType = exception.runtimeType.toString();
   if (errorType == '_ClientSocketException') {
     return DeferredPage(
+        key: const Key("DeferredServerOffline"),
         loader: server_offline_lib.loadLibrary,
         builder: (context) => server_offline_lib.ServerOfflinePage(
             exception: exception, stackTrace: stackTrace));

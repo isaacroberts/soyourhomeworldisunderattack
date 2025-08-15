@@ -10,7 +10,7 @@ import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 class FourOhFourPage extends StatelessWidget {
   final String? whatsMissing;
-  const FourOhFourPage({super.key, this.whatsMissing});
+  const FourOhFourPage({required super.key, this.whatsMissing});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,8 @@ class ErrorCodePage extends StatelessWidget {
   final int code;
   final String? error;
   final String? trace;
-  const ErrorCodePage({super.key, required this.code, this.error, this.trace});
+  const ErrorCodePage(
+      {required super.key, required this.code, this.error, this.trace});
 
   void goHome(BuildContext context) {
     //TODO: Find a funny place to send them

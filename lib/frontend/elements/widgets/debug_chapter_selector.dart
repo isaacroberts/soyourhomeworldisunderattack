@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 
+import '../../../backend/book.dart';
 import '../../../backend/chapter_info.dart';
 
 /// This is for the DebugReader.
@@ -37,7 +38,8 @@ class _ChapterSelectorState extends State<ChapterSelector> {
 
   void openDialog(_) {
     dev.log("Open dialog");
-    Navigator.push(context, ChapterSelectorGrid(onSelected: gridSelected));
+    ChapterSelectorGrid.pushChapterSelectorGrid(context,
+        onChapterSelected: gridSelected);
   }
 
   @override
@@ -67,8 +69,28 @@ class _TextSquare extends StatelessWidget {
 }
 
 class ChapterSelectorGrid extends PopupRoute {
-  final void Function(int) onSelected;
-  ChapterSelectorGrid({required this.onSelected});
+  final bool show0;
+  final void Function(int) onChapterSelected;
+
+  static void pushChapterSelectorGrid(BuildContext context,
+      {required void Function(int) onChapterSelected, bool show0 = true}) {
+    Navigator.push(
+        context,
+        ChapterSelectorGrid(
+            show0: show0, onChapterSelected: onChapterSelected));
+  }
+
+  ChapterSelectorGrid({
+    required this.onChapterSelected,
+    this.show0 = true,
+    // super.filter,
+  }) : super(
+            settings: const RouteSettings(name: 'ChapterSelectorGrid'),
+            requestFocus: true,
+            //Direction arrow keys will loop grid
+            directionalTraversalEdgeBehavior: TraversalEdgeBehavior.closedLoop,
+            //Regular traversal will leave the unimportant grid
+            traversalEdgeBehavior: TraversalEdgeBehavior.parentScope);
 
   @override
   Color get barrierColor => const Color(0x00000000);
@@ -82,15 +104,59 @@ class ChapterSelectorGrid extends PopupRoute {
   @override
   bool get opaque => false;
 
-  void boxSelected(int index) {
-    onSelected(index);
+  void boxSelected(int index, BuildContext context) {
+    if (canPop) {
+      Navigator.pop(context);
+    }
+    onChapterSelected(index);
   }
 
-  Widget itemBuilder(BuildContext context, int index) {
-    return _TextSquare(chapterNo: index, onPressed: boxSelected);
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    // var offset = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+    //     .animate(animation);
+
+    return FadeTransition(
+        opacity: animation,
+        child: Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+            elevation: 16,
+            child: SizedBox(
+                width: 300,
+                height: 400,
+                child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: ChapterSelectorWidget(
+                      onChapterSelected: (i) => boxSelected(i, context),
+                      show0: show0,
+                    )))));
   }
 
-  Widget grid(BuildContext context) {
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 150);
+}
+
+class ChapterSelectorWidget extends StatelessWidget {
+  final void Function(int) onChapterSelected;
+  final bool show0;
+  const ChapterSelectorWidget(
+      {super.key, required this.onChapterSelected, this.show0 = true});
+
+  Widget? itemBuilder(BuildContext context, int index) {
+    if (!show0) {
+      index += 1;
+    }
+    if (index < Book.of(context).chapterAmt) {
+      return _TextSquare(chapterNo: index, onPressed: onChapterSelected);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
@@ -100,23 +166,4 @@ class ChapterSelectorGrid extends PopupRoute {
             mainAxisExtent: 25),
         itemBuilder: itemBuilder);
   }
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    // var offset = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-    //     .animate(animation);
-
-    return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        elevation: 16,
-        child: SizedBox(
-            width: 300,
-            height: 400,
-            child: Padding(
-                padding: const EdgeInsets.all(5), child: grid(context))));
-  }
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 150);
 }

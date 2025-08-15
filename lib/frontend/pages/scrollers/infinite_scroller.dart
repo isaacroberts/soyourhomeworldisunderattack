@@ -168,7 +168,8 @@ class _MasterScrollerState extends State<MasterScroller> {
   }
 
   Widget _noItemsFoundIndicatorBuilder(BuildContext context) {
-    return const LoadingPage(message: 'No chapters...');
+    return const LoadingPage(
+        key: Key("LoadingPage"), message: 'No chapters...');
   }
 
   Widget _noMoreItemsIndicatorBuilder(BuildContext context) {
@@ -182,6 +183,7 @@ class _MasterScrollerState extends State<MasterScroller> {
 
   Widget _firstPageProgressIndicatorBuilder(BuildContext context) {
     return const LoadingPage(
+      key: Key("LoadingPage"),
       message: 'Loading first page...',
     );
   }

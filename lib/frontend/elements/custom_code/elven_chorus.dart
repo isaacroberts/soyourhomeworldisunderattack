@@ -114,9 +114,9 @@ class _ElvenChorusState extends State<ElvenChorus>
       Duration(milliseconds: (totalOffset * speedMultiplier * 3).toInt());
   void checkScroll(t) {
     if (mounted && controller.hasClients && initted) {
-      dev.log("Scroll @: ${controller.offset} / $totalOffset");
+      // dev.log("Scroll @: ${controller.offset} / $totalOffset");
       if (controller.offset == 0) {
-        dev.log("Animate forward");
+        dev.log("(ElvenChorus) Animate forward");
         Curve curve = Curves.linear;
 
         controller.animateTo(totalOffset + 10,
@@ -127,12 +127,12 @@ class _ElvenChorusState extends State<ElvenChorus>
         //Animate backwards
         if (wrap) {
           //Jump back
-          dev.log("Jump back");
+          dev.log("(ElvenChorus) Jump back");
           controller.jumpTo(0);
           // controller2.jumpTo(0);
         } else {
           //Animate back
-          dev.log("Animate back");
+          dev.log("(ElvenChorus) Animate back");
           Curve curve = Curves.fastEaseInToSlowEaseOut;
           controller.animateTo(0, duration: backDuration, curve: curve);
           // controller2.animateTo(0, duration: backDuration, curve: curve);

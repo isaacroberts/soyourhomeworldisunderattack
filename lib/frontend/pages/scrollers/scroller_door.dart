@@ -42,6 +42,7 @@ class ScrollDoor extends StatelessWidget {
     String exceptionType = bookSnapshot.error.runtimeType.toString();
     if (exceptionType == '_ClientSocketException') {
       return DeferredPage(
+          key: const Key("DeferredServerOffline"),
           loader: server_offline_lib.loadLibrary,
           builder: (context) => server_offline_lib.ServerOfflinePage(
               exception: bookSnapshot.error!,
@@ -66,7 +67,8 @@ class ScrollDoor extends StatelessWidget {
       return bookErrorBuilder(context, bookSnapshot);
     } else {
       // Otherwise show loader
-      return const LoadingPage(message: 'Loading index...');
+      return const LoadingPage(
+          key: Key("LoadingPage"), message: 'Loading index...');
     }
   }
 }
@@ -89,7 +91,8 @@ class NamedChapterScrollerDoor extends StatelessWidget {
       return ScrollDoor.bookErrorBuilder(context, bookSnapshot);
     } else {
       // Otherwise show loader
-      return const LoadingPage(message: 'Loading index...');
+      return const LoadingPage(
+          key: Key("LoadingPage"), message: 'Loading index...');
     }
   }
 
@@ -103,7 +106,8 @@ class NamedChapterScrollerDoor extends StatelessWidget {
     if (startChapter == null) {
       dev.log("Couldn't find chapter $chapterName");
       ErrorList.logError(Exception("Couldn't find chapter $chapterName"));
-      return SearchIndexPage(searchTerm: chapterName);
+      return SearchIndexPage(
+          key: const Key("SearchIndex"), searchTerm: chapterName);
     } else {
       return BookProvider(
           book: book,
@@ -122,7 +126,7 @@ class _ScrollerPicker extends StatelessWidget {
   });
 
   final Book book;
-  final int startChapter;
+  final int? startChapter;
 
   @override
   Widget build(BuildContext context) {
@@ -134,35 +138,39 @@ class _ScrollerPicker extends StatelessWidget {
   Widget builder(BuildContext context, Widget? child) {
     ViewSettings settings = ViewSettings.instance;
 
+    //TODO: Get
+
     switch (settings.useInfiniteScroll) {
       case ScrollMode.sliver:
-        //TODO: Defer load
+//No deferred load because sliver is already default
         return SliverScrollerPage(
-          key: const Key("slivScrollPage"),
+          key: const Key("SliverScroller"),
           startChapter: startChapter,
         );
       case (ScrollMode.infinitePackage):
         if (settings.useTestRig) {
           return DeferredPage(
+              key: const Key("DeferredRigLib"),
               loader: () => rig_lib.loadLibrary(),
               builder: (context) => rig_lib.TestRigScroller(
                     book: book,
-                    startChapter: startChapter,
+                    startChapter: startChapter ?? 0,
                   ));
         } else {
           return DeferredPage(
+              key: const Key("DeferredInfinite"),
               loader: () => infinite_lib.loadLibrary(),
               builder: (context) => infinite_lib.MasterScroller(
-                    key: Key('Master!${book.id}_$startChapter'),
+                    key: const Key('Master'),
                     book: book,
-                    startChapter: startChapter,
+                    startChapter: startChapter ?? 0,
                   ));
         }
       case (ScrollMode.paged):
         //TODO: Put DebugReader on PagingScroller
         return McScaffold(
             source: 'scroll',
-            key: Key("!ScrollEntry${book.id}_$startChapter"),
+            key: const Key("PagingScroller"),
             child: DeferredWidget(
                 loader: () => finite_lib.loadLibrary(),
                 builder: (context) => finite_lib.PagingScroller(

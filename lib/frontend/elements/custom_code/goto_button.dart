@@ -18,16 +18,13 @@ typedef _ChapterTooltip = (String, String);
 
 class GotoButtonHolder extends SpanHoldingCode {
   final String? link;
-  //Used to show destination
-  final String? dest;
   final bool isChapter;
   final Color color;
 
-  String get destination => dest ?? 'Unknown';
   String get linkText => link ?? 'null';
   const GotoButtonHolder(
       {required this.link,
-      required this.dest,
+      String? dest,
       required super.spans,
       this.color = Colors.white,
       this.isChapter = true});
@@ -52,11 +49,9 @@ class _GotoButtonWidget extends StatefulWidget {
 class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   String? get link => widget.holder.link;
   //Used to show destination
-  String? get dest => widget.holder.dest;
   bool get isChapter => widget.holder.isChapter;
   Color get color => widget.holder.color;
 
-  String get destination => dest ?? 'Unknown';
   String get linkText => link ?? 'null';
 
   void onPressed(BuildContext context) {
@@ -88,6 +83,9 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   }
 
   Widget destText(BuildContext context) {
+    //TODO: Fetch chapterholder from link. Then, fetch chapter.awaitWhere
+    String destination = 'TODO';
+
     return Text(
       'Going to: $destination',
       style: gotoButtonTextTheme.labelLarge,
@@ -96,7 +94,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   }
 
   Widget _buttonText(BuildContext context) {
-    dev.log("GotoButton: link=$linkText, isChapter=$isChapter");
+    // dev.log("GotoButton: link=$linkText, isChapter=$isChapter");
     return Text(HolderUtils.stripOutText(widget.holder.spans).trim(),
         style: gotoButtonTextTheme.displaySmall, textAlign: TextAlign.center);
   }
@@ -169,6 +167,8 @@ class _GotoTooltip extends StatelessWidget {
     if (holder.link == null) {
       return const TextSpan(text: '(No Destination)');
     }
+    //TODO: Just Refetch chapter destination
+    String destination = 'TODO';
     return WidgetSpan(
         child: Container(
             alignment: Alignment.topLeft,
@@ -176,7 +176,7 @@ class _GotoTooltip extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 6),
             child: Column(
               children: [
-                Text('Destination: ${holder.destination}'),
+                Text('Destination: $destination'),
                 const Divider(),
 
                 //TODO: Get chapter

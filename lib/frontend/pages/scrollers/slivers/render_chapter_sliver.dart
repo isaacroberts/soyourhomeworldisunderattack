@@ -1,4 +1,3 @@
-import 'dart:developer' as dev;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -43,12 +42,27 @@ class RenderChapterSliver extends RenderProxySliver {
   double get remainingCacheExtent => constraints.remainingCacheExtent;
   double get cacheOrigin => constraints.cacheOrigin;
 
+  void loadIfStillInCacheRange() async {
+    //Give it a quarter second to see if we're scrolling past
+    await Future.delayed(const Duration(milliseconds: 250));
+//Check if it's already been loaded (this will be spawned multiple times)
+    if (chapter.needsLoad) {
+//Check cacheExtent
+      final double cacheExtent =
+          calculateCacheOffset(constraints, from: 0.0, to: height);
+
+      if (cacheExtent > 0) {
+        chapter.load();
+      }
+    }
+  }
+
   @override
   void performLayout() {
     // if (belowScreen()) {
-    //   if (height == 0) {
-    //     height = viewportMainAxisExtent;
-    //   }
+    if (height == 0) {
+      height = viewportMainAxisExtent;
+    }
     //   // dev.log("Below ${chapter.id}");
     //   offscreenLayout();
     // } else {
@@ -91,20 +105,9 @@ class RenderChapterSliver extends RenderProxySliver {
 
     if (!squashForever) {
       if ((height - desiredHeight).abs() > 1) {
-        // if (fillingScreen()) {
-        //   dev.log("Chp${chapter.id} Filling");
-        if (touchingBottom()) {
-          dev.log("Chp${chapter.id} Bottom");
-        } else if (belowScreen()) {
-          dev.log("Chp${chapter.id} Below");
-        }
+        //TODO: It should expand if it's covering half the top of the screen
         if (touchingBottom() || belowScreen()) {
-          // dev.log(
-          //     "Chp${chapter.id} ${chapter.varName} ${desiredHeight.toInt()} -> ${height.toInt()}  Filling ${fillingScreen()} Above ${aboveScreen()} Below ${belowScreen()} TouchingBottom ${touchingBottom()}");
           height = desiredHeight;
-        } else {
-          // dev.log(
-          //     "Chp${chapter.id} ${chapter.varName}  wants ${desiredHeight.toInt()} -> ${height.toInt()}");
         }
       }
     }
@@ -124,11 +127,10 @@ class RenderChapterSliver extends RenderProxySliver {
 
     //If sliver within cache range
     if (cacheExtent > 0) {
-      // dev.log("(RenderChapter) CacheExtent $cacheExtent}");
       //If needs load
       if (chapter.needsLoad) {
-        // dev.log("\tLoad");
-        chapter.load();
+        //Give it some time, to see if object is still in view, or it it's scrolling past
+        loadIfStillInCacheRange();
       }
     }
 
@@ -152,7 +154,7 @@ class RenderChapterSliver extends RenderProxySliver {
     );
 
     if (origHeight != height) {
-      dev.log("Chp${chapter.id} ${chapter.varName} $origHeight -> $height");
+      // dev.log("Chp${chapter.id} ${chapter.varName} $origHeight -> $height");
     }
 
     child!.parentData = SliverPhysicalParentData();

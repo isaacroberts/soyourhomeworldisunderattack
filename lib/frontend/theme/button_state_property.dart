@@ -50,12 +50,6 @@ class ButtonBackgroundColorProperty extends WidgetStateProperty<Color> {
       return color;
     } else if (states.contains(WidgetState.hovered)) {
       return color.withAlpha(0xdd);
-      return Color.from(
-          alpha: color.a,
-          red: color.r * 1.2,
-          green: color.g * 1.3,
-          blue: color.b * 1.4);
-      return color;
     }
 //Otherwise, use translucent version of button
     return color.withAlpha(0x99);

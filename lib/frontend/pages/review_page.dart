@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 
 class ReviewPage extends StatelessWidget {
-  const ReviewPage({super.key});
+  const ReviewPage({required super.key});
 
   void startReview(BuildContext context) {}
 

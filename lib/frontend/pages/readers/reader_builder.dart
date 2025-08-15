@@ -39,7 +39,6 @@ class ReaderBuilder extends StatefulWidget {
 class ReaderBuilderState extends State<ReaderBuilder> {
   //Displays only N holders
   int itemsToDisplay = 0;
-  bool _showFonts = true;
 //TODO: PUt back
 //   bool get showFonts => _showFonts && ViewSettings.instance.showFonts;
   bool get showFonts => ViewSettings.instance.showFonts;
@@ -125,7 +124,6 @@ class ReaderBuilderState extends State<ReaderBuilder> {
                   return;
                 }
                 setState(() {
-                  _showFonts = false;
                   this.itemsToDisplay = maxLength;
                 });
                 dev.log("(Font) Using fallbacks (chp ${chapter.varName})");

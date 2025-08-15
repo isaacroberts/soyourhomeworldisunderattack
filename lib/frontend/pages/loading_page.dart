@@ -5,7 +5,7 @@ import '../elements/widgets/loader.dart';
 
 class LoadingPage extends StatelessWidget {
   final String message;
-  const LoadingPage({super.key, required this.message});
+  const LoadingPage({required super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {

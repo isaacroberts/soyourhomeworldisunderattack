@@ -539,8 +539,7 @@ class HolderDebugDialog extends PopupRoute {
             child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                child: AutomaticKeepAlive(
-                    child: HolderInspector(holder: holder)))));
+                child: HolderInspector(holder: holder))));
   }
 
   @override

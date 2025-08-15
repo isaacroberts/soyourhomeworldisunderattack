@@ -76,8 +76,10 @@ class ErrorList {
 
   Widget page(BuildContext context) {
     return DeferredPage(
+        key: const Key("ErrorDeferPage"),
         loader: error_lib_page.loadLibrary,
-        builder: (c) => error_lib_page.ErrorPage(list: list));
+        builder: (c) =>
+            error_lib_page.ErrorPage(key: const Key("ErrorPage"), list: list));
   }
 
   // === Snackbar ================

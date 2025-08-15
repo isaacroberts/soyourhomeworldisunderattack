@@ -36,7 +36,9 @@ class _RedirectPageState extends State<RedirectPage> {
   @override
   Widget build(BuildContext context) {
     if (!hasRedirected) {
-      return LoadingPage(message: 'Redirecting to ${widget.redirectTo}...');
+      return LoadingPage(
+          key: const Key("LoadingPage"),
+          message: 'Redirecting to ${widget.redirectTo}...');
     } else {
       return TextButton(onPressed: redirect, child: Text(widget.redirectTo));
     }

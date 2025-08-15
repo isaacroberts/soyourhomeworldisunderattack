@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/bar_driver.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/driven_bar.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/measure.dart';
 
@@ -13,14 +12,6 @@ class SliverHeader extends StatelessWidget {
   final HeaderOfText? header;
   const SliverHeader(
       {required super.key, required this.chapter, required this.header});
-
-  Widget animBuilder(BuildContext context, Animation<double> anim) {
-    return DrivenAppBar(
-        key: Key("AppBar${chapter?.varName}"),
-        chapter: chapter,
-        header: chapter?.chapter?.header,
-        animation: anim);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +29,10 @@ class SliverHeader extends StatelessWidget {
         child: SliverAppBar(
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          flexibleSpace: AppBarSizeDriver(
-              key: const Key('appBarDriver'),
-              minExtent: collapsedHeight,
-              maxExtent: expandedHeight,
-              builder: animBuilder),
+          flexibleSpace: DrivenAppBar(
+              key: Key("AppBar${chapter?.varName}"),
+              chapter: chapter,
+              header: chapter?.chapter?.header),
           leadingWidth: 50,
           collapsedHeight: collapsedHeight,
           // collapsedHeight: expandedHeight,

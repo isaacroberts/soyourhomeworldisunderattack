@@ -33,6 +33,7 @@ class DevPage extends StatelessWidget {
 
     return const StdBookWaiter(
         child: SliverScrollerPage(
+      key: Key('SliverScroller'),
       startChapter: 1,
     ));
     const Holder holder = GotoButtonHolder(
@@ -44,9 +45,15 @@ class DevPage extends StatelessWidget {
         ],
         color: Color(0xff8877ff));
     return PageWrap(child: holder.element(context));
-    return const ReviewPage();
+    return const ReviewPage(
+      key: Key("ReviewPage"),
+    );
     // return const AndyThumbnailHolder(spans: []).element(context);
-    return const GreenlandGamePage();
-    return const AdList();
+    return const GreenlandGamePage(
+      key: Key("GreenlandGame"),
+    );
+    return const AdList(
+      key: Key("AdList"),
+    );
   }
 }

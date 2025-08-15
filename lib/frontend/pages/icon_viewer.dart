@@ -44,7 +44,7 @@ class _RpgIconDisplay extends StatelessWidget {
 }
 
 class IconViewerPage extends StatelessWidget {
-  const IconViewerPage({super.key});
+  const IconViewerPage({required super.key});
 
   @override
   Widget build(BuildContext context) {

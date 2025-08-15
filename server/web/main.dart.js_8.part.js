@@ -3,10 +3,10 @@ a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_8",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
 $__dart_deferred_initializers__.current=function(a,b,c,$){var A,B
 A=c[0]
-B=c[75]
-var z=a.updateTypes([]);(function constants(){B.qh=new A.f(59700,"RpgAwesome",null,!1)
-B.qn=new A.f(59860,"RpgAwesome",null,!1)
-B.qq=new A.f(60017,"RpgAwesome",null,!1)
-B.qj=new A.f(59744,"RpgAwesome",null,!1)})()};
+B=c[72]
+var z=a.updateTypes([]);(function constants(){B.qy=new A.f(59700,"RpgAwesome",null,!1)
+B.qE=new A.f(59860,"RpgAwesome",null,!1)
+B.qH=new A.f(60017,"RpgAwesome",null,!1)
+B.qA=new A.f(59744,"RpgAwesome",null,!1)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_8",e:"endPart",h:b})})($__dart_deferred_initializers__,"92vpUMAUx7zwlrb28JpdBt4w6ks=");
+a.eventLog.push({p:"main.dart.js_8",e:"endPart",h:b})})($__dart_deferred_initializers__,"VHqVU0MX08H4urNBxRT0gRGxpQY=");

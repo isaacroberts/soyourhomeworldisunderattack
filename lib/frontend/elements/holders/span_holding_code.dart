@@ -1,7 +1,5 @@
 // import 'dart:math' as math;
 
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 
 import 'holder_base.dart';
@@ -39,7 +37,7 @@ class SpanHoldingCode extends Holder {
   Widget renderSpans(BuildContext context,
       {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
     bool showFonts = IsFallbackProvider.shouldShowFonts(context);
-    dev.log("SpanHoldingCode showFonts=$showFonts");
+    // dev.log("SpanHoldingCode showFonts=$showFonts");
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

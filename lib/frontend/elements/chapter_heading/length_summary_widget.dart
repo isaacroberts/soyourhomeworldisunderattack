@@ -18,11 +18,8 @@ class LengthSummaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
         message: 'Reading length: ${Chapter.readingLengthDescriptor(numDots)}',
-        waitDuration: const Duration(milliseconds: 50),
-        enableTapToDismiss: false,
-        enableFeedback: false,
+        //Because there's no onClick
         excludeFromSemantics: true,
-        triggerMode: TooltipTriggerMode.tap,
         child: CustomPaint(
           foregroundPainter: DotSquarePainter(
               numDots: numDots, dotColor: color, dotSize: dotSize),

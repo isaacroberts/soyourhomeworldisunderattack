@@ -8,7 +8,8 @@ class DeferredPage extends StatelessWidget {
   final Future Function() loader;
   final Widget Function(BuildContext) builder;
 
-  const DeferredPage({super.key, required this.loader, required this.builder});
+  const DeferredPage(
+      {required super.key, required this.loader, required this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class DeferredPage extends StatelessWidget {
     } else if (libSnapshot.connectionState == ConnectionState.done) {
       return builder(context);
     } else {
-      return const LoadingPage(message: 'Loading lib...');
+      return const LoadingPage(key: Key("LoadPage"), message: 'Loading lib...');
     }
   }
 }

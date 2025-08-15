@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../backend/book.dart';
 import '../../backend/chapter_holder.dart';
@@ -35,7 +36,7 @@ class IndexWidget extends StatelessWidget {
 }
 */
 class IndexPage extends StatelessWidget {
-  const IndexPage({super.key});
+  const IndexPage({required super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class IndexPage extends StatelessWidget {
 
 class SearchIndexPage extends StatelessWidget {
   final String? searchTerm;
-  const SearchIndexPage({super.key, this.searchTerm});
+  const SearchIndexPage({required super.key, this.searchTerm});
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +422,7 @@ class _PartListTileState extends State<PartListTile> {
   }
 
   void gotoPart() {
-    context.go('/scroll/${chapter.id}');
+    scrollToChapter(chapter, context: context);
   }
 
   Widget goButton(BuildContext context) {

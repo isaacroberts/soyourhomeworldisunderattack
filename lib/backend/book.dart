@@ -45,6 +45,7 @@ class Book {
   //Loaded
   final String title;
   final Color color;
+  //TODO: Make private, and add null-aware [] operator
   final List<ChapterHolder> chapters;
   Iterable<ChapterHolder> get parts => chapters.where((p) => p.isPart);
   final String byline;

@@ -10,7 +10,7 @@ import '../../elements/holders/holder_base.dart';
 const bool showOnDebug = true;
 
 class TitlePage extends StatelessWidget {
-  const TitlePage({super.key});
+  const TitlePage({required super.key});
 
   @override
   Widget build(BuildContext context) {

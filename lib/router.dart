@@ -12,8 +12,6 @@ import 'package:soyourhomeworld/frontend/elements/widgets/greenland_game.dart'
 //Deferred Loads
 import 'package:soyourhomeworld/frontend/pages/dev_page.dart'
     deferred as dev_page_lib;
-import 'package:soyourhomeworld/frontend/pages/downloads.dart'
-    deferred as downloads_page_lib;
 import 'package:soyourhomeworld/frontend/pages/icon_viewer.dart'
     deferred as icon_viewer_lib;
 import 'package:soyourhomeworld/frontend/pages/redirect_page.dart'
@@ -32,6 +30,7 @@ const bool devLoadToMain = true;
 Page _errorPageBuilder(BuildContext context, GoRouterState state) {
   return MaterialPage(
       child: DeferredPage(
+          key: const Key("DeferredErrorPage"),
           loader: error_page_lib.loadLibrary,
           builder: (context) => error_page_lib.errorPageBuilder(
               context, state.error, state.extra)));
@@ -54,14 +53,17 @@ List<GoRoute> routes() {
         name: 'Home',
         path: '/',
         builder: (context, state) => const ScrollDoor(
-              key: Key("RootScroll"),
+              key: Key("ScrollDoor!"),
             )),
     GoRoute(
         name: 'Title',
         path: '/title',
         builder: (context, state) => DeferredPage(
+            key: const Key("DeferredTitlePage"),
             loader: title_lib.loadLibrary,
-            builder: (c) => title_lib.TitlePage())),
+            builder: (c) => title_lib.TitlePage(
+                  key: const Key("TitlePage"),
+                ))),
     // GoRoute(path: '/home', builder: (context, state) => const ScrollDoor()),
     GoRoute(
         name: 'Reader',
@@ -74,6 +76,7 @@ List<GoRoute> routes() {
             int? number = int.tryParse(numStr);
             dev.log('Go parsed $number');
             return ScrollDoor.nullSafe(
+              key: const Key("ScrollDoor!"),
               startChapter: number,
             );
           } catch (exception) {
@@ -92,6 +95,7 @@ List<GoRoute> routes() {
             String? chapterName = state.pathParameters['term'];
 
             return NamedChapterScrollerDoor(
+              key: const Key("NamedScrollDoor!"),
               chapterName: chapterName,
             );
           } catch (exception) {
@@ -114,8 +118,10 @@ List<GoRoute> routes() {
         builder: (context, state) {
           String? pathName = state.pathParameters['pname'];
           return DeferredPage(
+              key: const Key("RedirectDeferral"),
               loader: () => redirect_lib.loadLibrary(),
               builder: (context) => redirect_lib.RedirectPage(
+                    key: const Key("RedirectPage"),
                     redirectTo: '/$pathName',
                   ));
         }),
@@ -124,8 +130,10 @@ List<GoRoute> routes() {
         name: 'Index',
         path: '/index',
         builder: (context, state) => DeferredPage(
+            key: const Key("DeferredIndex"),
             loader: () => index_lib.loadLibrary(),
-            builder: (context) => index_lib.SearchIndexPage(searchTerm: null))),
+            builder: (context) => index_lib.SearchIndexPage(
+                key: const Key("SearchIndexPage"), searchTerm: null))),
     // GoRoute(path: '/404', builder: (context, state) =>
     //
     // DeferredPage(loader: () => , builder: builder) FourOhFourPage()),
@@ -137,11 +145,6 @@ List<GoRoute> routes() {
     // GoRoute(path: '/shop', builder: (context, state) => const ShopPage()),
     // GoRoute(path: '/quiz', builder: (context, state) => const QuizPage()),
 
-    GoRoute(
-        path: '/downloads',
-        builder: (context, state) => DeferredPage(
-            loader: () => downloads_page_lib.loadLibrary(),
-            builder: (context) => downloads_page_lib.DownloadsPage())),
     GoRoute(
         name: '(Dev) Error Logger',
         path: '/logger',
@@ -165,18 +168,25 @@ FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
 
 Widget devPageBuilder(BuildContext context, GoRouterState routerState) {
   return DeferredPage(
+      key: const Key("DeferredDevPage"),
       loader: dev_page_lib.loadLibrary,
       builder: (context) => dev_page_lib.DevPage(routerState: routerState));
 }
 
 Widget greenlandPageBuilder(BuildContext context, GoRouterState routerState) {
   return DeferredPage(
+      key: const Key("DeferredGreenland"),
       loader: greenland_game_lib.loadLibrary,
-      builder: (context) => greenland_game_lib.GreenlandGamePage());
+      builder: (context) => greenland_game_lib.GreenlandGamePage(
+            key: const Key("GreenlandGame"),
+          ));
 }
 
 Widget iconPageBuilder(BuildContext context, GoRouterState routerState) {
   return DeferredPage(
+      key: const Key("DeferredIconPage"),
       loader: icon_viewer_lib.loadLibrary,
-      builder: (context) => icon_viewer_lib.IconViewerPage());
+      builder: (context) => icon_viewer_lib.IconViewerPage(
+            key: const Key("IconPage"),
+          ));
 }

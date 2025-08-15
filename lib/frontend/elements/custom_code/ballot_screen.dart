@@ -62,7 +62,7 @@ class _BallotScreenState extends State<BallotScreen> {
   void submitted() {
     if (value != null) {
       int ix = _candidates.indexOf(value!);
-
+//TODO: It would be cooler if this scrolled
       context.go('/search/${_candidateLinks[ix]}');
     }
   }

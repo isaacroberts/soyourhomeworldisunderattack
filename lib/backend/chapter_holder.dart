@@ -30,6 +30,7 @@ class ChapterHolder {
   // =Headers
   String get key => info.id.toString();
   ChapterKey get id => info.id;
+  int get index => info.id;
   String get varName => info.varName;
   String get displayName => info.displayName;
   String get filename => info.filename;
@@ -41,6 +42,9 @@ class ChapterHolder {
 
   ChapterKey? get previousId => previous?.id;
   ChapterKey? get nextId => next?.id;
+
+  String get searchUrl => '/search/$varName';
+  String get scrollUrl => '/scroll/$id';
 
   ChapterHolder(this.info)
       : globalKey = GlobalKey(debugLabel: 'Chapter_${info.varName}');
@@ -64,12 +68,36 @@ class ChapterHolder {
   Future<ChapterAndStream> getOrLoadChapter() async {
     if (startedStream != null) {
       return startedStream!;
-    }
-    if (chapter == null) {
+    } else if (chapter == null) {
+      //If loading already marked
+      if (_loading) {
+        //Wait for other stream to be ready
+        await Future.delayed(const Duration(seconds: 1));
+        //startedStream object should be ready
+        if (startedStream != null) {
+          return startedStream!;
+        }
+        //If not check, if chapter has already finished
+        else if (chapter != null) {
+          if (stream != null) {
+            return (chapter!, stream!);
+          } else {
+            //Frankly, if stream object is null, we should wait another few seconds
+            await Future.delayed(const Duration(milliseconds: 10));
+            //Try again
+            if (stream != null) {
+              return (chapter!, stream!);
+            }
+          }
+        } else {
+          //Otherwise, continue loading, which will re-load the chapter object
+          ErrorList.logWarning('Reloading chapter $varName');
+        }
+      }
+
       _loading = true;
-      ErrorList.logWarning("Started Loading ${info.filename}", null);
       String path = 'book_binary/${info.filename}';
-      dev.log("LOad path: $path");
+      dev.log("(ChapterHolder) Load: $path");
       ByteBuffer buffer = await getFileFromServer(path);
       ByteData data = buffer.asByteData();
       await buffer_lib.loadLibrary();
@@ -86,7 +114,6 @@ class ChapterHolder {
         startedStream = null;
         loadNotifier.notify();
       });
-      ErrorList.logWarning("Finished Loading ${info.filename}", null);
       loadNotifier.notify();
       return startedStream!;
     } else {

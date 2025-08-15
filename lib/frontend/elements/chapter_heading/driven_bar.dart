@@ -1,5 +1,3 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/subtitle.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/title.dart';
@@ -11,24 +9,15 @@ import '../../theme/colors.dart';
 class DrivenAppBar extends StatefulWidget {
   final ChapterHolder? chapter;
   final HeaderOfText? header;
-  final Animation<double> animation;
   const DrivenAppBar(
-      {required super.key,
-      required this.chapter,
-      required this.header,
-      required this.animation});
+      {required super.key, required this.chapter, required this.header});
 
   @override
   State<DrivenAppBar> createState() => _DrivenAppBarState();
 }
 
 class _DrivenAppBarState extends State<DrivenAppBar> {
-  Animation<double> get animation => widget.animation;
   ChapterHolder? get chapter => widget.chapter;
-
-  bool get fullyContracted => animation.value == 0;
-  bool get partiallyExpanded => animation.value > 0;
-  bool get fullyExpanded => animation.value >= 1;
 
   @override
   void initState() {
@@ -43,7 +32,24 @@ class _DrivenAppBarState extends State<DrivenAppBar> {
     }
   }
 
-  Widget column(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    return _OverflowWrap(
+        key: const Key('overflow'),
+        child: _AppBarCol(key: const Key("appBar"), chapter: chapter));
+  }
+}
+
+class _AppBarCol extends StatelessWidget {
+  const _AppBarCol({
+    super.key,
+    required this.chapter,
+  });
+
+  final ChapterHolder? chapter;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       key: const Key("col"),
       mainAxisAlignment: MainAxisAlignment.start,
@@ -64,30 +70,40 @@ class _DrivenAppBarState extends State<DrivenAppBar> {
         //Replaces divider with color change
         // const SizedBox(height: 6),
 
-        Container(
-            key: const Key("SubtitleBG"),
-            height: 60,
-            //Other 6 px of divider
-            // padding: const EdgeInsets.only(top: 8),
-            margin: EdgeInsets.zero,
-            decoration: const BoxDecoration(
-                border: Border(top: BorderSide(color: Primary.shade5, width: 1))
-                // color: Color(0x2faaaaaa),
-                // color: CanvasColor.shade1,
-                ),
-            //Only render child on expanded
-            alignment: Alignment.center,
-            child: ChapterHeadingSubtitle(
-                key: Key("Subtitle${chapter?.key}"), chapter: chapter)),
+        _SubtitleContainer(
+            key: const Key("subtitleContainer"), chapter: chapter),
       ],
 
       //Bookmark Button
     );
   }
+}
+
+class _SubtitleContainer extends StatelessWidget {
+  const _SubtitleContainer({
+    super.key,
+    required this.chapter,
+  });
+
+  final ChapterHolder? chapter;
 
   @override
   Widget build(BuildContext context) {
-    return _OverflowWrap(key: const Key('overflow'), child: column(context));
+    return Container(
+        key: const Key("SubtitleBG"),
+        height: 60,
+        //Other 6 px of divider
+        // padding: const EdgeInsets.only(top: 8),
+        margin: EdgeInsets.zero,
+        decoration: const BoxDecoration(
+            border: Border(top: BorderSide(color: Primary.shade5, width: 1))
+            // color: Color(0x2faaaaaa),
+            // color: CanvasColor.shade1,
+            ),
+        //Only render child on expanded
+        alignment: Alignment.center,
+        child: ChapterHeadingSubtitle(
+            key: Key("Subtitle${chapter?.key}"), chapter: chapter));
   }
 }
 

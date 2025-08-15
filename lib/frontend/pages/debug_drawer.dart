@@ -30,8 +30,12 @@ class DebugDrawer extends StatelessWidget {
     } else if (url == 'Home') {
       Navigator.pop(context);
     } else if (url == 'DevIcons') {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const IconViewerPage()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const IconViewerPage(
+                    key: Key("IconViewer"),
+                  )));
     }
   }
 

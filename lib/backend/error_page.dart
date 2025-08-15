@@ -4,7 +4,7 @@ import '../frontend/elements/scaffold.dart';
 import '../frontend/theme/base_text_theme.dart';
 import 'error_handler.dart';
 
-const String buildNo = '0.0.2';
+const String buildNo = '0.0.3';
 
 class ExceptionPage extends StatefulWidget {
   final ExceptionHolder holder;
@@ -34,7 +34,7 @@ class ErrorPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text('Errors:', style: headerFont),
-          Text('Build: $buildNo', style: bodyFont),
+          const Text('Build: $buildNo', style: bodyFont),
           if (list.isEmpty)
             const Center(
                 child: Text(
