@@ -1,237 +1,225 @@
 import 'dart:async';
 import 'dart:developer' as dev;
+import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:soyourhomeworld/backend/error_handler.dart';
-import 'package:soyourhomeworld/frontend/elements/holders/future_holder.dart';
+import 'package:async/async.dart';
+import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/server.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
-import '../frontend/elements/holders/textholders.dart';
+//Deferred loads
+import 'binary_utils/buffer_ptr.dart' deferred as buffer_lib;
+import 'chapter_data.dart';
 import 'chapter_info.dart';
+import 'chapter_parser.dart' deferred as parser_lib;
+import 'error_handler.dart';
 
-//TODO: I think remove the ChangeNotifier, since that's on the Holder now
-class ChapterExtra {
-  final String? subtitle;
-  final String? where;
-  final String? when;
-  final String? audioUrl;
-  const ChapterExtra(
-      {required this.subtitle,
-      required this.where,
-      required this.when,
-      this.audioUrl});
-}
+typedef ChapterAndStream = (ChapterData, Stream<Holder>);
 
-class Chapter extends ChangeNotifier {
-  /// Stores the spans themselves, and can notify listeners while unpacking
-  ///
+class Chapter {
+  /// This one stores the chapter, as a cache.
+  /// ChapterInfo is more transient, and can be moved around
   final ChapterInfo info;
-  final ChapterExtra extra;
+  ChapterData? data;
+  Stream<Holder>? stream;
+  Future<ChapterAndStream>? startedStream;
+  late final GlobalKey globalKey;
 
-  String? get subtitle => extra.subtitle;
-  String? get where => extra.where;
-  String? get when => extra.when;
+  ChapterLoadNotifier loadNotifier = ChapterLoadNotifier();
 
-  final List<Holder> lines = [];
-  HeaderOfText? header; // = const HeaderOfText('Loading...');
-
-  // ====  Ids ======
+  // =Headers
   String get key => info.id.toString();
   ChapterKey get id => info.id;
+  int get index => info.id;
   String get varName => info.varName;
+  String get displayName => info.displayName;
   String get displayTitle => info.displayName;
   String get filename => info.filename;
-  ChapterKey? get nextId => info.next;
+  bool get isPart => info.isPart;
 
-  // Constructors
+//Can't be final because of object creation
+  Chapter? next;
+  Chapter? previous;
 
-  Chapter.fromChapterInfo(this.info, {required this.extra});
+  ChapterKey? get previousId => previous?.id;
+  ChapterKey? get nextId => next?.id;
 
-  Chapter.fromChapterInfoAndStream(this.info, Stream<Holder> stream,
-      {required this.extra}) {
-    stream.listen(_addHolderFromStream,
-        onDone: postLoadCleanup,
-        onError: addAndRegisterError,
-        cancelOnError: false);
+  String get searchUrl => '/search/$varName';
+  String get scrollUrl => '/scroll/$id';
+
+  Chapter(this.info)
+      : globalKey = GlobalKey(debugLabel: 'Chapter_${info.varName}');
+
+  static Chapter of(BuildContext context) {
+    return ChapterProvider.of(context).chapter;
   }
 
-  /*  ================ Getters ===================  */
-
-  Holder? operator [](int ix) {
-    if (ix < lines.length) {
-      return lines[ix];
-    } else {
-      return null;
-    }
+  static Chapter? maybeOf(BuildContext context) {
+    return ChapterProvider.maybeOf(context)?.chapter;
   }
 
-  int get length => lines.length;
+  static const String bookId = 'SoYourHomeworld';
 
-  bool get isEmpty => lines.length < 3;
-  bool get isNotEmpty => lines.length >= 3;
-  bool get isTitle => varName == 'Title';
-  // ====  Info ======
-
-  static String readingLengthDescriptor(int n) {
-    return "${n * 2}k chars";
+  Future<ChapterAndStream> load() {
+    return getOrLoadChapter();
   }
 
-  int get readingLength {
-    double x = getText().length.toDouble();
-    x /= 2000;
-    return x.ceil();
+  CancelableOperation<ChapterAndStream> loadCancellable() {
+    return CancelableOperation.fromFuture(getOrLoadChapter());
   }
 
-  HeaderOfText get headerOrPlaceholder =>
-      header ?? const HeaderOfText(text: 'Loading...');
+  bool get needsLoad => data == null && !loading;
+  bool get loading => startedStream != null || _loading;
+  //TODO: Don't show loader once stream is running
+  bool get showLoader => (data == null); // || (startedStream != null);
+  bool _loading = false;
 
-  /* =========================================================================
-                                 Loading
-   ======================================================================== */
-
-  // LoadStatus get loadStatus => _loadStatus;
-  // bool get loaded => _loadStatus == LoadStatus.loaded;
-  // bool get loading => _loadStatus == LoadStatus.loading;
-  // bool get readyToShow => _loadStatus.readyToShow();
-  // bool get notYetLoaded => _loadStatus.notStartedLoading();
-
-  String get debugId => varName;
-  ChapterKey get cacheKey => id;
-
-  static ValueNotifier<bool> canLoad = ValueNotifier(true);
-
-  void _addHolderFromStream(Holder h) {
-    // int ix = lines.length;
-    lines.add(h);
-
-    // notifyListeners();
-  }
-
-  //======== Errors =======================
-
-  void addAndRegisterError(Object excep, [StackTrace? trace]) {
-    dev.log('Exception: $excep');
-    trace ??= StackTrace.current;
-
-    dev.log(trace.toString());
-    ExceptionHolder errorElem =
-        ExceptionHolder(exception: excep, stackTrace: trace);
-    lines.add(errorElem);
-    ErrorList.logErrorHolder(errorElem);
-  }
-
-  void postLoadCleanup() async {
-    if (lines.isNotEmpty) {
-      Holder? topElement = lines[0];
-      if (topElement is HeaderOfText) {
-        header = topElement;
-        lines.removeAt(0);
-      }
-    }
-    awaitFutures();
-    notifyListeners();
-  }
-
-  void awaitFutures() async {
-    for (int ix = 0; ix < lines.length; ++ix) {
-      Holder holder = lines[ix];
-      if (holder is FutureHolder) {
-        try {
-          Holder newHolder = await holder.holder;
-          lines[ix] = newHolder;
-        } catch (exception, trace) {
-          ErrorList.logError(exception, trace);
+  Future<ChapterAndStream> getOrLoadChapter() async {
+    if (startedStream != null) {
+      return startedStream!;
+    } else if (data == null) {
+      //If loading already marked
+      if (_loading) {
+        //Wait for other stream to be ready
+        await Future.delayed(const Duration(seconds: 1));
+        //startedStream object should be ready
+        if (startedStream != null) {
+          return startedStream!;
+        }
+        //If not check, if chapter has already finished
+        else if (this.data != null) {
+          if (stream != null) {
+            return (this.data!, stream!);
+          } else {
+            //Frankly, if stream object is null, we should wait another few seconds
+            await Future.delayed(const Duration(milliseconds: 10));
+            //Try again
+            if (stream != null) {
+              return (this.data!, stream!);
+            }
+          }
+        } else {
+          //Otherwise, continue loading, which will re-load the chapter object
+          ErrorList.logWarning('Reloading chapter $varName');
         }
       }
+
+      _loading = true;
+      String path = 'book_binary/${info.filename}';
+      dev.log("(ChapterHolder) Load: $path");
+      ByteBuffer buffer = await getFileFromServer(path);
+      ByteData data = buffer.asByteData();
+      await buffer_lib.loadLibrary();
+      var ptr = buffer_lib.BufferPtr(data.buffer);
+      await parser_lib.loadLibrary();
+      var parser = parser_lib.ChapterParser(debugId: info.varName, ptr: ptr);
+
+      startedStream = parser.getChapterAndStream(info, handleErrors: true);
+      _loading = false;
+
+      startedStream?.then((ChapterAndStream c) {
+        this.data = c.$1;
+        stream = c.$2;
+        startedStream = null;
+        loadNotifier.notify();
+      });
+      loadNotifier.notify();
+      return startedStream!;
+    } else {
+      return (data!, stream!);
     }
-    notifyListeners();
+    // return chapter!;
   }
 
-  // ============ Handles =============
-
-  void onTimeout() {
-    dev.log("Timed out!");
-    addAndRegisterError(
-        TimeoutException("ChapterFormat read timed out $debugId"));
+  bool loaded() {
+    return data != null;
   }
 
-  void handleLoadFailed() {
-    dev.log("Load failed!");
-    header ??= const HeaderOfText(text: '[Error]');
-    if (lines.isEmpty) {
-      lines.add(const BodyTextElement('[text]'));
+  bool matchesSearchTerm(String searchTerm) {
+    //TODO: A ranking might be smarter
+    if (displayName.contains(searchTerm)) {
+      return true;
     }
-    // endWidget ??= EndOfChapterText(number);
-  }
-
-  void onFileReadError(object, StackTrace trace) {
-    dev.log("FILE read ERROR");
-    throw trace;
-    // trace.toString()
-  }
-
-  void onFileReadDone() {
-    dev.log('File read done.');
-  }
-
-  String getText() {
-    /// All text in chapter.
-    // All holders
-    return lines
-        .map((l) =>
-            //Concatenate with line endings
-            l.toText())
-        .join('\n')
-        //Cut out extra line endings/spaces
-        .trim();
-  }
-
-  void copyText() {
-    String str = getText();
-    // str = str.trim();
-    Clipboard.setData(ClipboardData(text: str));
-  }
-}
-
-class ChapterLoadNotifier extends ChangeNotifier {
-  void notify() {
-    super.notifyListeners();
-  }
-}
-
-enum LoadStatus {
-  unloaded,
-  loading,
-  loaded,
-  fileError,
-  networkError,
-  fmtError,
-  codeError,
-  unknownError,
-  error;
-
-  bool isError() {
-    switch (this) {
-      case LoadStatus.unloaded:
-      case LoadStatus.loading:
-      case LoadStatus.loaded:
-        return false;
-      case LoadStatus.error:
-      case LoadStatus.fileError:
-      case LoadStatus.networkError:
-      case LoadStatus.fmtError:
-      case LoadStatus.codeError:
-      case LoadStatus.unknownError:
+    if (searchTerm.contains(displayName)) {
+      return true;
+    }
+    if (varName.contains(searchTerm)) {
+      return true;
+    }
+    if (searchTerm.contains(varName)) {
+      return true;
+    }
+    String? headerText = data?.header?.text;
+    if (headerText != null && headerText.isNotEmpty) {
+      if (headerText.contains(searchTerm)) {
         return true;
+      }
+      if (searchTerm.contains(headerText)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  Future<String?> awaitSubtitle() async {
+    ///Future for Subtitle. Technically might not return
+    if (needsLoad) {
+      await load();
+      return data?.subtitle;
+    } else if (data != null) {
+      return data!.subtitle;
+    } else {
+      await startedStream;
+      return data?.subtitle;
     }
   }
 
-  bool readyToShow() {
-    return !(this == LoadStatus.unloaded);
+  Future<String?> awaitWhere() async {
+    if (needsLoad) {
+      await load();
+      return data?.where;
+    } else if (data != null) {
+      return data!.where;
+    } else {
+      await startedStream;
+      return data?.where;
+    }
   }
 
-  bool notStartedLoading() {
-    return (this == LoadStatus.unloaded);
+  Future<String?> awaitWhen() async {
+    if (needsLoad) {
+      await load();
+      return data?.when;
+    } else if (data != null) {
+      return data!.when;
+    } else {
+      await startedStream;
+      return data?.when;
+    }
+  }
+}
+
+class ChapterProvider extends InheritedWidget {
+  final Chapter chapter;
+
+  const ChapterProvider(
+      {required super.key, required this.chapter, required super.child});
+
+  static ChapterProvider of(BuildContext context) {
+    return maybeOf(context)!;
+  }
+
+  static ChapterProvider? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<ChapterProvider>();
+  }
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    if (oldWidget is ChapterProvider) {
+      return oldWidget.chapter.id != chapter.id;
+    } else {
+      return true;
+    }
   }
 }

@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../../backend/chapter.dart';
+import '../../../backend/chapter_data.dart';
 
 class LengthSummaryWidget extends StatelessWidget {
   final int numDots;
@@ -17,7 +17,8 @@ class LengthSummaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-        message: 'Reading length: ${Chapter.readingLengthDescriptor(numDots)}',
+        message:
+            'Reading length: ${ChapterData.readingLengthDescriptor(numDots)}',
         //Because there's no onClick
         excludeFromSemantics: true,
         child: CustomPaint(

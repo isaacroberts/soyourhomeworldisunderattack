@@ -4,11 +4,10 @@ import 'package:soyourhomeworld/frontend/elements/chapter_heading/subtitle_compo
 import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
 import '../../../backend/book.dart';
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter.dart';
 
 class ChapterHeadingSubtitle extends StatelessWidget {
-  final ChapterHolder? chapter;
-  const ChapterHeadingSubtitle({required super.key, required this.chapter});
+  const ChapterHeadingSubtitle({required super.key});
 
   bool get center => false;
 
@@ -16,17 +15,17 @@ class ChapterHeadingSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
         alignment: center ? Alignment.center : Alignment.centerLeft,
-        child: SingleChildScrollView(
-            key: const Key("HeadingSubtitleTickerTape"),
+        child: const SingleChildScrollView(
+            key: Key("HeadingSubtitleTickerTape"),
             scrollDirection: Axis.horizontal,
             child: Padding(
-                key: const Key("heading_pad"),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                child: _SubtitleRow(key: const Key("row"), chapter: chapter))));
+                key: Key("heading_pad"),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                child: _SubtitleRow(key: Key("row")))));
   }
 
   Widget chapterNumber(BuildContext context) {
+    Chapter? chapter = Chapter.maybeOf(context);
     String tooltip = '${chapter?.id} / ${Book.maybeOf(context)?.chapterAmt}';
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -48,13 +47,9 @@ class ChapterHeadingSubtitle extends StatelessWidget {
 }
 
 class _SubtitleRow extends StatelessWidget {
-  const _SubtitleRow({
-    super.key,
-    required this.chapter,
-  });
+  const _SubtitleRow({super.key});
 
-  final ChapterHolder? chapter;
-  Widget futuresRow(BuildContext context) {
+  Widget futuresRow(BuildContext context, Chapter chapter) {
     ///For waiting on chapter
     return Row(
         key: const Key("heading_row"),
@@ -65,24 +60,24 @@ class _SubtitleRow extends StatelessWidget {
           BookmarkButton(key: const Key("bookmark"), chapter: chapter),
           FutureChip(
               key: const Key("Subtitle"),
-              value: chapter?.awaitSubtitle(),
+              value: chapter.awaitSubtitle(),
               label: 'Subtitle',
               icon: null),
           FutureChip(
               key: const Key("Where"),
-              value: chapter?.awaitWhere(),
+              value: chapter.awaitWhere(),
               label: 'Where',
               icon: Icons.public),
           FutureChip(
               key: const Key("When"),
-              value: chapter?.awaitWhen(),
+              value: chapter.awaitWhen(),
               label: 'When',
               icon: Icons.access_time),
           _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
         ]);
   }
 
-  Widget completedRow(BuildContext context) {
+  Widget completedRow(BuildContext context, Chapter chapter) {
     ///No waiting on futures
     return Row(
       key: const Key("heading_row"),
@@ -93,17 +88,17 @@ class _SubtitleRow extends StatelessWidget {
         BookmarkButton(key: const Key("bookmark"), chapter: chapter),
         CurrentChip(
             key: const Key("Subtitle"),
-            value: chapter!.chapter!.subtitle,
+            value: chapter.data!.subtitle,
             label: 'Subtitle',
             icon: null),
         CurrentChip(
             key: const Key("Where"),
-            value: chapter!.chapter!.where,
+            value: chapter.data!.where,
             label: 'Where',
             icon: Icons.public),
         CurrentChip(
             key: const Key("When"),
-            value: chapter!.chapter!.when,
+            value: chapter.data!.when,
             label: 'When',
             icon: Icons.access_time),
         _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
@@ -113,14 +108,25 @@ class _SubtitleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Chapter? chapter = Chapter.maybeOf(context);
+    if (chapter == null) {
+      //Assume it will always be null
+      return nullChapterRow(context);
+    }
+    return ListenableBuilder(
+        listenable: chapter!.loadNotifier, builder: builder);
+  }
+
+  Widget builder(BuildContext context, Widget? previousChild) {
+    Chapter? chapter = Chapter.maybeOf(context);
     if (chapter == null) {
       return nullChapterRow(context);
-    } else if (chapter?.chapter == null) {
+    } else if (chapter.data == null) {
       return nullChapterRow(context);
       //These futures are causing every chapter to load at once
-      return futuresRow(context);
+      return futuresRow(context, chapter);
     } else {
-      return completedRow(context);
+      return completedRow(context, chapter);
     }
   }
 
@@ -144,7 +150,7 @@ class _LengthSummaryWrap extends StatelessWidget {
     required this.chapter,
   });
 
-  final ChapterHolder? chapter;
+  final Chapter? chapter;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +162,7 @@ class _LengthSummaryWrap extends StatelessWidget {
                 width: 16,
                 height: 20,
                 child: LengthSummaryWidget(
-                  numDots: chapter?.chapter?.readingLength ?? 3,
+                  numDots: chapter?.data?.readingLength ?? 3,
                   dotSize: .5,
                   color: Primary.shadee,
                 ))));

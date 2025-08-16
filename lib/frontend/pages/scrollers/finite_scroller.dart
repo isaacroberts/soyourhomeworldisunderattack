@@ -1,9 +1,9 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/chapter.dart';
 
 import '../../../backend/book.dart';
-import '../../../backend/chapter.dart';
 import '../readers/reader.dart';
 
 class PagingScroller extends StatefulWidget {
@@ -31,7 +31,9 @@ class _PagingScrollerState extends State<PagingScroller> {
     dev.log("Paging scroller chp = $set");
 
     if (widget.book.hasKey(set)) {
-      Chapter chap = await widget.book.getAndLoadChapter(currentChapterIx);
+      Chapter chap = widget.book.chapters[currentChapterIx];
+
+      chap.load();
 
       setState(() {
         currentChapterIx = set;
@@ -73,32 +75,30 @@ class _PagingScrollerState extends State<PagingScroller> {
 
   @override
   Widget build(BuildContext context) {
-    Chapter? chp = currentChapter;
+    Chapter? chapter = currentChapter;
 
-    if (chp == null) {
+    if (chapter == null) {
       dev.log('Empty chapter');
       return const Placeholder();
       // return const EmptyChapterWidget();
     } else {
-      return SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            key: Key('Chp$currentChapterIx ScrollHoldCol'),
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ReaderScreen(
-                key: Key("FinScr_Reader_${chp.id}"),
-                chapter: chp,
-                // scrollController: _scrollController,
-              ),
-              Center(child: chapterButton()),
-              // const SizedBox(
-              //   height: 250,
-              // ),
-            ],
-          ));
+      return ChapterProvider(
+          key: Key("ChpProv${chapter.key}"),
+          chapter: chapter,
+          child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                key: Key('Chp$currentChapterIx ScrollHoldCol'),
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const ReaderScreen(
+                    key: Key("FinScr_Reader}"),
+                  ),
+                  Center(child: chapterButton()),
+                ],
+              )));
     }
   }
 }

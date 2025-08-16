@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter.dart';
 
-typedef ChapterMainCallback = void Function(ChapterHolder?, double);
+typedef ChapterMainCallback = void Function(Chapter?, double);
 
 class ChapterHeadingData extends InheritedWidget {
   final ChapterMainCallback? onChapterBecomesMain;

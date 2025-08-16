@@ -96,7 +96,7 @@ class StyleHandler:
 
         # if name == 'Heading':
         if 'Heading' in name:
-            font.isHeading = True
+            font._isHeading = True
         # if 'style:display-name' in style.attrs:
         #     font.set_display_name(style.attrs['style:display-name'])
 

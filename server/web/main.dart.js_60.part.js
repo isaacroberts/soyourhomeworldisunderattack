@@ -1,65 +1,66 @@
 ((a,b,c)=>{a[b]=a[b]||{}
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_60",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var J,A,C,D,B={
-aNt(d){var x,w,v,u,t="columns"
-d.mr()
-d.ms()
-d.bt("[",t)
-x=A.b([],y.o)
-w=y.m
-while(!0){if(!(d.kU()&&d.n9(0)==="c"))break
-d.bt("c",t)
-d.mr()
-d.bt("[",t)
-v=A.b([],w)
-u=new E.B2("Columns_obj",d)
-while(!0){if(!(d.kU()&&d.n9(0)!=="]"))break
-v.push(u.NL())}d=u.b
-d.OB("]")
-x.push(v)}d.OB("]")
-d.OB(";")
-return new B.Bp(x)},
-b36(d){return new B.UX(B.aNt(d).a)},
-Bp:function Bp(d){this.a=d},
-a8v:function a8v(){},
-a8u:function a8u(){},
-UX:function UX(d){this.a=d}},E
-J=c[1]
+$__dart_deferred_initializers__.current=function(a,b,c,$){var A,D,F,B={
+aYI(d,e){return new B.Oy(e,d)},
+Oy:function Oy(d,e){this.a=d
+this.b=e},
+uC:function uC(d,e){this.c=d
+this.a=e},
+Ig:function Ig(){this.c=this.a=this.d=null},
+au7:function au7(d,e){this.a=d
+this.b=e}},C,G,E
 A=c[0]
-C=c[2]
-D=c[33]
-B=a.updateHolder(c[21],B)
-E=c[5]
-B.Bp.prototype={
-dO(){var x=this.a
-return new A.a6(x,new B.a8v(),A.a1(x).h("a6<1,A<l>>")).by(0,"\n")},
-yh(d,e,f){var x,w=A.b([],y.e)
-for(x=J.bf(f);x.B();)w.push(x.gR().bP(d))
-return A.co(w,e,null,C.U,C.an)},
-a3r(d,e){return this.yh(d,C.a3,e)},
-bP(d){var x,w,v,u=A.b([],y.e)
-for(x=this.a,w=x.length,v=0;v<x.length;x.length===w||(0,A.E)(x),++v)u.push(new A.i8(1,C.d2,this.a3r(d,x[v]),null))
-return A.eZ(u,C.bd,null,C.c4,C.a2,null)},
-cE(d){return A.Rz(this.bP(d),!1)}}
-B.UX.prototype={
-yh(d,e,f){var x,w=A.b([],y.e)
-for(x=J.bf(f);x.B();)w.push(x.gR().bP(d))
-return A.co(w,e,null,C.U,C.an)},
-a3r(d,e){return this.yh(d,C.a3,e)},
-bP(d){var x=null,w=this.a
-return new D.G7(A.eZ(A.b([new A.i8(1,C.d2,this.yh(d,C.cj,w[0]),x),new A.i8(1,C.d2,this.yh(d,C.aA,w[1]),x)],y.e),C.bd,x,C.c4,C.a2,x),!0,x)}}
-var z=a.updateTypes([])
-B.a8v.prototype={
-$1(d){return J.qf(d,new B.a8u(),y.g)},
-$S:634}
-B.a8u.prototype={
-$1(d){return d.dO()},
-$S:134};(function inheritance(){var x=a.inherit,w=a.inheritMany
-x(B.Bp,A.aU)
-w(A.e2,[B.a8v,B.a8u])
-x(B.UX,B.Bp)})()
-A.bO(b.typeUniverse,JSON.parse('{"Bp":{"aU":[]},"UX":{"aU":[]}}'))
-var y={m:A.O("r<aU>"),o:A.O("r<Y<aU>>"),e:A.O("r<c>"),g:A.O("l")}};
+D=c[2]
+F=c[57]
+B=a.updateHolder(c[19],B)
+C=c[65]
+G=c[34]
+E=c[64]
+B.Oy.prototype={
+bN(d){return new B.uC(this,E.nE)},
+cD(d){return new B.uC(this,E.nE)},
+d7(){return"[Ballot code element]"}}
+B.uC.prototype={
+a1(){return new B.Ig()}}
+B.Ig.prototype={
+NH(d){this.a4(new B.au7(this,d))},
+FU(){var x,w,v=this.d
+if(v!=null){x=D.b.h6(C.lZ,v)
+v=this.c
+v.toString
+w=C.Xz[x]
+A.eX(v).fm("/search/"+w,null)}},
+C(d){var x,w,v,u,t,s=this,r=null,q=A.b([],y.e),p=s.gNG(),o=y.g,n=0
+while(!0){if(!(n<(s.a.c.a?5:2)))break
+x=s.d
+w=C.lZ[n]
+v=A.T(d).ax
+u=v.d
+v=u==null?v.b:u
+u=C.lZ[n]
+t=A.ar(u,r,r,r,r,r,r,r,r)
+q.push(G.aQA(D.j,s.d,p,x===w,v,r,D.c0,t,!0,u,o));++n}p=A.T(d).ax
+o=p.d
+p=A.aOG(r,r,o==null?p.b:o,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r)
+q.push(new A.aZ(E.q2,F.aJt(!1,C.a_X,r,r,r,r,r,r,s.a.c.b&&s.d!=null?s.gFT():r,r,p),r))
+return new A.ks($.aN5(),A.c0(q,D.al,r,D.M,D.ak),r)}}
+var z=a.updateTypes(["~(l?)","~()"])
+B.au7.prototype={
+$0(){this.a.d=this.b},
+$S:0};(function installTearOffs(){var x=a._instance_1u,w=a._instance_0u
+var v
+x(v=B.Ig.prototype,"gNG","NH",0)
+w(v,"gFT","FU",1)})();(function inheritance(){var x=a.inherit
+x(B.Oy,A.aO)
+x(B.uC,A.P)
+x(B.Ig,A.W)
+x(B.au7,A.e5)})()
+A.bK(b.typeUniverse,JSON.parse('{"uC":{"P":[],"c":[]},"Oy":{"aO":[]},"Ig":{"W":["uC"]}}'))
+var y={h:A.O("r<l>"),e:A.O("r<c>"),g:A.O("l")};(function constants(){var x=a.makeConstList
+C.lZ=A.b(x(["Human Jack","Anarchist Affinity Group (Christian Jones, Eric Green, Sophie Lichterman, Devonte Washington, Vashra Bhattacharyal, Tristen Pensicola)","Bugs Bunny","Grok AI","Pot Hol"]),y.h)
+C.Xz=A.b(x(["HumanJack","AnarchistsWin","TransgenderRabbit","AIWinsElection","PotHol"]),y.h)
+C.a9L=new A.du("Vote",null,null,D.av,null,null,null,null,null,null)
+C.a_X=new A.aZ(D.dx,C.a9L,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_60",e:"endPart",h:b})})($__dart_deferred_initializers__,"GKl8XqAbzmzW+eBFrxv34CBe+Ko=");
+a.eventLog.push({p:"main.dart.js_60",e:"endPart",h:b})})($__dart_deferred_initializers__,"wVAKtEysKn/z5dQuBKH/3OG2twI=");

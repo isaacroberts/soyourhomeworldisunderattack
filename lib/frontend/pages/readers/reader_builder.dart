@@ -6,6 +6,7 @@ import 'package:soyourhomeworld/frontend/pages/scrollers/slivers/load_sliver.dar
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../backend/chapter.dart';
+import '../../../backend/chapter_data.dart';
 import '../../../backend/error_handler.dart';
 import '../../elements/holders/holder_base.dart';
 
@@ -13,19 +14,16 @@ class ReaderBuilder extends StatefulWidget {
   /// Builds & shows elements, as loading fonts
   ///
   ///
-  /// TODO: This is causing jumps, when scrolling up.
-  /// I think the previous chapter is getting reloaded, and has a smaller height
-  final Chapter chapter;
 
   final Widget Function(BuildContext, Holder, bool) itemBuilder;
   final List<Widget> leadItems;
   final List<Widget> endItems;
   final Widget? waitingWidget;
+  //TODO: Separate SliverProtocol builder
   final bool useSliverProtocol;
 
   const ReaderBuilder(
       {required super.key,
-      required this.chapter,
       required this.itemBuilder,
       required this.useSliverProtocol,
       this.leadItems = const [],
@@ -37,6 +35,10 @@ class ReaderBuilder extends StatefulWidget {
 }
 
 class ReaderBuilderState extends State<ReaderBuilder> {
+  late Chapter chapter;
+
+  ChapterData get data => chapter.data!;
+
   //Displays only N holders
   int itemsToDisplay = 0;
 //TODO: PUt back
@@ -47,33 +49,36 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   @override
   void initState() {
     super.initState();
-    // dev.log("Reader init ${chapter.varName}");
-    widget.chapter.addListener(_chapterUpdated);
-    loadAndDisplayThread();
   }
 
   @override
   void didChangeDependencies() {
-    // dev.log("Reader changedDep ${chapter.varName}");
+    chapter = Chapter.of(context);
+    chapter.loadNotifier.addListener(_chapterUpdated);
 
     super.didChangeDependencies();
+    loadAndDisplayThread();
   }
 
   @override
   void dispose() {
+    chapter.loadNotifier.removeListener(_chapterUpdated);
+
     super.dispose();
   }
 
   bool get doneLoading => itemsToDisplay >= maxLength;
 
-  int get maxLength => widget.chapter.length;
+  int get maxLength => chapter.data?.length ?? 0;
 
-  Chapter get chapter => widget.chapter;
-  int get chapterNo => widget.chapter.id;
+  int get chapterNo => chapter.id;
 
-  String get _debugId => widget.chapter.debugId;
+  String get _debugId => chapter.varName;
 
   void loadAndDisplayThread() async {
+    if (chapter.data == null) {
+      return;
+    }
     if (itemsToDisplay < maxLength) {
       int itemsToDisplay = this.itemsToDisplay;
       // dev.log("(Font) loadthread (chp=$_debugId) items=$itemsToDisplay");
@@ -101,7 +106,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
           }
           if (n >= this.itemsToDisplay) {
             //If waiting to load font
-            Holder h = widget.chapter.lines[n];
+            Holder h = data.lines[n];
             if (!h.isLoaded()) {
               // dev.log("(Font) Needs load $n/$maxLength (chp=$_debugId)");
               //First update the sclinesreen to the current amount.
@@ -147,7 +152,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   }
 
   Holder getTextHolder(int n) {
-    return chapter.lines[n];
+    return data.lines[n];
   }
 
   //Handles
@@ -182,7 +187,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
       yield lead;
     }
     for (int n = 0; n < itemsToDisplay; ++n) {
-      yield widget.itemBuilder(context, chapter.lines[n], showFonts);
+      yield widget.itemBuilder(context, data.lines[n], showFonts);
     }
     if (doneLoading) {
       for (Widget end in widget.endItems) {
@@ -199,9 +204,9 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     }
     index -= widget.leadItems.length;
     if (index >= 0 && index < itemsToDisplay) {
-      return widget.itemBuilder(context, chapter.lines[index], showFonts);
+      return widget.itemBuilder(context, data.lines[index], showFonts);
     }
-    index -= chapter.lines.length;
+    index -= data.lines.length;
     if (doneLoading) {
       if (index >= 0 && index < widget.endItems.length) {
         return widget.endItems[index];
@@ -231,12 +236,12 @@ class ReaderBuilderState extends State<ReaderBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    // if (!chapter.loaded) {
-    //   return unloadedBuilder(context);
-    // }
+    if (chapter.data == null) {
+      return unloadedBuilder(context);
+    }
     if (useSliverProtocol) {
       if (!doneLoading) {
-        return ChapterLoadSliver(chapterTitle: chapter.displayTitle);
+        return ChapterLoadSliver(chapterTitle: chapter.displayName);
       }
 
       return IsFallbackProvider(
@@ -245,7 +250,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
           //     constraints:
           //         BoxConstraints(minHeight: MediaQuery.of(context).size.height),
           child: SliverMainAxisGroup(
-              key: Key('RdrSlvrChp${widget.chapter.id}'),
+              key: Key('RdrSlvrChp${chapter.id}'),
               slivers: itemIterator(context).toList(growable: false)));
     } else {
       return IsFallbackProvider(
@@ -260,7 +265,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   //TODO: Why a PageStorage Key?
-                  key: Key('RdrBldrChp${widget.chapter.id}'),
+                  key: Key('RdrBldrChp${chapter.id}'),
                   children: itemIterator(context).toList(growable: false))));
     }
   }

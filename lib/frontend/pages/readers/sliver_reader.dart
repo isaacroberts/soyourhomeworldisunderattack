@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/bar.dart';
 
 import '../../../backend/chapter.dart';
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter_data.dart';
 import '../../elements/holders/holder_base.dart';
 import 'reader_builder.dart';
 
 class SliverReader extends StatefulWidget {
-  final ChapterHolder? chapterHolder;
-
-  const SliverReader({required super.key, required this.chapterHolder});
-
-  Chapter? get chapter => chapterHolder?.chapter;
+  const SliverReader({required super.key});
 
   @override
   State<StatefulWidget> createState() => _SliverReaderState();
 }
 
 class _SliverReaderState extends State<SliverReader> {
-  Chapter? get chapter => widget.chapter;
+  late Chapter chapter;
+  ChapterData? get data => chapter.data;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    chapter = Chapter.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Widget itemBuilder(BuildContext context, Holder holder, bool showFonts) {
@@ -30,16 +32,9 @@ class _SliverReaderState extends State<SliverReader> {
         child: holder.elementOrFallback(context, showFonts));
   }
 
-  Widget header(BuildContext context) {
-    return SliverHeader(
-        key: const Key("header"),
-        chapter: widget.chapterHolder,
-        header: chapter?.header);
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (chapter == null) {
+    if (data == null) {
       //Returns zero box, so rest of reader can use ! null checks
       return const SliverToBoxAdapter(
           child: SizedBox(
@@ -49,23 +44,10 @@ class _SliverReaderState extends State<SliverReader> {
 
     return ReaderBuilder(
       useSliverProtocol: true,
-      key: Key('RdrBldr_Chp${chapter!.id}'),
-      chapter: chapter!,
+      key: const Key('RdrBldr'),
       itemBuilder: itemBuilder,
-      // leadItems: [header(context)],
+      // leadItems: [const SliverHeader(key: const Key("header"))],
       // endItems: const [SliverToBoxAdapter(child: Text('/End'))],
     );
-  }
-
-  Widget debugCornerWidget(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: const Color(0x88222222),
-            border: Border.all(color: const Color(0xffaaaaaa), width: 1.5),
-            borderRadius: BorderRadius.circular(12)),
-        child: Column(children: [
-          Text(chapter!.displayTitle),
-          // Text('Height: $height'),
-        ]));
   }
 }

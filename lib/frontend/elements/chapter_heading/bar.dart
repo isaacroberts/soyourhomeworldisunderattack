@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/driven_bar.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/measure.dart';
 
-import '../../../backend/chapter_holder.dart';
 import '../../theme/colors.dart';
-import '../holders/textholders.dart';
 import 'heading_data.dart';
 
 class SliverHeader extends StatelessWidget {
-  final ChapterHolder? chapter;
-  final HeaderOfText? header;
-  const SliverHeader(
-      {required super.key, required this.chapter, required this.header});
+  const SliverHeader({required super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +16,14 @@ class SliverHeader extends StatelessWidget {
     ChapterHeadingData? headingData = ChapterHeadingData.maybeOf(context);
 
     return ChapterHeaderMeasureSliver(
-        chapter: chapter,
         onBecomesMain: headingData?.onChapterBecomesMain,
         // child: SliverCenter(
         //     sliver: SliverConstrainedCrossAxis(
         //         maxExtent: 600,
-        child: SliverAppBar(
+        child: const SliverAppBar(
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          flexibleSpace: DrivenAppBar(
-              key: Key("AppBar${chapter?.varName}"),
-              chapter: chapter,
-              header: chapter?.chapter?.header),
+          flexibleSpace: DrivenAppBar(key: Key("AppBar")),
           leadingWidth: 50,
           collapsedHeight: collapsedHeight,
           // collapsedHeight: expandedHeight,

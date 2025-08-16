@@ -39,7 +39,8 @@ class Font:
         # self.align = 'left'
         self.isSheeted = False
         # self.tags = set(self.tag)
-        self.isHeading = False
+        self._isHeading = False
+        self.markedNotHeading=False
         self.isSub = False
         if Font.static_body is None:
             Font.static_body = 0
@@ -80,7 +81,7 @@ class Font:
         """
         f = Font(tag, '', None, None, None, mono=None)
         # f.align = None
-        f.isHeading = None
+        f._isHeading = None
         f.isSub = True
         return f
 
@@ -109,7 +110,8 @@ class Font:
 
     def isCodeMarker(self):
         return False
-
+    def isHeading(self):
+        return self._isHeading and not self.markedNotHeading
     def hasColor(self):
         if self.fontCol is None:
             return False
@@ -187,9 +189,13 @@ class Font:
                  '_strikethrough', '_underline', '_overline',
                  '_subSuper', '_small_caps']  # , 'align']
         # Heading-ness needs to propagate, because i mess with the fonts on the headings
-        if self.isHeading:
+        if self.markedNotHeading:
+            other._isHeading=False
+            other.markedNotHeading=True
+        elif self._isHeading:
             print('\t Heading')
-            other.isHeading = True
+            other._isHeading = True
+
         for v in vars:
             ov = getattr(other, v, None)
             if ov is None or ov == '' or ov == 0.0:
@@ -220,6 +226,8 @@ class Font:
         s = self.family + '_'+str(self.size) + 'I' if self.italic else 'r' + \
             self.bold + '_'+col+'_'+bif(self.bgCol) \
             + bin(self._strikethrough) + bin(self._underline)+bin(self._overline)+ bif(self._subSuper)
+
+        s += 'H' if self.isHeading() else 'x' if self.markedNotHeading else 'n'
         # t= s.encode()
         #
         # print('t', t, type(t))
@@ -238,6 +246,8 @@ class Font:
             return False
         if self.bold != other.bold:
             # print('\t\tbold', self.bold, other.bold)
+            return False
+        if self.isHeading() != other.isHeading():
             return False
         return True
     def decorations_equal(self, other):
@@ -291,6 +301,7 @@ class Font:
             return False
         if not self.decorations_equal(other):
             return False
+
         return True
 
     def equal_minus_color(self, other):
@@ -311,7 +322,7 @@ class Font:
 
 
     def __str__(self):
-        if self.isHeading:
+        if self.isHeading():
             pre = 'H:'
         else:
             pre = ''
@@ -412,7 +423,10 @@ class Font:
         elif name == 'line-through':
             self._strikethrough = True
             print("Got strikethrough!")
-            # exit (0)
+        elif name == 'text-underline':
+            self._underline=True
+        elif name == 'text-overline':
+            self._overline = True
         elif name == 'text-position':
             # sub 58%
             if value.startswith('sub'):
@@ -427,8 +441,6 @@ class Font:
                 print('TextPosition: ', value)
                 t = input('U see this shit? (y/n)')
             # exit(0)
-        elif name == 'text-underline-style':
-            self._underline=True
         elif name == 'text-shadow':
             pass
         elif name == 'font-variant':
@@ -439,7 +451,7 @@ class Font:
                 exit(1)
         elif name == 'text-outline':
             value = bool(value)
-            self.isHeading=value
+            self._isHeading=value
             self.markedNotHeading=not value
 
         else:
@@ -451,7 +463,7 @@ class Font:
 
 WANTED_ATTRIBUTES = [
     'font-size', 'font-family', 'font-style', 'font-weight', 'color', 'background-color',
-    'line-through','text-underline-style',
+    'line-through',
     'text-position', 'font-variant',
     'text-outline',
     'text-shadow',
@@ -467,9 +479,16 @@ RDR_ATTRIBUTES = {
 'font-style-complex': 'font-style',
 'font-weight-complex': 'font-weight',
 
+# Lines thru
 'text-line-through-style': 'line-through',
 'text-line-through-type': 'line-through',
-
+'text-line-through-color': 'line-through',
+'text-underline-style': 'text-underline',
+'text-underline-width': 'text-underline',
+'text-underline-color': 'text-underline',
+'text-overline-style': 'text-overline',
+'text-overline-width': 'text-overline',
+'text-overline-color': 'text-overline',
 }
 
 UNWANTED_ATTRIBUTES = [
@@ -503,7 +522,7 @@ UNWANTED_ATTRIBUTES = [
 # Eh
 'text-underline-width',
 'text-underline-color',
-
+'text-overline-style',
 
 #libreOffice shit
 'use-window-font-color',

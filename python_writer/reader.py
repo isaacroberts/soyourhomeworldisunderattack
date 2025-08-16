@@ -154,7 +154,7 @@ for para in paras:
                     spans.append(Header(font, text, align))
 
                 # Header font means Header object
-                elif font.isHeading:
+                elif font.isHeading():
                     print(f'>\t\t\tHeader("{text}")', '\n' in text)
                     spans.append(Header(font, text, align))
                 else:

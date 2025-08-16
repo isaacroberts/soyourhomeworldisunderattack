@@ -45,9 +45,11 @@ print('Upgrade to Headers')
 for i in range(len(spans)):
 
     if isinstance(spans[i], TextSpan):
-        if spans[i].font.isHeading:
-            print('->Heading', spans[i])
-            spans[i] = Header(spans[i].font, spans[i].text, spans[i].align())
+        if spans[i].font.isHeading():
+            # This is an attribute from the style manager
+            if not spans[i].font.markedNotHeading:
+                print('->Heading', spans[i])
+                spans[i] = Header(spans[i].font, spans[i].text, spans[i].align())
 
 print('//////')
 print ("Combining Headers")
@@ -406,7 +408,7 @@ def span0_check(span0):
         if '\n' in span0.text:
             print('\thas newline')
             return False
-        if span0.font.isHeading:
+        if span0.font.isHeading():
             print('\theading')
             return False
         return True
@@ -426,7 +428,7 @@ def span_check(span0, next):
         if '\n' in next.text[:-1]:
             print('\tHas newline within span')
             return False
-        if next.font.isHeading:
+        if next.font.isHeading():
             print('\theading')
             return False
         if next.align() != span0.align():

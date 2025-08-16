@@ -5,7 +5,7 @@ import 'package:async/async.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
 
 import 'chapter.dart';
-import 'chapter_holder.dart';
+import 'chapter_data.dart';
 import 'chapter_info.dart';
 
 class ChapterLoadQueue {
@@ -32,7 +32,7 @@ class ChapterLoadQueue {
   final List<_QueueWrap> _requestedLoads = [];
   _QueueWrap? _currentlyLoading;
 
-  CancelableOperation<ChapterAndStream> requestLoad(ChapterHolder chapter) {
+  CancelableOperation<ChapterAndStream> requestLoad(Chapter chapter) {
     int ixMatch = _requestedLoads.indexWhere((q) => q.matches(chapter));
 
     if (ixMatch == -1) {
@@ -46,8 +46,7 @@ class ChapterLoadQueue {
     }
   }
 
-  CancelableOperation<ChapterAndStream> requestUrgentLoad(
-      ChapterHolder chapter) {
+  CancelableOperation<ChapterAndStream> requestUrgentLoad(Chapter chapter) {
     int ixMatch = _requestedLoads.indexWhere((q) => q.matches(chapter));
 
     if (ixMatch == -1) {
@@ -61,7 +60,7 @@ class ChapterLoadQueue {
     }
   }
 
-  void cancelLoad(ChapterHolder chapter) {
+  void cancelLoad(Chapter chapter) {
     if (_currentlyLoading?.matches(chapter) ?? false) {
       //Cancel load thread
       _currentlyLoading?.completer.operation.cancel();
@@ -109,7 +108,7 @@ class ChapterLoadQueue {
 }
 
 class _QueueWrap {
-  final ChapterHolder chapter;
+  final Chapter chapter;
   final CancelableCompleter<ChapterAndStream> completer;
 
   _QueueWrap({required this.chapter})
@@ -138,9 +137,9 @@ class _QueueWrap {
   bool matches(Object other) {
     if (other is _QueueWrap) {
       return chapter.id == other.chapter.id;
-    } else if (other is ChapterHolder) {
-      return chapter.id == other.id;
     } else if (other is Chapter) {
+      return chapter.id == other.id;
+    } else if (other is ChapterData) {
       return chapter.id == other.id;
     } else if (other is ChapterInfo) {
       return chapter.id == other.id;

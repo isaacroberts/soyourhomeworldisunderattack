@@ -2,11 +2,11 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/book.dart';
+import 'package:soyourhomeworld/backend/chapter.dart';
 import 'package:soyourhomeworld/frontend/elements/common_blocks.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/debug_chapter_selector.dart';
 
-import '../../../../backend/chapter.dart';
 import '../../icons.dart';
 import '../drawer.dart';
 import '../readers/debug_reader.dart';
@@ -27,14 +27,14 @@ class _TestRigScrollerState extends State<TestRigScroller> {
 
   @override
   void initState() {
-    widget.book.getAndLoadChapter(widget.startChapter).then(_chapterGot);
+    chapter = widget.book.chapters[chapterIx ?? 0];
     super.initState();
   }
 
-  void _chapterGot(Chapter? chap) {
+  void setChapter(int ix) {
     setState(() {
-      chapter = chap;
-      chapterIx = chapter?.id;
+      chapter = widget.book.chapters[ix];
+      chapterIx = ix;
     });
   }
 
@@ -47,11 +47,9 @@ class _TestRigScrollerState extends State<TestRigScroller> {
   void _nextChapter() {
     int? chapterIx = this.chapterIx;
     if (chapterIx != null) {
-      setState(() {
-        widget.book.getAndLoadChapter(chapterIx + 1).then(_chapterGot);
-      });
+      setChapter(chapterIx);
     } else {
-      widget.book.getAndLoadChapter(widget.startChapter).then(_chapterGot);
+      setChapter(widget.startChapter);
     }
   }
 
@@ -59,21 +57,17 @@ class _TestRigScrollerState extends State<TestRigScroller> {
     int? chapterIx = this.chapterIx;
     if (chapterIx != null) {
       setState(() {
-        widget.book.getAndLoadChapter(chapterIx - 1).then(_chapterGot);
+        setChapter(chapterIx - 1);
       });
     } else {
-      widget.book.getAndLoadChapter(widget.startChapter).then(_chapterGot);
+      setChapter(widget.startChapter);
     }
-  }
-
-  void _setChapter(int index) {
-    widget.book.getAndLoadChapter(index).then(_chapterGot);
   }
 
   Widget scaffold(BuildContext context, {required Widget child}) {
     //TODO: Chapter file
     String appBarDisplay = '${chapter?.id}:  ${chapter?.displayTitle ?? ' ? '}';
-    String elemDisplay = '(${chapter?.length} elements)';
+    String elemDisplay = '(${chapter?.data?.length} elements)';
     TextStyle greyed = const TextStyle(
         fontFamily: 'Palatino', fontSize: 12, color: Color(0x40ffffff));
 
@@ -96,7 +90,7 @@ class _TestRigScrollerState extends State<TestRigScroller> {
                 onPressed: _previousChapter,
                 icon: const Icon(Icons.navigate_before)),
             // Text('${chapter?.id}'),
-            ChapterSelector(onChapterChanged: _setChapter),
+            ChapterSelector(onChapterChanged: setChapter),
             IconButton(
                 onPressed: _nextChapter, icon: const Icon(Icons.navigate_next)),
             IconButton(onPressed: _refresh, icon: const Icon(Icons.refresh)),
@@ -113,21 +107,20 @@ class _TestRigScrollerState extends State<TestRigScroller> {
 
   @override
   Widget build(BuildContext context) {
-    Chapter? chapter = this.chapter;
-
     if (chapter == null) {
-      return scaffold(context,
-          child: ColoredIconCard(
-            text: 'Null Chapter (start=${widget.startChapter})',
-            icon: RpgAwesome.bleeding_eye,
+      return ColoredIconCard(
+        text: 'Null Chapter (start=${widget.startChapter})',
+        icon: RpgAwesome.bleeding_eye,
+      );
+    } else {
+      return ChapterProvider(
+          key: Key("Chp_${chapter!.key}"),
+          chapter: chapter!,
+          child: scaffold(
+            context,
+            child: const SingleChildScrollView(
+                child: DebugReaderScreen(key: Key('DbgRdr'))),
           ));
     }
-
-    return scaffold(
-      context,
-      child: SingleChildScrollView(
-          child: DebugReaderScreen(
-              key: Key('DbgRdr_chp${chapter.id}'), chapter: chapter)),
-    );
   }
 }

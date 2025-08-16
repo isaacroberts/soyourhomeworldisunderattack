@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '_book_libs.dart' deferred as book_lib;
 import 'chapter.dart';
-import 'chapter_holder.dart';
+import 'chapter_data.dart';
 import 'chapter_info.dart';
 import 'error_handler.dart';
 
@@ -46,8 +47,8 @@ class Book {
   final String title;
   final Color color;
   //TODO: Make private, and add null-aware [] operator
-  final List<ChapterHolder> chapters;
-  Iterable<ChapterHolder> get parts => chapters.where((p) => p.isPart);
+  final List<Chapter> chapters;
+  Iterable<Chapter> get parts => chapters.where((p) => p.isPart);
   final String byline;
 
   Book(
@@ -55,7 +56,14 @@ class Book {
       required this.title,
       required this.color,
       required this.chapters,
-      required this.byline});
+      required this.byline}) {
+    if (kDebugMode) {
+      for (int ch = 0; ch < chapters.length; ++ch) {
+        assert(chapters[ch].index == ch);
+      }
+    }
+  }
+
   // Book.mckinsey() : id = 'SoYourHomeworld';
 
   int get chapterAmt => chapters.length;
@@ -121,13 +129,13 @@ class Book {
     return (key >= 0 && key < chapters.length);
   }
 
-  Future<Chapter> getAndLoadChapter(ChapterKey key) async {
+  Future<ChapterData> getAndLoadChapter(ChapterKey key) async {
     var tup = await chapters[key].getOrLoadChapter();
     return tup.$1;
   }
 
-  Chapter? getChapterIfLoaded(ChapterKey key) {
-    return chapters[key].chapter;
+  ChapterData? getChapterIfLoaded(ChapterKey key) {
+    return chapters[key].data;
   }
 
   // Future<Chapter> refreshChapter(ChapterKey key) {
@@ -139,7 +147,7 @@ class Book {
   //   }
   // }
 
-  Future<Chapter?> getNextChapter(Chapter? current) async {
+  Future<ChapterData?> getNextChapter(ChapterData? current) async {
     if (current == null) {
       return null;
     } else {
@@ -183,10 +191,10 @@ class BookLoader {
   BookLoader._mckinsey() : id = defaultBook;
 
   Book convert() {
-    List<ChapterHolder> chapterHolders = [];
+    List<Chapter> chapterHolders = [];
     //Add objects
     for (ChapterInfo info in chapters) {
-      chapterHolders.add(ChapterHolder(info));
+      chapterHolders.add(Chapter(info));
     }
     //Match nexts
     for (int n = 0; n < chapterHolders.length; ++n) {

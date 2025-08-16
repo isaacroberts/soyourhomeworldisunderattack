@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../../../backend/chapter_holder.dart';
+import '../../../../backend/chapter.dart';
 import '../../../theme/colors.dart';
 
 const bool squashForever = kDebugMode && false;
@@ -14,14 +14,9 @@ class RenderChapterSliver extends RenderProxySliver {
   /// ChapterSliver(key: Chapter5, pos: next)
   /// -> ChapterSliver(key: Chapter5, pos: current)
 
-  final ChapterHolder chapter;
+  Chapter chapter;
 
-  // double height = 0;
-
-  RenderChapterSliver({required this.chapter, this.height = 0}) {
-    // chapter.startedStream?.then(onStreamComplete);
-    // dev.log("New RenderChapterSliver: $isLoader");
-  }
+  RenderChapterSliver({required this.chapter, this.height = 0});
   double scrollExtent = 0;
 
   double height = 0;
@@ -104,10 +99,23 @@ class RenderChapterSliver extends RenderProxySliver {
     // }
 
     if (!squashForever) {
-      if ((height - desiredHeight).abs() > 1) {
-        //TODO: It should expand if it's covering half the top of the screen
-        if (touchingBottom() || belowScreen()) {
+      if (desiredHeight > height + 1) {
+        //Grow with more abandon than shrinking
+        if (touchingBottom() || belowScreen() || halfOfScreen()) {
           height = desiredHeight;
+        }
+      } else if (desiredHeight < height - 1) {
+        //Only shrink to
+        if (belowScreen()) {
+          height = desiredHeight;
+        } else if (touchingBottom()) {
+          // Clip to paintExtent
+          double pixelsBelow =
+              math.max(0, height - scrollOffset - viewportMainAxisExtent);
+          //This prevents it from jumping up suddenly
+          double maxExtent = height - pixelsBelow;
+          height = math.max(maxExtent, desiredHeight);
+          // height = desiredHeight;
         }
       }
     }
@@ -208,6 +216,11 @@ class RenderChapterSliver extends RenderProxySliver {
         !aboveScreen();
   }
 
+  bool halfOfScreen() {
+    return drawnHeight > viewportMainAxisExtent * .66 &&
+        drawnHeight > viewportMainAxisExtent - 100;
+  }
+
   bool nearBottom(double range) {
     return scrollOffset <= height - viewportMainAxisExtent + range &&
         remainingPaintExtent > range &&
@@ -284,15 +297,22 @@ class RenderChapterSliver extends RenderProxySliver {
       //Halo to show extra content
       if ((desiredHeight > height)) {
         //White = text clipped
-        drawEdgeHilite(context,
-            offset: offset, start: Primary.shadee.withAlpha(200));
+        drawHalo(context, offset: offset, start: Primary.shadec);
       }
 
       //Dark halo to show it wants to shorten
       if ((desiredHeight < height)) {
+        double top = offset.dy - scrollOffset + desiredHeight;
+        double bot = height + offset.dy - scrollOffset;
+        Paint shortenBG = Paint()
+          ..style = PaintingStyle.fill
+          ..shader = ui.Gradient.linear(Offset(0, top), Offset(0, bot),
+              [Primary.shade2, Secondary.shade1, Secondary.shade0], [0, .5, 1]);
+        context.canvas
+            .drawRect(Rect.fromLTRB(0, top, crossAxisExtent, bot), shortenBG);
+
         // Red = mild error
-        drawEdgeHilite(context,
-            offset: offset, start: Primary.shade7.withAlpha(200));
+        // drawHalo(context, offset: offset, start: Primary.shade0);
       }
     }
   }
@@ -301,27 +321,38 @@ class RenderChapterSliver extends RenderProxySliver {
   ui.Rect get semanticBounds => calculateClipRect();
   // @override // TODO: implement alwaysNeedsCompositing
   // bool get alwaysNeedsCompositing => true;
-  void drawEdgeHilite(PaintingContext context,
+  void drawHalo(PaintingContext context,
       {required Offset offset, required Color start}) {
     double drawLine = offset.dy + drawnHeight;
+    //Halo shrinks as it gets closer
+    final double haloHeight = math.min(72, (desiredHeight - height).abs());
+    if (haloHeight <= 0) {
+      return;
+    }
     //Don't draw along bottom
     if (!touchingBottom()) {
       Paint grad = Paint()
-        ..shader = ui.Gradient.linear(Offset(0, drawLine - 100),
-            Offset(0, drawLine), [start.withAlpha(0), start]);
+        ..shader = ui.Gradient.linear(
+            Offset(0, drawLine - haloHeight),
+            Offset(0, drawLine),
+            [start.withAlpha(0), start.withAlpha(128), start],
+            [0, .75, 1]);
       context.canvas.drawRect(
-          Rect.fromLTRB(0, drawLine - 100, crossAxisExtent, drawLine), grad);
+          Rect.fromLTRB(0, drawLine - haloHeight, crossAxisExtent, drawLine),
+          grad);
     } else {
+      double offset = height - scrollOffset - viewportMainAxisExtent;
       //Draw overlap below screen
-      double offset = -remainingPaintExtent + height;
+      // double offset = -remainingPaintExtent + height;
       //If overlap < 100px
-      if (offset < 100) {
+      if (offset < haloHeight) {
         //Shift drawn line
         double bot = drawLine + offset;
-        double top = drawLine + offset - 100;
+        double top = drawLine + offset - haloHeight;
+
         Paint grad = Paint()
-          ..shader = ui.Gradient.linear(
-              Offset(0, top), Offset(0, bot), [start.withAlpha(0), start]);
+          ..shader = ui.Gradient.linear(Offset(0, top), Offset(0, bot),
+              [start.withAlpha(0), start.withAlpha(128), start], [0, .75, 1]);
         context.canvas
             .drawRect(Rect.fromLTRB(0, top, crossAxisExtent, bot), grad);
       }
@@ -391,7 +422,7 @@ class RenderChapterSliver extends RenderProxySliver {
   }
 
   void copyChapter() {
-    chapter.chapter?.copyText();
+    chapter.data?.copyText();
   }
 
   @override

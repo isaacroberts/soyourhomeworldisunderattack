@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter.dart';
 import '../../../backend/error_handler.dart';
 import '../../../backend/server.dart';
 import '../../theme/colors.dart';
 
 class BookmarkButton extends StatelessWidget {
-  final ChapterHolder? chapter;
+  final Chapter? chapter;
   const BookmarkButton({required super.key, required this.chapter});
   Color get color => Primary.shadee.withAlpha(128);
   String get url => '$displayURL/search/${chapter?.varName}';

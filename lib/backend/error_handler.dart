@@ -127,8 +127,8 @@ class ErrorList {
 
   void checkSnackbar(BuildContext context) {
     if (_snackbarWaiting.isNotEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(_errorSnackBar(context, _snackbarWaiting.removeAt(0)));
+      ScaffoldMessenger.maybeOf(context)
+          ?.showSnackBar(_errorSnackBar(context, _snackbarWaiting.removeAt(0)));
     }
   }
 }

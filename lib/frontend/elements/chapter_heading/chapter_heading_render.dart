@@ -20,10 +20,12 @@ class FlexibleWidthSubtitle extends SingleChildRenderObjectWidget {
   @override
   void updateRenderObject(
     BuildContext context,
-    covariant _RenderFlexibleWidthSubtitle renderObject,
+    covariant RenderProxyBoxWithHitTestBehavior renderObject,
   ) {
-    renderObject.relativeWidth = relativeWidth;
-    renderObject.markNeedsLayout();
+    if (renderObject is _RenderFlexibleWidthSubtitle) {
+      renderObject.relativeWidth = relativeWidth;
+      renderObject.markNeedsLayout();
+    }
   }
 }
 

@@ -4,7 +4,7 @@ import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/theme/colors.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
-import '../../../../backend/chapter.dart';
+import '../../../backend/chapter.dart';
 import '../../elements/debug_elem_inspector.dart' deferred as inspector_lib;
 import '../../elements/holders/holder_base.dart';
 import '../../elements/holders/span_holding_code.dart';
@@ -14,8 +14,7 @@ typedef ChangeChapterCallback = void Function(int);
 
 // ================ Debug scroller ===============================
 class DebugReaderScreen extends StatelessWidget {
-  final Chapter chapter;
-  const DebugReaderScreen({super.key, required this.chapter});
+  const DebugReaderScreen({super.key});
 
   Widget mapFunc(BuildContext context, Holder t, bool showFonts) {
     //Don't wrap code elements in expensive viewers
@@ -26,18 +25,19 @@ class DebugReaderScreen extends StatelessWidget {
   }
 
   Widget header(BuildContext context) {
-    HeaderOfText? header = chapter.header;
+    Chapter? chapter = Chapter.maybeOf(context);
+    HeaderOfText? header = chapter?.data?.header;
     late final Widget element;
     if (header == null) {
       element = Text(
-        '[${chapter.varName}]',
+        '[${chapter?.varName}]',
         style: headerFont,
       );
     } else {
       element = header.element(context);
     }
     //Remove folder from filename
-    String tooltip = chapter.filename.split('/').last;
+    String tooltip = chapter?.filename.split('/').last ?? '';
     return Tooltip(
         message: tooltip,
         waitDuration: const Duration(seconds: 1),
@@ -83,8 +83,7 @@ class DebugReaderScreen extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 800),
                 child: ReaderBuilder(
                   useSliverProtocol: false,
-                  key: Key('DbgRdrBldr_Chp${chapter.id}'),
-                  chapter: chapter,
+                  key: const Key('DbgRdrBldr_Chp'),
                   itemBuilder: mapFunc,
                   //TODO: You probably want some more lead items
                   leadItems: [debugNote(context), header],

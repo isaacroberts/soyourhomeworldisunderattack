@@ -266,11 +266,10 @@ class CodeMarker: # Inherits: Font
     # The only line that matters
     def isCodeMarker(self):
         return True
-
+    def isHeading(self):
+        return False
     # The rest are to avoid getting errors
     def __getattr__(self, name):
-        if name == 'isHeading':
-            return False
         if name=='size':
             return 12
         elif name == 'family':

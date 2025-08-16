@@ -306,7 +306,7 @@ for chapter in chapters:
                 i-=1
             elif obj == 'Where':
                 value = chapter.spans[i].params[0]
-                chapter.where = value 
+                chapter.where = value
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
@@ -321,6 +321,40 @@ for chapter in chapters:
             print(chapter.spans[i])
             assert False, f'Unhandled Keyword: "{obj}"'
         i += 1
+
+change_log_file('post_keywords')
+
+# Remove whitespace
+for chapter in chapters:
+    print("Removing whitespace from ", chapter.id)
+
+    print('first element: ', chapter.spans[0])
+    while len(chapter.spans)>0 and isinstance(chapter.spans[0], (NewLine, NewLineSized)):
+        print('remove newline from start', chapter.spans[0])
+        chapter.spans.pop(0)
+
+    if isinstance(chapter.spans[0], Header) and len(chapter.spans)>1:
+        print('first nonheader element: ', chapter.spans[1])
+        while len(chapter.spans)>1 and isinstance(chapter.spans[1], (NewLine, NewLineSized)):
+            print('remove newline from after header', chapter.spans[1])
+            chapter.spans.pop(1)
+
+    print('last element: ', chapter.spans[-1])
+    cont = True
+    while cont and isinstance(chapter.spans[-1], (NewLine, NewLineSized)):
+        nl = chapter.spans[-1]
+        print('remove newline from end', nl)
+
+        if isinstance(nl, NewLine):
+            # Remove, because NewLines aren't supposed to be here
+            chapter.spans.pop(-1)
+        if isinstance(nl, NewLineSized):
+            if nl.height > 150:
+                print('Leaving newline of height', nl)
+                cont = False
+            else:
+                # clean small heights
+                chapter.spans.pop(-1)
 
 # Ensure varname uniqueness
 print("Checking varname uniqueness")

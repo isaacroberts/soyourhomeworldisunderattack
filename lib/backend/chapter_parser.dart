@@ -9,7 +9,7 @@ import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/binary.dart';
 import 'binary_utils/buffer_ptr.dart';
 import 'chapter.dart';
-import 'chapter_holder.dart';
+import 'chapter_data.dart';
 import 'chapter_info.dart';
 import 'error_handler.dart';
 import 'live_text_holder.dart';
@@ -38,7 +38,7 @@ class ChapterParser {
     return Chapter.fromChapterInfoAndStream(info, spans);
   }
 */
-  Future<Chapter> parseWithExistingChapterInfo(ChapterInfo info,
+  Future<ChapterData> parseWithExistingChapterInfo(ChapterInfo info,
       {required bool handleErrors}) async {
     dev.log("Parsing ${info.varName} (fromExisting)");
     if (!ptr.hasMore()) {
@@ -53,7 +53,7 @@ class ChapterParser {
     } else {
       spans = parseBody();
     }
-    return Chapter.fromChapterInfoAndStream(info, spans, extra: extra);
+    return ChapterData.fromChapterInfoAndStream(info, spans, extra: extra);
   }
 
   Future<ChapterAndStream> getChapterAndStream(ChapterInfo info,
@@ -71,7 +71,10 @@ class ChapterParser {
     } else {
       spans = parseBody();
     }
-    return (Chapter.fromChapterInfoAndStream(info, spans, extra: extra), spans);
+    return (
+      ChapterData.fromChapterInfoAndStream(info, spans, extra: extra),
+      spans
+    );
   }
 
   Future<ChapterInfo?> parseBookHeader(int index) async {

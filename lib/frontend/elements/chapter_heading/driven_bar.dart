@@ -1,52 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/subtitle.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/title.dart';
-import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter.dart';
 import '../../theme/colors.dart';
 
-class DrivenAppBar extends StatefulWidget {
-  final ChapterHolder? chapter;
-  final HeaderOfText? header;
-  const DrivenAppBar(
-      {required super.key, required this.chapter, required this.header});
+class DrivenAppBar extends StatelessWidget {
+  const DrivenAppBar({required super.key});
 
   @override
-  State<DrivenAppBar> createState() => _DrivenAppBarState();
+  Widget build(BuildContext context) {
+    return const ClipRRect(
+        key: Key("clip"),
+        clipBehavior: Clip.hardEdge,
+        child: OverflowBox(
+            key: Key('overflow'),
+            alignment: Alignment.topCenter,
+            maxHeight: 120,
+            child: _AppBarCol(key: Key("appBar"))));
+  }
 }
 
-class _DrivenAppBarState extends State<DrivenAppBar> {
-  ChapterHolder? get chapter => widget.chapter;
+class _AppBarCol extends StatefulWidget {
+  const _AppBarCol({
+    super.key,
+  });
+  @override
+  State<StatefulWidget> createState() => _AppBarColState();
+}
+
+class _AppBarColState extends State<_AppBarCol> {
+  late Chapter? chapter;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
+    //Add listener
+    chapter = Chapter.maybeOf(context);
     chapter?.loadNotifier.addListener(chapterUpdated);
-    super.initState();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    //Remove listener
+    chapter?.loadNotifier.removeListener(chapterUpdated);
+    super.dispose();
   }
 
   void chapterUpdated() {
     if (mounted) {
-      // dev.log("(Bar) Chapter updated: ${chapter?.varName}");
+      //Header, accessed from chapter, won't update on change
       setState(() {});
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return _OverflowWrap(
-        key: const Key('overflow'),
-        child: _AppBarCol(key: const Key("appBar"), chapter: chapter));
-  }
-}
-
-class _AppBarCol extends StatelessWidget {
-  const _AppBarCol({
-    super.key,
-    required this.chapter,
-  });
-
-  final ChapterHolder? chapter;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +71,7 @@ class _AppBarCol extends StatelessWidget {
 
                 child: HeadingTitleRow(
                     key: Key("Title${chapter?.key}"),
-                    header: chapter?.chapter?.header,
+                    header: chapter?.data?.header,
                     chapter: chapter))),
         //Replaces divider with color change
         // const SizedBox(height: 6),
@@ -85,37 +91,18 @@ class _SubtitleContainer extends StatelessWidget {
     required this.chapter,
   });
 
-  final ChapterHolder? chapter;
+  final Chapter? chapter;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         key: const Key("SubtitleBG"),
         height: 60,
-        //Other 6 px of divider
-        // padding: const EdgeInsets.only(top: 8),
         margin: EdgeInsets.zero,
         decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: Primary.shade5, width: 1))
-            // color: Color(0x2faaaaaa),
-            // color: CanvasColor.shade1,
-            ),
+            border: Border(top: BorderSide(color: Primary.shade5, width: 1))),
         //Only render child on expanded
         alignment: Alignment.center,
-        child: ChapterHeadingSubtitle(
-            key: Key("Subtitle${chapter?.key}"), chapter: chapter));
-  }
-}
-
-class _OverflowWrap extends StatelessWidget {
-  final Widget child;
-  const _OverflowWrap({required super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-        clipBehavior: Clip.hardEdge,
-        child: OverflowBox(
-            alignment: Alignment.topCenter, maxHeight: 120, child: child));
+        child: ChapterHeadingSubtitle(key: Key("Subtitle${chapter?.key}")));
   }
 }

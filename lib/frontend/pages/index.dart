@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../backend/book.dart';
-import '../../backend/chapter_holder.dart';
+import '../../backend/chapter.dart';
 import '../../backend/chapter_info.dart';
 import '../book_waiter.dart';
 import '../elements/scaffold.dart';
@@ -96,12 +96,12 @@ class _SearchIndexWidgetState extends State<SearchIndexWidget> {
   //   });
   // }
 
-  Iterable<ChapterHolder> suggestions(SearchController controller) sync* {
+  Iterable<Chapter> suggestions(SearchController controller) sync* {
     Book? book = Book.maybeOf(context);
     if (book == null) {
       return;
     }
-    for (ChapterHolder chapter in book.chapters) {
+    for (Chapter chapter in book.chapters) {
       if (chapter.displayName.contains(controller.text)) {
         yield chapter;
       }
@@ -110,16 +110,15 @@ class _SearchIndexWidgetState extends State<SearchIndexWidget> {
 
   Iterable<Widget> suggestionBuilder(
       BuildContext context, SearchController controller) {
-    return suggestions(controller).map((ChapterHolder chapter) =>
-        _SearchedChapter(
-            key: Key('searched_${chapter.id}'),
-            chapter: chapter.info,
-            searchTerm: controller.text));
+    return suggestions(controller).map((Chapter chapter) => _SearchedChapter(
+        key: Key('searched_${chapter.id}'),
+        chapter: chapter.info,
+        searchTerm: controller.text));
   }
 
   Iterable<Widget> items(BuildContext context) sync* {
     Book book = Book.of(context);
-    for (ChapterHolder chapter in book.chapters) {
+    for (Chapter chapter in book.chapters) {
       yield _SearchedChapter(
           key: Key('searched_${chapter.id}'),
           chapter: chapter.info,
@@ -216,7 +215,7 @@ class _PartedSearchIndexWidgetState extends State<PartedSearchIndexWidget> {
     super.didChangeDependencies();
   }
 
-  Iterable<ChapterHolder> suggestions(SearchController controller) sync* {
+  Iterable<Chapter> suggestions(SearchController controller) sync* {
     Book? book = Book.maybeOf(context);
     if (book == null) {
       return;
@@ -236,11 +235,10 @@ class _PartedSearchIndexWidgetState extends State<PartedSearchIndexWidget> {
 
   Iterable<Widget> suggestionBuilder(
       BuildContext context, SearchController controller) {
-    return suggestions(controller).map((ChapterHolder chapter) =>
-        _SearchedChapter(
-            key: Key('searched_${chapter.id}'),
-            chapter: chapter.info,
-            searchTerm: controller.text));
+    return suggestions(controller).map((Chapter chapter) => _SearchedChapter(
+        key: Key('searched_${chapter.id}'),
+        chapter: chapter.info,
+        searchTerm: controller.text));
   }
 
   Iterable<Widget> blankSuggestions(
@@ -316,7 +314,7 @@ class SearchedIndexWidget extends StatelessWidget {
     if (ix >= book.chapterAmt) {
       return null;
     }
-    ChapterHolder chapter = book.chapters[ix];
+    Chapter chapter = book.chapters[ix];
     return ListTile(
         // key: Key('SearchIndexChp$ix'),
         leading: Checkbox(value: chapter.isPart, onChanged: null),
@@ -368,7 +366,7 @@ class _SearchedChapter extends StatelessWidget {
 }
 
 List<PartListTile> splitParts(Book book) {
-  ChapterHolder? lastPart;
+  Chapter? lastPart;
   int lastIx = 0;
   List<PartListTile> parts = [];
 
@@ -397,8 +395,8 @@ List<PartListTile> splitParts(Book book) {
 }
 
 class PartListTile extends StatefulWidget {
-  final ChapterHolder chapter;
-  final List<ChapterHolder> subChapters;
+  final Chapter chapter;
+  final List<Chapter> subChapters;
   const PartListTile(
       {super.key, required this.chapter, required this.subChapters});
 
@@ -407,9 +405,9 @@ class PartListTile extends StatefulWidget {
 }
 
 class _PartListTileState extends State<PartListTile> {
-  ChapterHolder get chapter => widget.chapter;
+  Chapter get chapter => widget.chapter;
 
-  Widget subTile(ChapterHolder sub) {
+  Widget subTile(Chapter sub) {
     return ListTile(
         key: Key('subChapterTile_${sub.id}'),
         leading: const SizedBox(

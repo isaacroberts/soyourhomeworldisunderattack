@@ -5,10 +5,12 @@ class Primary extends MaterialColor {
   //LibreOffice Background
   static const Color shade1 = Color(0xFF060615);
   static const Color shade2 = Color(0xFF0a0a1a);
+  //TODO: curve this range
   static const Color shade3 = Color(0xFF110d24);
   static const Color shade4 = Color(0xFF130f36);
   static const Color shade5 = Color(0xFF25164a);
   static const Color shade6 = Color(0xFF321f4f);
+  //TODO: These fall off faster than they seem
   static const Color shade7 = Color(0xFF38235c);
   static const Color shade8 = Color(0xFF422369);
   static const Color shade9 = Color(0xFF5a16a1);
@@ -59,7 +61,6 @@ class BrightPrimary extends MaterialColor {
 class Secondary extends MaterialColor {
   ///Reduced saturation, on- the BG
   static const Color shade0 = Color(0xFF141220);
-  //LibreOffice Background
   static const Color shade1 = Color(0xFF161625);
   static const Color shade2 = Color(0xFF1a1a2a);
   static const Color shade3 = Color(0xFF1f1d30);

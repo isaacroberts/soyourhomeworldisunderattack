@@ -3,11 +3,10 @@ import 'package:soyourhomeworld/frontend/elements/chapter_heading/subtitle.dart'
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter.dart';
 
 class ExpandoAppBar extends StatefulWidget {
-  final ChapterHolder? chapter;
-  const ExpandoAppBar({super.key, required this.chapter});
+  const ExpandoAppBar({super.key});
 
   @override
   State<ExpandoAppBar> createState() => _ExpandoAppBarState();
@@ -19,7 +18,6 @@ class _ExpandoAppBarState extends State<ExpandoAppBar> {
   bool hovered = false;
   // bool _expanded = false;
   bool get expanded => hovered || _expanded;
-  ChapterHolder? get chapter => widget.chapter;
 
   void toggleExpand() {
     if (mounted) {
@@ -53,6 +51,7 @@ class _ExpandoAppBarState extends State<ExpandoAppBar> {
   }
 
   Widget row1(BuildContext context) {
+    Chapter? chapter = Chapter.maybeOf(context);
     return Row(
       key: const Key("headerRow"),
       mainAxisSize: MainAxisSize.max,
@@ -71,7 +70,7 @@ class _ExpandoAppBarState extends State<ExpandoAppBar> {
         //TODO: Use Holder element so CustomHeaders can be shown
         //Right now they're all getting labelled as Rubik
         Text(
-          chapter?.chapter?.header?.text ?? '-',
+          chapter?.data?.header?.text ?? '-',
           style: headerFont,
         ),
         // chapter?.header?.element(context) ??
@@ -109,8 +108,9 @@ class _ExpandoAppBarState extends State<ExpandoAppBar> {
             ),
             //Only render child on expanded
             child: expanded
-                ? ChapterHeadingSubtitle(
-                    key: const Key("Subtitle"), chapter: chapter)
+                ? const ChapterHeadingSubtitle(
+                    key: Key("Subtitle"),
+                  )
                 : null),
       ],
     );

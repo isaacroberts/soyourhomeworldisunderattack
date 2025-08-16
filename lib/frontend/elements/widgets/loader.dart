@@ -40,20 +40,20 @@ class TriWizardLoader extends StatelessWidget {
 
 class _TriWizardLoader extends StatefulWidget {
   // static const Color color = Colors.white;
-  Color get color {
-    switch (colorMode) {
-      case LoaderColorMode.normal:
-        return Primary.white;
-      case LoaderColorMode.grey:
-        return const Color(0xff777777);
-    }
-  }
+  // Color get color {
+  //   switch (colorMode) {
+  //     case LoaderColorMode.normal:
+  //       return Primary.white;
+  //     case LoaderColorMode.grey:
+  //       return const Color(0xff777777);
+  //   }
+  // }
+  Color get color => Primary.shade8;
 
-  final LoaderColorMode colorMode;
+  // final LoaderColorMode colorMode;
   final String? text;
 
-  const _TriWizardLoader(
-      {super.key, required this.text, this.colorMode = LoaderColorMode.normal});
+  const _TriWizardLoader({super.key, required this.text});
 
   @override
   State<_TriWizardLoader> createState() => _TriWizardLoaderState();

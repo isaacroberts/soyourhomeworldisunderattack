@@ -11,9 +11,13 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/character_selectio
     deferred as character_selection_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/columns_holder.dart'
     deferred as columns_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/facebook_post.dart'
+    deferred as facebook_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
     deferred as goto_button_lib;
-import 'package:soyourhomeworld/frontend/elements/custom_code/image_holder.dart';
+//TODO: Defer
+import 'package:soyourhomeworld/frontend/elements/custom_code/image_holder.dart'
+    deferred as image_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
@@ -62,7 +66,8 @@ Future<Holder> _instantiateCodeTag(String cls, List<String> params) async {
     } else {
       url = null;
     }
-    return ImageHolder(url: url);
+    await image_lib.loadLibrary();
+    return image_lib.ImageHolder(url: url);
   } else if (cls == 'ELVENCHORUS') {
     dev.log("Elven Chorus");
     int? speed = _readIntParam(params, 'Speed');
@@ -165,9 +170,13 @@ Future<Holder> _instantiateCodeBlock(
 
   dev.log("Cls: $cls");
 
-  if (cls == 'Art') {
+  //TODO: Sort alphabetically
+  if (cls == 'ART') {
     await art_lib.loadLibrary();
     return art_lib.ArtHolder(spans: spans);
+  } else if (cls == 'FACEBOOK') {
+    await facebook_lib.loadLibrary();
+    return facebook_lib.FacebookHolder(spans);
   } else if (cls == 'SHIRT' || cls == 'PRINTEXACTSHIRT') {
     await shirts_lib.loadLibrary();
     //TODO: Convert params to an object

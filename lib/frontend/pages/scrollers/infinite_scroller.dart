@@ -9,8 +9,8 @@ import 'package:soyourhomeworld/frontend/pages/readers/debug_reader.dart';
 import 'package:soyourhomeworld/frontend/pages/readers/reader.dart';
 import 'package:soyourhomeworld/frontend/pages/title/title.dart';
 
-import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';
+import '../../../backend/chapter.dart';
 import '../../theme/base_text_theme.dart';
 import '../../view_settings.dart';
 import '../loading_page.dart';
@@ -100,22 +100,30 @@ class _MasterScrollerState extends State<MasterScroller> {
   // ======= Page related ======================
 
   Widget itemBuilder(BuildContext context, Chapter chapter, int index) {
-    if (index == 0 && chapter.isTitle) {
-      return const TitleWidget(
-        key: Key("title"),
-      );
+    if (index == 0) {
+      return ChapterProvider(
+          key: const Key("ChpTitle"),
+          chapter: chapter,
+          child: const TitleWidget(
+            key: Key("title"),
+          ));
     }
     if (ViewSettings.instance.useTestRig) {
-      return DebugReaderScreen(
-        chapter: chapter,
-        key: Key("DebugReader_${chapter.id}"),
-      );
+      return ChapterProvider(
+          key: Key("Chp${chapter.id}"),
+          chapter: chapter,
+          child: const DebugReaderScreen(
+            key: Key("DebugReader"),
+          ));
     }
 
-    return ReaderScreen(
-        key: Key("Reader_${chapter.id}"),
-        // scrollController: _scrollController,
-        chapter: chapter);
+    return ChapterProvider(
+        key: Key("Chp${chapter.id}"),
+        chapter: chapter,
+        child: const ReaderScreen(
+          key: Key("Reader"),
+          // scrollController: _scrollController,
+        ));
   }
 
   Future<void> _fetchPage(int pageKey) async {
@@ -124,8 +132,8 @@ class _MasterScrollerState extends State<MasterScroller> {
     // dev.log("Getting page $pageKey");
     if (widget.book.hasKey(pageKey)) {
       try {
-        Chapter chap = await widget.book.getAndLoadChapter(pageKey);
-
+        Chapter chap = widget.book.chapters[pageKey];
+        chap.load();
         // dev.log('(InfScroll) Factoried Chapter = $chap ${chap.length}');
         // TODO: You could do funky navigation with the nextPageKey here.
         // final nextPageKey = pageKey + 1;

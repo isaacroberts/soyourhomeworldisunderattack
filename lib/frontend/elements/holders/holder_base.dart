@@ -40,6 +40,11 @@ abstract class Holder {
   }
 }
 
+//Will add json data later
+abstract class CodeHolder extends Holder {
+  const CodeHolder();
+}
+
 class IsFallbackProvider extends InheritedWidget {
   final bool showFonts;
   const IsFallbackProvider(

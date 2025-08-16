@@ -3,7 +3,7 @@ import 'package:soyourhomeworld/frontend/elements/widgets/debug_chapter_selector
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/book.dart';
-import '../../../backend/chapter_holder.dart';
+import '../../../backend/chapter.dart';
 import '../../theme/base_text_theme.dart';
 import '../holders/textholders.dart';
 
@@ -14,7 +14,7 @@ class HeadingTitleRow extends StatelessWidget {
     required this.header,
   });
 
-  final ChapterHolder? chapter;
+  final Chapter? chapter;
   final HeaderOfText? header;
 
   @override
@@ -102,7 +102,7 @@ class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
   void onSelected(int ix) {
     Book book = Book.of(context);
     //Get chapter
-    ChapterHolder chapter = book.chapters[ix];
+    Chapter chapter = book.chapters[ix];
     //Use customized scroll
     scrollToChapter(chapter, context: context);
   }

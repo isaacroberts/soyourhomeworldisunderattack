@@ -25,7 +25,7 @@ import 'frontend/pages/scrollers/scroller_door.dart';
 import 'frontend/pages/server_error_page.dart' deferred as error_page_lib;
 import 'frontend/pages/title/title.dart' deferred as title_lib;
 
-const bool devLoadToMain = true;
+const bool devLoadToMain = false;
 
 Page _errorPageBuilder(BuildContext context, GoRouterState state) {
   return MaterialPage(
@@ -40,7 +40,11 @@ GoRouter router() {
   //TODO: I think this needs error handling
   return GoRouter(
       errorPageBuilder: _errorPageBuilder,
-      initialLocation: (kDebugMode && !devLoadToMain) ? '/dev_page/' : '/',
+      initialLocation: (kDebugMode && !devLoadToMain)
+          ? '/scroll/3'
+          // '/dev_page/'
+
+          : '/',
       debugLogDiagnostics: true,
       redirect: redirector,
       routes: routes());
