@@ -330,7 +330,7 @@ class RenderChapterSliver extends RenderProxySliver {
           },
         );
       }
-
+/*
       if (squashForever) {
         //Fill gutter below page
         if (desiredHeight < height) {
@@ -340,7 +340,7 @@ class RenderChapterSliver extends RenderProxySliver {
           context.canvas.drawRect(gutter.intersect(rect), bg);
         }
       }
-
+*/
       if (!squashForever) {
         //Halo to show extra content
         if ((desiredHeight > height)) {

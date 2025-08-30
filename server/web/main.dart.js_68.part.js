@@ -438,7 +438,7 @@ else if(d==="c")return C.bV
 else if(d==="j")return C.eS
 else throw A.i(E.e6("Incorrect align character "+d,"[?]"))},
 b0Z(d){if(d<=100)return C.is
-else if(d<=200)return C.cr
+else if(d<=200)return C.cq
 else if(d<=300)return C.b8
 else if(d<=400)return C.o
 else if(d<=500)return C.P
@@ -583,8 +583,8 @@ break}u.b.bH(">",t)
 p=u.b.aww()
 o=A.bt("isPart")
 n=A.bt("hidePart")
-if(u.b.fB("^")){o.b=!0
-n.b=!1}else if(u.b.fB("v"))n.b=o.b=!0
+if(u.b.fA("^")){o.b=!0
+n.b=!1}else if(u.b.fA("v"))n.b=o.b=!0
 else n.b=o.b=!1
 u.b.bH(")",t)
 u.b.bH(";",t)
@@ -627,7 +627,7 @@ return A.M($async$NH,w)},
 a6J(){var x=this,w=!1
 while(!0){if(!(!w&&x.b.kY()))break
 x.b.L4(F.kx)
-w=x.b.aws("zoinks&")}x.b.fB(D.I_)},
+w=x.b.aws("zoinks&")}x.b.fA(D.I_)},
 yd(){var $async$yd=A.I(function(d,e){switch(d){case 2:s=v
 x=s.pop()
 break
@@ -673,7 +673,7 @@ case 4:w=2
 break
 case 3:return 0
 case 1:return d.c=u.at(-1),3}}}},
-O_(){var x,w,v,u,t,s,r,q,p,o,n=this,m=new B.Eo(C.au,D.cA),l=new B.agq(m)
+O_(){var x,w,v,u,t,s,r,q,p,o,n=this,m=new B.Eo(C.au,D.cz),l=new B.agq(m)
 for(;n.b.kY();){x=n.b.my()
 w=A.ds(x)
 if(x===0){if(n.b.kY())throw A.i(E.e6("Null terminator in middle of binary",n.a))}else if(x!==10)if(x===59)return l.a1W()
@@ -710,10 +710,10 @@ if(m)throw A.i(E.e6("Unmatched paren "+w+" in chapter binary (pos="+o+")",v))
 else throw A.i(E.e6("Unhandled char "+w+" (code="+x+" pos="+o+") in chapter binary",v))}}A.ia(new E.v_("Unterminated TextHolder (pos="+n.b.a+"; liveHolder="+l.k(0)+")",n.a),null)
 return l.a1W()},
 aDF(){var x,w,v,u,t,s,r=this,q=A.b([],y.U),p=new B.agp(q,C.au)
-if(r.b.fB("(")){r.b.a_y()
+if(r.b.fA("(")){r.b.a_y()
 p.c=r.b.my()
 p.b=B.bc3(r.b.tb())
-if(!r.b.fB(")"))throw A.i(E.e6("Unmatched ( in ChapterFormat Span element; (found '"+r.b.kp()+" instead')",r.a))}x=r.b.fB("[")
+if(!r.b.fA(")"))throw A.i(E.e6("Unmatched ( in ChapterFormat Span element; (found '"+r.b.kp()+" instead')",r.a))}x=r.b.fA("[")
 w=r.b
 v=r.a
 if(x){u=w.lw()
@@ -721,19 +721,19 @@ r.b.bH(".",v)
 t=r.b.G7(0,u)
 r.b.eT(u)
 r.b.bH("]",v)
-while(!0){if(!(t.kY()&&!t.fB("]")))break
+while(!0){if(!(t.kY()&&!t.fA("]")))break
 s=r.aDH(p,t)
 if(s!=null)q.push(s)}}else throw A.i(E.e6("No list in span. char="+w.kp()+" pos="+r.b.a,v))
 q=p.a2B()
 q=A.a5(q,q.$ti.h("D.E"))
 q.$flags=1
 return new B.y8(q,p.b,p.c)},
-aDH(d,e){var x,w,v,u,t,s="font",r=new B.Eo(C.au,D.cA),q=new B.wx(r)
-for(;e.kY();)if(e.fB("b")){x=this.b.pJ()
+aDH(d,e){var x,w,v,u,t,s="font",r=new B.Eo(C.au,D.cz),q=new B.wx(r)
+for(;e.kY();)if(e.fA("b")){x=this.b.pJ()
 w=this.b.pJ()
 v=this.b.tc(!0)
-return new B.Ro(new B.C_(x,w,v==null?C.v:v),new B.Eo(C.au,D.cA))}else if(e.fB("{")){u=e.L4(125).aFh()
-q.a=new A.us(!1).zW(u,0,null,!0)}else if(e.fB("(")){t=e.L5(41,!0)
+return new B.Ro(new B.C_(x,w,v==null?C.v:v),new B.Eo(C.au,D.cz))}else if(e.fA("{")){u=e.L4(125).aFh()
+q.a=new A.us(!1).zW(u,0,null,!0)}else if(e.fA("(")){t=e.L5(41,!0)
 t.bH("f",s)
 r.c=t.lw()
 t.bH("s",s)
@@ -742,18 +742,18 @@ t.bH("w",s)
 r.r=new B.Im(t.my())
 if(t.kp()==="^"){r.w=D.jE
 t.eT(1)}else if(t.kp()==="v"){r.w=D.jD
-t.eT(1)}if(t.fB(F.kx)){r.e=t.tc(!1)
-if(t.fB(F.kx))r.f=t.a_x()}}else if(e.fB(";"))return q
+t.eT(1)}if(t.fA(F.kx)){r.e=t.tc(!1)
+if(t.fA(F.kx))r.f=t.a_x()}}else if(e.fA(";"))return q
 else if(e.kp()==="]")throw A.i(A.iH('"Not sure what to do about this" - ending bracket in span fragment'))
 else throw A.i(E.e6("Unhandled char in FragOfText "+e.kp()+" "+e.a,"frag?"))
 return null},
 Fi(d){var x,w,v,u,t,s=this,r='Missing open LBRK in CodeBlock (char = "',q=s.b.Ep(58).toUpperCase(),p=y.s,o=A.b([],p)
-if(s.b.fB(D.I0))o=A.b(s.b.Ep(D.I1).split(","),p)
+if(s.b.fA(D.I0))o=A.b(s.b.Ep(D.I1).split(","),p)
 for(p=o.length,x=0;x<p;++x){w=o[x]
 v=w.length
 if(v>2)o[x]=C.c.a7(w,1,v-1)
 else o[x]=""}if(d===D.oO)return new B.og(B.Av(q,o))
-else if(d===D.oN){if(!s.b.fB(F.oR))throw A.i(E.e6(r+s.b.kp()+'" pos='+s.b.a+")",s.a))
+else if(d===D.oN){if(!s.b.fA(F.oR))throw A.i(E.e6(r+s.b.kp()+'" pos='+s.b.a+")",s.a))
 u=s.b.lw()
 p=s.a
 s.b.bH(".",p)
@@ -763,7 +763,7 @@ s.b.bH("]",p)
 p=new B.BF(p,t).a3d()
 p=A.a5(p,p.$ti.h("D.E"))
 p.$flags=1
-return new B.og(B.eW(q,o,p))}else if(d===D.oM){if(!s.b.fB(F.oP))throw A.i(E.e6(r+s.b.kp()+'" pos='+s.b.a+")",s.a))
+return new B.og(B.eW(q,o,p))}else if(d===D.oM){if(!s.b.fA(F.oP))throw A.i(E.e6(r+s.b.kp()+'" pos='+s.b.a+")",s.a))
 u=s.b.lw()
 p=s.a
 s.b.bH(".",p)
@@ -840,7 +840,7 @@ a2a(){var x,w=this,v=!1
 if(w.c===0){x=w.d
 if(x==null||x===12)if(w.e==null)if(w.f==null){v=w.r
 v=v==null?null:v.a===80
-v=v!==!1&&w.w===D.cA}}return v},
+v=v!==!1&&w.w===D.cz}}return v},
 a3c(d){var x,w=this,v="font"
 if(d.kp()===";"){w.c=0
 w.d=12
@@ -854,7 +854,7 @@ w.r=new B.Im(d.my())
 x=d.nh(0)
 if(x==="^"){w.w=D.jE
 d.eT(1)}else if(x==="v"){w.w=D.jD
-d.eT(1)}else w.w=D.cA
+d.eT(1)}else w.w=D.cz
 return d}},
 aDC(d){var x,w,v,u=this,t="font",s="Unexpected char in font ("
 u.a=d.my()
@@ -885,7 +885,7 @@ v=u.f
 return new B.ada(t,x,B.b0Z(Math.max(Math.min(C.h.dN(w.a,16),9),1)*100),w,v)}}
 B.agq.prototype={
 a1W(){var x,w,v,u,t=this,s=t.b
-if(s.w!==D.cA){x=s.tf()
+if(s.w!==D.cz){x=s.tf()
 w=t.a
 v=s.e
 if(v==null)v=C.v
@@ -904,13 +904,13 @@ aAR(){var x,w=this.b,v=!1
 if(w.c===1){x=w.d
 if(x==null||x===24)if(w.e==null)if(w.f==null){v=w.r
 v=v==null?null:v.a===80
-v=v!==!1&&w.w===D.cA}}x=this.a
+v=v!==!1&&w.w===D.cz}}x=this.a
 if(v)return new B.rj(x)
 else{v=w.tf()
 return new B.Ck(w.b,v,x)}}}
 B.wx.prototype={
 Ck(){var x,w=this,v=w.b
-if(v.w!==D.cA){x=w.a
+if(v.w!==D.cz){x=w.a
 return new B.Dt(v.tf(),x,v.e,v.w)}else if(v.a2a())return new B.w1(w.a)
 else return new B.Ds(v.tf(),w.a,v.e)}}
 B.Ro.prototype={
@@ -963,7 +963,7 @@ else t.dy=w
 v=t.dx
 if(v!=null&&t.dy!=null){u=t.dy
 u.toString
-if(!A.mL(v,u).d_(s).gaf(0)){t.fr=!0
+if(!A.mL(v,u).d5(s).gaf(0)){t.fr=!0
 t.uZ(C.ji)}else t.uY(C.d5)}else t.uY(C.d5)
 return A.xT(s,x)},
 xv(d){var x=this
@@ -1009,8 +1009,8 @@ d7(){return" "},
 Th(d){var x=this,w=null,v=x.c
 if(v.a<40)return A.br(w,w,C.m,w,w,new A.bu(v,w,A.dK(C.j,-1,1),w,w,w,C.N),w,x.b,w,C.S,C.S,w,w,x.a)
 return A.br(w,w,C.m,v,w,w,w,x.b,w,C.S,C.S,w,w,x.a)},
-uQ(d){return new A.iK(this.Th(d),C.cy,null,null)},
-ct(d){return new A.iK(this.Th(d),C.cy,null,null)},
+uQ(d){return new A.iK(this.Th(d),C.cx,null,null)},
+ct(d){return new A.iK(this.Th(d),C.cx,null,null)},
 h9(){return!0}}
 B.DD.prototype={
 d7(){return""},
@@ -1095,12 +1095,12 @@ u=u.wG(v/2,2)
 return new A.iK(x.a_o(A.am(x.b,w,w,w,w,w,u,w,w)),C.mH,C.r,u)}else if(v===D.jD){v=u.r
 v.toString
 u=u.wG(v/2,1)
-return new A.iK(x.a_o(A.am(x.b,w,w,w,w,w,u,w,w)),C.cy,C.r,u)}else throw A.i(A.dz("Wrong usage of subSuperSpan function"))},
+return new A.iK(x.a_o(A.am(x.b,w,w,w,w,w,u,w,w)),C.cx,C.r,u)}else throw A.i(A.dz("Wrong usage of subSuperSpan function"))},
 uQ(d){var x=this
-if(x.d!==D.cA)return x.Q6(d,!1)
+if(x.d!==D.cz)return x.Q6(d,!1)
 else return A.co(null,x.a.tQ(x.c),x.b)},
 ct(d){var x=this
-if(x.d!==D.cA)return x.Q6(d,!0)
+if(x.d!==D.cz)return x.Q6(d,!0)
 return A.co(null,x.a.D2(x.c),x.b)}}
 B.yD.prototype={}
 B.Rj.prototype={
@@ -1211,10 +1211,10 @@ D.aan=new A.jC("Getting code element",null,null)
 D.a3T=new A.aw(null,150,D.aan,null)
 D.aal=new A.jC("Getting code element (fallback)",null,null)
 D.a3U=new A.aw(null,150,D.aal,null)
-D.cA=new B.Hm(0,"normal")
+D.cz=new B.Hm(0,"normal")
 D.jD=new B.Hm(1,"subscript")
 D.jE=new B.Hm(2,"superscript")
 D.f2=new A.z("tabs",y.O)
 D.Ee=new B.Im(80)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_68",e:"endPart",h:b})})($__dart_deferred_initializers__,"jSes6uchTb6hZWYX+KoR1m5hRw4=");
+a.eventLog.push({p:"main.dart.js_68",e:"endPart",h:b})})($__dart_deferred_initializers__,"fS5sI98VCmqMGb/6hriT03u+LNM=");
