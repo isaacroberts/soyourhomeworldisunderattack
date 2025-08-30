@@ -77,24 +77,6 @@ def return_flutter_doc(name):
     print('sending', dir_name,'/', datalist[-1])
     return send_from_directory(dir_name, datalist[-1])
 
-# @CORS.cross_origin()
-@app.route('/book_binary/<path:name>', methods=['GET', 'POST', 'OPTIONS'])
-def return_book_binary(name):
-    # if request.method == 'OPTIONS':
-    #     return _build_cors_preflight_response()
-
-    # print("Grabbing book")
-    datalist = str(name).split('/')
-    dir_name = 'book_binary'
-    # print('list:', datalist)
-    if len(datalist) > 1:
-        for i in range(0, len(datalist) - 1):
-            dir_name += '/' + datalist[i]
-    print('sending', dir_name,'/', datalist[-1])
-    s = send_from_directory(dir_name, datalist[-1])
-    # print('Sending ', s)
-    return s
-
 @app.errorhandler(HTTPException)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
@@ -160,29 +142,6 @@ def get_font_id_post():
     family = data['family']
     return fonts.family_to_id(family)
 
-@app.route('/hosted_fonts/<string:url>', methods=['GET'])
-def get_font(url):
-    # print('Font serve:', url)
-    fname = url.split('/')[-1]
-    # print('Font:', fname)
-    try:
-        # print('sending', fname)
-        return send_from_directory('hosted_fonts', fname)
-        # return send_file(f'/fonts/{url}',
-        #     mimetype='font/ttf',
-        #     attachment_name = fname)
-    except FileNotFoundError as e:
-        return json_response(error=str(e), status_code=404)
-
-@app.route('/images/<string:url>', methods=['GET'])
-def get_image(url):
-    # TODO: Accept size as parameter
-    fname = url.split('/')[-1]
-    try:
-        return send_from_directory('images', fname)
-    except FileNotFoundError as e:
-        return json_response(error=str(e), status_code=404)
-
 @app.route('/submit_feedback/', methods=['POST'])
 def submit_feedback():
     data = request.get_json(force=True)
@@ -200,6 +159,41 @@ def show_feedback():
     rows = feedback_db.get_range(start, amt)
     rows = rows.to_json()
     return json_response(feedback=rows)
+
+"""
+File wrappers for server/no-server interoperability
+"""
+
+# @CORS.cross_origin()
+@app.route('/book_binary/<path:name>', methods=['GET', 'POST', 'OPTIONS'])
+def return_book_binary(name):
+    datalist = str(name).split('/')
+    dir_name = 'book_binary'
+    if len(datalist) > 1:
+        for i in range(0, len(datalist) - 1):
+            dir_name += '/' + datalist[i]
+    print('sending', dir_name,'/', datalist[-1])
+    s = send_from_directory(dir_name, datalist[-1])
+    # print('Sending ', name)
+    return s
+
+@app.route('/images/<string:url>', methods=['GET'])
+def get_image(url):
+    fname = url.split('/')[-1]
+    try:
+        print("Sending", fname)
+        return send_from_directory('images', fname)
+    except FileNotFoundError as e:
+        return json_response(error=str(e), status_code=404)
+
+@app.route('/hosted_fonts/<string:url>', methods=['GET'])
+def get_font(url):
+    fname = url.split('/')[-1]
+    print('Font serve:', fname)
+    try:
+        return send_from_directory('hosted_fonts', fname)
+    except FileNotFoundError as e:
+        return json_response(error=str(e), status_code=404)
 
 
 if __name__=="__main__":

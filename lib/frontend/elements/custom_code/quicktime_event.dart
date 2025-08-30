@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
-import 'package:soyourhomeworld/frontend/theme/colors.dart';
 
+import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 import '../holders/span_holding_code.dart';
 
@@ -79,11 +79,14 @@ class _QuicktimeEventWidgetState extends State<QuicktimeEventWidget> {
   }
 
   Widget timerCountdown(BuildContext context) {
+    Part? part = Part.maybeOf(context);
     return Center(
         child: Text(
       secondsRemaining.toString(),
       style: bodyFont.copyWith(
-          fontSize: 36, fontWeight: FontWeight.w800, color: canvasColor),
+          fontSize: 36,
+          fontWeight: FontWeight.w800,
+          color: part?.canvasColor ?? Colors.black),
     ));
   }
 

@@ -39,6 +39,11 @@ class StyleHandler:
         # {old_tag: new_tag}
         self.repl_dict = {}
 
+    def add_style(self, style, tag=None):
+        # Covering the ass of a missing Preformatted_20_Text
+        if tag is None:
+            tag = style.tag
+        self.fonts[tag] = style
 
     def read(self, style, is_sub_font=False):
         print(style['style:name'])
@@ -145,12 +150,16 @@ class StyleHandler:
         # Change Palatino Linotype -> Palatino
         if font.family == 'Palatino Linotype':
             font.family = 'Palatino'
-        # TODO: This is caused by variadic font weights. I don't think it lines up one to one.
+        # TODO: This is caused by variadic font weights.
+        # I don't think it lines up one to one.
+        # Also, the variadic fonts are not showing up on the final product
         if font.family.endswith('3') and not font.family == 'Z003':
             print('Remove font.family3')
             print(font)
             print(font.family)
-            r = input('? y/n')
+            # TODO: Remove the auto
+            # r = input('? y/n')
+            r = 'y'
             if r=='y':
                 font.family = font.family[:-1]
             else:
@@ -450,6 +459,14 @@ class StyleHandler:
             return False
             # assert False, f'Font tag not found {tag} (step={step_name})'
 
+    def health_inspection(self, spans=None):
+        for tag, font in self.sub_fonts.items():
+            parent = font.parent
+            # TODO: I don't remember if it's allowed to have null parents
+            if parent is not None:
+                assert self.is_tag_present(parent), f"'{parent}' tag not present"
+        if spans is not None:
+            self.assert_all_fonts_extant(spans, 'health_inspection')
 
     def assert_all_fonts_extant(self, spans, step_name=''):
         """

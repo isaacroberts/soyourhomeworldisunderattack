@@ -19,13 +19,16 @@ logf_n = 0
 script_name = ''
 
 def logger_start(scr_name):
+    """
+    It's okay to call this multiple times 
+    """
     global script_name
     # After script_name is
     script_name = scr_name
 
     if os.path.exists('log/'):
-        import subprocess
-        subprocess.run(["rm", f"log/{script_name}*"])
+        # over-script already does this
+        pass
     else:
         print('Create log directory?')
         print('Cwd:', os.getcwd())

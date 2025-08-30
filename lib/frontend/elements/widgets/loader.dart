@@ -1,59 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 
-import '../../theme/colors.dart';
-
 //ThreeRotatingDots from https://pub.dev/packages/loading_animation_widget
 
-enum LoaderColorMode { normal, grey }
-
 class TriWizardLoader extends StatelessWidget {
-  final String message;
-  final LoaderColorMode colorMode;
+  final String? message;
+  final Color? loaderColor;
+  final Color? textColor;
   const TriWizardLoader(
-      {super.key,
-      required this.message,
-      this.colorMode = LoaderColorMode.normal});
+      {super.key, required this.message, this.loaderColor, this.textColor});
   static const double size = 100;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-          // const CircularProgressIndicator(),
-          _TriWizardLoader(
-            key: Key("Loader($message)"),
-            text: message,
-          ),
-          if (message.isNotEmpty)
+    Color loaderColor =
+        this.loaderColor ?? Theme.of(context).colorScheme.primary;
+    Color textColor = this.textColor ??
+        Theme.of(context).textTheme.labelLarge?.color ??
+        Theme.of(context).colorScheme.onSurface;
+
+    if (message == null) {
+      return Center(
+          child: _TriWizardLoader(
+        loaderColor: loaderColor,
+        textColor: textColor,
+        key: const Key("Loader"),
+      ));
+    } else {
+      return Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+            // const CircularProgressIndicator(),
+            _TriWizardLoader(
+              loaderColor: loaderColor,
+              textColor: textColor,
+              key: const Key("Loader"),
+            ),
             Text(
-              message,
+              message!,
               textAlign: TextAlign.center,
             )
-        ]));
+          ]));
+    }
   }
 }
 
 class _TriWizardLoader extends StatefulWidget {
-  // static const Color color = Colors.white;
-  // Color get color {
-  //   switch (colorMode) {
-  //     case LoaderColorMode.normal:
-  //       return Primary.white;
-  //     case LoaderColorMode.grey:
-  //       return const Color(0xff777777);
-  //   }
-  // }
-  Color get color => Primary.shade8;
+  final Color loaderColor;
+  final Color textColor;
 
-  // final LoaderColorMode colorMode;
-  final String? text;
-
-  const _TriWizardLoader({super.key, required this.text});
+  const _TriWizardLoader(
+      {super.key, required this.loaderColor, required this.textColor});
 
   @override
   State<_TriWizardLoader> createState() => _TriWizardLoaderState();
@@ -93,9 +93,6 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
     const double edgeOffset = (TriWizardLoader.size - dotSize) / 2;
     const double pi = 3.1415926535897932384;
 
-    // TODO: This needs to be changed so that ideally it's making a full rotation
-    // and has 3 stops. That's something with tweens.
-
     const Interval firstDotsInterval = Interval(
       0,
       1,
@@ -116,7 +113,7 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
             children: <Widget>[
               _BuildDot.first(
                 key: const Key("Dot1"),
-                color: widget.color,
+                color: widget.loaderColor,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -125,10 +122,9 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
                 interval: firstDotsInterval,
                 index: wrap(0),
               ),
-
               _BuildDot.first(
                 key: const Key("Dot2"),
-                color: widget.color,
+                color: widget.loaderColor,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -137,10 +133,9 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
                 interval: firstDotsInterval,
                 index: wrap(1),
               ),
-
               _BuildDot.first(
                 key: const Key("Dot3"),
-                color: widget.color,
+                color: widget.loaderColor,
                 size: dotSize,
                 controller: _animationController,
                 dotOffset: edgeOffset,
@@ -149,9 +144,6 @@ class _TriWizardLoaderState extends State<_TriWizardLoader>
                 interval: firstDotsInterval,
                 index: wrap(2),
               ),
-              // if (widget.text != null) Text(widget.text!)
-
-              /// Next 3 dots
             ],
           ),
         ),

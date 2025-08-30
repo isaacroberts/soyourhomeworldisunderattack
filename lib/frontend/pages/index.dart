@@ -52,11 +52,8 @@ class SearchIndexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return McScaffold(
         source: 'search',
-        child: StdBookWaiter(
-            child: PartedSearchIndexWidget(searchTerm: searchTerm)));
-    return McScaffold(
-        source: 'search',
-        child: StdBookWaiter(child: SearchIndexWidget(searchTerm: searchTerm)));
+        child:
+            BookWaiter(child: PartedSearchIndexWidget(searchTerm: searchTerm)));
   }
 }
 

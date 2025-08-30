@@ -14,120 +14,274 @@ import sys
 sys.path.append("/home/titzak/scripts/")
 import python_script_tools as pst
 
-if __name__=="__main__":
-    # pst.DEBUG=True
-    pass
+def read_folder(folder):
+    logger_start('reader')
 
-assert len(sys.argv)>=2, 'Must provide input unzipped folder'
-folder = sys.argv[1]
+    with open(os.path.join(folder, 'content.xml'), 'r') as f:
+        file = f.read()
+    # 'xml' is the parser used. For html files, which BeautifulSoup is typically used for, it would be 'html.parser'.
+    content_soup = BeautifulSoup(file, 'xml')
 
-logger_start('reader')
+    with open(os.path.join(folder,'styles.xml'), 'r') as f:
+        file = f.read()
+    style_soup = BeautifulSoup(file, 'xml')
 
-    # print("This isn't going to run because you need to change the aligns.")
-    # print("Currently it's on the fonts (you've commented font.align but not the calls) ")
-    # print("The align needs to be extracted and moved to the text element.")
-    # exit(1)
+    # Result not used
+    # fams = find_font_families(style_soup)
 
+    return soup_to_processed_spans(content_soup, style_soup)
 
-with open(os.path.join(folder,'styles.xml'), 'r') as f:
-    file = f.read()
-# print(len(file))
-# 'xml' is the parser used. For html files, which BeautifulSoup is typically used for, it would be 'html.parser'.
-style_soup = BeautifulSoup(file, 'xml')
+def soup_to_processed_spans(content_soup, style_soup):
+    # Process document styles
+    style_handler = soup_to_styles(style_soup, content_soup)
+    # Read XML to spans
+    spans = soup_to_raw_spans(content_soup, style_handler)
+    # Preliminary clean of code tags
+    spans = clean_raw_code_tags(spans)
+    # End step on styles
+    manage_raw_styles(style_handler, spans)
+    return style_handler, spans
 
+def get_font_families(style_soup):
+    change_log_file('families')
 
-with open(os.path.join(folder, 'content.xml'), 'r') as f:
-    file = f.read()
-# print(len(file))
-# 'xml' is the parser used. For html files, which BeautifulSoup is typically used for, it would be 'html.parser'.
-content_soup = BeautifulSoup(file, 'xml')
+    # Move this later
+    fams = find_font_families(style_soup)
+    print('\n'.join(fams))
+    pst.button()
 
-
-def find_font_families(soup):
     fams = style_soup.find_all('style:font-face')
     fams = [f['style:name'] for f in fams]
     return fams
 
-change_log_file('families')
+def soup_to_styles(style_soup, content_soup):
 
-fams = find_font_families(style_soup)
-print('\n'.join(fams))
-pst.button()
+    change_log_file('styles')
+    try:
+        master_styles = style_soup.find_all('style:style')
+        sub_styles = content_soup.find_all('style:style')
 
-change_log_file('styles')
+        # print(soup.prettify())
 
-master_styles = style_soup.find_all('style:style')
-sub_styles = content_soup.find_all('style:style')
+        print(len(master_styles),'styles')
+        # styles = styles[:60]
 
-# print(soup.prettify())
+        style_handler = StyleHandler()
+        style_handler.health_inspection()
+        #
+        for style in master_styles:
+            print('Master style:', style['style:name'])
+            # print(style['style:name'])
+            # print(style.attrs)
 
-print(len(master_styles),'styles')
-# styles = styles[:60]
+            style_handler.read(style, is_sub_font=False)
+                    # assert isinstance(font.size, double)
 
-style_handler = StyleHandler()
+        style_handler.health_inspection()
+        for style in sub_styles:
+            print(style['style:name'])
+            print(style.attrs)
 
-#
-for style in master_styles:
-    print(style['style:name'])
-    print(style.attrs)
-    # print(style.__dict__)
-
-    style_handler.read(style, is_sub_font=False)
-            # assert isinstance(font.size, double)
-
-
-for style in sub_styles:
-    print(style['style:name'])
-    print(style.attrs)
-
-    style_handler.read(style, is_sub_font=True)
+            style_handler.read(style, is_sub_font=True)
 
 
-print('Wo fill')
-print(style_handler.fonts)
-pst.click()
-print(style_handler.sub_fonts)
-pst.click()
+        style_handler.health_inspection()
+        print('Wo fill')
+        print(style_handler.fonts)
+        print(style_handler.sub_fonts)
+        pst.click(3)
 
+        print('Parents:')
 
-print('Parents:')
-
-ss = ''
-for s in style_handler.sub_fonts.values():
-    if s.parent is not None:
-        ss += f'{s.tag} -> {s.parent}), '
-# s = ', '.join(s.tag+': '+ s.parent for s in style_handler.sub_fonts.values())
-# print('{',s,'}')
-
-# exit(1)
-style_handler.fill_masters()
-# print(fonts)
-print('Filled:')
-print(style_handler.fonts)
-pst.click()
-print(style_handler.sub_fonts)
-pst.click()
+        ss = ''
+        for s in style_handler.sub_fonts.values():
+            if s.parent is not None:
+                ss += f'{s.tag} -> {s.parent}), '
+        # s = ', '.join(s.tag+': '+ s.parent for s in style_handler.sub_fonts.values())
+        print(ss)
+        # ERR!
+        style_handler.fill_masters()
+        # print(fonts)
+        print('Filled:')
+        print(style_handler.fonts)
+        print(style_handler.sub_fonts)
+        pst.click(3)
+    finally:
+        logger_end()
+    return style_handler
 
 
 """
  ================ Acquire Text =============
 """
 
-change_log_file('text')
+class StateBasedHorseshit:
+    # Sometimes fonts roll over to the next span
+    # So these are global variables
+    def __init__(self):
+        self.is_first_such_span = True
+        self.font = Font.body('base')
+        self.align = 'l'
+        self.style_handler = None
 
-# Use BeautifulSoup to find paragraphs & headers
-paras = content_soup.find_all(['text:p', 'text:h'])
+def soup_to_raw_spans(content_soup, style_handler):
+    change_log_file('text')
 
-spans = []
+    # Use BeautifulSoup to find paragraphs & headers
+    paras = content_soup.find_all(['text:p', 'text:h'])
 
-# ==== Scrape all elements & fonts out of document
-for para in paras:
+    spans = []
+    state = StateBasedHorseshit()
+    state.style_handler = style_handler
 
+    # ==== Scrape all elements & fonts out of document
+    for para in paras:
+        newspans = para_to_spans(state, para)
+        spans.extend(newspans)
+
+    print('Text Acquired')
+    pst.button()
+    return spans
+
+# Utilities
+
+def get_line_of_text(state, text):
+    """
+    Adds either TextSpan or Header, depending on font
+    """
+    font = state.font
+    align = state.align
+    # If text is empty
+    if len(text)==0:
+        # Add NewLine with correct spacing
+        print(f'>\t\t\tNL(empty maybe_header)')
+        return NewLine(font)
+    else:
+        if font is None:
+            assert False, 'None font for Header'
+            print(f'(!)\t\t\tNull-font Header("{text}")', '\n' in text)
+            return Header(font, text, align)
+
+        # Header font means Header object
+        elif font.isHeading():
+            print(f'>\t\t\tHeader("{text}")', '\n' in text)
+            return Header(font, text, align)
+        else:
+            # Non-header TextSpan
+            print(f'>\t\t\tText("{text}")', '\n' in text)
+            return TextSpan(font, text, align)
+
+def add_spans(spans, obj):
+    if isinstance(obj,list):
+        spans.extend(obj)
+    elif obj is None:
+        pass
+    else:
+        spans.append(obj)
+
+def get_contents(state, c):
+    spans = []
+    print('\t', 'contents:', c.contents)
+    #Check contents of span
+    for cc in c.contents:
+        # If tag
+        if isinstance(cc, bs4.element.Tag):
+            # Then it's not text
+            line = get_misc_element(state, cc)
+            add_spans(spans, line)
+        else: #Else
+            # Must be string
+            assert(isinstance(cc, str))
+            # Add line of text with rolling font
+            line = get_line_of_text(state, cc)
+            add_spans(spans, line)
+        state.is_first_such_span=False
+    return spans
+
+def get_misc_element(state, c):
+    """
+    Handle non-standard object.
+    Returns a list
+    """
+
+    font = state.font
+    align = state.align
+    assert font is not None, f"! None font in handle_Misc: c='{c}' first_span = '{state.is_first_such_span}'"
+    spans = []
+
+    print('\t\tMisc:', c)
+    # Span
+    if c.name=='span':
+        # If has font
+        if 'text:style-name' in c.attrs:
+            # Update rolling font
+            temp_font_name = c.attrs['text:style-name']
+            # Assumed to be in []
+            # subfonts are a COMBINATION of 'P32' + arbitary parent font
+            state.font, state.align = \
+                state.style_handler.fill_sub(temp_font_name, font)
+            font = state.font
+            align = state.align
+
+            add_spans(spans, get_contents(state, c))
+        return spans
+    # Tab element
+    elif c.name == 'tab':
+        print(f'>\t\t\tTextSpan("\\t")')
+        return TextSpan(font, '\t', align)
+    # Page break
+    elif c.name == 'soft-page-break':
+        print(f'>\t\t\tMiscToken("{c.name}")')
+        return MiscToken(c.name)
+    # Single space
+    elif c.name=='s':
+        # Single space
+        spc = ' '
+        # Count
+        if 'text:c' in c.attrs:
+            count = int(c.attrs['text:c'])
+            spc = ' ' * count
+        print(f'>\t\t\tText("{spc}")')
+        return TextSpan(font, spc, align)
+    # Line break
+    elif c.name=='line-break':
+        if state.is_first_such_span:
+            # Add fixed NewLine
+            print(f'>\t\t\tNL(starting line break)')
+            return NewLine(font)
+        else:
+            # Prevents joins later.
+            # I think there's another NewLine added later
+            print(f'>\t\t\tEndOfPara()')
+            return EndOfPara()
+    # Only other types of elements
+    elif c.name in ['bookmark-start', 'bookmark-end']:
+        print('Skipping', c.name)
+        return None
+    elif c.name == 'a':
+        # We could later auto-fill this,
+        # but for now we're assuming that the
+        # author will wrap it in a Source widget
+        print("\tLink:", c)
+        # span = c.attrs['text:span']
+
+        ct =  get_contents(state, c)
+        print(f'>\t\t\tLink => {ct}')
+        return ct
+        # return get_misc_element(state, span)
+    else:
+        # Crash just to make sure we don't miss something
+        print('Unhandled element: ', c)
+        assert False, 'Unhandled text type: "'+ c.name +'"'
+        return None
+
+def para_to_spans(state, para):
+    spans = []
     # font tag
     tag = para.attrs['text:style-name']
 
     # Guaranteed to have the font & align, unless something's wrong
-    font, align = style_handler.get_font(tag)
+    font, align = state.style_handler.get_font(tag)
 
     # Newline
     if len(para.contents)==0:
@@ -138,113 +292,13 @@ for para in paras:
     # Process paragraph
     else:
 
-        def add_line_of_text(font, text, align):
-            """
-            Adds either TextSpan or Header, depending on font
-            """
-            # If text is empty
-            if len(text)==0:
-                # Add NewLine with correct spacing
-                print(f'>\t\t\tNL(empty maybe_header)')
-                spans.append(NewLine(font))
-            else:
-                if font is None:
-                    assert False, 'None font for Header'
-                    print(f'(!)\t\t\tNull-font Header("{text}")', '\n' in text)
-                    spans.append(Header(font, text, align))
-
-                # Header font means Header object
-                elif font.isHeading():
-                    print(f'>\t\t\tHeader("{text}")', '\n' in text)
-                    spans.append(Header(font, text, align))
-                else:
-                    # Non-header TextSpan
-                    print(f'>\t\t\tText("{text}")', '\n' in text)
-                    spans.append(TextSpan(font, text, align))
-
         # Sometimes fonts roll over to the next span
         # So these are global variables
-        temp_font = font
-        temp_align = align
-
-        def add_misc_element(font, c, is_first_such_span):
-            """
-            Handle non-standard object.
-            These aren't used
-            """
-            global temp_font
-            global temp_align
-
-            assert font is not None, f"! None font in handle_Misc: c='{c}' first_span = '{is_first_such_span}'"
-
-            print('\t\tMisc:', c)
-            # Span
-            if c.name=='span':
-                # If has font
-                if 'text:style-name' in c.attrs:
-                    # Update rolling font
-                    temp_font_name = c.attrs['text:style-name']
-                    # Assumed to be in []
-                    # subfonts are a COMBINATION of 'P32' + arbitary parent font
-                    tup = style_handler.fill_sub(temp_font_name, font)
-                    temp_font, temp_align = tup
-
-                print('\t', 'contents:', c.contents)
-                #Check contents of span
-                for cc in c.contents:
-                    # If tag
-                    if isinstance(cc, bs4.element.Tag):
-                        # Then it's not text
-                        add_misc_element(temp_font, cc, is_first_such_span)
-                    else: #Else
-                        # Must be string
-                        assert(isinstance(cc, str))
-                        # Add line of text with rolling font
-                        add_line_of_text(temp_font, cc, temp_align)
-                    is_first_such_span=False
-            # Tab element
-            elif c.name == 'tab':
-                print(f'>\t\t\tTextSpan("\\t")')
-                spans.append(TextSpan(font, '\t', align))
-            # Page break
-            elif c.name == 'soft-page-break':
-                print(f'>\t\t\tMiscToken("{c.name}")')
-                spans.append(MiscToken(c.name))
-            # Single space
-            elif c.name=='s':
-                # Single space
-                spc = ' '
-                # Count
-                if 'text:c' in c.attrs:
-                    count = int(c.attrs['text:c'])
-                    spc = ' ' * count
-                print(f'>\t\t\tText("{spc}")')
-                spans.append(TextSpan(font, spc, align))
-            # Line break
-            elif c.name=='line-break':
-                if is_first_such_span:
-                    # Add fixed NewLine
-                    print(f'>\t\t\tNL(starting line break)')
-                    spans.append(NewLine(font))
-                else:
-                    # Prevents joins later.
-                    # I think there's another NewLine added later
-                    print(f'>\t\t\tEndOfPara()')
-                    spans.append(EndOfPara())
-            # Only other types of elements
-            elif c.name in ['bookmark-start', 'bookmark-end']:
-                print('Skipping', c.name)
-                pass
-            elif c.name == 'a':
-                print('Unhandled web link: ', c)
-                assert False, 'Unhandled text type: '+ c.name
-            else:
-                # Crash just to make sure we don't miss something
-                print('Unhandled element: ', c)
-                assert False, 'Unhandled text type: '+ c.name
+        state.font = font
+        state.align = align
 
         # Beginning of span
-        is_first_such_span = True
+        state.is_first_such_span = True
         # For contents
         for c in para.contents:
             print('\tContents:', c)
@@ -255,135 +309,143 @@ for para in paras:
                 else:
                     # String uses main font
                     # TODO: Check whether it should use rolling font
-                    add_line_of_text(font, c, align)
-                    is_first_such_span=False
-                    print(spans[-1])
+                    span = get_line_of_text(state, c)
+                    print(span)
+                    add_spans(spans, span)
+                    state.is_first_such_span=False
             elif isinstance(c, bs4.element.Tag):
                 # Misc element
-                add_misc_element(font, c, is_first_such_span)
-                is_first_such_span = False
+                span = get_misc_element(state, c)
+                print(span)
+                add_spans(spans, span)
+                state.is_first_such_span = False
 
         print(f'>\t\t\tEndOfPara()')
         # Prevents joins later
         spans.append(EndOfPara())
 
-    print('')
+    return spans
 
-"""
-TODO: Fix variadic font families.
-    Ex: Montserrat2
-"""
+# Top-level
 
-print('Text Acquired')
-pst.button()
+def clean_raw_code_tags(spans):
+    # Log file
+    change_log_file('code tags')
 
-# Log file
-change_log_file('code tags')
+    print('Find Code Tags')
 
-print('Find Code Tags')
+    # Code tag style name in ODT file
+    code_tag_base_name = 'code_5f_marker'
 
-# Code tag style name in ODT file
-code_tag_base_name = 'code_5f_marker'
+    #Search for code tags
+    for i in range(len(spans)):
+        if isinstance(spans[i], TextSpan):
+            if spans[i].font.isCodeMarker():
+                print('->CodeTag', spans[i])
+                # Convert to CodeTag
+                spans[i] = CodeTag(spans[i].text, spans[i].font)
 
-#Search for code tags
-for i in range(len(spans)):
-    if isinstance(spans[i], TextSpan):
-        if spans[i].font.isCodeMarker():
-            print('->CodeTag', spans[i])
-            # Convert to CodeTag
-            spans[i] = CodeTag(spans[i].text, spans[i].font)
-
-print("Clean CodeTags")
-i=1
-while i < len(spans):
-    if isinstance(spans[i], CodeTag):
-        # Remove blank code tags
-        if len(spans[i].text)==0:
-            spans.pop(i)
-            i-=1
-        # Merge neighboring CodeTags
-        #(sometimes the xml format splits them up for no reason)
-        elif isinstance(spans[i-1], CodeTag):
-            # Combine function checks for newlines and shit
-            did_combine = spans[i-1].combine(spans[i])
-            # Remove if they were combined
-            if did_combine:
+    print("Clean CodeTags")
+    i=1
+    while i < len(spans):
+        if isinstance(spans[i], CodeTag):
+            # Remove blank code tags
+            if len(spans[i].text)==0:
                 spans.pop(i)
                 i-=1
-                print('Combined:', spans[i])
-    # Increment span index
-    i+=1
+            # Merge neighboring CodeTags
+            #(sometimes the xml format splits them up for no reason)
+            elif isinstance(spans[i-1], CodeTag):
+                # Combine function checks for newlines and shit
+                did_combine = spans[i-1].combine(spans[i])
+                # Remove if they were combined
+                if did_combine:
+                    spans.pop(i)
+                    i-=1
+                    print('Combined:', spans[i])
+        # Increment span index
+        i+=1
+    pst.button()
+    return spans
 
-pst.button()
+# Top-level
 
-# Font Management
-change_log_file('styles')
+def manage_raw_styles(style_handler, spans):
+    # Font Management
+    change_log_file('styles')
 
-# Currently, style_handler has the fonts that were found during span search
+    # Currently, style_handler has the fonts that were found during span search
 
-style_handler.assert_all_fonts_extant(spans, 'begin')
+    style_handler.assert_all_fonts_extant(spans, 'begin')
 
-print('Finding dupes')
-# Creates lookup dict and removes old fonts
-style_handler.find_and_delete_dupes()
+    print('Finding dupes')
+    # Creates lookup dict and removes old fonts
+    style_handler.find_and_delete_dupes()
 
-style_handler.assert_all_fonts_extant(spans, 'post_find')
+    style_handler.assert_all_fonts_extant(spans, 'post_find')
 
-print("Fixing Names")
-# Removes symbols from tags
-style_handler.fix_names()
-
-
-style_handler.assert_all_fonts_extant(spans, 'post namefix')
-
-print('Repl dict:{{{{{{{{{{{{{{{{{{{\n')
-
-print(style_handler.repl_dict)
-
-print('\n}}}}}}}}}}}}}}}}}}}')
-
-
-
-print("Replacing fonts")
-# Collects all fonts in span
-style_handler.replace_fonts(spans)
+    print("Fixing Names")
+    # Removes symbols from tags
+    style_handler.fix_names()
 
 
+    style_handler.assert_all_fonts_extant(spans, 'post namefix')
+
+    print('Repl dict:{{{{{{{{{{{{{{{{{{{\n')
+
+    print(style_handler.repl_dict)
+
+    print('\n}}}}}}}}}}}}}}}}}}}')
+
+    print("Replacing fonts")
+    # Collects all fonts in span
+    style_handler.replace_fonts(spans)
+
+    style_handler.assert_all_fonts_extant(spans, 'post_repl')
+
+    # Make spans pickleable by replacing font objects with tags
+    style_handler.convert_to_tags(spans)
+
+    print("Deleting dupes")
+    # Deletes repl_dict as well
+    style_handler.cleanup_dupes()
+
+    style_handler.assert_all_fonts_extant(spans, 'end')
+
+    print("Finding files")
+    style_handler.find_files()
+
+    print(style_handler.fonts)
+
+    logger_end()
 
 
-style_handler.assert_all_fonts_extant(spans, 'post_repl')
+def xml_folder_to_raw_file(folder, spans_file='spans_raw.json', fonts_file='fonts_raw.json'):
+    logger_start('reader')
+
+    style_handler, spans = read_folder(folder)
+
+    change_log_file('writing')
+    style_handler.write(fonts_file)
+
+    print("Log style handler:")
+    style_handler.log()
+
+    print('Writing')
+
+    import common.files as cf
+
+    cf.save_spans(spans, spans_file)
+
+    logger_end()
 
 
-# Make spans pickleable by replacing font objects with tags
-style_handler.convert_to_tags(spans)
 
-print("Deleting dupes")
-# Deletes repl_dict as well
-style_handler.cleanup_dupes()
-
-
-style_handler.assert_all_fonts_extant(spans, 'end')
-
-
-print("Finding files")
-style_handler.find_files()
-
-print(style_handler.fonts)
-
-style_handler.write('fonts_raw.json')
-
-print("Log style handler:")
-style_handler.log()
-
-print('Writing')
-change_log_file('writing')
-
-import common.files as cf
-
-cf.save_spans(spans, 'spans_raw.json')
-
-logger_end()
-
-# pst.unfinished(False)
-print('>Xml Reader Done<')
-pst.end()
+if __name__=="__main__":
+    # pst.DEBUG=True
+    assert len(sys.argv)>=2, 'Must provide input unzipped folder'
+    folder = sys.argv[1]
+    xml_folder_to_raw_file(folder)
+    # pst.unfinished(False)
+    print('>Xml Reader Done<')
+    pst.end()

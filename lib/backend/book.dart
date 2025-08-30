@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/font_cache.dart';
 
 import '_book_libs.dart' deferred as book_lib;
 import 'chapter.dart';
@@ -57,9 +58,12 @@ class Book {
       required this.color,
       required this.chapters,
       required this.byline}) {
+    //Urls & names of font families
+    FontCache.getInstance().readFontTable();
     if (kDebugMode) {
       for (int ch = 0; ch < chapters.length; ++ch) {
-        assert(chapters[ch].index == ch);
+        assert(chapters[ch].index == ch,
+            '${chapters[ch]} has incorrect id: ${chapters[ch].index}; in position $ch');
       }
     }
   }

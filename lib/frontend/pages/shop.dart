@@ -3,8 +3,8 @@ import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 
 import '../icons.dart';
+import '../parts/noir_colors.dart';
 import '../theme/base_text_theme.dart';
-import '../theme/color_scheme.dart';
 
 class ShopItem {
   final String itemName;
@@ -59,10 +59,10 @@ class ShopItemThumbnail extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 12),
                     child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                               left: BorderSide(
-                                  color: colorScheme.primary, width: 3)),
+                                  color: NoirPrimary.shadea, width: 3)),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

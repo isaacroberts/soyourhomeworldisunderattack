@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/server.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/image/image_widget.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/image/no_image_widget.dart';
 
 import '../holders/holder_base.dart';
 
-class ImageHolder extends Holder {
+class ImageHolder extends CodeHolder {
   final String? url;
-  const ImageHolder({required this.url});
-
-  Widget placeholder() {
-    return const SizedBox(height: 400, width: 600, child: Placeholder());
-  }
+  final Color? colorHint;
+  const ImageHolder({required this.url, this.colorHint});
 
   @override
   String toText() {
@@ -19,14 +18,26 @@ class ImageHolder extends Holder {
   @override
   Widget element(BuildContext context) {
     if (url == null) {
-      return placeholder();
+      return NoImageWidget(
+          key: const Key("NoImg"),
+          reason: NoImageReason.leftBlank,
+          displayUrl: '.',
+          url: url);
     }
-    return Image.network(imageUrl(url!),
-        width: 600, height: 400, fit: BoxFit.contain);
-  }
+    if (!url!.contains('.')) {
+      return NoImageWidget(
+          key: const Key("NoImg"),
+          reason: NoImageReason.suggestion,
+          displayUrl: url,
+          url: url);
+    } else {
+      String cleanedUrl = imageUrl(url!);
 
-  @override
-  Widget fallback(BuildContext context) {
-    return placeholder();
+      return MyNetworkImageWidget(
+          key: Key("Img($cleanedUrl)"),
+          url: cleanedUrl,
+          displayUrl: url,
+          colorHint: colorHint);
+    }
   }
 }

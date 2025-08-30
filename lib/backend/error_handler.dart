@@ -7,9 +7,8 @@ import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.da
 import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
+import '../frontend/theme/base_colors.dart';
 import '../frontend/theme/base_text_theme.dart';
-import '../frontend/theme/colors.dart';
-import '../frontend/theme/text_theme.dart';
 import 'error_page.dart' deferred as error_lib_page;
 
 class ErrorList {
@@ -100,8 +99,12 @@ class ErrorList {
     return SnackBar(
         action: SnackBarAction(
             label: 'View', onPressed: () => _onSnackBarPressed(context)),
-        backgroundColor: errorBg,
-        content: Text(txt, maxLines: 2, style: monoFont));
+        // backgroundColor: errorBg,
+        showCloseIcon: true,
+        content: Text(
+          txt,
+          maxLines: 2,
+        ));
   }
 
   bool firstErrorOfType(ExceptionHolder exec) {

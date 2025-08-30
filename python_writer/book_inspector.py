@@ -1,11 +1,9 @@
 import json
 import jsonpickle
+import common
+import common.files
 
-f= open('temp/book.json', 'r')
-str1 = f.read()
-f.close()
-
-book_info = jsonpickle.decode(str1)
+book_info = common.files.read_book_info()
 
 def missing_info(key):
     if key not in book_info:
@@ -15,7 +13,7 @@ def missing_info(key):
         return True
     return False
 
-# Manual inputs 
+# Manual inputs
 if missing_info('id'):
     book_info['id'] = input('Enter id')
 if missing_info('title'):

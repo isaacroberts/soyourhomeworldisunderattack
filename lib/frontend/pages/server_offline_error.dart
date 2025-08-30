@@ -12,7 +12,7 @@ class ServerOfflinePage extends StatelessWidget {
       {super.key, required this.exception, required this.stackTrace});
 
   void refresh(BuildContext context) {
-    go.GoRouter.of(context).refresh();
+    go.GoRouter.of(context).go('/home/');
     // context.go('/');
   }
 

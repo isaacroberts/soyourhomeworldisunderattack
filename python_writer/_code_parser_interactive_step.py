@@ -95,206 +95,301 @@ class InteractiveMatchingStep():
 
         self.i = 0
         while self.i < len(self.spans):
-            i = self.i
-            self.print_radius(i)
-            self.printOpenObjects()
-
-            # If ChapterStart
-            if isinstance(self.spans[i], ChapterStart):
-                print('ChapterStart', self.spans[i].get_text())
-                if self.hasOpenObject('b'):
-                    print('New chapter.')
-                    print('Close',self.openBO,'CustomBlock?')
-                    print(f'ChapterStart: {i}, openBO: {self.openBOIx}')
-                    r = pst.saveable_response('Close?  y/c=close, x=exit, \nm=move ChapterStart before CustomBlock,\nd=delete ChapterStart,\n p=print')
-                    if r=='p':
-                        self.print_range(self.openBOIx-5, i+5)
-                        r = pst.saveable_response('Close?  y/c=close, x=exit, \nm=move ChapterStart before CustomBlockd=delete ChapterStart')
-                    if r in ['y', 'c']:
-                        # close open CustomSpan
-                        self._close_custom_block(has_end_tag=False)
-                        self.decrement()
-                        continue
-                    elif r == 'd':
-                        self._deleteChapterStart(i)
-                    elif r == 'm':
-                        self._moveChapterStart(i, self.openBOIx)
-            #} ChapterStart
-            # else if CodeTag
-            elif isinstance(self.spans[i], CodeKeywordTag):
-                pass
-            elif isinstance(self.spans[i], CodeTag):
-                obj = self.spans[i].obj
-                hasColon = self.spans[i].hasColon
-
-                if obj in self.classTextReplacements:
-                    obj = self.classTextReplacements[obj]
-                    self.spans[i].obj = obj
-
-                classType = self.getObjectClassType(obj)
-                #Check if '' is caught
-
-                if len(obj.strip())==0:
-                    print("Delete whitespace ", i)
-                    self.spans.pop(i)
-                    self.decrement()
-                elif obj == '//':
-                    pass
-                elif classType is None:
-                    caught = False
-                    print('classType = None')
-                    if self.hasOpenObject('b'):
-                        print(obj, 'x', self.openBO.obj, '(',i, self.openBOIx,')')
-                        if self._matches_classname_for_close(obj, self.openBO.obj):
-                            self._close_custom_block(has_end_tag=True)
-                            caught = True
-
-                    if not caught:
-                        print('Uncaught tag:', obj)
-                        self.print_pos(i)
-                        print('Uncaught tag:', f"'{obj}'")
-                        if self.hasOpenObject('b'):
-                            print('Hanging CustomBlock:', self.openBO)
-                        print('Match?')
-                        prompt = "Continue?" + \
-                            ("o = matches CustomBlock," if self.openBO is not None else '') + \
-                        """
-                        w = add ParsedBlock, a=add CustomBlock, z=add tag,
-                        k = convert to keyword,
-                        d=delete, m=convert to mono_text, b=convert_to_body,
-                        p=print, x=exit
-                        """
-
-                        r = pst.saveable_response(prompt)
-                        if r=='p':
-                            self.print_range(0, len(self.spans))
-                            r = pst.saveable_response(prompt)
-                        if r=='m':# convert to mono text
-                            self.convert_to_text(i)
-                            caught=True
-                        elif r=='b': # convert to body
-                            self.convert_to_body(i)
-                            caught=True
-                        elif r=='d': # delete
-                            self.spans.pop(i)
-                            self.decrement()
-                            caught=True
-                        elif r=='a': # add CustomBlock
-                            self.add_class(obj, 'b')
-                            classType = 'b'
-                        elif r=='k':
-                            classType = 'k'
-                            caught = True
-                        elif r=='z': # Add CodeTag
-                            self.spans[i].obj = obj
-                            self.add_class(obj, 't')
-                            classType = 't'
-                        elif r =='o': # o = matches CustomBlock
-                            assert self.openBO is not None
-                            self._close_custom_block(has_end_tag=True)
-                            caught = True
-                        elif r=='w': # Matches ParsedBlock
-                            raise NotImplementedError('Adding ParsedBlock on the fly (how dare you)')
-                            classType = 'p'
-                        else:
-                            print("I must've missed an option.")
-                            assert False
-                # If ladder restarts to allow added objects
-                # Keyword
-                if classType == 'k':
-                    # If Blocks clash with keyword
-                    if self.hasOpenObject('b'):
-                        print(f'CustomBlock {self.openBO} blocking Keyword {obj}.')
-                        print(self.spans[i])
-                        print('x', self.openBO)
-                        self.print_range(self.openBOIx, i)
-                        r = pst.saveable_response('Closing. Y=yes, p=print, n=exit')
-                        if r=='p':
-                            self.print_range(0, len(self.spans))
-                            r = pst.saveable_response('Closing. Y/c=yes, x=exit')
-                        if r in ['y', 'c']:
-                            # close open Block
-                            self._close_custom_block(has_end_tag=False)
-                        elif r=='x':
-                            exit(1)
-                        elif r == 'n':
-                            assert False
-                        else:
-                            assert False
-
-                    self._change_to_keyword(i)
-                # } Keyword
-                elif classType == 'p':
-                    # Close all objects
-                    if self.hasOpenObject('b'):
-                        # Block clashes with ParsedBlock
-                        print(f'CustomBlock {self.openBO} blocking ParsedObject {obj}.')
-                        print(self.spans[i])
-                        print('x', self.openBO)
-                        self.print_range(self.openBOIx, i)
-                        r = pst.saveable_response('Closing. Y=yes, p=print, n=exit')
-                        if r=='p':
-                            self.print_range(0, len(self.spans))
-                            r = pst.saveable_response('Closing. Y=yes, x=exit')
-                        if r=='y':
-                            # close open CustomSpan
-                            self._close_custom_block(has_end_tag=False)
-                        elif r == 'n':
-                            assert False
-                        else:
-                            assert False
-
-                    print('Detouring to object')
-                    self.parsed_object_detour(i)
-                    self.decrement()
-                #}ParsedBlock
-                elif classType == 'b':
-                    # BlockObject{
-                    if self.hasOpenObject('b'):
-                        if self._matches_classname_for_close(obj, self.openBO.obj):
-                            if hasColon:
-                                print(f'{obj} ({i}) has a colon. Closing & Starting new object.')
-                                self._close_custom_block(has_end_tag=False)
-                                i = self.i
-                                self._open_custom_block(i)
-                            else:
-                                self._close_custom_block(has_end_tag=True)
-                                i = self.i
-                        else:
-                            print('Clashing CustomBlocks.')
-                            print(self.spans[i],'/', obj, f"({i})")
-                            print('x', self.openBO, f"({self.openBOIx})")
-
-                            r = pst.saveable_response('Continue? n=no, m = match, c=add close, p=print')
-                            if r=='m':
-                                self._close_custom_block(has_end_tag=True)
-                            if r=='c':
-                                self.decrement()
-                                self._close_custom_block(has_end_tag=False)
-                            if r in ['n', 'x']:
-                                assert False
-                            if r=='p':
-                                self.print_range(0, len(self.spans))
-                                exit(1)
-                    else:
-                        # No open BO
-                        self._open_custom_block(i)
-                #}BlockObject
-                #Tag
-                elif classType == 't':
-                    self.spans[i].obj = obj
-                    print(obj, 'Tag is good')
-                #}Tag
-            # /if CodeTag
+            self.step(self.i)
             self.i += 1
         return self.spans, self.classes_to_add
 
+    def step(self, i):
+        self.print_radius(i)
+        self.printOpenObjects()
+
+        # If ChapterStart
+        if isinstance(self.spans[i], ChapterStart):
+            # i passed by member
+            self.handle_chapter_start()
+        #} ChapterStart
+        # else if CodeTag
+        elif isinstance(self.spans[i], CodeKeywordTag):
+            # CodeKeywords are handled once chapters are broken
+            pass
+        elif isinstance(self.spans[i], CodeTag):
+            obj = self.spans[i].obj
+            # Handles case & replacements
+            obj, classType = self.getObjectClassTypePermissive(obj)
+            self.spans[i].obj = obj
+            #Check if '' is caught
+
+            if len(obj.strip())==0:
+                print("Delete whitespace ", i)
+                self.spans.pop(i)
+                self.decrement()
+            elif obj == '//':
+                pass
+            elif classType is None:
+                obj, classType = self.catch_unrecognized_class(obj, i)
+            # If ladder restarts to allow added objects
+            # Keyword
+            if classType is None:
+                return
+            else:
+                self.handle_insert_block(obj, classType)
+            #}Tag
+        # /if CodeTag
+
+    """ ==============================================
+                      User Prompts
+    ============================================== """
+    def handle_chapter_start(self):
+        i = self.i
+        print('ChapterStart', self.spans[i].get_text())
+        # Attempt to close any open blocks
+        if self.hasOpenObject('b'):
+            print('New chapter.')
+            print('Close',self.openBO,'CustomBlock?')
+            print(f'ChapterStart: {i}, openBO: {self.openBOIx}')
+            r = pst.saveable_response('Close?  y/c=close, x=exit, \nm=move ChapterStart before CustomBlock,\nd=delete ChapterStart,\n p=print')
+            if r=='p':
+                self.print_range(self.openBOIx-5, i+5)
+                r = pst.saveable_response('Close?  y/c=close, x=exit, \nm=move ChapterStart before CustomBlockd=delete ChapterStart')
+            if r in ['y', 'c']:
+                # close open CustomSpan
+                self._close_custom_block(has_end_tag=False)
+                self.decrement()
+                return
+            elif r == 'd':
+                self._deleteChapterStart(i)
+                return
+            elif r == 'm':
+                self._moveChapterStart(i, self.openBOIx)
+                return
+
+    def handle_insert_block(self, obj, classType):
+        """
+        Obj & classtype must be in self.classes by this point
+        I is a parameter, but it's stored on the object
+        """
+        i = self.i
+        if classType == 'k':
+            # If Blocks clash with keyword
+            if self.hasOpenObject('b'):
+                print(f'CustomBlock {self.openBO} blocking Keyword {obj}.')
+                print(self.spans[i])
+                print('x', self.openBO)
+                self.print_range(self.openBOIx, i)
+                r = pst.saveable_response('Closing. Y=yes, p=print, n=exit')
+                if r=='p':
+                    self.print_range(0, len(self.spans))
+                    r = pst.saveable_response('Closing. Y/c=yes, x=exit')
+                if r in ['y', 'c']:
+                    # close open Block
+                    self._close_custom_block(has_end_tag=False)
+                    return
+                elif r=='x':
+                    exit(1)
+                elif r == 'n':
+                    assert False
+                else:
+                    assert False
+
+            self._change_to_keyword(i)
+            return
+        # } Keyword
+        elif classType == 'p':
+            # Close all objects
+            if self.hasOpenObject('b'):
+                # Block clashes with ParsedBlock
+                print(f'CustomBlock {self.openBO} blocking ParsedObject {obj}.')
+                print(self.spans[i])
+                print('x', self.openBO)
+                self.print_range(self.openBOIx, i)
+                r = pst.saveable_response('Closing. Y=yes, p=print, n=exit')
+                if r=='p':
+                    self.print_range(0, len(self.spans))
+                    r = pst.saveable_response('Closing. Y=yes, x=exit')
+                if r=='y':
+                    # close open CustomSpan
+                    self._close_custom_block(has_end_tag=False)
+                elif r == 'n':
+                    assert False
+                else:
+                    assert False
+
+            print('Detouring to object')
+            self.parsed_object_detour(i)
+            self.decrement()
+            return
+        #}ParsedBlock
+        elif classType == 'b':
+            # BlockObject{
+            if self.hasOpenObject('b'):
+                if self._matches_classname_for_close(obj, self.openBO.obj):
+                    if self.spans[i].hasColon:
+                        print(f'{obj} ({i}) has a colon. Closing & Starting new object.')
+                        self._close_custom_block(has_end_tag=False)
+                        self._open_custom_block(i)
+                        return
+                    else:
+                        self._close_custom_block(has_end_tag=True)
+                        return
+                else:
+                    print('Clashing CustomBlocks.')
+                    print(self.spans[i],'/', obj, f"({i})")
+                    print('x', self.openBO, f"({self.openBOIx})")
+
+                    r = pst.saveable_response('Continue? n=no, m = match, c=add close, p=print')
+                    if r=='m':
+                        self._close_custom_block(has_end_tag=True)
+                    if r=='c':
+                        self.decrement()
+                        self._close_custom_block(has_end_tag=False)
+                    if r in ['n', 'x']:
+                        assert False
+                    if r=='p':
+                        self.print_range(0, len(self.spans))
+                        exit(1)
+            else:
+                # No open BO
+                self._open_custom_block(i)
+                return
+        #}BlockObject
+        #Tag
+        elif classType == 't':
+            self.spans[i].obj = obj
+            print(obj, 'Tag is good')
+            return
+
+    def catch_unrecognized_class(self, obj, i):
+        """
+        Get clarification from user about CodeParse typos.
+
+        returns: new_class, new_classtype.
+        If object no longer exists, it returns None, None.
+        If obj is now text, it returns 'Text', None
+        """
+        span = self.spans[i]
+        if self.hasOpenObject('b'):
+            print(obj, 'x', self.openBO.obj, '(',i, self.openBOIx,')')
+            if self._matches_classname_for_close(obj, self.openBO.obj):
+                self._close_custom_block(has_end_tag=True)
+                # Classtype is none because a close brace is nothing.
+                return None, None
+
+        print('Uncaught tag:', obj)
+        self.print_pos(i)
+        print('Uncaught tag:', f"'{obj}'")
+        if self.hasOpenObject('b'):
+            print('Hanging CustomBlock:', self.openBO)
+        print('Match?')
+        prompt = "Continue?\n"
+        if self.openBO is not None:
+            prompt += "o = matches CustomBlock,\n"
+        prompt += "\n" \
+"""
+c = Change (type)
+w = add ParsedBlock, a=add CustomBlock, z=add tag,
+k = convert to keyword,
+d=delete, m=convert to mono_text, b=convert_to_body,
+p=print, x=exit
+"""
+
+        r = pst.saveable_response(prompt)
+        if r=='p':
+            self.print_range(0, len(self.spans))
+            # Repeat previous prompt
+            r = pst.saveable_response(prompt)
+            # Continue
+
+        if r=='c':
+            print('Classes\n:', [k for k in self.classes.keys()])
+            name = pst.saveable_string_input('Enter correct name')
+            name, classType = self.getObjectClassTypePermissive(name)
+
+            if classType is not None:
+                # The value is the classType
+                return name, classType
+            else:
+                print('=========================')
+                print("It's a time portal, Yug!")
+                print()
+                print("Not in class list.")
+                print()
+                print()
+                # Repeat question with recursion
+                return self.catch_unrecognized_class(obj, i)
+        elif r=='m':# convert to mono text
+            self.convert_to_text(i)
+            # Class, Classtype
+            return 'Text', None
+        elif r=='b': # convert to body
+            self.convert_to_body(i)
+            # Class, Classtype
+            return 'Text', None
+        elif r=='d': # delete
+            self.spans.pop(i)
+            self.decrement()
+            # Class, Classtype
+            return None, None
+        elif r=='a': # add CustomBlock
+            # classType = 'b'
+            self.add_class(obj, 'b')
+            # Class, Classtype
+            return obj, 'b'
+        elif r=='k':#convert to keyword
+            assert False, "It's not possible to create a new keyword. Rerun the script."
+            # classType = 'k'
+            # Class, Classtype
+            return obj, 'k'
+        elif r=='z': # Add CodeTag
+            self.spans[i].obj = obj
+            # classType = 't'
+            self.add_class(obj, 't')
+            # Class, Classtype
+            return obj, 't'
+        elif r =='o': # o = matches CustomBlock
+            assert self.openBO is not None
+            self._close_custom_block(has_end_tag=True)
+            # Class, Classtype
+            return None, None
+        elif r=='w': # Matches ParsedBlock
+            raise NotImplementedError('Adding ParsedBlock on the fly (how dare you)')
+            # classType = 'p'
+            # Class, Classtype
+            return obj, 'p'
+        else:
+            print("I must've missed an option.")
+            assert False
+            return obj, None
 
 
-    """ ================================================================
-                API
-        ================================================================
-    """
+    def match_obj_keyword(self, obj):
+        import objects.custom_code as cc
+        koClasses = cc.chapter_keywords()
+
+        if obj in koClasses:
+            return obj
+        else:
+            print("Checking related keywords.")
+            for kw in koClasses:
+                if kw in obj:
+                    r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
+                    if r=='y':
+                        return kw
+
+                elif obj in kw:
+                    r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
+                    if r=='y':
+                        return kw
+            print ("Checking all keywords.")
+            for kw in koClasses:
+                r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
+                if r=='y':
+                    return kw
+            #Not a keyword
+            assert False
+
+    """ ==========================================
+                        API
+    ========================================== """
     def decrement(self):
         self.i -= 1
 
@@ -305,10 +400,44 @@ class InteractiveMatchingStep():
         self.spans[i] = TextSpan(Font.body('body'), self.spans[i].text, 'l')
 
     def getObjectClassType(self, obj):
+        """
+        Match object to classtype. Can also be used to see if object exists.
+        """
         if obj in self.classes:
             return self.classes[obj]
         else:
             return None
+    def getObjectClassTypePermissive(self, obj):
+        """ Attempts to match an object to existing classes.
+            Can also be used to see if an object exists & get the right casing.
+
+            Because it's ignore case, the function should also
+            return the case-corrected version
+
+            Returns: case_corrected(obj), obj.classType
+        """
+        lobj = obj.lower().strip()
+        # Try objects
+        for cl, t in self.classes.items():
+            if lobj == cl.lower():
+                return cl, t
+        # Try classtext replacements
+        for match, repl in self.classTextReplacements.items():
+            if lobj == match.lower():
+                # classTextReplacements must exist anyway
+                assert repl in self.classes, f"classTextReplacement {match}->{repl}, but {repl} is not in classes. (Classes: {self.classes})"
+                # class, classType
+                return repl, self.classes[repl]
+
+        return obj, None
+
+    def getObjectClassReplacements(self, obj):
+        if obj in self.classTextReplacements:
+            obj = self.classTextReplacements[obj]
+            return obj
+        return obj
+
+
     def hasAnyOpenObject(self):
         return self.openBOIx is not None or self.openPOIx is not None
     def hasOpenObject(self, type = None):
@@ -357,32 +486,6 @@ class InteractiveMatchingStep():
                 Span Internals
         ================================================================
     """
-
-    def match_obj_keyword(self, obj):
-        import objects.custom_code as cc
-        koClasses = cc.chapter_keywords()
-
-        if obj in koClasses:
-            return obj
-        else:
-            print("Checking related keywords.")
-            for kw in koClasses:
-                if kw in obj:
-                    r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
-                    if r=='y':
-                        return kw
-
-                elif obj in kw:
-                    r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
-                    if r=='y':
-                        return kw
-            print ("Checking all keywords.")
-            for kw in koClasses:
-                r = pst.saveable_response(f"Does object '{obj}' mean '{kw}'? y/n\n")
-                if r=='y':
-                    return kw
-            #Not a keyword
-            assert False
 
     def _change_to_keyword(self, i):
         # print(self.spans[i], type(self.spans[i]))

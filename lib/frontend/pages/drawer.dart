@@ -3,7 +3,6 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../theme/colors.dart';
 import '../view_settings.dart';
 
 const List<(String, String?)> drawerItems = [
@@ -90,8 +89,7 @@ class MenuDrawer extends StatelessWidget {
     }
     //Settings
     listTiles.add(ScrollModeDropdown(
-        label: 'Scroll mode',
-        value: ViewSettings.instance.infiniteScrollNotifier));
+        label: 'Scroll mode', value: ViewSettings.instance.scrollModeNotifier));
     listTiles.add(NotifiedSwitch(
       label: 'Dev Rig',
       value: ViewSettings.instance.testRigNotifier,
@@ -100,7 +98,9 @@ class MenuDrawer extends StatelessWidget {
       label: 'Fonts',
       value: ViewSettings.instance.showFontsNotifier,
     )); //Drawer
-
+    listTiles.add(NotifiedSwitch(
+        label: 'Social Media',
+        value: ViewSettings.instance.showBottomNavNotifier)); //Drawer
     //Dev
 
     for ((String, String) tup in devItems) {
@@ -176,12 +176,16 @@ class DevListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // GrandSwatch swatch =
+    //     Part.maybeOf(context)?.secondary ?? const NoirSecondary();
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return ListTile(
       key: const Key("ListTile"),
       style: ListTileStyle.drawer,
-      tileColor: Secondary.shade5,
-      textColor: Secondary.shadee,
-      iconColor: Secondary.shadee,
+      tileColor: colorScheme.secondaryFixedDim,
+      textColor: colorScheme.onSecondaryFixed,
+      iconColor: colorScheme.onSecondaryFixed,
       leading: const Icon(Icons.construction),
       title: Text(title),
       onTap: () {

@@ -100,6 +100,8 @@ class Chapter:
         self.when = None
         # fx
         self.audio=None
+        # other
+        self.data = {}
 
     def matches_bookmark(self, tag):
         if tag in self.bookmarks:
@@ -156,13 +158,13 @@ class Chapter:
         self.header = BinList('ChapterOutput.output('+id+')')
 
         self.header += '$'
-
-        self.header += pack_untyped_uint(self.index)
-        self.header += '='
-
-        self.header += pack_text(id)
-        self.header += '/'
-        self.header += pack_text(self.display_name)
+        #
+        # self.header += pack_untyped_uint(self.index)
+        # self.header += '='
+        #
+        # self.header += pack_text(id)
+        # self.header += '/'
+        # self.header += pack_text(self.display_name)
         self.header += '/'
         def textornull(s):
             if s is None:
@@ -210,12 +212,14 @@ class Chapter:
 
         bin = BinList('chapter_for_index')
         bin += '('
-        bin += fmt.pack_int(self.index)
-        bin += '='
+        bin += fmt.pack_untyped_uint(self.index)
+        # bin += '='
         bin += fmt.pack_text(self.id)
-        bin += ':'
+        # bin += ':'
         bin += fmt.pack_text(self.display_name)
-        bin += '@'
+        # bin += '^'
+        bin += fmt.pack_untyped_uint(self.partId)
+        # bin += '@'
         filename = self.filename()
         filename = self.book_id+'/'+filename
         bin += fmt.pack_text(filename)
@@ -223,7 +227,7 @@ class Chapter:
         if self.next is None:
             bin += fmt.pack_none()
         else:
-            bin += fmt.pack_int(self.next.index)
+            bin += fmt.pack_typed_uint(self.next.index)
 
         if self.part:
             if self.hidepart:
@@ -231,7 +235,7 @@ class Chapter:
             else:
                 bin += '^'
 
-        bin += '*'
+        # bin += '*'
 
         p = './generated_book/' + filename
         file_size = os.path.getsize(p)
@@ -243,7 +247,7 @@ class Chapter:
             print(f"Yoooo chapter is {gb} Gigabytes")
             assert False
 
-        bin += fmt.pack_untyped_uint(file_size)
+        # bin += fmt.pack_untyped_uint(file_size)
         bin += ')';
         bin += ';'
         return bin

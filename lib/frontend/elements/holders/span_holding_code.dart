@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'holder_base.dart';
 
-class SpanHoldingCode extends Holder {
+class SpanHoldingCode extends CodeHolder {
   final List<Holder> spans;
   const SpanHoldingCode({required this.spans});
+
+  @override
+  bool get wantsPadding => true;
 
   @override
   String toText() {

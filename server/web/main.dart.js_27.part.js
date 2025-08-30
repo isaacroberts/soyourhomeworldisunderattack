@@ -1,1857 +1,3927 @@
-((a,b,c)=>{a[b]=a[b]||{}
-a[b][c]=a[b][c]||[]
-a[b][c].push({p:"main.dart.js_27",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var J,B,C,F,A={nG:function nG(d,e){this.a=d
-this.b=e},qu:function qu(d,e){this.a=d
-this.b=e},rK:function rK(d,e){this.a=d
-this.b=e},Az:function Az(d,e,f,g,h,i,j){var _=this
-_.r=d
-_.y=e
-_.Q=f
-_.c=g
-_.d=h
-_.e=i
-_.a=j},Xf:function Xf(d,e){var _=this
-_.fx=_.fr=_.dy=_.dx=_.db=_.cy=_.cx=_.CW=null
-_.e=_.d=$
-_.dV$=d
-_.bq$=e
-_.c=_.a=null},ati:function ati(){},atj:function atj(){},atk:function atk(){},atl:function atl(){},atm:function atm(){},atn:function atn(){},ato:function ato(){},atp:function atp(){},
-afi(d,e,f){var x,w,v=f.a,u=e.a,t=Math.pow(v[0]-u[0],2)+Math.pow(v[1]-u[1],2)
-if(t===0)return e
-x=d.a_(0,e)
-w=f.a_(0,e)
-return e.W(0,w.l9(B.y(x.pX(w)/t,0,1)))},
-b0V(d,e){var x,w,v,u,t,s,r,q=e.a,p=d.a_(0,q),o=e.b,n=o.a_(0,q),m=e.d,l=m.a_(0,q),k=p.pX(n),j=n.pX(n),i=p.pX(l),h=l.pX(l)
-if(0<=k&&k<=j&&0<=i&&i<=h)return d
-x=e.c
-w=[A.afi(d,q,o),A.afi(d,o,x),A.afi(d,x,m),A.afi(d,m,q)]
-v=B.bz("closestOverall")
-for(q=d.a,u=1/0,t=0;t<4;++t){s=w[t]
-o=s.a
-r=Math.sqrt(Math.pow(q[0]-o[0],2)+Math.pow(q[1]-o[1],2))
-if(r<u){v.b=s
-u=r}}return v.aV()},
-b4J(){var x=new B.aU(new Float64Array(16))
-x.dw()
-return new A.Ww(x,$.al())},
-aTF(d,e,f){return Math.log(f/d)/Math.log(e/100)},
-aU9(d,e){var x,w,v,u,t,s,r=new B.aU(new Float64Array(16))
-r.bt(d)
-r.fB(r)
-x=e.a
-w=e.b
-v=new B.bP(new Float64Array(3))
-v.e3(x,w,0)
-v=r.lP(v)
-u=e.c
-t=new B.bP(new Float64Array(3))
-t.e3(u,w,0)
-t=r.lP(t)
-w=e.d
-s=new B.bP(new Float64Array(3))
-s.e3(u,w,0)
-s=r.lP(s)
-u=new B.bP(new Float64Array(3))
-u.e3(x,w,0)
-u=r.lP(u)
-x=new B.bP(new Float64Array(3))
-x.bt(v)
-w=new B.bP(new Float64Array(3))
-w.bt(t)
-v=new B.bP(new Float64Array(3))
-v.bt(s)
-t=new B.bP(new Float64Array(3))
-t.bt(u)
-return new A.TA(x,w,v,t)},
-aTA(d,e){var x,w,v,u,t,s,r=[e.a,e.b,e.c,e.d]
-for(x=C.f,w=0;w<4;++w){v=r[w]
-u=A.b0V(v,d).a
-t=v.a
-s=u[0]-t[0]
-t=u[1]-t[1]
-if(Math.abs(s)>Math.abs(x.a))x=new B.h(s,x.b)
-if(Math.abs(t)>Math.abs(x.b))x=new B.h(x.a,t)}return A.aLT(x)},
-aLT(d){return new B.h(B.aM8(C.d.an(d.a,9)),B.aM8(C.d.an(d.b,9)))},
-b7D(d,e){if(d.j(0,e))return null
-return Math.abs(e.a-d.a)>Math.abs(e.b-d.b)?C.ac:C.H},
-Dw:function Dw(d,e,f,g){var _=this
-_.w=d
-_.at=e
-_.ax=f
-_.a=g},
-JQ:function JQ(d,e,f,g){var _=this
-_.d=$
-_.e=d
-_.f=e
-_.w=_.r=null
-_.z=_.y=_.x=$
-_.at=_.as=_.Q=null
-_.ay=_.ax=0
-_.ch=null
-_.cJ$=f
-_.aI$=g
-_.c=_.a=null},
-az0:function az0(){},
-a_n:function a_n(d,e,f,g,h,i,j){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.f=g
-_.r=h
-_.w=i
-_.a=j},
-Ww:function Ww(d,e){var _=this
-_.a=d
-_.K$=0
-_.J$=e
-_.al$=_.V$=0},
-Jz:function Jz(d,e){this.a=d
-this.b=e},
-akJ:function akJ(d,e){this.a=d
-this.b=e},
-Nb:function Nb(){},
-WA:function WA(){},
-Wz:function Wz(d,e){var _=this
-_.r=d
-_.K$=0
-_.J$=e
-_.al$=_.V$=0},
-a9x:function a9x(d,e){this.a=d
-this.b=e},
-HK:function HK(d,e,f,g,h,i,j){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.f=g
-_.y=h
-_.z=i
-_.a=j},
-WC:function WC(d,e){var _=this
-_.e=_.d=null
-_.f=d
-_.r=e
-_.c=_.a=null},
-asr:function asr(d){this.a=d},
-asq:function asq(d,e){this.a=d
-this.b=e},
-a4k:function a4k(d,e){this.b=d
-this.a=e},
-Mz:function Mz(d,e,f,g,h,i,j,k,l,m,n,o,p,q,r){var _=this
-_.ay=d
-_.ch=e
-_.c=f
-_.d=g
-_.e=h
-_.f=i
-_.r=j
-_.w=k
-_.x=l
-_.y=m
-_.z=n
-_.Q=o
-_.as=p
-_.at=q
-_.a=r},
-MA:function MA(d,e,f,g,h,i,j,k,l,m,n,o){var _=this
-_.e=_.d=_.k3=_.k2=null
-_.f=$
-_.r=d
-_.w=$
-_.y=_.x=null
-_.z=e
-_.Q=f
-_.as=g
-_.at=h
-_.ax=!1
-_.cx=_.CW=_.ch=_.ay=null
-_.ce$=i
-_.hA$=j
-_.q4$=k
-_.eW$=l
-_.hB$=m
-_.cJ$=n
-_.aI$=o
-_.c=_.a=null},
-aFl:function aFl(d){this.a=d},
-aFm:function aFm(d){this.a=d},
-tX:function tX(d,e,f,g,h,i,j,k,l,m,n,o,p,q,r){var _=this
-_.ay=d
-_.ch=e
-_.c=f
-_.d=g
-_.e=h
-_.f=i
-_.r=j
-_.w=k
-_.x=l
-_.y=m
-_.z=n
-_.Q=o
-_.as=p
-_.at=q
-_.a=r},
-a__:function a__(d,e,f,g,h,i,j,k,l,m,n,o){var _=this
-_.k2=$
-_.e=_.d=null
-_.f=$
-_.r=d
-_.w=$
-_.y=_.x=null
-_.z=e
-_.Q=f
-_.as=g
-_.at=h
-_.ax=!1
-_.cx=_.CW=_.ch=_.ay=null
-_.ce$=i
-_.hA$=j
-_.q4$=k
-_.eW$=l
-_.hB$=m
-_.cJ$=n
-_.aI$=o
-_.c=_.a=null},
-Qp:function Qp(){},
-WB:function WB(){},
-asp:function asp(d){this.a=d},
-aKz(d,e,f,g,h,i){var x,w,v,u
-if(f==null)return h
-x=new A.an0(f,i,g,e)
-w=new A.an_(f,i,g,e)
-switch(d){case C.aG:case C.aM:return w.$1(h)
-case C.V:case C.N:return x.$1(h)
-case null:case void 0:v=w.$1(h)
-h=x.$1(v==null?h:v)
-if(h==null){u=f.aN(i.d)
-x=f.gjk()
-return B.d4(u,x)}return h}},
-aQL(d,e,f,g,h,i){var x,w,v,u,t
-switch(d.a){case 1:x=i.T
-break
-case 0:x=i.v
-break
-default:x=null}w=i.l8(f,0,d,h)
-v=i.l8(f,1,d,h)
-u=x.at
-u.toString
-t=B.aQO(u,w,v)
-if(t==null)return null
-x.u1(t.a,e,g)
-return t.b},
-yb:function yb(){},
-a4l:function a4l(d,e,f,g){var _=this
-_.p1=d
-_.p2=e
-_.c=_.b=_.a=_.CW=_.ay=_.p4=_.p3=null
-_.d=$
-_.e=f
-_.r=_.f=null
-_.w=g
-_.z=_.y=null
-_.Q=!1
-_.as=!0
-_.at=!1},
-aF4:function aF4(d,e){this.a=d
-this.b=e},
-yc:function yc(d,e){var _=this
-_.a=null
-_.b=d
-_.f=_.e=_.c=null
-_.kL$=e},
-p1:function p1(){},
-amY:function amY(d){this.a=d},
-an0:function an0(d,e,f,g){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g},
-an_:function an_(d,e,f,g){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g},
-amZ:function amZ(d){this.a=d},
-amX:function amX(d,e){this.a=d
-this.b=e},
-iU:function iU(d,e){this.a=d
-this.b=e},
-a4m:function a4m(){},
-a5Q:function a5Q(){},
-a5R:function a5R(){},
-aYE(d){return new A.Oj(d)},
-AR:function AR(d,e){this.c=d
-this.a=e},
-Ic:function Ic(){this.d=!0
-this.c=this.a=null},
-atN:function atN(d){this.a=d},
-atO:function atO(d){this.a=d},
-yZ:function yZ(d,e,f){this.c=d
-this.d=e
-this.a=f},
-Oj:function Oj(d){this.a=d},
-Vk:function Vk(d,e){this.z=d
-this.a=e},
-aqm:function aqm(d){this.a=d},
-LJ:function LJ(d,e,f,g,h,i,j,k){var _=this
-_.c=d
-_.e=e
-_.f=f
-_.w=g
-_.x=h
-_.z=i
-_.as=j
-_.a=k},
-a3_:function a3_(d,e,f,g,h,i,j,k,l){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.f=g
-_.r=h
-_.w=i
-_.x=j
-_.y=k
-_.a=l},
-L8:function L8(d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s){var _=this
-_.mx=d
-_.v=e
-_.Y=f
-_.T=g
-_.af=h
-_.a0=i
-_.K=j
-_.J=k
-_.V=l
-_.al=m
-_.ar=n
-_.aJ=o
-_.bF=p
-_.t=!1
-_.ct=q
-_.bL=_.cQ=_.bz=_.cE=_.P=_.cP=null
-_.be=!0
-_.dy=r
-_.b=_.fy=null
-_.c=0
-_.y=_.d=null
-_.z=!0
-_.Q=null
-_.as=!1
-_.at=null
-_.ay=$
-_.ch=s
-_.CW=!1
-_.cx=$
-_.cy=!0
-_.db=!1
-_.dx=$},
-aC2:function aC2(d,e){this.a=d
-this.b=e},
-aQx(){var x=new Float64Array(4)
-x[3]=1
-return new A.oT(x)},
-TA:function TA(d,e,f,g){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g},
-oT:function oT(d){this.a=d}},D,E,G,H
-J=c[1]
-B=c[0]
-C=c[2]
-F=c[58]
-A=a.updateHolder(c[18],A)
-D=c[63]
-E=c[46]
-G=c[56]
-H=c[51]
-A.nG.prototype={
-ep(d){return B.qm(this.a,this.b,d)}}
-A.qu.prototype={
-ep(d){var x=B.iS(this.a,this.b,d)
-x.toString
-return x}}
-A.rK.prototype={
-ep(a8){var x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,a0,a1,a2=new B.bP(new Float64Array(3)),a3=new B.bP(new Float64Array(3)),a4=A.aQx(),a5=A.aQx(),a6=new B.bP(new Float64Array(3)),a7=new B.bP(new Float64Array(3))
-this.a.a_J(a2,a4,a6)
-this.b.a_J(a3,a5,a7)
-x=1-a8
-w=a2.l9(x).W(0,a3.l9(a8))
-v=a4.l9(x).W(0,a5.l9(a8))
-u=new Float64Array(4)
-t=new A.oT(u)
-t.bt(v)
-t.xU()
-s=a6.l9(x).W(0,a7.l9(a8))
-x=new Float64Array(16)
-v=new B.aU(x)
-r=u[0]
-q=u[1]
-p=u[2]
-o=u[3]
-n=r+r
-m=q+q
-l=p+p
-k=r*n
-j=r*m
-i=r*l
-h=q*m
-g=q*l
-f=p*l
-e=o*n
-d=o*m
-a0=o*l
-a1=w.a
-x[0]=1-(h+f)
-x[1]=j+a0
-x[2]=i-d
-x[3]=0
-x[4]=j-a0
-x[5]=1-(k+f)
-x[6]=g+e
-x[7]=0
-x[8]=i+d
-x[9]=g-e
-x[10]=1-(k+h)
-x[11]=0
-x[12]=a1[0]
-x[13]=a1[1]
-x[14]=a1[2]
-x[15]=1
-v.bm(s)
-return v}}
-A.Az.prototype={
-a1(){return new A.Xf(null,null)}}
-A.Xf.prototype={
-mJ(d){var x,w,v,u=this,t=null,s=u.CW
-u.a.toString
-x=y.K
-u.CW=x.a(d.$3(s,t,new A.ati()))
-s=u.cx
-u.a.toString
-w=y.Z
-u.cx=w.a(d.$3(s,t,new A.atj()))
-s=y.Q
-u.cy=s.a(d.$3(u.cy,u.a.y,new A.atk()))
-v=u.db
-u.a.toString
-u.db=s.a(d.$3(v,t,new A.atl()))
-u.dx=y.E.a(d.$3(u.dx,u.a.Q,new A.atm()))
-v=u.dy
-u.a.toString
-u.dy=w.a(d.$3(v,t,new A.atn()))
-v=u.fr
-u.a.toString
-u.fr=y.e.a(d.$3(v,t,new A.ato()))
-v=u.fx
-u.a.toString
-u.fx=x.a(d.$3(v,t,new A.atp()))},
-C(d){var x,w,v,u,t,s,r,q=this,p=null,o=q.geG(),n=q.CW
-n=n==null?p:n.ac(o.gp())
-x=q.cx
-x=x==null?p:x.ac(o.gp())
-w=q.cy
-w=w==null?p:w.ac(o.gp())
-v=q.db
-v=v==null?p:v.ac(o.gp())
-u=q.dx
-u=u==null?p:u.ac(o.gp())
-t=q.dy
-t=t==null?p:t.ac(o.gp())
-s=q.fr
-s=s==null?p:s.ac(o.gp())
-r=q.fx
-r=r==null?p:r.ac(o.gp())
-return B.br(n,q.a.r,C.m,p,u,w,v,p,p,t,x,s,r,p)}}
-A.Dw.prototype={
-a1(){var x=null,w=y.z
-return new A.JQ(new B.aL(x,w),new B.aL(x,w),x,x)}}
-A.JQ.prototype={
-gc3(){var x=this.d
-if(x===$){this.a.toString
-x=A.b4J()
-this.d=x}return x},
-gzF(){var x,w=$.a3.P$.x.i(0,this.e).gO()
-w.toString
-x=y.x.a(w).gq()
-this.a.toString
-return C.T.xu(new B.t(0,0,0+x.a,0+x.b))},
-gBF(){var x=$.a3.P$.x.i(0,this.f).gO()
-x.toString
-x=y.x.a(x).gq()
-return new B.t(0,0,0+x.a,0+x.b)},
-rI(a0,a1){var x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d=this
-if(a1.j(0,C.f)){x=new B.aU(new Float64Array(16))
-x.bt(a0)
-return x}if(d.Q!=null){d.a.toString
-switch(3){case 3:break}}w=new B.aU(new Float64Array(16))
-w.bt(a0)
-w.bG(a1.a,a1.b)
-v=A.aU9(w,d.gBF())
-if(d.gzF().ga1X(0))return w
-x=d.gzF()
-u=d.ay
-t=new B.aU(new Float64Array(16))
-t.dw()
-s=x.c
-r=x.a
-q=s-r
-p=x.d
-x=x.b
-o=p-x
-t.bG(q/2,o/2)
-t.EF(u)
-t.bG(-q/2,-o/2)
-u=new B.bP(new Float64Array(3))
-u.e3(r,x,0)
-u=t.lP(u)
-q=new B.bP(new Float64Array(3))
-q.e3(s,x,0)
-q=t.lP(q)
-x=new B.bP(new Float64Array(3))
-x.e3(s,p,0)
-x=t.lP(x)
-s=new B.bP(new Float64Array(3))
-s.e3(r,p,0)
-s=t.lP(s)
-r=new Float64Array(3)
-new B.bP(r).bt(u)
-u=new Float64Array(3)
-new B.bP(u).bt(q)
-q=new Float64Array(3)
-new B.bP(q).bt(x)
-x=new Float64Array(3)
-new B.bP(x).bt(s)
-s=r[0]
-p=u[0]
-o=q[0]
-n=x[0]
-m=Math.min(s,Math.min(p,Math.min(o,n)))
-r=r[1]
-u=u[1]
-q=q[1]
-x=x[1]
-l=Math.min(r,Math.min(u,Math.min(q,x)))
-k=Math.max(s,Math.max(p,Math.max(o,n)))
-j=Math.max(r,Math.max(u,Math.max(q,x)))
-x=new B.bP(new Float64Array(3))
-x.e3(m,l,0)
-u=new B.bP(new Float64Array(3))
-u.e3(k,l,0)
-s=new B.bP(new Float64Array(3))
-s.e3(k,j,0)
-r=new B.bP(new Float64Array(3))
-r.e3(m,j,0)
-q=new B.bP(new Float64Array(3))
-q.bt(x)
-x=new B.bP(new Float64Array(3))
-x.bt(u)
-u=new B.bP(new Float64Array(3))
-u.bt(s)
-s=new B.bP(new Float64Array(3))
-s.bt(r)
-i=new A.TA(q,x,u,s)
-h=A.aTA(i,v)
-if(h.j(0,C.f))return w
-x=w.yS().a
-u=x[0]
-x=x[1]
-g=a0.qU()
-u-=h.a*g
-x-=h.b*g
-f=new B.aU(new Float64Array(16))
-f.bt(a0)
-s=new B.bP(new Float64Array(3))
-s.e3(u,x,0)
-f.Pz(s)
-e=A.aTA(i,A.aU9(f,d.gBF()))
-if(e.j(0,C.f))return f
-s=e.a===0
-if(!s&&e.b!==0){x=new B.aU(new Float64Array(16))
-x.bt(a0)
-return x}u=s?u:0
-x=e.b===0?x:0
-s=new B.aU(new Float64Array(16))
-s.bt(a0)
-r=new B.bP(new Float64Array(3))
-r.e3(u,x,0)
-s.Pz(r)
-return s},
-Ik(d,e){var x,w,v,u,t,s,r,q=this
-if(e===1){x=new B.aU(new Float64Array(16))
-x.bt(d)
-return x}w=q.gc3().a.qU()
-x=q.gBF()
-v=q.gzF()
-u=q.gBF()
-t=q.gzF()
-s=Math.max(w*e,Math.max((x.c-x.a)/(v.c-v.a),(u.d-u.b)/(t.d-t.b)))
-t=q.a
-r=B.y(s,t.ax,t.at)
-x=new B.aU(new Float64Array(16))
-x.bt(d)
-x.bm(r/w)
-return x},
-amb(d,e,f){var x,w,v,u
-if(e===0){x=new B.aU(new Float64Array(16))
-x.bt(d)
-return x}w=this.gc3().iK(f)
-x=new B.aU(new Float64Array(16))
-x.bt(d)
-v=w.a
-u=w.b
-x.bG(v,u)
-x.EF(-e)
-x.bG(-v,-u)
-return x},
-A5(d){var x
-$label0$0:{x=!0
-if(D.adU===d){x=!1
-break $label0$0}if(D.jP===d){this.a.toString
-break $label0$0}if(D.hl===d||d==null){this.a.toString
-break $label0$0}x=null}return x},
-Ts(d){this.a.toString
-if(Math.abs(d.d-1)>Math.abs(0))return D.jP
-else return D.hl},
-anF(d){var x,w,v=this
-v.a.toString
-x=v.y
-x===$&&B.a()
-w=x.r
-if(w!=null&&w.a!=null){x.ek()
-x=v.y
-x.sp(x.a)
-x=v.r
-if(x!=null)x.a.G(v.gAh())
-v.r=null}x=v.z
-x===$&&B.a()
-w=x.r
-if(w!=null&&w.a!=null){x.ek()
-x=v.z
-x.sp(x.a)
-x=v.w
-if(x!=null)x.a.G(v.gAl())
-v.w=null}v.Q=v.ch=null
-v.at=v.gc3().a.qU()
-v.as=v.gc3().iK(d.b)
-v.ax=v.ay},
-anH(d){var x,w,v,u,t,s,r=this,q=r.gc3().a.qU(),p=r.x=d.c,o=r.gc3().iK(p),n=r.ch
-if(n===D.hl)n=r.ch=r.Ts(d)
-else if(n==null){n=r.Ts(d)
-r.ch=n}if(!r.A5(n)){r.a.toString
-return}switch(r.ch.a){case 1:n=r.at
-n.toString
-r.gc3().sp(r.Ik(r.gc3().a,n*d.d/q))
-x=r.gc3().iK(p)
-n=r.gc3()
-w=r.gc3().a
-v=r.as
-v.toString
-n.sp(r.rI(w,x.a_(0,v)))
-u=r.gc3().iK(p)
-p=r.as
-p.toString
-if(!A.aLT(p).j(0,A.aLT(u)))r.as=u
-break
-case 2:n=d.r
-if(n===0){r.a.toString
-return}w=r.ax
-w.toString
-t=w+n
-r.gc3().sp(r.amb(r.gc3().a,r.ay-t,p))
-r.ay=t
-break
-case 0:if(d.d!==1){r.a.toString
-return}if(r.Q==null){n=r.as
-n.toString
-r.Q=A.b7D(n,o)}n=r.as
-n.toString
-s=o.a_(0,n)
-r.gc3().sp(r.rI(r.gc3().a,s))
-r.as=r.gc3().iK(p)
-break}r.a.toString},
-anD(d){var x,w,v,u,t,s,r,q,p,o,n,m,l=this
-l.a.toString
-l.as=l.ax=l.at=null
-x=l.r
-if(x!=null)x.a.G(l.gAh())
-x=l.w
-if(x!=null)x.a.G(l.gAl())
-x=l.y
-x===$&&B.a()
-x.sp(x.a)
-x=l.z
-x===$&&B.a()
-x.sp(x.a)
-if(!l.A5(l.ch)){l.Q=null
-return}$label0$0:{w=l.ch
-if(D.hl===w){x=d.a.a
-if(x.gdj()<50){l.Q=null
-return}v=l.gc3().a.yS().a
-u=v[0]
-v=v[1]
-l.a.toString
-t=B.ad5(0.0000135,u,x.a,0)
-l.a.toString
-s=B.ad5(0.0000135,v,x.b,0)
-x=x.gdj()
-l.a.toString
-r=A.aTF(x,0.0000135,10)
-x=t.gtN()
-q=s.gtN()
-p=y.L
-o=B.bt(C.dm,l.y,null)
-l.r=new B.ax(o,new B.au(new B.h(u,v),new B.h(x,q),p),p.h("ax<am.T>"))
-l.y.e=B.dy(0,C.d.aQ(r*1000),0)
-o.S(l.gAh())
-l.y.bW()
-break $label0$0}if(D.jP===w){x=d.b
-v=Math.abs(x)
-if(v<0.1){l.Q=null
-return}n=l.gc3().a.qU()
-l.a.toString
-m=B.ad5(0.0026999999999999997,n,x/10,0)
-l.a.toString
-r=A.aTF(v,0.0000135,0.1)
-x=m.eT(r)
-v=y.t
-u=B.bt(C.dm,l.z,null)
-l.w=new B.ax(u,new B.au(n,x,v),v.h("ax<am.T>"))
-l.z.e=B.dy(0,C.d.aQ(r*1000),0)
-u.S(l.gAl())
-l.z.bW()
-break $label0$0}break $label0$0}},
-alA(d){var x,w,v,u,t,s,r,q=this,p=d.gds(),o=d.gbi()
-if(y.C.b(d)){x=d.gcq()===C.b0
-if(x)q.a.toString
-if(x){q.a.toString
-x=o.W(0,d.glW())
-w=d.glW()
-v=B.rZ(d.gc2(),null,w,x)
-if(!q.A5(D.hl)){q.a.toString
-return}u=q.gc3().iK(p)
-t=q.gc3().iK(p.a_(0,v))
-q.gc3().sp(q.rI(q.gc3().a,t.a_(0,u)))
-q.a.toString
-return}if(d.glW().b===0)return
-x=d.glW()
-q.a.toString
-s=Math.exp(-x.b/200)}else if(y.X.b(d))s=d.gfJ()
-else return
-q.a.toString
-if(!q.A5(D.jP)){q.a.toString
-return}u=q.gc3().iK(p)
-q.gc3().sp(q.Ik(q.gc3().a,s))
-r=q.gc3().iK(p)
-q.gc3().sp(q.rI(q.gc3().a,r.a_(0,u)))
-q.a.toString},
-aiJ(){var x,w,v,u,t,s=this,r=s.y
-r===$&&B.a()
-r=r.r
-if(!(r!=null&&r.a!=null)){s.Q=null
-r=s.r
-if(r!=null)r.a.G(s.gAh())
-s.r=null
-r=s.y
-r.sp(r.a)
-return}r=s.gc3().a.yS().a
-x=r[0]
-r=r[1]
-w=s.gc3()
-v=s.gc3().a
-u=s.gc3()
-t=s.r
-w.sp(s.rI(v,u.iK(t.b.ac(t.a.gp())).a_(0,s.gc3().iK(new B.h(x,r)))))},
-ajR(){var x,w,v,u,t,s=this,r=s.z
-r===$&&B.a()
-r=r.r
-if(!(r!=null&&r.a!=null)){s.Q=null
-r=s.w
-if(r!=null)r.a.G(s.gAl())
-s.w=null
-r=s.z
-r.sp(r.a)
-return}r=s.w
-x=r.b.ac(r.a.gp())
-r=s.gc3().a.qU()
-w=s.gc3()
-v=s.x
-v===$&&B.a()
-u=w.iK(v)
-s.gc3().sp(s.Ik(s.gc3().a,x/r))
-t=s.gc3().iK(s.x)
-s.gc3().sp(s.rI(s.gc3().a,t.a_(0,u)))},
-akW(){this.a4(new A.az0())},
-ai(){var x=this,w=null
-x.au()
-x.y=B.bh(C.A,w,w,w,w,x)
-x.z=B.bh(C.A,w,w,w,w,x)
-x.gc3().S(x.gUy())},
-aF(d){this.aM(d)
-this.a.toString
-return},
-l(){var x=this,w=x.y
-w===$&&B.a()
-w.l()
-w=x.z
-w===$&&B.a()
-w.l()
-x.gc3().G(x.gUy())
-x.a.toString
-w=x.gc3()
-w.J$=$.al()
-w.K$=0
-x.aaK()},
-C(d){var x,w,v,u=this,t=null
-u.a.toString
-x=u.gc3().a
-w=u.a.w
-v=new A.a_n(w,u.e,C.z,!0,x,t,t)
-return B.rC(C.bE,B.fI(C.ay,v,C.a3,!1,t,t,t,t,t,t,t,t,t,u.ganC(),u.ganE(),u.ganG(),t,t,t,t,t,t,t,t,t,t,t,!1,new B.h(0,-0.005)),u.f,t,t,t,u.galz(),t)}}
-A.a_n.prototype={
-C(d){var x=this,w=B.Wu(x.w,new B.k4(x.c,x.d),null,x.r,!0)
-return B.qz(w,x.e,null)}}
-A.Ww.prototype={
-iK(d){var x=this.a,w=new B.aU(new Float64Array(16))
-if(w.fB(x)===0)B.ad(B.hq(x,"other","Matrix cannot be inverted"))
-x=new B.bP(new Float64Array(3))
-x.e3(d.a,d.b,0)
-x=w.lP(x).a
-return new B.h(x[0],x[1])}}
-A.Jz.prototype={
-L(){return"_GestureType."+this.b}}
-A.akJ.prototype={
-L(){return"PanAxis."+this.b}}
-A.Nb.prototype={
-bo(){this.cd()
-this.c4()
-this.dN()},
-l(){var x=this,w=x.aI$
-if(w!=null)w.G(x.gdE())
-x.aI$=null
-x.ap()}}
-A.WA.prototype={}
-A.Wz.prototype={
-pB(d,e){var x,w,v,u,t,s=null
-if(e.a<0)return s
-if(e.b<0)return s
-x=null
-try{x=this.r.$2(d,e)}catch(u){w=B.ai(u)
-v=B.aC(u)
-x=B.aTs(w,v)}if(x==null)return s
-t=x
-x=new B.fN(t,s)
-t=x
-x=new B.qp(new B.ua(t,s),s)
-return x}}
-A.a9x.prototype={
-L(){return"DiagonalDragBehavior."+this.b}}
-A.HK.prototype={
-a1(){var x=y.q
-return new A.WC(new B.aL(null,x),new B.aL(null,x))},
-aFp(d,e,f){return this.f.$3(d,e,f)}}
-A.WC.prototype={
-ai(){var x=this,w=x.a
-if(w.e.b==null)x.d=B.iw(null,0,!0)
-if(w.d.b==null)x.e=B.iw(null,0,!0)
-x.au()},
-aF(d){var x,w,v=this
-v.aM(d)
-x=d.e.b
-w=v.a.e.b
-if(x!=w)if(x==null){v.d.l()
-v.d=null}else if(w==null)v.d=B.iw(null,0,!0)
-x=d.d.b
-w=v.a.d.b
-if(x!=w)if(x==null){v.e.l()
-v.e=null}else if(w==null)v.e=B.iw(null,0,!0)},
-C(d){var x,w,v=this,u=null,t=v.a,s=t.e,r=s.b
-if(r==null){r=v.d
-r.toString}x=s.d
-if(x==null)x=C.z
-w=t.z
-return new A.a4k(new B.mL(new A.Mz(t.c,v.r,s.a,r,s.c,new A.asr(v),u,!1,t.y,u,w,"OuterVerticalTwoDimensionalScrollable",u,x,v.f),u,u),u)},
-l(){var x=this.d
-if(x!=null)x.l()
-x=this.e
-if(x!=null)x.l()
-this.ap()}}
-A.a4k.prototype={
-cc(d){return!1}}
-A.Mz.prototype={
-a1(){var x=null,w=y.z
-return new A.MA(new B.zz($.al()),new B.aL(x,w),new B.aL(x,y.a),new B.aL(x,w),C.fR,x,B.u(y.N,y.P),x,!0,x,x,x)}}
-A.MA.prototype={
-IB(d,e,f,g,h,i){return new B.aq(B.b([],y.M),this)},
-Hq(d){var x=this.k3.a_(0,d),w=Math.abs(x.a)-Math.abs(x.b)
-if(Math.abs(w)>=18)this.k2=w>0?C.ac:C.H
-else this.k2=null},
-vO(d){var x=this.a
-x.toString
-y.A.a(x)
-switch(x.ay.a){case 0:break
-case 1:case 2:case 3:x=x.ch.gN()
-x.toString
-x.vO(d)
-break}this.a8J(d)},
-pm(d){var x,w,v=this,u=d.b
-v.k3=u
-x=v.a
-x.toString
-w=y.A
-w.a(x)
-switch(x.ay.a){case 0:break
-case 3:u=x.ch.gN()
-u.toString
-u.pm(d)
-break
-case 1:case 2:v.Hq(u)
-switch(v.k2){case null:case void 0:u=v.a
-u.toString
-u=w.a(u).ch.gN()
-u.toString
-u.pm(d)
-break
-case C.ac:u=v.a
-u.toString
-u=w.a(u).ch.gN()
-u.toString
-u.pm(d)
-return
-case C.H:break}break}v.a8L(d)},
-pn(d){var x,w=this,v=d.a,u=d.b,t=u.b,s=d.d,r=d.e,q=new B.fh(v,new B.h(0,t),t,s,r)
-u=u.a
-x=new B.fh(v,new B.h(u,0),u,s,r)
-v=w.a
-v.toString
-u=y.A
-u.a(v)
-switch(v.ay.a){case 0:w.Gi(q)
-return
-case 3:v=v.ch.gN()
-v.toString
-v.pn(x)
-w.Gi(q)
-return
-case 2:w.Hq(s)
-w.k3=s
-break
-case 1:if(w.k2==null&&w.k3!=null)w.Hq(s)
-break}switch(w.k2){case null:case void 0:v=w.a
-v.toString
-v=u.a(v).ch.gN()
-v.toString
-v.pn(x)
-break
-case C.ac:v=w.a
-v.toString
-v=u.a(v).ch.gN()
-v.toString
-v.pn(x)
-return
-case C.H:break}w.Gi(q)},
-vP(d){var x,w,v,u=this
-u.k2=u.k3=null
-x=d.a.a
-w=x.a
-v=x.b
-x=u.a
-x.toString
-y.A.a(x)
-switch(x.ay.a){case 0:break
-case 1:case 2:case 3:x=x.ch.gN()
-x.toString
-x.vP(new B.eF(new B.f4(new B.h(w,0)),w,C.f))
-break}u.a8K(new B.eF(new B.f4(new B.h(0,v)),v,C.f))},
-nM(){var x,w=this
-w.k2=w.k3=null
-x=w.a
-x.toString
-y.A.a(x)
-switch(x.ay.a){case 0:break
-case 1:case 2:case 3:x=x.ch.gN()
-x.toString
-x.nM()
-break}w.a8I()},
-uN(d){var x=this,w=x.a
-w.toString
-switch(y.A.a(w).ay.a){case 0:x.Qz(d)
-return
-case 1:case 2:case 3:if(d){x.at=B.aA([C.hg,new B.c2(new A.aFl(x),new A.aFm(x),y.i)],y.u,y.s)
-x.nM()
-x.ay=!0
-x.ch=B.bb(x.a.c)
-w=x.Q
-if(w.gN()!=null)w.gN().NX(x.at)}return}},
-GC(d,e){var x=this,w=x.a.c,v=x.gpl(),u=x.a.at,t=x.w
-t===$&&B.a()
-return t.wo(d,e,new B.mP(w,v,null,u))}}
-A.tX.prototype={
-a1(){var x=null,w=y.z
-return new A.a__(new B.zz($.al()),new B.aL(x,w),new B.aL(x,y.a),new B.aL(x,w),C.fR,x,B.u(y.N,y.P),x,!0,x,x,x)}}
-A.a__.prototype={
-ba(){var x,w=this.c
-w.toString
-x=B.hc(w,null)
-x.toString
-this.k2=x
-this.a8M()},
-IB(d,e,f,g,h,i){var x=this.d.a0i(d,e,f,g,h),w=this.k2
-w===$&&B.a()
-return new B.aq(B.b([x,w.d.a0i(d,e,f,g,h)],y.M),this.k2)},
-uN(d){var x=this,w=x.a
-w.toString
-y.Y.a(w)
-switch(w.ch.a){case 0:x.Qz(d)
-return
-case 1:case 2:case 3:if(d){x.at=C.fR
-w.ay.gN().uN(!0)
-x.nM()
-x.ay=!0
-x.ch=B.bb(x.a.c)
-w=x.Q
-if(w.gN()!=null)w.gN().NX(x.at)}return}},
-GC(d,e){var x=this,w=x.a.c,v=x.gpl(),u=x.a.at,t=x.w
-t===$&&B.a()
-return t.wo(d,e,new B.mP(w,v,null,u))}}
-A.Qp.prototype={
-qT(d){return C.B},
-ta(d,e,f,g,h,i,j,k){return C.a1},
-wn(d,e,f,g){return C.a1},
-qS(d,e){return C.f}}
-A.WB.prototype={
-C(d){var x,w,v,u,t,s,r,q,p=this,o=null
-switch(1){case 1:x=p.w
-break}w=p.f
-w=x.b==null&&B.aKs(d,C.H)
-if(w){v=B.wU(d)
-v.toString
-u=x.a
-t=x.c
-x=x.d
-s=new B.mP(u,v,t,x)}else s=x
-switch(1){case 1:x=p.x
-break}switch(1){case 1:break}r=new A.HK(p.e,x,s,p.gavg(),C.ay,C.a3,o)
-q=w?B.aKr(r):r
-if(p.z===C.mJ)return new B.di(new A.asp(d),q,o,y.n)
-return q}}
-A.yb.prototype={
-cl(){var x=y.h
-return new A.a4l(B.u(y.g,x),B.u(y.B,x),this,C.ag)}}
-A.a4l.prototype={
-gO(){return y.D.a(B.aG.prototype.gO.call(this))},
-iF(){this.v_()
-var x=y.D.a(B.aG.prototype.gO.call(this))
-x.be=!0
-x.fM()},
-hV(d){this.iT(d)
-this.p1.F(0,d.c)
-if(d.gaY().a!=null)this.p2.F(0,d.gaY().a)},
-hD(d,e){var x=y.D.a(B.aG.prototype.gO.call(this))
-x.ar.m(0,e,d)
-x.ht(d)},
-hE(d,e,f){y.D.a(B.aG.prototype.gO.call(this)).amv(d,e,f)},
-i5(d,e){y.D.a(B.aG.prototype.gO.call(this)).asL(d,e)},
-bl(d){var x=this.p1
-new B.aV(x,B.k(x).h("aV<2>")).aw(0,d)},
-acB(d){this.f.pD(this,new A.aF4(this,d))},
-aq8(d,e){var x,w,v=this,u=d.a
-if(u!=null){x=v.p2.F(0,u)
-if(x!=null)v.p1.F(0,x.c)
-return x}w=v.p1.i(0,e)
-if(w!=null&&w.gaY().a==null)return v.p1.F(0,e)
-return null},
-Wk(d){var x,w,v=this,u=v.p1.F(0,d),t=v.p3
-t.toString
-u.toString
-t.m(0,d,u)
-if(u.gaY().a!=null){t=v.p4
-t.toString
-x=u.gaY().a
-x.toString
-w=v.p2.F(0,u.gaY().a)
-w.toString
-t.m(0,x,w)}},
-afR(){var x,w,v=this,u=null
-for(x=v.p1,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();){w=x.d
-if(w.gaY().a==null)v.dg(w,u,u)}for(x=v.p2,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();)v.dg(x.d,u,u)
-x=v.p3
-x.toString
-v.p1=x
-x=v.p4
-x.toString
-v.p2=x
-v.p4=v.p3=null},
-$iaRY:1}
-A.yc.prototype={
-gqr(){if(J.e(this.c,C.B)){var x=this.c
-x=x.b!==0||x.a!==0}else x=!0
-return x},
-k(d){var x,w,v=this,u=v.b.k(0),t=B.o(v.a),s=B.o(v.f)
-if(v.c==null)x="not visible; "
-else{x=!v.gqr()?"not ":""
-x=x+"visible - paintExtent="+B.o(v.c)+"; "}w=v.kL$?"keepAlive; ":""
-return"vicinity="+u+"; layoutOffset="+t+"; paintOffset="+s+"; "+x+w}}
-A.p1.prototype={
-saA3(d){var x=this,w=x.v
-if(w===d)return
-if(x.y!=null)w.G(x.gjh())
-x.v=d
-if(x.y!=null)d.S(x.gjh())
-x.fM()},
-saA2(d){if(this.Y===d)return
-this.Y=d
-this.fM()},
-saFn(d){var x=this,w=x.T
-if(w===d)return
-if(x.y!=null)w.G(x.gjh())
-x.T=d
-if(x.y!=null)d.S(x.gjh())
-x.fM()},
-saFm(d){if(this.af===d)return
-this.af=d
-this.fM()},
-swM(d){var x,w=this,v=w.a0
-if(v===d)return
-if(w.y!=null)v.G(w.gAf())
-x=w.a0
-w.a0=d
-if(w.y!=null)d.S(w.gAf())
-B.x(w.a0)
-B.x(x)
-w.be=!0
-w.fM()},
-saBr(d){if(this.K===d)return
-this.K=d
-this.fM()},
-sKq(d){if(this.J==d)return
-this.J=d
-this.fM()},
-sj9(d){var x=this
-if(x.V===d)return
-x.V=d
-x.aA()
-x.bf()},
-gez(){return!0},
-gjt(){return!0},
-ahS(){this.be=!0
-this.fM()
-return null},
-ea(d){if(!(d.b instanceof A.yc))d.b=new A.yc(D.HN,!1)},
-ao(d){var x,w=this
-w.dA(d)
-x=w.gjh()
-w.v.S(x)
-w.T.S(x)
-w.a0.S(w.gAf())
-for(x=w.ar,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();)x.d.ao(d)
-for(x=w.bF,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();)x.d.ao(d)},
-ad(){var x,w=this
-w.dm()
-x=w.gjh()
-w.v.G(x)
-w.T.G(x)
-w.a0.G(w.gAf())
-for(x=w.ar,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();)x.d.ad()
-for(x=w.bF,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();)x.d.ad()},
-eQ(){for(var x=this.ar,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>"));x.B();)x.d.eQ()
-x=this.bF
-new B.aV(x,B.k(x).h("aV<2>")).aw(0,this.gEs())},
-bl(d){var x,w,v=this.cQ
-for(x=y.m;v!=null;){d.$1(v)
-w=v.b
-w.toString
-v=x.a(w).e}x=this.bF
-new B.aV(x,B.k(x).h("aV<2>")).aw(0,d)},
-eS(d){var x,w,v=this.cQ
-for(x=y.m;v!=null;){w=v.b
-w.toString
-x.a(w)
-d.$1(v)
-v=w.e}},
-cp(d){return new B.C(B.y(1/0,d.a,d.b),B.y(1/0,d.c,d.d))},
-cR(d,e){var x,w,v,u,t
-for(x=this.ar,x=new B.aX(x,x.r,x.e,B.k(x).h("aX<2>")),w=y.m;x.B();){v=x.d
-u=v.b
-u.toString
-w.a(u)
-if(J.e(u.c,C.B)){t=u.c
-t=t.b!==0||t.a!==0}else t=!0
-if(!t)continue
-if(d.j4(new A.amY(v),u.f,e))return!0}return!1},
-qD(){var x=this,w=x.fy!=null?x.gq():null
-x.Qq()
-x.v.py(x.gq().a)
-x.T.py(x.gq().b)
-J.e(w,x.gq())},
-l8(d,e,f,g){var x,w,v,u,t,s,r,q,p,o,n=this,m=null,l=f.a
-switch(l){case 1:x=n.T.at
-x.toString
-x=new B.aq(x,n.af)
-break
-case 0:x=n.v.at
-x.toString
-x=new B.aq(x,n.Y)
-break
-default:x=m}w=x.a
-v=m
-u=x.b
-v=u
-if(g==null)g=d.gjk()
-for(t=d;t.gb_()!==n;t=x){x=t.gb_()
-x.toString}y.x.a(t)
-s=B.d4(d.aN(t),g)
-switch(v){case C.V:x=t.gq().b-s.d
-break
-case C.aG:x=t.gq().a-s.c
-break
-case C.aM:x=s.a
-break
-case C.N:x=s.b
-break
-default:x=m}r=t.b
-r.toString
-r=y.m.a(r).f
-r.toString
-switch(v){case C.V:r=n.gq().b-r.b-t.gq().b
-break
-case C.aG:r=n.gq().a-r.a-t.gq().a
-break
-case C.aM:r=r.a
-break
-case C.N:r=r.b
-break
-default:r=m}q=B.d4(d.aN(n),g)
-switch(l){case 0:p=n.gq().a-(s.c-s.a)
-break
-case 1:p=n.gq().b-(s.d-s.b)
-break
-default:p=m}o=w+x+r-p*e
-switch(l){case 0:l=n.v.at
-l.toString
-l-=o
-break
-case 1:l=n.T.at
-l.toString
-l-=o
-break
-default:l=m}switch(v){case C.V:l=q.bG(0,-l)
-break
-case C.N:l=q.bG(0,l)
-break
-case C.aG:l=q.bG(-l,0)
-break
-case C.aM:l=q.bG(l,0)
-break
-default:l=m}return new B.lm(o,l)},
-P1(d,e,f){return this.l8(d,e,f,null)},
-cB(d,e,f,g){var x,w,v,u,t,s,r,q,p,o,n=this,m=null
-$label0$0:{x=!0
-w=!0
-v=!0
-if(v){u=!0
-t=!0
-s=!0}else{t=m
-u=t
-s=!1}r=m
-if(s)break $label0$0
-q=!w
-s=q
-if(s)if(v){s=u
-p=v}else{t=!0
-p=!0
-s=!0}else{p=v
-s=!1}if(s){r=n.af
-break $label0$0}if(x){if(p)s=t
-else{t=!0
-p=!0
-s=!0}o=!s
-s=o}else{o=m
-s=!1}if(s){r=n.Y
-break $label0$0}if(q)if(x)s=o
-else{o=!(!p||t)
-s=o}else s=!1
-if(s)return n.rg(d,e,f,g)}n.rg(d,m,f,A.aKz(r,d,e,f,g,n))},
-kp(){return this.cB(C.at,null,C.w,null)},
-iP(d){return this.cB(C.at,null,C.w,d)},
-js(d,e,f){return this.cB(d,null,e,f)},
-iQ(d,e){return this.cB(C.at,d,C.w,e)},
-a2m(d){this.be=this.be||d
-this.fM()},
-a3(){return this.a2m(!1)},
-aX(){var x,w,v,u,t,s,r=this
-r.bL=r.cQ=null
-r.aJ.a5(0)
-x=r.al
-w=y.h
-x.p3=B.u(y.g,w)
-x.p4=B.u(y.B,w)
-w=r.v.at
-w.toString
-x=r.T.at
-x.toString
-v=r.gq()
-u=r.gq()
-t=r.ava(D.HM)
-t.bV(C.dh,!0)
-s=t.b
-s.toString
-y.m.a(s).a=new B.h(-w,-x)
-r.v.nW(0,B.y(t.gq().a-v.a,0,1/0))
-r.T.nW(0,B.y(t.gq().b-u.b,0,1/0))
-r.be=!1
-r.ad8()
-r.qn(new A.amZ(r),y.k)},
-ad8(){var x,w,v,u,t=this,s=t.ar,r=B.k(s).h("aV<2>"),q=t.aJ,p=B.k(q).h("aV<2>")
-p=B.dr(new B.aV(s,r),r.h("B.E")).h_(B.dr(new B.aV(q,p),p.h("B.E")))
-x=B.a4(p,B.k(p).c)
-for(s=x.length,r=y.m,q=t.bF,p=t.al,w=0;w<x.length;x.length===s||(0,B.G)(x),++w){v=x[w]
-u=v.b
-u.toString
-r.a(u)
-if(u.kL$){q.m(0,u.b,v)
-p.Wk(u.b)}}},
-apG(){var x,w,v,u,t=this,s=null
-switch(t.K.a){case 1:x=t.cE
-x.toString
-w=x
-while(!0){x=t.bz
-x.toString
-if(!(w<=x))break
-x=t.cP
-x.toString
-v=x
-while(!0){x=t.P
-x.toString
-if(!(v<=x))break
-u=t.RZ(new A.iU(v,w),s)
-s=u==null?s:u;++v}++w}break
-case 0:x=t.cP
-x.toString
-w=x
-while(!0){x=t.P
-x.toString
-if(!(w<=x))break
-x=t.cE
-x.toString
-v=x
-while(!0){x=t.bz
-x.toString
-if(!(v<=x))break
-u=t.RZ(new A.iU(w,v),s)
-s=u==null?s:u;++v}++w}break}t.bL=s
-if(s!=null){x=s.b
-x.toString
-y.m.a(x).e=null}t.bz=t.cE=t.P=t.cP=null},
-RZ(d,e){var x,w,v,u=this,t=u.ar
-if(t.aq(d)){x=t.i(0,d)
-t=x.b
-t.toString
-w=y.m
-w.a(t)
-v=t.a
-v.toString
-t.c=u.aw8(v,x.gq())
-v=t.a
-v.toString
-t.f=u.aw7(x,v)
-u.t=u.t||!J.e(t.a,t.c)||!t.gqr()
-if(e==null)u.cQ=x
-else{t=e.b
-t.toString
-w.a(t).e=x
-t=x.b
-t.toString
-w.a(t)}return x}return null},
-ava(d){var x,w,v=this,u=v.cP,t=!0
-if(u!=null)if(v.P!=null)t=v.bz==null
-x=d.a
-w=d.b
-if(t){v.P=v.cP=x
-v.bz=v.cE=w}else{v.cP=Math.min(x,u)
-u=v.P
-u.toString
-v.P=Math.max(x,u)
-u=v.cE
-u.toString
-v.cE=Math.min(w,u)
-u=v.bz
-u.toString
-v.bz=Math.max(w,u)}if(!v.be)u=!v.ar.aq(d)&&!v.bF.aq(d)
-else u=!0
-if(u)v.qn(new A.amX(v,d),y.k)
-else{v.bF.F(0,d)
-v.al.Wk(d)}u=v.ar
-if(!u.aq(d))return null
-u=u.i(0,d)
-u.toString
-v.aJ.m(0,d,u)
-t=u.b
-t.toString
-y.m.a(t).b=d
-return u},
-aw8(d,e){var x,w,v,u=this
-if(e.j(0,C.B)||e.b===0||e.a===0)return C.B
-x=d.a
-if(x<0){w=x+e.a
-if(w<=0)return C.B}else if(x>=u.gq().a)return C.B
-else{w=e.a
-if(x+w>u.gq().a)w=u.gq().a-x}x=d.b
-if(x<0){v=x+e.b
-if(v<=0)return C.B}else if(x>=u.gq().b)return C.B
-else{v=e.b
-if(x+v>u.gq().b)v=u.gq().b-x}return new B.C(w,v)},
-aw7(d,e){var x,w,v,u=this,t="This should not happen",s=u.Y
-$label0$0:{if(C.aM===s){x=e.a
-break $label0$0}if(C.aG===s){x=u.gq().a-(e.a+d.gq().a)
-break $label0$0}x=C.V===s||C.N===s?B.ad(B.dO(t)):null}w=u.af
-$label1$1:{if(C.V===w){v=u.gq().b-(e.b+d.gq().b)
-break $label1$1}if(C.N===w){v=e.b
-break $label1$1}v=C.aM===w||C.aG===w?B.ad(B.dO(t)):null}return new B.h(x,v)},
-aB(d,e){var x,w,v,u=this
-if(u.ar.a===0)return
-x=u.t&&u.V!==C.m
-w=u.ct
-if(x){x=u.cx
-x===$&&B.a()
-v=u.gq()
-w.saz(d.iG(x,e,new B.t(0,0,0+v.a,0+v.b),u.gaoo(),u.V,w.a))}else{w.saz(null)
-u.Vx(d,e)}},
-Vx(d,e){var x,w,v,u,t,s=this.cQ
-for(x=y.m,w=e.a,v=e.b;s!=null;){u=s.b
-u.toString
-x.a(u)
-if(J.e(u.c,C.B)){t=u.c
-t=t.b!==0||t.a!==0}else t=!0
-if(t){t=u.f
-d.cz(s,new B.h(w+t.a,v+t.b))}s=u.e}},
-amv(d,e,f){var x,w=d.b
-w.toString
-y.m.a(w)
-if(!(w.kL$&&!w.gqr())){w=this.ar
-if(w.i(0,e)===d)w.F(0,e)
-w.m(0,f,d)
-return}x=this.bF
-if(x.i(0,w.b)===d)x.F(0,w.b)
-x.m(0,w.b,d)},
-asL(d,e){var x,w=this,v=d.b
-v.toString
-y.m.a(v)
-if(!(v.kL$&&!v.gqr())){x=w.ar
-if(x.i(0,e)===d)x.F(0,e)
-x=w.bF
-if(x.i(0,v.b)===d)x.F(0,v.b)
-w.jd(d)
-return}w.bF.F(0,v.b)
-w.jd(d)},
-b3(d){return 0},
-b1(d){return 0},
-b2(d){return 0},
-b8(d){return 0},
-cI(d,e){var x,w=d.b
-w.toString
-x=y.m.a(w).f
-e.bG(x.a,x.b)},
-l(){this.ct.saz(null)
-this.eF()},
-$ioZ:1}
-A.iU.prototype={
-j(d,e){if(e==null)return!1
-return e instanceof A.iU&&e.a===this.a&&e.b===this.b},
-gD(d){return B.X(this.a,this.b,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a,C.a)},
-bp(d,e){var x=this.a,w=e.a
-if(x===w)return this.b-e.b
-return x-w},
-k(d){return"(xIndex: "+this.a+", yIndex: "+this.b+")"},
-$ibZ:1}
-A.a4m.prototype={}
-A.a5Q.prototype={}
-A.a5R.prototype={}
-A.AR.prototype={
-a1(){return new A.Ic()}}
-A.Ic.prototype={
-LR(d){this.a4(new A.atN(this))},
-aBN(){this.a4(new A.atO(this))},
-Fc(d){var x=null,w=B.cw(this),v=this.a.c
-return B.aJQ(new A.Az(v,x,x,C.Q,C.c3,x,x),x,x,x,"art_art_"+w,!1)},
-C(d){var x,w,v,u=this,t=null,s=y.l,r=B.b7(d,t,s).w.a.a,q=B.b7(d,t,s).w.a.b
-if(u.d){s=B.cw(u)
-return B.fI(t,new B.az(r,q,B.cG(new A.yZ(G.Vq(H.QL(u.Fc(d),C.oe)),!0,new B.Q("art_"+s,y.O)),t,t),t),C.a3,!1,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,u.gaBM(),t,t,t,t,t,t,!1,C.b7)}else{x=B.T(d).w
-s=x===C.a7||x===C.Z||x===C.ba
-w=y.O
-v=u.gLQ(u)
-if(s){s=B.cw(u)
-return new B.az(r,q,new A.Dw(new B.p6(C.nl,t,B.fI(t,new A.yZ(u.Fc(d),!1,new B.Q("art_"+s,w)),C.a3,!1,t,v,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,!1,C.b7),t,new A.Qp(),t,t),1.5,0.333,t),t)}else{s=B.cw(u)
-return new B.az(r,q,new A.Vk(B.cG(new B.p6(C.nl,t,B.fI(t,new A.yZ(u.Fc(d),!1,new B.Q("art_"+s,w)),C.a3,!1,t,v,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,!1,C.b7),t,new A.Qp(),t,t),t,t),t),t)}}}}
-A.yZ.prototype={
-C(d){var x=null,w=this.d,v=w?D.Jh:D.IQ
-return B.br(C.v,this.c,C.m,x,x,new B.bB(v,x,B.dK(w?D.JL:D.K_,-1,15),x,x,x,C.S),x,x,x,D.LF,x,x,x,x)}}
-A.Oj.prototype={
-bN(d){return new A.AR(this.QA(d,C.a2),null)}}
-A.Vk.prototype={
-C(d){var x=null,w={}
-w.a=this.z
-return new A.LJ(new A.Wz(new A.aqm(w),$.al()),D.KK,x,new B.mP(C.N,x,x,C.z),new B.mP(C.aM,x,x,C.z),C.jg,C.z,x)}}
-A.LJ.prototype={
-avh(d,e,f){var x=this
-return new A.a3_(e,x.w.a,f,x.x.a,C.H,null,x.as,x.c,null)}}
-A.a3_.prototype={
-aD(d){var x,w,v,u,t=this
-y.T.a(d)
-x=y.I
-w=B.a7(x)
-v=y.g
-u=y.x
-x=B.a7(x)
-x=new A.L8(w,t.e,t.f,t.c,t.d,t.y,t.r,250,t.x,d,B.u(v,u),B.u(v,u),B.u(v,u),x,new B.aE(),B.a7(y.v))
-x.aC()
-return x},
-aH(d,e){var x=this
-e.saA3(x.e)
-e.saA2(x.f)
-e.saFn(x.c)
-e.saFm(x.d)
-e.saBr(x.r)
-e.sKq(x.w)
-e.sj9(x.x)
-e.swM(x.y)}}
-A.L8.prototype={
-l(){this.mx.saz(null)
-this.a8f()},
-X1(d){var x,w,v=this
-switch(v.V.a){case 0:return!1
-default:x=d.a
-if(!(x<0)){w=d.b
-x=w<0||x+v.cQ.gq().a>v.gq().a||w+v.cQ.gq().b>v.gq().b}else x=!0
-return x}},
-aB(d,e){var x,w,v,u,t=this,s=t.cQ
-if(s==null)return
-x=s.b
-x.toString
-x=y.m.a(x).f
-x.toString
-w=new A.aC2(s,x)
-v=t.mx
-if(t.X1(x)){x=t.cx
-x===$&&B.a()
-u=t.gq()
-v.saz(d.iG(x,e,new B.t(0,0,0+u.a,0+u.b),w,t.V,v.a))}else{v.saz(null)
-w.$2(d,e)}},
-cB(d,e,f,g){var x,w,v,u=this
-A.aKz(C.aM,d,e,f,null,u)
-x=A.aKz(C.N,d,e,f,null,u)
-if(x==null&&e instanceof B.v){w=u.P1(e,0,C.ac)
-v=u.P1(e,0,C.H)
-if(w.a===0&&v.a===0){w=e.gq()
-x=new B.t(0,0,0+w.a,0+w.b)}}u.a8g(d,null,f,x)},
-kp(){return this.cB(C.at,null,C.w,null)},
-iP(d){return this.cB(C.at,null,C.w,d)},
-js(d,e,f){return this.cB(d,null,e,f)},
-iQ(d,e){return this.cB(C.at,d,C.w,e)},
-lu(d){var x=!1
-if(d instanceof B.v){x=d.b
-x.toString
-x=y.m.a(x).f
-x.toString
-x=this.X1(x)}if(x){x=this.gq()
-return new B.t(0,0,0+x.a,0+x.b)}return null},
-CC(d){var x,w,v,u=this,t=B.y(u.cQ.gq().a-u.gq().a,0,1/0),s=B.y(u.cQ.gq().b-u.gq().b,0,1/0),r=u.v.at
-r.toString
-x=u.T.at
-x.toString
-u.gq()
-w=u.v.at
-w.toString
-u.gq()
-v=u.T.at
-v.toString
-return new B.t(0-w,0-v,0+u.gq().a+(t-r),0+u.gq().b+(s-x))}}
-A.TA.prototype={}
-A.oT.prototype={
-bt(d){var x=d.a,w=this.a,v=x[0]
-w.$flags&2&&B.aF(w)
-w[0]=v
-w[1]=x[1]
-w[2]=x[2]
-w[3]=x[3]},
-a5T(d){var x,w,v,u,t,s=d.a,r=s[0],q=s[4],p=s[8],o=0+r+q+p
-if(o>0){x=Math.sqrt(o+1)
-r=this.a
-r.$flags&2&&B.aF(r)
-r[3]=x*0.5
-x=0.5/x
-r[0]=(s[5]-s[7])*x
-r[1]=(s[6]-s[2])*x
-r[2]=(s[1]-s[3])*x}else{if(r<q)w=q<p?2:1
-else w=r<p?2:0
-v=(w+1)%3
-u=(w+2)%3
-r=w*3
-q=v*3
-p=u*3
-x=Math.sqrt(s[r+w]-s[q+v]-s[p+u]+1)
-t=this.a
-t.$flags&2&&B.aF(t)
-t[w]=x*0.5
-x=0.5/x
-t[3]=(s[q+u]-s[p+v])*x
-t[v]=(s[r+v]+s[q+w])*x
-t[u]=(s[r+u]+s[p+w])*x}},
-xU(){var x,w,v,u=Math.sqrt(this.gxK())
-if(u===0)return 0
-x=1/u
-w=this.a
-v=w[0]
-w.$flags&2&&B.aF(w)
-w[0]=v*x
-w[1]=w[1]*x
-w[2]=w[2]*x
-w[3]=w[3]*x
-return u},
-gxK(){var x=this.a,w=x[0],v=x[1],u=x[2],t=x[3]
-return w*w+v*v+u*u+t*t},
-gI(d){var x=this.a,w=x[0],v=x[1],u=x[2],t=x[3]
-return Math.sqrt(w*w+v*v+u*u+t*t)},
-l9(d){var x=new Float64Array(4),w=new A.oT(x)
-w.bt(this)
-x[3]=x[3]*d
-x[2]=x[2]*d
-x[1]=x[1]*d
-x[0]=x[0]*d
-return w},
-ah(a5,a6){var x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h=this.a,g=h[3],f=h[2],e=h[1],d=h[0],a0=a6.gaFN(),a1=a0.i(0,3),a2=a0.i(0,2),a3=a0.i(0,1),a4=a0.i(0,0)
-h=C.d.ah(g,a4)
-x=C.d.ah(d,a1)
-w=C.d.ah(e,a2)
-v=C.d.ah(f,a3)
-u=C.d.ah(g,a3)
-t=C.d.ah(e,a1)
-s=C.d.ah(f,a4)
-r=C.d.ah(d,a2)
-q=C.d.ah(g,a2)
-p=C.d.ah(f,a1)
-o=C.d.ah(d,a3)
-n=C.d.ah(e,a4)
-m=C.d.ah(g,a1)
-l=C.d.ah(d,a4)
-k=C.d.ah(e,a3)
-j=C.d.ah(f,a2)
-i=new Float64Array(4)
-i[0]=h+x+w-v
-i[1]=u+t+s-r
-i[2]=q+p+o-n
-i[3]=m-l-k-j
-return new A.oT(i)},
-W(d,e){var x,w=new Float64Array(4),v=new A.oT(w)
-v.bt(this)
-x=e.a
-w[0]=w[0]+x[0]
-w[1]=w[1]+x[1]
-w[2]=w[2]+x[2]
-w[3]=w[3]+x[3]
-return v},
-a_(d,e){var x,w=new Float64Array(4),v=new A.oT(w)
-v.bt(this)
-x=e.a
-w[0]=w[0]-x[0]
-w[1]=w[1]-x[1]
-w[2]=w[2]-x[2]
-w[3]=w[3]-x[3]
-return v},
-i(d,e){return this.a[e]},
-k(d){var x=this.a
-return B.o(x[0])+", "+B.o(x[1])+", "+B.o(x[2])+" @ "+B.o(x[3])}}
-var z=a.updateTypes(["~()","U(U)","nG(@)","j1(@)","~({curve:fg,descendant:m?,duration:aN,rect:t?})","qu(@)","rK(@)","~(FX)","~(FY)","~(xo)","~(f_)","tX(M,eQ)","~(jW)","~(i9)","~(fh)","~(eF)","~({withDelegateRebuild:A})","~(ka,h)","c(M,iU)","c(M,eQ,eQ)"])
-A.ati.prototype={
-$1(d){return new A.nG(y.U.a(d),null)},
-$S:z+2}
-A.atj.prototype={
-$1(d){return new E.j1(y.W.a(d),null)},
-$S:z+3}
-A.atk.prototype={
-$1(d){return new B.m4(y.S.a(d),null)},
-$S:187}
-A.atl.prototype={
-$1(d){return new B.m4(y.S.a(d),null)},
-$S:187}
-A.atm.prototype={
-$1(d){return new A.qu(y.k.a(d),null)},
-$S:z+5}
-A.atn.prototype={
-$1(d){return new E.j1(y.W.a(d),null)},
-$S:z+3}
-A.ato.prototype={
-$1(d){return new A.rK(y.w.a(d),null)},
-$S:z+6}
-A.atp.prototype={
-$1(d){return new A.nG(y.U.a(d),null)},
-$S:z+2}
-A.az0.prototype={
-$0(){},
-$S:0}
-A.asr.prototype={
-$2(d,e){var x,w,v=this.a,u=v.a,t=u.d,s=t.b
-if(s==null){s=v.e
-s.toString}x=t.d
-if(x==null)x=C.z
-w=u.z
-return new A.tX(v.f,u.c,t.a,s,t.c,new A.asq(v,e),null,!1,u.y,null,w,"InnerHorizontalTwoDimensionalScrollable",null,x,v.r)},
-$S:z+11}
-A.asq.prototype={
-$2(d,e){return this.a.a.aFp(d,this.b,e)},
-$S:178}
-A.aFl.prototype={
-$0(){var x=this.a.w
-x===$&&B.a()
-return B.aKl(null,x.gkH())},
-$S:107}
-A.aFm.prototype={
-$1(d){var x,w,v=this.a
-d.ay=v.gB3()
-d.ch=v.gB5()
-d.CW=v.gB6()
-d.cx=v.gB4()
-d.cy=v.gB2()
-x=v.e
-d.db=x==null?null:x.gDO()
-x=v.e
-d.dx=x==null?null:x.gxR()
-x=v.e
-d.dy=x==null?null:x.gu0()
-x=v.w
-x===$&&B.a()
-w=v.c
-w.toString
-d.fx=x.yF(w)
-d.at=v.a.z
-d.b=v.y},
-$S:108}
-A.asp.prototype={
-$1(d){var x,w=B.CZ(this.a)
-if(d.d!=null&&!w.ghW()&&w.gbU()){x=$.a3.P$.d.c
-if(x!=null)x.hG()}return!1},
-$S:116}
-A.aF4.prototype={
-$0(){var x,w,v,u=this.a,t=u.e
-t.toString
-x=this.b
-w=y.V.a(t).y.pB(u,x)
-if(w==null)return
-v=u.dg(u.aq8(w,x),w,x)
-t=u.p3
-t.toString
-v.toString
-t.m(0,x,v)
-t=w.a
-if(t!=null)u.p4.m(0,t,v)},
-$S:0}
-A.amY.prototype={
-$2(d,e){return this.a.cf(d,e)},
-$S:11}
-A.an0.prototype={
-$1(d){var x=this
-return A.aQL(C.H,x.d,x.a,x.c,d,x.b)},
-$S:179}
-A.an_.prototype={
-$1(d){var x=this
-return A.aQL(C.ac,x.d,x.a,x.c,d,x.b)},
-$S:179}
-A.amZ.prototype={
-$1(d){var x=this.a
-x.al.afR()
-x.apG()},
-$S:112}
-A.amX.prototype={
-$1(d){this.a.al.acB(this.b)},
-$S:112}
-A.atN.prototype={
-$0(){this.a.d=!0},
-$S:0}
-A.atO.prototype={
-$0(){this.a.d=!1},
-$S:0}
-A.aqm.prototype={
-$2(d,e){return this.a.a},
-$S:z+18}
-A.aC2.prototype={
-$2(d,e){d.cz(this.a,e.W(0,this.b))},
-$S:77};(function aliases(){var x=A.Nb.prototype
-x.aaK=x.l
-x=A.p1.prototype
-x.a8g=x.cB
-x.a8f=x.l})();(function installTearOffs(){var x=a._instance_1u,w=a._instance_0u,v=a.installInstanceTearOff,u=a._instance_2u,t=a._instance_0i
-var s
-x(s=A.JQ.prototype,"ganE","anF",7)
-x(s,"ganG","anH",8)
-x(s,"ganC","anD",9)
-x(s,"galz","alA",10)
-w(s,"gAh","aiJ",0)
-w(s,"gAl","ajR",0)
-w(s,"gUy","akW",0)
-x(s=A.MA.prototype,"gB3","vO",12)
-x(s,"gB5","pm",13)
-x(s,"gB6","pn",14)
-x(s,"gB4","vP",15)
-w(s,"gB2","nM",0)
-w(s=A.p1.prototype,"gAf","ahS",0)
-v(s,"gm_",0,0,null,["$4$curve$descendant$duration$rect","$0","$1$rect","$3$curve$duration$rect","$2$descendant$rect"],["cB","kp","iP","js","iQ"],4,0,0)
-v(s,"gjh",0,0,null,["$1$withDelegateRebuild","$0"],["a2m","a3"],16,0,0)
-u(s,"gaoo","Vx",17)
-x(s,"gby","b3",1)
-x(s,"gbd","b1",1)
-x(s,"gbC","b2",1)
-x(s,"gbI","b8",1)
-t(s=A.Ic.prototype,"gLQ","LR",0)
-w(s,"gaBM","aBN",0)
-v(A.LJ.prototype,"gavg",0,3,null,["$3"],["avh"],19,0,0)
-v(A.L8.prototype,"gm_",0,0,null,["$4$curve$descendant$duration$rect","$0","$1$rect","$3$curve$duration$rect","$2$descendant$rect"],["cB","kp","iP","js","iQ"],4,0,0)})();(function inheritance(){var x=a.mixinHard,w=a.mixin,v=a.inheritMany,u=a.inherit
-v(B.au,[A.nG,A.qu,A.rK])
-u(A.Az,B.w_)
-u(A.Xf,B.nH)
-v(B.dL,[A.ati,A.atj,A.atk,A.atl,A.atm,A.atn,A.ato,A.atp,A.aFm,A.asp,A.an0,A.an_,A.amZ,A.amX])
-v(B.P,[A.Dw,A.HK,A.AR])
-v(B.W,[A.Nb,A.WC,A.Ic])
-u(A.JQ,A.Nb)
-v(B.e5,[A.az0,A.aFl,A.aF4,A.atN,A.atO])
-v(B.R,[A.a_n,A.WB,A.yZ,A.Vk])
-u(A.Ww,B.bI)
-v(B.hR,[A.Jz,A.akJ,A.a9x])
-u(A.WA,B.e3)
-u(A.Wz,A.WA)
-v(B.jR,[A.asr,A.asq,A.amY,A.aqm,A.aC2])
-u(A.a4k,B.aP)
-v(B.p4,[A.Mz,A.tX])
-v(B.jl,[A.MA,A.a__])
-u(A.Qp,B.Wi)
-u(A.yb,B.af)
-u(A.a5Q,B.aG)
-u(A.a5R,A.a5Q)
-u(A.a4l,A.a5R)
-u(A.a4m,B.cL)
-u(A.yc,A.a4m)
-u(A.p1,B.v)
-v(B.z,[A.iU,A.TA,A.oT])
-u(A.Oj,F.dD)
-u(A.LJ,A.WB)
-u(A.a3_,A.yb)
-u(A.L8,A.p1)
-x(A.Nb,B.d5)
-w(A.a4m,B.im)
-w(A.a5Q,B.wF)
-w(A.a5R,B.HX)})()
-B.bK(b.typeUniverse,JSON.parse('{"nG":{"au":["fe?"],"am":["fe?"],"am.T":"fe?","au.T":"fe?"},"qu":{"au":["a2"],"am":["a2"],"am.T":"a2","au.T":"a2"},"rK":{"au":["aU"],"am":["aU"],"am.T":"aU","au.T":"aU"},"Az":{"P":[],"c":[]},"Xf":{"W":["Az"]},"Dw":{"P":[],"c":[]},"JQ":{"W":["Dw"]},"a_n":{"R":[],"c":[]},"Ww":{"bI":["aU"],"a6":[]},"WA":{"a6":[]},"Wz":{"a6":[]},"HK":{"P":[],"c":[]},"tX":{"P":[],"c":[]},"WC":{"W":["HK"]},"a4k":{"aP":[],"aD":[],"c":[]},"Mz":{"P":[],"c":[]},"MA":{"jl":[],"W":["p4"]},"a__":{"jl":[],"W":["p4"]},"WB":{"R":[],"c":[]},"iU":{"bZ":["iU"]},"yb":{"af":[],"c":[]},"a4l":{"aG":[],"ba":[],"M":[],"aRY":[]},"yc":{"im":[],"cL":[]},"p1":{"v":[],"oZ":[],"m":[],"ae":[]},"AR":{"P":[],"c":[]},"Ic":{"W":["AR"]},"yZ":{"R":[],"c":[]},"Oj":{"dD":[],"aO":[]},"Vk":{"R":[],"c":[]},"LJ":{"R":[],"c":[]},"a3_":{"yb":[],"af":[],"c":[]},"L8":{"p1":[],"v":[],"oZ":[],"m":[],"ae":[]}}'))
-var y=(function rtii(){var x=B.O
-return{U:x("fe"),k:x("a2"),g:x("iU"),I:x("nR"),v:x("dq"),S:x("iZ"),W:x("ct"),h:x("ba"),i:x("c2<jh>"),s:x("o8<cu>"),M:x("r<aa<~>>"),B:x("e9"),a:x("aL<t8>"),q:x("aL<jl>"),z:x("aL<W<P>>"),w:x("aU"),l:x("fn"),n:x("di<ix>"),X:x("t2"),C:x("oR"),x:x("v"),D:x("p1"),N:x("ec<z?>"),L:x("au<h>"),t:x("au<U>"),T:x("aRY"),V:x("yb"),m:x("yc"),u:x("fy"),O:x("Q<l>"),Y:x("tX"),A:x("Mz"),K:x("nG?"),E:x("qu?"),Q:x("m4?"),Z:x("j1?"),e:x("rK?"),P:x("~()")}})();(function constants(){D.HM=new A.iU(0,0)
-D.HN=new A.iU(-1,-1)
-D.IQ=new B.n(1,0.4666666666666667,0.4,0.3333333333333333,C.e)
-D.Jh=new B.n(1,0.8,0.7333333333333333,0.6666666666666666,C.e)
-D.JL=new B.n(1,0.4666666666666667,0.4,0,C.e)
-D.K_=new B.n(1,0.3333333333333333,0.26666666666666666,0,C.e)
-D.KK=new A.a9x(0,"none")
-D.LF=new B.aj(3,3,3,3)
-D.afd=new A.akJ(3,"free")
-D.hl=new A.Jz(0,"pan")
-D.jP=new A.Jz(1,"scale")
-D.adU=new A.Jz(2,"rotate")})()};
-((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_27",e:"endPart",h:b})})($__dart_deferred_initializers__,"s3nxJTUppRf0CU5RzU7sFrx1qnE=");
+// Generated by dart2js (, csp, intern-composite-values), the Dart to JavaScript compiler version: 3.8.1.
+((s, d, e) => {
+  s[d] = s[d] || {};
+  s[d][e] = s[d][e] || [];
+  s[d][e].push({p: "main.dart.js_27", e: "beginPart"});
+})(self, "$__dart_deferred_initializers__", "eventLog");
+$__dart_deferred_initializers__.current = function(hunkHelpers, init, holdersList, $) {
+  var J, A, C, F, G,
+  B = {AlignmentGeometryTween: function AlignmentGeometryTween(t0, t1) {
+      this.begin = t0;
+      this.end = t1;
+    }, BoxConstraintsTween: function BoxConstraintsTween(t0, t1) {
+      this.begin = t0;
+      this.end = t1;
+    }, Matrix4Tween: function Matrix4Tween(t0, t1) {
+      this.begin = t0;
+      this.end = t1;
+    }, AnimatedContainer: function AnimatedContainer(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.child = t0;
+      _.decoration = t1;
+      _.constraints = t2;
+      _.curve = t3;
+      _.duration = t4;
+      _.onEnd = t5;
+      _.key = t6;
+    }, _AnimatedContainerState: function _AnimatedContainerState(t0, t1, t2) {
+      var _ = this;
+      _._transformAlignment = _._implicit_animations$_transform = _._margin = _._implicit_animations$_constraints = _._foregroundDecoration = _._implicit_animations$_decoration = _._implicit_animations$_padding = _._implicit_animations$_alignment = null;
+      _.__ImplicitlyAnimatedWidgetState__animation_AI = _.__ImplicitlyAnimatedWidgetState_controller_FI = $;
+      _.SingleTickerProviderStateMixin__ticker = t0;
+      _.SingleTickerProviderStateMixin__tickerModeNotifier = t1;
+      _._widget = null;
+      _._debugLifecycleState = t2;
+      _._framework$_element = null;
+    }, _AnimatedContainerState_forEachTween_closure: function _AnimatedContainerState_forEachTween_closure() {
+    }, _AnimatedContainerState_forEachTween_closure0: function _AnimatedContainerState_forEachTween_closure0() {
+    }, _AnimatedContainerState_forEachTween_closure1: function _AnimatedContainerState_forEachTween_closure1() {
+    }, _AnimatedContainerState_forEachTween_closure2: function _AnimatedContainerState_forEachTween_closure2() {
+    }, _AnimatedContainerState_forEachTween_closure3: function _AnimatedContainerState_forEachTween_closure3() {
+    }, _AnimatedContainerState_forEachTween_closure4: function _AnimatedContainerState_forEachTween_closure4() {
+    }, _AnimatedContainerState_forEachTween_closure5: function _AnimatedContainerState_forEachTween_closure5() {
+    }, _AnimatedContainerState_forEachTween_closure6: function _AnimatedContainerState_forEachTween_closure6() {
+    },
+    InteractiveViewer_getNearestPointOnLine(point, l1, l2) {
+      var l1P, l1L2,
+        t1 = l2._v3storage,
+        t2 = l1._v3storage,
+        lengthSquared = Math.pow(t1[0] - t2[0], 2) + Math.pow(t1[1] - t2[1], 2);
+      if (lengthSquared === 0)
+        return l1;
+      l1P = point.$sub(0, l1);
+      l1L2 = l2.$sub(0, l1);
+      return l1.$add(0, l1L2.scaled$1(A.clampDouble(l1P.dot$1(l1L2) / lengthSquared, 0, 1)));
+    },
+    InteractiveViewer_getNearestPointInside(point, quad) {
+      var t4, closestPoints, closestOverall, minDistance, _i, closePoint, distance,
+        t1 = quad._point0,
+        aM = point.$sub(0, t1),
+        t2 = quad._point1,
+        aB = t2.$sub(0, t1),
+        t3 = quad._point3,
+        aD = t3.$sub(0, t1),
+        aMAB = aM.dot$1(aB),
+        aBAB = aB.dot$1(aB),
+        aMAD = aM.dot$1(aD),
+        aDAD = aD.dot$1(aD);
+      if (0 <= aMAB && aMAB <= aBAB && 0 <= aMAD && aMAD <= aDAD)
+        return point;
+      t4 = quad._point2;
+      closestPoints = [B.InteractiveViewer_getNearestPointOnLine(point, t1, t2), B.InteractiveViewer_getNearestPointOnLine(point, t2, t4), B.InteractiveViewer_getNearestPointOnLine(point, t4, t3), B.InteractiveViewer_getNearestPointOnLine(point, t3, t1)];
+      closestOverall = A._Cell$named("closestOverall");
+      for (t1 = point._v3storage, minDistance = 1 / 0, _i = 0; _i < 4; ++_i) {
+        closePoint = closestPoints[_i];
+        t2 = closePoint._v3storage;
+        distance = Math.sqrt(Math.pow(t1[0] - t2[0], 2) + Math.pow(t1[1] - t2[1], 2));
+        if (distance < minDistance) {
+          closestOverall._value = closePoint;
+          minDistance = distance;
+        }
+      }
+      return closestOverall._readLocal$0();
+    },
+    TransformationController$() {
+      var t1 = new A.Matrix4(new Float64Array(16));
+      t1.setIdentity$0();
+      t1 = new B.TransformationController(t1, $.$get$ChangeNotifier__emptyListeners());
+      A.ChangeNotifier_maybeDispatchObjectCreation(t1);
+      return t1;
+    },
+    _getFinalTime(velocity, drag, effectivelyMotionless) {
+      return Math.log(effectivelyMotionless / velocity) / Math.log(drag / 100);
+    },
+    _transformViewport(matrix, viewport) {
+      var t1, t2, t3, t4, t5, t6,
+        inverseMatrix = new A.Matrix4(new Float64Array(16));
+      inverseMatrix.setFrom$1(matrix);
+      inverseMatrix.copyInverse$1(inverseMatrix);
+      t1 = viewport.left;
+      t2 = viewport.top;
+      t3 = new A.Vector3(new Float64Array(3));
+      t3.setValues$3(t1, t2, 0);
+      t3 = inverseMatrix.transform3$1(t3);
+      t4 = viewport.right;
+      t5 = new A.Vector3(new Float64Array(3));
+      t5.setValues$3(t4, t2, 0);
+      t5 = inverseMatrix.transform3$1(t5);
+      t2 = viewport.bottom;
+      t6 = new A.Vector3(new Float64Array(3));
+      t6.setValues$3(t4, t2, 0);
+      t6 = inverseMatrix.transform3$1(t6);
+      t4 = new A.Vector3(new Float64Array(3));
+      t4.setValues$3(t1, t2, 0);
+      t4 = inverseMatrix.transform3$1(t4);
+      t1 = new A.Vector3(new Float64Array(3));
+      t1.setFrom$1(t3);
+      t2 = new A.Vector3(new Float64Array(3));
+      t2.setFrom$1(t5);
+      t3 = new A.Vector3(new Float64Array(3));
+      t3.setFrom$1(t6);
+      t5 = new A.Vector3(new Float64Array(3));
+      t5.setFrom$1(t4);
+      return new B.Quad(t1, t2, t3, t5);
+    },
+    _exceedsBy(boundary, viewport) {
+      var largestExcess, _i, point, t1, t2, t3,
+        viewportPoints = [viewport._point0, viewport._point1, viewport._point2, viewport._point3];
+      for (largestExcess = C.Offset_0_0, _i = 0; _i < 4; ++_i) {
+        point = viewportPoints[_i];
+        t1 = B.InteractiveViewer_getNearestPointInside(point, boundary)._v3storage;
+        t2 = point._v3storage;
+        t3 = t1[0] - t2[0];
+        t2 = t1[1] - t2[1];
+        if (Math.abs(t3) > Math.abs(largestExcess._dx))
+          largestExcess = new A.Offset(t3, largestExcess._dy);
+        if (Math.abs(t2) > Math.abs(largestExcess._dy))
+          largestExcess = new A.Offset(largestExcess._dx, t2);
+      }
+      return B._round(largestExcess);
+    },
+    _round(offset) {
+      return new A.Offset(A.double_parse(C.JSNumber_methods.toStringAsFixed$1(offset._dx, 9)), A.double_parse(C.JSNumber_methods.toStringAsFixed$1(offset._dy, 9)));
+    },
+    _getPanAxis(point1, point2) {
+      if (point1.$eq(0, point2))
+        return null;
+      return Math.abs(point2._dx - point1._dx) > Math.abs(point2._dy - point1._dy) ? C.Axis_0 : C.Axis_1;
+    },
+    InteractiveViewer: function InteractiveViewer(t0, t1, t2, t3) {
+      var _ = this;
+      _.child = t0;
+      _.maxScale = t1;
+      _.minScale = t2;
+      _.key = t3;
+    },
+    _InteractiveViewerState: function _InteractiveViewerState(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.___InteractiveViewerState__transformer_AI = $;
+      _._childKey = t0;
+      _._parentKey = t1;
+      _._scaleAnimation = _._interactive_viewer$_animation = null;
+      _.___InteractiveViewerState__scaleController_A = _.___InteractiveViewerState__controller_A = _.___InteractiveViewerState__scaleAnimationFocalPoint_A = $;
+      _._scaleStart = _._referenceFocalPoint = _._currentAxis = null;
+      _._currentRotation = _._rotationStart = 0;
+      _._gestureType = null;
+      _.TickerProviderStateMixin__tickers = t2;
+      _.TickerProviderStateMixin__tickerModeNotifier = t3;
+      _._widget = null;
+      _._debugLifecycleState = t4;
+      _._framework$_element = null;
+    },
+    _InteractiveViewerState__handleTransformation_closure: function _InteractiveViewerState__handleTransformation_closure() {
+    },
+    _InteractiveViewerBuilt: function _InteractiveViewerBuilt(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.child = t0;
+      _.childKey = t1;
+      _.clipBehavior = t2;
+      _.constrained = t3;
+      _.matrix = t4;
+      _.alignment = t5;
+      _.key = t6;
+    },
+    TransformationController: function TransformationController(t0, t1) {
+      var _ = this;
+      _._change_notifier$_value = t0;
+      _.ChangeNotifier__count = 0;
+      _.ChangeNotifier__listeners = t1;
+      _.ChangeNotifier__reentrantlyRemovedListeners = _.ChangeNotifier__notificationCallStackDepth = 0;
+      _.ChangeNotifier__debugCreationDispatched = _.ChangeNotifier__debugDisposed = false;
+    },
+    _GestureType: function _GestureType(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    PanAxis: function PanAxis(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    __InteractiveViewerState_State_TickerProviderStateMixin_dispose_closure: function __InteractiveViewerState_State_TickerProviderStateMixin_dispose_closure(t0) {
+      this.$this = t0;
+    },
+    __InteractiveViewerState_State_TickerProviderStateMixin: function __InteractiveViewerState_State_TickerProviderStateMixin() {
+    },
+    TwoDimensionalChildDelegate: function TwoDimensionalChildDelegate() {
+    },
+    TwoDimensionalChildBuilderDelegate: function TwoDimensionalChildBuilderDelegate(t0, t1) {
+      var _ = this;
+      _.builder = t0;
+      _.ChangeNotifier__count = 0;
+      _.ChangeNotifier__listeners = t1;
+      _.ChangeNotifier__reentrantlyRemovedListeners = _.ChangeNotifier__notificationCallStackDepth = 0;
+      _.ChangeNotifier__debugCreationDispatched = _.ChangeNotifier__debugDisposed = false;
+    },
+    Scrollable_of(context) {
+      var scrollableState = A.Scrollable_maybeOf(context, null);
+      A.assertHelper(new B.Scrollable_of_closure(scrollableState, null, context).call$0());
+      scrollableState.toString;
+      return scrollableState;
+    },
+    Scrollable_of_closure: function Scrollable_of_closure(t0, t1, t2) {
+      this.scrollableState = t0;
+      this.axis = t1;
+      this.context = t2;
+    },
+    DiagonalDragBehavior: function DiagonalDragBehavior(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    TwoDimensionalScrollable: function TwoDimensionalScrollable(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.diagonalDragBehavior = t0;
+      _.horizontalDetails = t1;
+      _.verticalDetails = t2;
+      _.viewportBuilder = t3;
+      _.hitTestBehavior = t4;
+      _.dragStartBehavior = t5;
+      _.key = t6;
+    },
+    TwoDimensionalScrollableState: function TwoDimensionalScrollableState(t0, t1, t2) {
+      var _ = this;
+      _._horizontalFallbackController = _._verticalFallbackController = null;
+      _._verticalOuterScrollableKey = t0;
+      _._horizontalInnerScrollableKey = t1;
+      _._widget = null;
+      _._debugLifecycleState = t2;
+      _._framework$_element = null;
+    },
+    TwoDimensionalScrollableState_build_closure: function TwoDimensionalScrollableState_build_closure(t0) {
+      this.$this = t0;
+    },
+    TwoDimensionalScrollableState_build__closure: function TwoDimensionalScrollableState_build__closure(t0, t1) {
+      this.$this = t0;
+      this.verticalOffset = t1;
+    },
+    _TwoDimensionalScrollableScope: function _TwoDimensionalScrollableScope(t0, t1) {
+      this.child = t0;
+      this.key = t1;
+    },
+    _VerticalOuterDimension: function _VerticalOuterDimension(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14) {
+      var _ = this;
+      _.diagonalDragBehavior = t0;
+      _.horizontalKey = t1;
+      _.axisDirection = t2;
+      _.controller = t3;
+      _.physics = t4;
+      _.viewportBuilder = t5;
+      _.incrementCalculator = t6;
+      _.excludeFromSemantics = t7;
+      _.hitTestBehavior = t8;
+      _.semanticChildCount = t9;
+      _.dragStartBehavior = t10;
+      _.restorationId = t11;
+      _.scrollBehavior = t12;
+      _.clipBehavior = t13;
+      _.key = t14;
+    },
+    _VerticalOuterDimensionState: function _VerticalOuterDimensionState(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) {
+      var _ = this;
+      _._physics = _._scrollable$_position = _.lastDragOffset = _.lockedAxis = null;
+      _.__ScrollableState__devicePixelRatio_A = $;
+      _._persistedScrollOffset = t0;
+      _.__ScrollableState__configuration_A = $;
+      _._mediaQueryGestureSettings = _._fallbackScrollController = null;
+      _._scrollSemanticsKey = t1;
+      _._gestureDetectorKey = t2;
+      _._ignorePointerKey = t3;
+      _._scrollable$_gestureRecognizers = t4;
+      _._shouldIgnorePointer = false;
+      _._hold = _._scrollable$_drag = _._scrollable$_lastAxisDirection = _._lastCanDrag = null;
+      _.RestorationMixin__bucket = t5;
+      _.RestorationMixin__properties = t6;
+      _.RestorationMixin__debugPropertiesWaitingForReregistration = t7;
+      _.RestorationMixin__firstRestorePending = t8;
+      _.RestorationMixin__currentParent = t9;
+      _.TickerProviderStateMixin__tickers = t10;
+      _.TickerProviderStateMixin__tickerModeNotifier = t11;
+      _._widget = null;
+      _._debugLifecycleState = t12;
+      _._framework$_element = null;
+    },
+    _VerticalOuterDimensionState_setCanDrag_closure: function _VerticalOuterDimensionState_setCanDrag_closure(t0) {
+      this.$this = t0;
+    },
+    _VerticalOuterDimensionState_setCanDrag_closure0: function _VerticalOuterDimensionState_setCanDrag_closure0(t0) {
+      this.$this = t0;
+    },
+    _HorizontalInnerDimension: function _HorizontalInnerDimension(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14) {
+      var _ = this;
+      _.verticalOuterKey = t0;
+      _.diagonalDragBehavior = t1;
+      _.axisDirection = t2;
+      _.controller = t3;
+      _.physics = t4;
+      _.viewportBuilder = t5;
+      _.incrementCalculator = t6;
+      _.excludeFromSemantics = t7;
+      _.hitTestBehavior = t8;
+      _.semanticChildCount = t9;
+      _.dragStartBehavior = t10;
+      _.restorationId = t11;
+      _.scrollBehavior = t12;
+      _.clipBehavior = t13;
+      _.key = t14;
+    },
+    _HorizontalInnerDimensionState: function _HorizontalInnerDimensionState(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) {
+      var _ = this;
+      _.___HorizontalInnerDimensionState_verticalScrollable_A = $;
+      _._physics = _._scrollable$_position = null;
+      _.__ScrollableState__devicePixelRatio_A = $;
+      _._persistedScrollOffset = t0;
+      _.__ScrollableState__configuration_A = $;
+      _._mediaQueryGestureSettings = _._fallbackScrollController = null;
+      _._scrollSemanticsKey = t1;
+      _._gestureDetectorKey = t2;
+      _._ignorePointerKey = t3;
+      _._scrollable$_gestureRecognizers = t4;
+      _._shouldIgnorePointer = false;
+      _._hold = _._scrollable$_drag = _._scrollable$_lastAxisDirection = _._lastCanDrag = null;
+      _.RestorationMixin__bucket = t5;
+      _.RestorationMixin__properties = t6;
+      _.RestorationMixin__debugPropertiesWaitingForReregistration = t7;
+      _.RestorationMixin__firstRestorePending = t8;
+      _.RestorationMixin__currentParent = t9;
+      _.TickerProviderStateMixin__tickers = t10;
+      _.TickerProviderStateMixin__tickerModeNotifier = t11;
+      _._widget = null;
+      _._debugLifecycleState = t12;
+      _._framework$_element = null;
+    },
+    EmptyTextSelectionControls: function EmptyTextSelectionControls() {
+    },
+    TwoDimensionalScrollView: function TwoDimensionalScrollView() {
+    },
+    TwoDimensionalScrollView_build_closure: function TwoDimensionalScrollView_build_closure(t0) {
+      this.context = t0;
+    },
+    _TwoDimensionalViewportElement__compareChildren(a, b) {
+      var t2, t3,
+        t1 = type$.Element;
+      t1._as(a);
+      t1._as(b);
+      t1 = a._slot;
+      t1.toString;
+      t2 = type$.ChildVicinity;
+      t2._as(t1);
+      t3 = b._slot;
+      t3.toString;
+      return t1.compareTo$1(0, t2._as(t3));
+    },
+    RenderTwoDimensionalViewport_showInViewport(axisDirection, curve, descendant, duration, rect, viewport) {
+      var t1, t2, rect0, transform;
+      if (descendant == null)
+        return rect;
+      t1 = new B.RenderTwoDimensionalViewport_showInViewport_showVertical(descendant, viewport, duration, curve);
+      t2 = new B.RenderTwoDimensionalViewport_showInViewport_showHorizontal(descendant, viewport, duration, curve);
+      switch (axisDirection) {
+        case C.AxisDirection_3:
+        case C.AxisDirection_1:
+          return t2.call$1(rect);
+        case C.AxisDirection_0:
+        case C.AxisDirection_2:
+          return t1.call$1(rect);
+        case null:
+        case void 0:
+          rect0 = t2.call$1(rect);
+          rect = t1.call$1(rect0 == null ? rect : rect0);
+          if (rect == null) {
+            A.assertHelper(viewport._object$_parent != null);
+            transform = descendant.getTransformTo$1(viewport._object$_parent);
+            t1 = descendant.get$paintBounds();
+            return A.MatrixUtils_transformRect(transform, t1);
+          }
+          return rect;
+      }
+    },
+    RenderTwoDimensionalViewport__showInViewportForAxisDirection(axis, curve, descendant, duration, rect, viewport) {
+      var t1, leadingEdgeOffset, trailingEdgeOffset, t2, targetOffset;
+      switch (axis.index) {
+        case 1:
+          t1 = viewport._verticalOffset;
+          break;
+        case 0:
+          t1 = viewport._horizontalOffset;
+          break;
+        default:
+          t1 = null;
+      }
+      leadingEdgeOffset = viewport.getOffsetToReveal$4$axis$rect(descendant, 0, axis, rect);
+      trailingEdgeOffset = viewport.getOffsetToReveal$4$axis$rect(descendant, 1, axis, rect);
+      t2 = t1._pixels;
+      t2.toString;
+      targetOffset = A.RevealedOffset_clampOffset(t2, leadingEdgeOffset, trailingEdgeOffset);
+      if (targetOffset == null)
+        return null;
+      t1.moveTo$3$curve$duration(targetOffset.offset, curve, duration);
+      return targetOffset.rect;
+    },
+    TwoDimensionalViewport: function TwoDimensionalViewport() {
+    },
+    _TwoDimensionalViewportElement: function _TwoDimensionalViewportElement(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._vicinityToChild = t0;
+      _._keyToChild = t1;
+      _._slot = _._notificationTree = _._framework$_parent = _._ancestorRenderObjectElement = _._framework$_renderObject = _._newKeyToChild = _._newVicinityToChild = null;
+      _.__Element__depth_A = $;
+      _._widget = t2;
+      _._parentBuildScope = _._framework$_owner = null;
+      _._lifecycleState = t3;
+      _._debugForgottenChildrenWithGlobalKey = t4;
+      _._dependencies = _._inheritedElements = null;
+      _._hadUnsatisfiedDependencies = false;
+      _._dirty = true;
+      _._debugBuiltOnce = _._inDirtyList = false;
+    },
+    _TwoDimensionalViewportElement__buildChild_closure: function _TwoDimensionalViewportElement__buildChild_closure(t0, t1) {
+      this.$this = t0;
+      this.vicinity = t1;
+    },
+    TwoDimensionalViewportParentData: function TwoDimensionalViewportParentData(t0, t1) {
+      var _ = this;
+      _.layoutOffset = null;
+      _.vicinity = t0;
+      _.paintOffset = _._two_dimensional_viewport$_nextSibling = _._paintExtent = null;
+      _.KeepAliveParentDataMixin_keepAlive = t1;
+    },
+    TwoDimensionalViewportParentData_isVisible_closure: function TwoDimensionalViewportParentData_isVisible_closure(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport: function RenderTwoDimensionalViewport() {
+    },
+    RenderTwoDimensionalViewport_closure: function RenderTwoDimensionalViewport_closure(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport_debugDescribeChildren_closure: function RenderTwoDimensionalViewport_debugDescribeChildren_closure(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport_hitTestChildren_closure: function RenderTwoDimensionalViewport_hitTestChildren_closure(t0, t1, t2) {
+      this.position = t0;
+      this.childParentData = t1;
+      this.child = t2;
+    },
+    RenderTwoDimensionalViewport_showInViewport_showVertical: function RenderTwoDimensionalViewport_showInViewport_showVertical(t0, t1, t2, t3) {
+      var _ = this;
+      _.descendant = t0;
+      _.viewport = t1;
+      _.duration = t2;
+      _.curve = t3;
+    },
+    RenderTwoDimensionalViewport_showInViewport_showHorizontal: function RenderTwoDimensionalViewport_showInViewport_showHorizontal(t0, t1, t2, t3) {
+      var _ = this;
+      _.descendant = t0;
+      _.viewport = t1;
+      _.duration = t2;
+      _.curve = t3;
+    },
+    RenderTwoDimensionalViewport_performLayout_closure: function RenderTwoDimensionalViewport_performLayout_closure(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport_performLayout__closure: function RenderTwoDimensionalViewport_performLayout__closure(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport__debugCheckContentDimensions_closure: function RenderTwoDimensionalViewport__debugCheckContentDimensions_closure(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport__debugCheckContentDimensions_closure0: function RenderTwoDimensionalViewport__debugCheckContentDimensions_closure0(t0) {
+      this.$this = t0;
+    },
+    RenderTwoDimensionalViewport_buildOrObtainChildFor_closure: function RenderTwoDimensionalViewport_buildOrObtainChildFor_closure(t0, t1) {
+      this.$this = t0;
+      this.vicinity = t1;
+    },
+    RenderTwoDimensionalViewport__moveChild_closure: function RenderTwoDimensionalViewport__moveChild_closure(t0, t1) {
+      this.$this = t0;
+      this.child = t1;
+    },
+    RenderTwoDimensionalViewport__moveChild_closure0: function RenderTwoDimensionalViewport__moveChild_closure0(t0, t1) {
+      this.$this = t0;
+      this.childParentData = t1;
+    },
+    RenderTwoDimensionalViewport__removeChild_closure: function RenderTwoDimensionalViewport__removeChild_closure(t0, t1) {
+      this.$this = t0;
+      this.child = t1;
+    },
+    RenderTwoDimensionalViewport__debugTrackOrphans_closure: function RenderTwoDimensionalViewport__debugTrackOrphans_closure(t0, t1, t2) {
+      this.$this = t0;
+      this.newOrphan = t1;
+      this.noLongerOrphan = t2;
+    },
+    RenderTwoDimensionalViewport_debugThrowIfNotCheckingIntrinsics_closure: function RenderTwoDimensionalViewport_debugThrowIfNotCheckingIntrinsics_closure(t0) {
+      this.$this = t0;
+    },
+    ChildVicinity: function ChildVicinity(t0, t1) {
+      this.xIndex = t0;
+      this.yIndex = t1;
+    },
+    _TwoDimensionalViewportParentData_ParentData_KeepAliveParentDataMixin: function _TwoDimensionalViewportParentData_ParentData_KeepAliveParentDataMixin() {
+    },
+    __TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin: function __TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin() {
+    },
+    __TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin_ViewportElementMixin: function __TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin_ViewportElementMixin() {
+    },
+    ArtHolder$(spans) {
+      return new B.ArtHolder(spans);
+    },
+    ArtWidget: function ArtWidget(t0, t1) {
+      this.art = t0;
+      this.key = t1;
+    },
+    _ArtWidgetState: function _ArtWidgetState(t0) {
+      var _ = this;
+      _.contain = false;
+      _._widget = null;
+      _._debugLifecycleState = t0;
+      _._framework$_element = null;
+    },
+    _ArtWidgetState_expand_closure: function _ArtWidgetState_expand_closure(t0) {
+      this.$this = t0;
+    },
+    _ArtWidgetState_minimize_closure: function _ArtWidgetState_minimize_closure(t0) {
+      this.$this = t0;
+    },
+    _Frame: function _Frame(t0, t1, t2) {
+      this.child = t0;
+      this.contain = t1;
+      this.key = t2;
+    },
+    ArtHolder: function ArtHolder(t0) {
+      this.spans = t0;
+    },
+    _RenderSingleChild2DViewPort$(cacheExtent, childManager, clipBehavior, delegate, horizontalAxisDirection, horizontalOffset, mainAxis, verticalAxisDirection, verticalOffset) {
+      var t1 = type$.ClipRectLayer,
+        t2 = A.LayerHandle$(t1),
+        t3 = type$.ChildVicinity,
+        t4 = type$.RenderBox;
+      t1 = A.LayerHandle$(t1);
+      if (A.assertTest(verticalAxisDirection === C.AxisDirection_2 || verticalAxisDirection === C.AxisDirection_0))
+        A.assertThrow(string$.TwoDimv);
+      if (A.assertTest(horizontalAxisDirection === C.AxisDirection_3 || horizontalAxisDirection === C.AxisDirection_1))
+        A.assertThrow(string$.TwoDimh);
+      t1 = new B._RenderSingleChild2DViewPort(t2, horizontalOffset, horizontalAxisDirection, verticalOffset, verticalAxisDirection, delegate, mainAxis, 250, clipBehavior, childManager, A.LinkedHashMap_LinkedHashMap$_empty(t3, t4), A.LinkedHashMap_LinkedHashMap$_empty(t3, t4), A.LinkedHashMap_LinkedHashMap$_empty(t3, t4), t1, new A._LayoutCacheStorage(), A.LayerHandle$(type$.ContainerLayer));
+      t1.RenderObject$0();
+      t1.RenderTwoDimensionalViewport$9$cacheExtent$childManager$clipBehavior$delegate$horizontalAxisDirection$horizontalOffset$mainAxis$verticalAxisDirection$verticalOffset(cacheExtent, childManager, clipBehavior, delegate, horizontalAxisDirection, horizontalOffset, mainAxis, verticalAxisDirection, verticalOffset);
+      return t1;
+    },
+    SingleChildTwoDimensionalScrollView: function SingleChildTwoDimensionalScrollView(t0, t1) {
+      this.child = t0;
+      this.key = t1;
+    },
+    SingleChildTwoDimensionalScrollView_build_closure: function SingleChildTwoDimensionalScrollView_build_closure(t0) {
+      this._box_0 = t0;
+    },
+    _SingleChild2DScrollView: function _SingleChild2DScrollView(t0, t1, t2, t3, t4, t5, t6, t7) {
+      var _ = this;
+      _.delegate = t0;
+      _.diagonalDragBehavior = t1;
+      _.primary = t2;
+      _.verticalDetails = t3;
+      _.horizontalDetails = t4;
+      _.keyboardDismissBehavior = t5;
+      _.clipBehavior = t6;
+      _.key = t7;
+    },
+    _SingleChild2DViewPort: function _SingleChild2DViewPort(t0, t1, t2, t3, t4, t5, t6, t7, t8) {
+      var _ = this;
+      _.verticalOffset = t0;
+      _.verticalAxisDirection = t1;
+      _.horizontalOffset = t2;
+      _.horizontalAxisDirection = t3;
+      _.mainAxis = t4;
+      _.cacheExtent = t5;
+      _.clipBehavior = t6;
+      _.delegate = t7;
+      _.key = t8;
+    },
+    _RenderSingleChild2DViewPort: function _RenderSingleChild2DViewPort(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15) {
+      var _ = this;
+      _._single_child_2d_scroll_view$_clipRectLayer = t0;
+      _._horizontalOffset = t1;
+      _._horizontalAxisDirection = t2;
+      _._verticalOffset = t3;
+      _._verticalAxisDirection = t4;
+      _._two_dimensional_viewport$_delegate = t5;
+      _._mainAxis = t6;
+      _._two_dimensional_viewport$_cacheExtent = t7;
+      _._two_dimensional_viewport$_clipBehavior = t8;
+      _._two_dimensional_viewport$_childManager = t9;
+      _._two_dimensional_viewport$_children = t10;
+      _._activeChildrenForLayoutPass = t11;
+      _._two_dimensional_viewport$_keepAliveBucket = t12;
+      _.__RenderTwoDimensionalViewport__debugDanglingKeepAlives_A = $;
+      _._two_dimensional_viewport$_hasVisualOverflow = false;
+      _._two_dimensional_viewport$_clipRectLayer = t13;
+      _._two_dimensional_viewport$_lastChild = _._two_dimensional_viewport$_firstChild = _._trailingYIndex = _._leadingYIndex = _._trailingXIndex = _._leadingXIndex = null;
+      _._needsDelegateRebuild = true;
+      _._debugOrphans = null;
+      _._layoutCacheStorage = t14;
+      _._computingThisDryBaseline = _._computingThisDryLayout = false;
+      _._box$_size = null;
+      _._debugActivePointers = 0;
+      _._debugDisposed = false;
+      _.parentData = null;
+      _._depth = 0;
+      _.debugCreator = _._object$_parent = null;
+      _._debugDoingThisLayout = _._debugDoingThisResize = false;
+      _._debugCanParentUseSize = null;
+      _._debugMutationsLocked = false;
+      _._object$_owner = null;
+      _._needsLayout = true;
+      _._isRelayoutBoundary = null;
+      _._doingThisLayoutWithCallback = false;
+      _._constraints = null;
+      _._debugDoingThisPaint = false;
+      _.__RenderObject__wasRepaintBoundary_A = $;
+      _._layerHandle = t15;
+      _._needsCompositingBitsUpdate = false;
+      _.__RenderObject__needsCompositing_A = $;
+      _._needsPaint = true;
+      _._needsCompositedLayerUpdate = false;
+      _.__RenderObject__semantics_FI = $;
+    },
+    _RenderSingleChild2DViewPort_paint_paintChild: function _RenderSingleChild2DViewPort_paint_paintChild(t0, t1) {
+      this.child = t0;
+      this.paintOffset = t1;
+    },
+    Quaternion_Quaternion$identity() {
+      var t1 = new Float64Array(4);
+      t1[3] = 1;
+      return new B.Quaternion(t1);
+    },
+    Quad: function Quad(t0, t1, t2, t3) {
+      var _ = this;
+      _._point0 = t0;
+      _._point1 = t1;
+      _._point2 = t2;
+      _._point3 = t3;
+    },
+    Quaternion: function Quaternion(t0) {
+      this._qStorage = t0;
+    }
+  },
+  D, E, H;
+  J = holdersList[1];
+  A = holdersList[0];
+  C = holdersList[2];
+  F = holdersList[57];
+  G = holdersList[59];
+  B = hunkHelpers.updateHolder(holdersList[18], B);
+  D = holdersList[66];
+  E = holdersList[49];
+  H = holdersList[56];
+  B.AlignmentGeometryTween.prototype = {
+    lerp$1(t) {
+      return A.AlignmentGeometry_lerp(this.begin, this.end, t);
+    }
+  };
+  B.BoxConstraintsTween.prototype = {
+    lerp$1(t) {
+      var t1 = A.BoxConstraints_lerp(this.begin, this.end, t);
+      t1.toString;
+      return t1;
+    }
+  };
+  B.Matrix4Tween.prototype = {
+    lerp$1(t) {
+      var beginTranslation, endTranslation, beginRotation, endRotation, beginScale, endScale, t1, lerpTranslation, t2, t3, lerpRotation, lerpScale, x, y, z, w, x2, y2, z2, xx, xy, xz, yy, yz, zz, wx, wy, wz, arg0Storage, _this = this;
+      A.assertHelper(_this.begin != null);
+      A.assertHelper(_this.end != null);
+      beginTranslation = new A.Vector3(new Float64Array(3));
+      endTranslation = new A.Vector3(new Float64Array(3));
+      beginRotation = B.Quaternion_Quaternion$identity();
+      endRotation = B.Quaternion_Quaternion$identity();
+      beginScale = new A.Vector3(new Float64Array(3));
+      endScale = new A.Vector3(new Float64Array(3));
+      _this.begin.decompose$3(beginTranslation, beginRotation, beginScale);
+      _this.end.decompose$3(endTranslation, endRotation, endScale);
+      t1 = 1 - t;
+      lerpTranslation = beginTranslation.scaled$1(t1).$add(0, endTranslation.scaled$1(t));
+      t2 = beginRotation.scaled$1(t1).$add(0, endRotation.scaled$1(t));
+      t3 = new Float64Array(4);
+      lerpRotation = new B.Quaternion(t3);
+      lerpRotation.setFrom$1(t2);
+      lerpRotation.normalize$0();
+      lerpScale = beginScale.scaled$1(t1).$add(0, endScale.scaled$1(t));
+      t1 = new Float64Array(16);
+      t2 = new A.Matrix4(t1);
+      x = t3[0];
+      y = t3[1];
+      z = t3[2];
+      w = t3[3];
+      x2 = x + x;
+      y2 = y + y;
+      z2 = z + z;
+      xx = x * x2;
+      xy = x * y2;
+      xz = x * z2;
+      yy = y * y2;
+      yz = y * z2;
+      zz = z * z2;
+      wx = w * x2;
+      wy = w * y2;
+      wz = w * z2;
+      arg0Storage = lerpTranslation._v3storage;
+      t1[0] = 1 - (yy + zz);
+      t1[1] = xy + wz;
+      t1[2] = xz - wy;
+      t1[3] = 0;
+      t1[4] = xy - wz;
+      t1[5] = 1 - (xx + zz);
+      t1[6] = yz + wx;
+      t1[7] = 0;
+      t1[8] = xz + wy;
+      t1[9] = yz - wx;
+      t1[10] = 1 - (xx + yy);
+      t1[11] = 0;
+      t1[12] = arg0Storage[0];
+      t1[13] = arg0Storage[1];
+      t1[14] = arg0Storage[2];
+      t1[15] = 1;
+      t2.scale$1(lerpScale);
+      return t2;
+    }
+  };
+  B.AnimatedContainer.prototype = {
+    createState$0() {
+      return new B._AnimatedContainerState(null, null, C._StateLifecycle_0);
+    },
+    debugFillProperties$1(properties) {
+      var t1, t2, t3, _null = null;
+      this.super$ImplicitlyAnimatedWidget$debugFillProperties(properties);
+      t1 = type$.AlignmentGeometry;
+      properties.add$1(0, A.DiagnosticsProperty$("alignment", _null, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, false, true, C.DiagnosticsTreeStyle_8, _null, t1));
+      t2 = type$.EdgeInsetsGeometry;
+      properties.add$1(0, A.DiagnosticsProperty$("padding", _null, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t2));
+      t3 = type$.Decoration;
+      properties.add$1(0, A.DiagnosticsProperty$("bg", this.decoration, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t3));
+      properties.add$1(0, A.DiagnosticsProperty$("fg", _null, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t3));
+      properties.add$1(0, A.DiagnosticsProperty$("constraints", this.constraints, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, false, true, C.DiagnosticsTreeStyle_8, _null, type$.BoxConstraints));
+      properties.add$1(0, A.DiagnosticsProperty$("margin", _null, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t2));
+      properties.add$1(0, A.ObjectFlagProperty$has("transform", _null, type$.Matrix4));
+      properties.add$1(0, A.DiagnosticsProperty$("transformAlignment", _null, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t1));
+      properties.add$1(0, A.DiagnosticsProperty$("clipBehavior", C.Clip_0, true, C.C__NoDefaultValue, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, type$.Clip));
+    }
+  };
+  B._AnimatedContainerState.prototype = {
+    forEachTween$1(visitor) {
+      var t1, t2, t3, t4, _this = this, _null = null;
+      type$.nullable_Tween_dynamic_Function_3_nullable_Tween_dynamic_and_dynamic_and_Tween_dynamic_Function_dynamic._as(visitor);
+      t1 = _this._implicit_animations$_alignment;
+      _this._widget.toString;
+      t2 = type$.nullable_AlignmentGeometryTween;
+      _this._implicit_animations$_alignment = t2._as(visitor.call$3(t1, _null, new B._AnimatedContainerState_forEachTween_closure()));
+      t1 = _this._implicit_animations$_padding;
+      _this._widget.toString;
+      t3 = type$.nullable_EdgeInsetsGeometryTween;
+      _this._implicit_animations$_padding = t3._as(visitor.call$3(t1, _null, new B._AnimatedContainerState_forEachTween_closure0()));
+      t1 = type$.nullable_DecorationTween;
+      _this._implicit_animations$_decoration = t1._as(visitor.call$3(_this._implicit_animations$_decoration, _this._widget.decoration, new B._AnimatedContainerState_forEachTween_closure1()));
+      t4 = _this._foregroundDecoration;
+      _this._widget.toString;
+      _this._foregroundDecoration = t1._as(visitor.call$3(t4, _null, new B._AnimatedContainerState_forEachTween_closure2()));
+      _this._implicit_animations$_constraints = type$.nullable_BoxConstraintsTween._as(visitor.call$3(_this._implicit_animations$_constraints, _this._widget.constraints, new B._AnimatedContainerState_forEachTween_closure3()));
+      t4 = _this._margin;
+      _this._widget.toString;
+      _this._margin = t3._as(visitor.call$3(t4, _null, new B._AnimatedContainerState_forEachTween_closure4()));
+      t4 = _this._implicit_animations$_transform;
+      _this._widget.toString;
+      _this._implicit_animations$_transform = type$.nullable_Matrix4Tween._as(visitor.call$3(t4, _null, new B._AnimatedContainerState_forEachTween_closure5()));
+      t4 = _this._transformAlignment;
+      _this._widget.toString;
+      _this._transformAlignment = t2._as(visitor.call$3(t4, _null, new B._AnimatedContainerState_forEachTween_closure6()));
+    },
+    build$1(context) {
+      var t2, t3, t4, t5, t6, t7, t8, _this = this, _null = null,
+        animation = _this.get$_animation(),
+        t1 = _this._implicit_animations$_alignment;
+      t1 = t1 == null ? _null : t1.transform$1(type$.Animation_double._as(animation).get$value());
+      t2 = _this._implicit_animations$_padding;
+      t2 = t2 == null ? _null : t2.transform$1(type$.Animation_double._as(animation).get$value());
+      t3 = _this._implicit_animations$_decoration;
+      t3 = t3 == null ? _null : t3.transform$1(type$.Animation_double._as(animation).get$value());
+      t4 = _this._foregroundDecoration;
+      t4 = t4 == null ? _null : t4.transform$1(type$.Animation_double._as(animation).get$value());
+      t5 = _this._implicit_animations$_constraints;
+      t5 = t5 == null ? _null : t5.transform$1(type$.Animation_double._as(animation).get$value());
+      t6 = _this._margin;
+      t6 = t6 == null ? _null : t6.transform$1(type$.Animation_double._as(animation).get$value());
+      t7 = _this._implicit_animations$_transform;
+      t7 = t7 == null ? _null : t7.transform$1(type$.Animation_double._as(animation).get$value());
+      t8 = _this._transformAlignment;
+      t8 = t8 == null ? _null : t8.transform$1(type$.Animation_double._as(animation).get$value());
+      return A.Container$(t1, _this._widget.child, C.Clip_0, _null, t5, t3, t4, _null, _null, t6, t2, t7, t8, _null);
+    },
+    debugFillProperties$1(description) {
+      var t1, t2, t3, _this = this, _null = null;
+      _this.super$_ImplicitlyAnimatedWidgetState_State_SingleTickerProviderStateMixin$debugFillProperties(description);
+      t1 = type$.AlignmentGeometryTween;
+      description.add$1(0, A.DiagnosticsProperty$("alignment", _this._implicit_animations$_alignment, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, false, true, C.DiagnosticsTreeStyle_8, _null, t1));
+      t2 = type$.EdgeInsetsGeometryTween;
+      description.add$1(0, A.DiagnosticsProperty$("padding", _this._implicit_animations$_padding, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t2));
+      t3 = type$.DecorationTween;
+      description.add$1(0, A.DiagnosticsProperty$("bg", _this._implicit_animations$_decoration, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t3));
+      description.add$1(0, A.DiagnosticsProperty$("fg", _this._foregroundDecoration, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t3));
+      description.add$1(0, A.DiagnosticsProperty$("constraints", _this._implicit_animations$_constraints, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, false, true, C.DiagnosticsTreeStyle_8, _null, type$.BoxConstraintsTween));
+      description.add$1(0, A.DiagnosticsProperty$("margin", _this._margin, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t2));
+      description.add$1(0, A.ObjectFlagProperty$has("transform", _this._implicit_animations$_transform, type$.Matrix4Tween));
+      description.add$1(0, A.DiagnosticsProperty$("transformAlignment", _this._transformAlignment, true, _null, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, t1));
+    }
+  };
+  B.InteractiveViewer.prototype = {
+    createState$0() {
+      var _null = null,
+        t1 = type$.LabeledGlobalKey_State_StatefulWidget;
+      return new B._InteractiveViewerState(new A.LabeledGlobalKey(_null, t1), new A.LabeledGlobalKey(_null, t1), _null, _null, C._StateLifecycle_0);
+    }
+  };
+  B._InteractiveViewerState.prototype = {
+    get$_transformer() {
+      var value = this.___InteractiveViewerState__transformer_AI;
+      if (value === $) {
+        this._widget.toString;
+        value = B.TransformationController$();
+        this.___InteractiveViewerState__transformer_AI = value;
+      }
+      return value;
+    },
+    get$_boundaryRect() {
+      var t3, childSize, boundaryRect, _this = this,
+        t1 = _this._childKey,
+        t2 = type$.WidgetsBinding;
+      A.assertHelper(A.BindingBase_checkInstance($.WidgetsBinding__instance, t2).WidgetsBinding__buildOwner._globalKeyRegistry.$index(0, t1) != null);
+      _this._widget.toString;
+      t3 = !isNaN(0);
+      A.assertHelper(t3);
+      _this._widget.toString;
+      A.assertHelper(t3);
+      _this._widget.toString;
+      A.assertHelper(t3);
+      _this._widget.toString;
+      A.assertHelper(t3);
+      t1 = A.BindingBase_checkInstance($.WidgetsBinding__instance, t2).WidgetsBinding__buildOwner._globalKeyRegistry.$index(0, t1).findRenderObject$0();
+      t1.toString;
+      childSize = type$.RenderBox._as(t1).get$size();
+      _this._widget.toString;
+      boundaryRect = C.EdgeInsets_0_0_0_0.inflateRect$1(new A.Rect(0, 0, 0 + childSize._dx, 0 + childSize._dy));
+      if (A.assertTest(!boundaryRect.get$isEmpty(0)))
+        A.assertThrow("InteractiveViewer's child must have nonzero dimensions.");
+      if (!boundaryRect.get$isFinite(0)) {
+        t1 = boundaryRect.left;
+        t2 = false;
+        if (t1 == 1 / 0 || t1 == -1 / 0) {
+          t1 = boundaryRect.top;
+          if (t1 == 1 / 0 || t1 == -1 / 0) {
+            t1 = boundaryRect.right;
+            if (t1 == 1 / 0 || t1 == -1 / 0) {
+              t1 = boundaryRect.bottom;
+              t1 = t1 == 1 / 0 || t1 == -1 / 0;
+            } else
+              t1 = t2;
+          } else
+            t1 = t2;
+        } else
+          t1 = t2;
+      } else
+        t1 = true;
+      if (A.assertTest(t1))
+        A.assertThrow("boundaryRect must either be infinite in all directions or finite in all directions.");
+      return boundaryRect;
+    },
+    get$_viewport() {
+      var t1 = this._parentKey,
+        t2 = type$.WidgetsBinding;
+      A.assertHelper(A.BindingBase_checkInstance($.WidgetsBinding__instance, t2).WidgetsBinding__buildOwner._globalKeyRegistry.$index(0, t1) != null);
+      t1 = A.BindingBase_checkInstance($.WidgetsBinding__instance, t2).WidgetsBinding__buildOwner._globalKeyRegistry.$index(0, t1).findRenderObject$0();
+      t1.toString;
+      t1 = type$.RenderBox._as(t1).get$size();
+      return new A.Rect(0, 0, 0 + t1._dx, 0 + t1._dy);
+    },
+    _matrixTranslate$2(matrix, translation) {
+      var t1, nextMatrix, nextViewport, t2, rotationMatrix, t3, t4, t5, t6, t7, t8, minX, minY, maxX, maxY, boundariesAabbQuad, offendingDistance, currentScale, correctedMatrix, offendingCorrectedDistance, _this = this;
+      if (translation.$eq(0, C.Offset_0_0)) {
+        t1 = new A.Matrix4(new Float64Array(16));
+        t1.setFrom$1(matrix);
+        return t1;
+      }
+      if (_this._currentAxis != null) {
+        _this._widget.toString;
+        switch (3) {
+          case 3:
+            break;
+        }
+      }
+      nextMatrix = new A.Matrix4(new Float64Array(16));
+      nextMatrix.setFrom$1(matrix);
+      nextMatrix.translate$2(translation._dx, translation._dy);
+      nextViewport = B._transformViewport(nextMatrix, _this.get$_viewport());
+      if (_this.get$_boundaryRect().get$isInfinite(0))
+        return nextMatrix;
+      t1 = _this.get$_boundaryRect();
+      t2 = _this._currentRotation;
+      rotationMatrix = new A.Matrix4(new Float64Array(16));
+      rotationMatrix.setIdentity$0();
+      t3 = t1.right;
+      t4 = t1.left;
+      t5 = t3 - t4;
+      t6 = t1.bottom;
+      t1 = t1.top;
+      t7 = t6 - t1;
+      rotationMatrix.translate$2(t5 / 2, t7 / 2);
+      rotationMatrix.rotateZ$1(t2);
+      rotationMatrix.translate$2(-t5 / 2, -t7 / 2);
+      t2 = new A.Vector3(new Float64Array(3));
+      t2.setValues$3(t4, t1, 0);
+      t2 = rotationMatrix.transform3$1(t2);
+      t5 = new A.Vector3(new Float64Array(3));
+      t5.setValues$3(t3, t1, 0);
+      t5 = rotationMatrix.transform3$1(t5);
+      t1 = new A.Vector3(new Float64Array(3));
+      t1.setValues$3(t3, t6, 0);
+      t1 = rotationMatrix.transform3$1(t1);
+      t3 = new A.Vector3(new Float64Array(3));
+      t3.setValues$3(t4, t6, 0);
+      t3 = rotationMatrix.transform3$1(t3);
+      t4 = new Float64Array(3);
+      new A.Vector3(t4).setFrom$1(t2);
+      t2 = new Float64Array(3);
+      new A.Vector3(t2).setFrom$1(t5);
+      t5 = new Float64Array(3);
+      new A.Vector3(t5).setFrom$1(t1);
+      t1 = new Float64Array(3);
+      new A.Vector3(t1).setFrom$1(t3);
+      t3 = t4[0];
+      t6 = t2[0];
+      t7 = t5[0];
+      t8 = t1[0];
+      minX = Math.min(t3, Math.min(t6, Math.min(t7, t8)));
+      t4 = t4[1];
+      t2 = t2[1];
+      t5 = t5[1];
+      t1 = t1[1];
+      minY = Math.min(t4, Math.min(t2, Math.min(t5, t1)));
+      maxX = Math.max(t3, Math.max(t6, Math.max(t7, t8)));
+      maxY = Math.max(t4, Math.max(t2, Math.max(t5, t1)));
+      t1 = new A.Vector3(new Float64Array(3));
+      t1.setValues$3(minX, minY, 0);
+      t2 = new A.Vector3(new Float64Array(3));
+      t2.setValues$3(maxX, minY, 0);
+      t3 = new A.Vector3(new Float64Array(3));
+      t3.setValues$3(maxX, maxY, 0);
+      t4 = new A.Vector3(new Float64Array(3));
+      t4.setValues$3(minX, maxY, 0);
+      t5 = new A.Vector3(new Float64Array(3));
+      t5.setFrom$1(t1);
+      t1 = new A.Vector3(new Float64Array(3));
+      t1.setFrom$1(t2);
+      t2 = new A.Vector3(new Float64Array(3));
+      t2.setFrom$1(t3);
+      t3 = new A.Vector3(new Float64Array(3));
+      t3.setFrom$1(t4);
+      boundariesAabbQuad = new B.Quad(t5, t1, t2, t3);
+      offendingDistance = B._exceedsBy(boundariesAabbQuad, nextViewport);
+      if (offendingDistance.$eq(0, C.Offset_0_0))
+        return nextMatrix;
+      t1 = nextMatrix.getTranslation$0()._v3storage;
+      t2 = t1[0];
+      t1 = t1[1];
+      currentScale = matrix.getMaxScaleOnAxis$0();
+      t2 -= offendingDistance._dx * currentScale;
+      t1 -= offendingDistance._dy * currentScale;
+      correctedMatrix = new A.Matrix4(new Float64Array(16));
+      correctedMatrix.setFrom$1(matrix);
+      t3 = new A.Vector3(new Float64Array(3));
+      t3.setValues$3(t2, t1, 0);
+      correctedMatrix.setTranslation$1(t3);
+      offendingCorrectedDistance = B._exceedsBy(boundariesAabbQuad, B._transformViewport(correctedMatrix, _this.get$_viewport()));
+      if (offendingCorrectedDistance.$eq(0, C.Offset_0_0))
+        return correctedMatrix;
+      t3 = offendingCorrectedDistance._dx === 0;
+      if (!t3 && offendingCorrectedDistance._dy !== 0) {
+        t1 = new A.Matrix4(new Float64Array(16));
+        t1.setFrom$1(matrix);
+        return t1;
+      }
+      t2 = t3 ? t2 : 0;
+      t1 = offendingCorrectedDistance._dy === 0 ? t1 : 0;
+      t3 = new A.Matrix4(new Float64Array(16));
+      t3.setFrom$1(matrix);
+      t4 = new A.Vector3(new Float64Array(3));
+      t4.setValues$3(t2, t1, 0);
+      t3.setTranslation$1(t4);
+      return t3;
+    },
+    _matrixScale$2(matrix, scale) {
+      var t1, currentScale, t2, t3, t4, totalScale, clampedTotalScale, _this = this;
+      if (scale === 1) {
+        t1 = new A.Matrix4(new Float64Array(16));
+        t1.setFrom$1(matrix);
+        return t1;
+      }
+      A.assertHelper(scale !== 0);
+      currentScale = _this.get$_transformer()._change_notifier$_value.getMaxScaleOnAxis$0();
+      t1 = _this.get$_viewport();
+      t2 = _this.get$_boundaryRect();
+      t3 = _this.get$_viewport();
+      t4 = _this.get$_boundaryRect();
+      totalScale = Math.max(currentScale * scale, Math.max((t1.right - t1.left) / (t2.right - t2.left), (t3.bottom - t3.top) / (t4.bottom - t4.top)));
+      t4 = _this._widget;
+      clampedTotalScale = A.clampDouble(totalScale, t4.minScale, t4.maxScale);
+      t1 = new A.Matrix4(new Float64Array(16));
+      t1.setFrom$1(matrix);
+      t1.scale$1(clampedTotalScale / currentScale);
+      return t1;
+    },
+    _matrixRotate$3(matrix, rotation, focalPoint) {
+      var t1, focalPointScene, t2, t3;
+      if (rotation === 0) {
+        t1 = new A.Matrix4(new Float64Array(16));
+        t1.setFrom$1(matrix);
+        return t1;
+      }
+      focalPointScene = this.get$_transformer().toScene$1(focalPoint);
+      t1 = new A.Matrix4(new Float64Array(16));
+      t1.setFrom$1(matrix);
+      t2 = focalPointScene._dx;
+      t3 = focalPointScene._dy;
+      t1.translate$2(t2, t3);
+      t1.rotateZ$1(-rotation);
+      t1.translate$2(-t2, -t3);
+      return t1;
+    },
+    _gestureIsSupported$1(gestureType) {
+      var t1;
+      $label0$0: {
+        t1 = true;
+        if (D._GestureType_2 === gestureType) {
+          t1 = false;
+          break $label0$0;
+        }
+        if (D._GestureType_1 === gestureType) {
+          this._widget.toString;
+          break $label0$0;
+        }
+        if (D._GestureType_0 === gestureType || gestureType == null) {
+          this._widget.toString;
+          break $label0$0;
+        }
+        t1 = null;
+      }
+      return t1;
+    },
+    _getGestureType$1(details) {
+      this._widget.toString;
+      if (Math.abs(details.scale - 1) > Math.abs(0))
+        return D._GestureType_1;
+      else
+        return D._GestureType_0;
+    },
+    _onScaleStart$1(details) {
+      var t1, t2, _this = this;
+      _this._widget.toString;
+      t1 = _this.___InteractiveViewerState__controller_A;
+      t1 === $ && A.throwLateFieldNI("_controller");
+      t2 = t1._ticker;
+      if (t2 != null && t2._ticker$_future != null) {
+        t1.stop$0();
+        t1 = _this.___InteractiveViewerState__controller_A;
+        t1.set$value(t1.lowerBound);
+        t1 = _this._interactive_viewer$_animation;
+        if (t1 != null) {
+          t2 = type$.void_Function._as(_this.get$_handleInertiaAnimation());
+          t1.parent.removeListener$1(t2);
+        }
+        _this._interactive_viewer$_animation = null;
+      }
+      t1 = _this.___InteractiveViewerState__scaleController_A;
+      t1 === $ && A.throwLateFieldNI("_scaleController");
+      t2 = t1._ticker;
+      if (t2 != null && t2._ticker$_future != null) {
+        t1.stop$0();
+        t1 = _this.___InteractiveViewerState__scaleController_A;
+        t1.set$value(t1.lowerBound);
+        t1 = _this._scaleAnimation;
+        if (t1 != null) {
+          t2 = type$.void_Function._as(_this.get$_handleScaleAnimation());
+          t1.parent.removeListener$1(t2);
+        }
+        _this._scaleAnimation = null;
+      }
+      _this._currentAxis = _this._gestureType = null;
+      _this._scaleStart = _this.get$_transformer()._change_notifier$_value.getMaxScaleOnAxis$0();
+      _this._referenceFocalPoint = _this.get$_transformer().toScene$1(details.localFocalPoint);
+      _this._rotationStart = _this._currentRotation;
+    },
+    _onScaleUpdate$1(details) {
+      var focalPointSceneScaled, t3, t4, focalPointSceneCheck, desiredRotation, translationChange, _this = this,
+        scale = _this.get$_transformer()._change_notifier$_value.getMaxScaleOnAxis$0(),
+        t1 = _this.___InteractiveViewerState__scaleAnimationFocalPoint_A = details.localFocalPoint,
+        focalPointScene = _this.get$_transformer().toScene$1(t1),
+        t2 = _this._gestureType;
+      if (t2 === D._GestureType_0)
+        t2 = _this._gestureType = _this._getGestureType$1(details);
+      else if (t2 == null) {
+        t2 = _this._getGestureType$1(details);
+        _this._gestureType = t2;
+      }
+      if (!_this._gestureIsSupported$1(t2)) {
+        _this._widget.toString;
+        return;
+      }
+      switch (_this._gestureType.index) {
+        case 1:
+          A.assertHelper(_this._scaleStart != null);
+          t2 = _this._scaleStart;
+          t2.toString;
+          _this.get$_transformer().set$value(_this._matrixScale$2(_this.get$_transformer()._change_notifier$_value, t2 * details.scale / scale));
+          focalPointSceneScaled = _this.get$_transformer().toScene$1(t1);
+          t2 = _this.get$_transformer();
+          t3 = _this.get$_transformer()._change_notifier$_value;
+          t4 = _this._referenceFocalPoint;
+          t4.toString;
+          t2.set$value(_this._matrixTranslate$2(t3, focalPointSceneScaled.$sub(0, t4)));
+          focalPointSceneCheck = _this.get$_transformer().toScene$1(t1);
+          t1 = _this._referenceFocalPoint;
+          t1.toString;
+          if (!B._round(t1).$eq(0, B._round(focalPointSceneCheck)))
+            _this._referenceFocalPoint = focalPointSceneCheck;
+          break;
+        case 2:
+          t2 = details.rotation;
+          if (t2 === 0) {
+            _this._widget.toString;
+            return;
+          }
+          t3 = _this._rotationStart;
+          t3.toString;
+          desiredRotation = t3 + t2;
+          _this.get$_transformer().set$value(_this._matrixRotate$3(_this.get$_transformer()._change_notifier$_value, _this._currentRotation - desiredRotation, t1));
+          _this._currentRotation = desiredRotation;
+          break;
+        case 0:
+          A.assertHelper(_this._referenceFocalPoint != null);
+          if (details.scale !== 1) {
+            _this._widget.toString;
+            return;
+          }
+          if (_this._currentAxis == null) {
+            t2 = _this._referenceFocalPoint;
+            t2.toString;
+            _this._currentAxis = B._getPanAxis(t2, focalPointScene);
+          }
+          t2 = _this._referenceFocalPoint;
+          t2.toString;
+          translationChange = focalPointScene.$sub(0, t2);
+          _this.get$_transformer().set$value(_this._matrixTranslate$2(_this.get$_transformer()._change_notifier$_value, translationChange));
+          _this._referenceFocalPoint = _this.get$_transformer().toScene$1(t1);
+          break;
+      }
+      _this._widget.toString;
+    },
+    _onScaleEnd$1(details) {
+      var t1, t2, _0_0, t3, frictionSimulationX, frictionSimulationY, tFinal, t4, t5, t6, scale, frictionSimulation, _this = this;
+      _this._widget.toString;
+      _this._referenceFocalPoint = _this._rotationStart = _this._scaleStart = null;
+      t1 = _this._interactive_viewer$_animation;
+      if (t1 != null) {
+        t2 = type$.void_Function._as(_this.get$_handleInertiaAnimation());
+        t1.parent.removeListener$1(t2);
+      }
+      t1 = _this._scaleAnimation;
+      if (t1 != null) {
+        t2 = type$.void_Function._as(_this.get$_handleScaleAnimation());
+        t1.parent.removeListener$1(t2);
+      }
+      t1 = _this.___InteractiveViewerState__controller_A;
+      t1 === $ && A.throwLateFieldNI("_controller");
+      t1.set$value(t1.lowerBound);
+      t1 = _this.___InteractiveViewerState__scaleController_A;
+      t1 === $ && A.throwLateFieldNI("_scaleController");
+      t1.set$value(t1.lowerBound);
+      if (!_this._gestureIsSupported$1(_this._gestureType)) {
+        _this._currentAxis = null;
+        return;
+      }
+      $label0$0: {
+        _0_0 = _this._gestureType;
+        if (D._GestureType_0 === _0_0) {
+          t1 = details.velocity.pixelsPerSecond;
+          if (t1.get$distance() < 50) {
+            _this._currentAxis = null;
+            return;
+          }
+          t2 = _this.get$_transformer()._change_notifier$_value.getTranslation$0()._v3storage;
+          t3 = t2[0];
+          t2 = t2[1];
+          _this._widget.toString;
+          frictionSimulationX = A.FrictionSimulation$(0.0000135, t3, t1._dx, 0);
+          _this._widget.toString;
+          frictionSimulationY = A.FrictionSimulation$(0.0000135, t2, t1._dy, 0);
+          t1 = t1.get$distance();
+          _this._widget.toString;
+          tFinal = B._getFinalTime(t1, 0.0000135, 10);
+          t1 = frictionSimulationX.get$finalX();
+          t4 = frictionSimulationY.get$finalX();
+          t5 = type$.Tween_Offset;
+          t6 = type$.Animation_double._as(A.CurvedAnimation$(C.C__DecelerateCurve, _this.___InteractiveViewerState__controller_A, null));
+          _this._interactive_viewer$_animation = new A._AnimatedEvaluation(t6, new A.Tween(new A.Offset(t3, t2), new A.Offset(t1, t4), t5), t5._eval$1("_AnimatedEvaluation<Animatable.T>"));
+          _this.___InteractiveViewerState__controller_A.duration = A.Duration$(0, C.JSNumber_methods.round$0(tFinal * 1000), 0);
+          t6.addListener$1(type$.void_Function._as(_this.get$_handleInertiaAnimation()));
+          _this.___InteractiveViewerState__controller_A.forward$0();
+          break $label0$0;
+        }
+        if (D._GestureType_1 === _0_0) {
+          t1 = details.scaleVelocity;
+          t2 = Math.abs(t1);
+          if (t2 < 0.1) {
+            _this._currentAxis = null;
+            return;
+          }
+          scale = _this.get$_transformer()._change_notifier$_value.getMaxScaleOnAxis$0();
+          _this._widget.toString;
+          frictionSimulation = A.FrictionSimulation$(0.0026999999999999997, scale, t1 / 10, 0);
+          _this._widget.toString;
+          tFinal = B._getFinalTime(t2, 0.0000135, 0.1);
+          t1 = frictionSimulation.x$1(tFinal);
+          t2 = type$.Tween_double;
+          t3 = type$.Animation_double._as(A.CurvedAnimation$(C.C__DecelerateCurve, _this.___InteractiveViewerState__scaleController_A, null));
+          _this._scaleAnimation = new A._AnimatedEvaluation(t3, new A.Tween(scale, t1, t2), t2._eval$1("_AnimatedEvaluation<Animatable.T>"));
+          _this.___InteractiveViewerState__scaleController_A.duration = A.Duration$(0, C.JSNumber_methods.round$0(tFinal * 1000), 0);
+          t3.addListener$1(type$.void_Function._as(_this.get$_handleScaleAnimation()));
+          _this.___InteractiveViewerState__scaleController_A.forward$0();
+          break $label0$0;
+        }
+        break $label0$0;
+      }
+    },
+    _interactive_viewer$_receivedPointerSignal$1($event) {
+      var local, global, t1, t2, localDelta, focalPointScene, newFocalPointScene, scaleChange, focalPointSceneScaled, _this = this;
+      type$.PointerSignalEvent._as($event);
+      local = $event.get$localPosition();
+      global = $event.get$position();
+      if (type$.PointerScrollEvent._is($event)) {
+        t1 = $event.get$kind() === C.PointerDeviceKind_4;
+        if (t1)
+          _this._widget.toString;
+        if (t1) {
+          _this._widget.toString;
+          t1 = global.$add(0, $event.get$scrollDelta());
+          t2 = $event.get$scrollDelta();
+          localDelta = A.PointerEvent_transformDeltaViaPositions($event.get$transform(), null, t2, t1);
+          if (!_this._gestureIsSupported$1(D._GestureType_0)) {
+            _this._widget.toString;
+            return;
+          }
+          focalPointScene = _this.get$_transformer().toScene$1(local);
+          newFocalPointScene = _this.get$_transformer().toScene$1(local.$sub(0, localDelta));
+          _this.get$_transformer().set$value(_this._matrixTranslate$2(_this.get$_transformer()._change_notifier$_value, newFocalPointScene.$sub(0, focalPointScene)));
+          _this._widget.toString;
+          return;
+        }
+        if ($event.get$scrollDelta()._dy === 0)
+          return;
+        t1 = $event.get$scrollDelta();
+        _this._widget.toString;
+        scaleChange = Math.exp(-t1._dy / 200);
+      } else if (type$.PointerScaleEvent._is($event))
+        scaleChange = $event.get$scale();
+      else
+        return;
+      _this._widget.toString;
+      if (!_this._gestureIsSupported$1(D._GestureType_1)) {
+        _this._widget.toString;
+        return;
+      }
+      focalPointScene = _this.get$_transformer().toScene$1(local);
+      _this.get$_transformer().set$value(_this._matrixScale$2(_this.get$_transformer()._change_notifier$_value, scaleChange));
+      focalPointSceneScaled = _this.get$_transformer().toScene$1(local);
+      _this.get$_transformer().set$value(_this._matrixTranslate$2(_this.get$_transformer()._change_notifier$_value, focalPointSceneScaled.$sub(0, focalPointScene)));
+      _this._widget.toString;
+    },
+    _handleInertiaAnimation$0() {
+      var t2, t3, t4, t5, t6, _this = this,
+        t1 = _this.___InteractiveViewerState__controller_A;
+      t1 === $ && A.throwLateFieldNI("_controller");
+      t1 = t1._ticker;
+      if (!(t1 != null && t1._ticker$_future != null)) {
+        _this._currentAxis = null;
+        t1 = _this._interactive_viewer$_animation;
+        if (t1 != null) {
+          t2 = type$.void_Function._as(_this.get$_handleInertiaAnimation());
+          t1.parent.removeListener$1(t2);
+        }
+        _this._interactive_viewer$_animation = null;
+        t1 = _this.___InteractiveViewerState__controller_A;
+        t1.set$value(t1.lowerBound);
+        return;
+      }
+      t1 = _this.get$_transformer()._change_notifier$_value.getTranslation$0()._v3storage;
+      t2 = t1[0];
+      t1 = t1[1];
+      t3 = _this.get$_transformer();
+      t4 = _this.get$_transformer()._change_notifier$_value;
+      t5 = _this.get$_transformer();
+      t6 = _this._interactive_viewer$_animation;
+      t3.set$value(_this._matrixTranslate$2(t4, t5.toScene$1(t6._evaluatable.transform$1(type$.Animation_double._as(t6.parent).get$value())).$sub(0, _this.get$_transformer().toScene$1(new A.Offset(t2, t1)))));
+    },
+    _handleScaleAnimation$0() {
+      var t2, desiredScale, t3, referenceFocalPoint, focalPointSceneScaled, _this = this,
+        t1 = _this.___InteractiveViewerState__scaleController_A;
+      t1 === $ && A.throwLateFieldNI("_scaleController");
+      t1 = t1._ticker;
+      if (!(t1 != null && t1._ticker$_future != null)) {
+        _this._currentAxis = null;
+        t1 = _this._scaleAnimation;
+        if (t1 != null) {
+          t2 = type$.void_Function._as(_this.get$_handleScaleAnimation());
+          t1.parent.removeListener$1(t2);
+        }
+        _this._scaleAnimation = null;
+        t1 = _this.___InteractiveViewerState__scaleController_A;
+        t1.set$value(t1.lowerBound);
+        return;
+      }
+      t1 = _this._scaleAnimation;
+      desiredScale = t1._evaluatable.transform$1(type$.Animation_double._as(t1.parent).get$value());
+      t1 = _this.get$_transformer()._change_notifier$_value.getMaxScaleOnAxis$0();
+      t2 = _this.get$_transformer();
+      t3 = _this.___InteractiveViewerState__scaleAnimationFocalPoint_A;
+      t3 === $ && A.throwLateFieldNI("_scaleAnimationFocalPoint");
+      referenceFocalPoint = t2.toScene$1(t3);
+      _this.get$_transformer().set$value(_this._matrixScale$2(_this.get$_transformer()._change_notifier$_value, desiredScale / t1));
+      focalPointSceneScaled = _this.get$_transformer().toScene$1(_this.___InteractiveViewerState__scaleAnimationFocalPoint_A);
+      _this.get$_transformer().set$value(_this._matrixTranslate$2(_this.get$_transformer()._change_notifier$_value, focalPointSceneScaled.$sub(0, referenceFocalPoint)));
+    },
+    _handleTransformation$0() {
+      this.setState$1(new B._InteractiveViewerState__handleTransformation_closure());
+    },
+    initState$0() {
+      var _this = this, _null = null;
+      _this.super$State$initState();
+      _this.___InteractiveViewerState__controller_A = A.AnimationController$(C.AnimationBehavior_0, _null, _null, _null, _null, _this);
+      _this.___InteractiveViewerState__scaleController_A = A.AnimationController$(C.AnimationBehavior_0, _null, _null, _null, _null, _this);
+      _this.get$_transformer().addListener$1(_this.get$_handleTransformation());
+    },
+    didUpdateWidget$1(oldWidget) {
+      this.super$State$didUpdateWidget(type$.InteractiveViewer._as(oldWidget));
+      this._widget.toString;
+      return;
+    },
+    dispose$0() {
+      var _this = this,
+        t1 = _this.___InteractiveViewerState__controller_A;
+      t1 === $ && A.throwLateFieldNI("_controller");
+      t1.dispose$0();
+      t1 = _this.___InteractiveViewerState__scaleController_A;
+      t1 === $ && A.throwLateFieldNI("_scaleController");
+      t1.dispose$0();
+      _this.get$_transformer().removeListener$1(_this.get$_handleTransformation());
+      _this._widget.toString;
+      _this.get$_transformer().dispose$0();
+      _this.super$__InteractiveViewerState_State_TickerProviderStateMixin$dispose();
+    },
+    build$1(context) {
+      var t1, t2, child, _this = this, _null = null;
+      _this._widget.toString;
+      t1 = _this.get$_transformer()._change_notifier$_value;
+      t2 = _this._widget.child;
+      child = new B._InteractiveViewerBuilt(t2, _this._childKey, C.Clip_1, true, t1, _null, _null);
+      return A.Listener$(C.HitTestBehavior_0, A.GestureDetector$(C.HitTestBehavior_1, child, C.DragStartBehavior_1, false, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _this.get$_onScaleEnd(), _this.get$_onScaleStart(), _this.get$_onScaleUpdate(), _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, false, new A.Offset(0, -0.005)), _this._parentKey, _null, _null, _null, _this.get$_interactive_viewer$_receivedPointerSignal(), _null);
+    },
+    $isTickerProvider: 1
+  };
+  B._InteractiveViewerBuilt.prototype = {
+    build$1(context) {
+      var _this = this,
+        child = A.Transform$(_this.alignment, new A.KeyedSubtree(_this.child, _this.childKey), null, _this.matrix, true);
+      return A.ClipRect$(child, _this.clipBehavior, null);
+    }
+  };
+  B.TransformationController.prototype = {
+    toScene$1(viewportPoint) {
+      var t1 = this._change_notifier$_value,
+        r = new A.Matrix4(new Float64Array(16));
+      if (r.copyInverse$1(t1) === 0)
+        A.throwExpression(A.ArgumentError$value(t1, "other", "Matrix cannot be inverted"));
+      t1 = new A.Vector3(new Float64Array(3));
+      t1.setValues$3(viewportPoint._dx, viewportPoint._dy, 0);
+      t1 = r.transform3$1(t1)._v3storage;
+      return new A.Offset(t1[0], t1[1]);
+    }
+  };
+  B._GestureType.prototype = {
+    _enumToString$0() {
+      return "_GestureType." + this._name;
+    }
+  };
+  B.PanAxis.prototype = {
+    _enumToString$0() {
+      return "PanAxis." + this._name;
+    }
+  };
+  B.__InteractiveViewerState_State_TickerProviderStateMixin.prototype = {
+    activate$0() {
+      this.super$State$activate();
+      this._updateTickerModeNotifier$0();
+      this._updateTickers$0();
+    },
+    dispose$0() {
+      var t1, _this = this;
+      A.assertHelper(new B.__InteractiveViewerState_State_TickerProviderStateMixin_dispose_closure(_this).call$0());
+      t1 = _this.TickerProviderStateMixin__tickerModeNotifier;
+      if (t1 != null)
+        t1.removeListener$1(_this.get$_updateTickers());
+      _this.TickerProviderStateMixin__tickerModeNotifier = null;
+      _this.super$State$dispose();
+    },
+    debugFillProperties$1(properties) {
+      var t1, t2, t3, _null = null;
+      this.super$State$debugFillProperties(properties);
+      t1 = this.TickerProviderStateMixin__tickers;
+      if (t1 != null) {
+        t2 = t1._collection$_length;
+        t3 = t2 === 1 ? "" : "s";
+        t3 = "tracking " + t2 + " ticker" + t3;
+        t2 = t3;
+      } else
+        t2 = _null;
+      properties.add$1(0, A.DiagnosticsProperty$("tickers", t1, true, _null, t2, false, _null, _null, C.DiagnosticLevel_3, _null, false, true, true, C.DiagnosticsTreeStyle_8, _null, type$.Set_Ticker));
+    }
+  };
+  B.TwoDimensionalChildDelegate.prototype = {};
+  B.TwoDimensionalChildBuilderDelegate.prototype = {
+    build$2(context, vicinity) {
+      var child, exception, stackTrace, exception0, t1, _null = null;
+      if (vicinity.xIndex < 0)
+        return _null;
+      if (vicinity.yIndex < 0)
+        return _null;
+      child = null;
+      try {
+        child = this.builder.call$2(context, vicinity);
+      } catch (exception0) {
+        exception = A.unwrapException(exception0);
+        stackTrace = A.getTraceFromException(exception0);
+        child = A._createErrorWidget(exception, stackTrace);
+      }
+      if (child == null)
+        return _null;
+      t1 = child;
+      child = new A.RepaintBoundary(t1, _null);
+      t1 = child;
+      child = new A.AutomaticKeepAlive(new A._SelectionKeepAlive(t1, _null), _null);
+      return child;
+    }
+  };
+  B.DiagonalDragBehavior.prototype = {
+    _enumToString$0() {
+      return "DiagonalDragBehavior." + this._name;
+    }
+  };
+  B.TwoDimensionalScrollable.prototype = {
+    createState$0() {
+      var t1 = type$.LabeledGlobalKey_ScrollableState;
+      return new B.TwoDimensionalScrollableState(new A.LabeledGlobalKey(null, t1), new A.LabeledGlobalKey(null, t1), C._StateLifecycle_0);
+    },
+    viewportBuilder$3(arg0, arg1, arg2) {
+      return this.viewportBuilder.call$3(arg0, arg1, arg2);
+    }
+  };
+  B.TwoDimensionalScrollableState.prototype = {
+    initState$0() {
+      var _this = this;
+      if (_this._widget.verticalDetails.controller == null)
+        _this._verticalFallbackController = A.ScrollController$(null, 0, true);
+      if (_this._widget.horizontalDetails.controller == null)
+        _this._horizontalFallbackController = A.ScrollController$(null, 0, true);
+      _this.super$State$initState();
+    },
+    didUpdateWidget$1(oldWidget) {
+      var t1, t2, _this = this;
+      type$.TwoDimensionalScrollable._as(oldWidget);
+      _this.super$State$didUpdateWidget(oldWidget);
+      t1 = oldWidget.verticalDetails.controller;
+      t2 = _this._widget.verticalDetails.controller;
+      if (t1 != t2)
+        if (t1 == null) {
+          A.assertHelper(_this._verticalFallbackController != null);
+          A.assertHelper(_this._widget.verticalDetails.controller != null);
+          _this._verticalFallbackController.dispose$0();
+          _this._verticalFallbackController = null;
+        } else if (t2 == null) {
+          A.assertHelper(_this._verticalFallbackController == null);
+          _this._verticalFallbackController = A.ScrollController$(null, 0, true);
+        }
+      t1 = oldWidget.horizontalDetails.controller;
+      t2 = _this._widget.horizontalDetails.controller;
+      if (t1 != t2)
+        if (t1 == null) {
+          A.assertHelper(_this._horizontalFallbackController != null);
+          A.assertHelper(_this._widget.horizontalDetails.controller != null);
+          _this._horizontalFallbackController.dispose$0();
+          _this._horizontalFallbackController = null;
+        } else if (t2 == null) {
+          A.assertHelper(_this._horizontalFallbackController == null);
+          _this._horizontalFallbackController = A.ScrollController$(null, 0, true);
+        }
+    },
+    build$1(context) {
+      var t1, t2, t3, t4, t5, t6, t7, _this = this, _null = null;
+      if (A.assertTest(A.axisDirectionToAxis(_this._widget.verticalDetails.direction) === C.Axis_1))
+        A.assertThrow("TwoDimensionalScrollable.verticalDetails are not Axis.vertical.");
+      if (A.assertTest(A.axisDirectionToAxis(_this._widget.horizontalDetails.direction) === C.Axis_0))
+        A.assertThrow("TwoDimensionalScrollable.horizontalDetails are not Axis.horizontal.");
+      t1 = _this._widget;
+      t2 = t1.verticalDetails;
+      t3 = t2.direction;
+      t4 = t2.controller;
+      if (t4 == null) {
+        t4 = _this._verticalFallbackController;
+        t4.toString;
+      }
+      t5 = t2.decorationClipBehavior;
+      if (t5 == null)
+        t5 = C.Clip_1;
+      t6 = t1.dragStartBehavior;
+      t7 = t1.diagonalDragBehavior;
+      t1 = t1.hitTestBehavior;
+      A.assertHelper(t3 === C.AxisDirection_0 || t3 === C.AxisDirection_2);
+      return new B._TwoDimensionalScrollableScope(new A.RestorationScope(new B._VerticalOuterDimension(t7, _this._horizontalInnerScrollableKey, t3, t4, t2.physics, new B.TwoDimensionalScrollableState_build_closure(_this), _null, false, t1, _null, t6, "OuterVerticalTwoDimensionalScrollable", _null, t5, _this._verticalOuterScrollableKey), _null, _null), _null);
+    },
+    dispose$0() {
+      var t1 = this._verticalFallbackController;
+      if (t1 != null)
+        t1.dispose$0();
+      t1 = this._horizontalFallbackController;
+      if (t1 != null)
+        t1.dispose$0();
+      this.super$State$dispose();
+    }
+  };
+  B._TwoDimensionalScrollableScope.prototype = {
+    updateShouldNotify$1(old) {
+      type$._TwoDimensionalScrollableScope._as(old);
+      return false;
+    }
+  };
+  B._VerticalOuterDimension.prototype = {
+    createState$0() {
+      var t2, _null = null,
+        t1 = new A._RestorableScrollOffset($.$get$ChangeNotifier__emptyListeners());
+      A.ChangeNotifier_maybeDispatchObjectCreation(t1);
+      t2 = type$.LabeledGlobalKey_State_StatefulWidget;
+      return new B._VerticalOuterDimensionState(t1, new A.LabeledGlobalKey(_null, t2), new A.LabeledGlobalKey(_null, type$.LabeledGlobalKey_RawGestureDetectorState), new A.LabeledGlobalKey(_null, t2), C.Map_empty5, _null, A.LinkedHashMap_LinkedHashMap$_empty(type$.RestorableProperty_nullable_Object, type$.void_Function), _null, true, _null, _null, _null, C._StateLifecycle_0);
+    }
+  };
+  B._VerticalOuterDimensionState.prototype = {
+    _performEnsureVisible$6$alignment$alignmentPolicy$curve$duration$targetRenderObject(object, alignment, alignmentPolicy, curve, duration, targetRenderObject) {
+      A.assertThrow("The _performEnsureVisible method was called for the vertical scrollable of a TwoDimensionalScrollable. This should not happen as the horizontal scrollable handles both axes.");
+      return new A._Record_2(A._setArrayType([], type$.JSArray_Future_void), this);
+    },
+    _evaluateLockedAxis$1(offset) {
+      var offsetDelta, axisDifferential, _this = this;
+      A.assertHelper(_this.lastDragOffset != null);
+      offsetDelta = _this.lastDragOffset.$sub(0, offset);
+      axisDifferential = Math.abs(offsetDelta._dx) - Math.abs(offsetDelta._dy);
+      if (Math.abs(axisDifferential) >= 18)
+        _this.lockedAxis = axisDifferential > 0 ? C.Axis_0 : C.Axis_1;
+      else
+        _this.lockedAxis = null;
+    },
+    _scrollable$_handleDragDown$1(details) {
+      var t1;
+      type$.DragDownDetails._as(details);
+      t1 = this._widget;
+      t1.toString;
+      type$._VerticalOuterDimension._as(t1);
+      switch (t1.diagonalDragBehavior.index) {
+        case 0:
+          break;
+        case 1:
+        case 2:
+        case 3:
+          t1 = t1.horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragDown$1(details);
+          break;
+      }
+      this.super$ScrollableState$_handleDragDown(details);
+    },
+    _scrollable$_handleDragStart$1(details) {
+      var t1, t2, t3, _this = this;
+      type$.DragStartDetails._as(details);
+      t1 = details.globalPosition;
+      _this.lastDragOffset = t1;
+      t2 = _this._widget;
+      t2.toString;
+      t3 = type$._VerticalOuterDimension;
+      t3._as(t2);
+      switch (t2.diagonalDragBehavior.index) {
+        case 0:
+          break;
+        case 3:
+          t1 = t2.horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragStart$1(details);
+          break;
+        case 1:
+        case 2:
+          _this._evaluateLockedAxis$1(t1);
+          switch (_this.lockedAxis) {
+            case null:
+            case void 0:
+              t1 = _this._widget;
+              t1.toString;
+              t1 = t3._as(t1).horizontalKey.get$currentState();
+              t1.toString;
+              t1._scrollable$_handleDragStart$1(details);
+              break;
+            case C.Axis_0:
+              t1 = _this._widget;
+              t1.toString;
+              t1 = t3._as(t1).horizontalKey.get$currentState();
+              t1.toString;
+              t1._scrollable$_handleDragStart$1(details);
+              return;
+            case C.Axis_1:
+              break;
+          }
+          break;
+      }
+      _this.super$ScrollableState$_handleDragStart(details);
+    },
+    _scrollable$_handleDragUpdate$1(details) {
+      var t1, t2, t3, t4, t5, verticalDragDetails, horizontalDragDetails, _this = this;
+      type$.DragUpdateDetails._as(details);
+      t1 = details.sourceTimeStamp;
+      t2 = details.delta;
+      t3 = t2._dy;
+      t4 = details.globalPosition;
+      t5 = details.localPosition;
+      verticalDragDetails = A.DragUpdateDetails$(new A.Offset(0, t3), t4, t5, t3, t1);
+      t2 = t2._dx;
+      horizontalDragDetails = A.DragUpdateDetails$(new A.Offset(t2, 0), t4, t5, t2, t1);
+      t1 = _this._widget;
+      t1.toString;
+      t2 = type$._VerticalOuterDimension;
+      t2._as(t1);
+      switch (t1.diagonalDragBehavior.index) {
+        case 0:
+          _this.super$ScrollableState$_handleDragUpdate(verticalDragDetails);
+          return;
+        case 3:
+          t1 = t1.horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragUpdate$1(horizontalDragDetails);
+          _this.super$ScrollableState$_handleDragUpdate(verticalDragDetails);
+          return;
+        case 2:
+          _this._evaluateLockedAxis$1(t4);
+          _this.lastDragOffset = t4;
+          break;
+        case 1:
+          if (_this.lockedAxis == null && _this.lastDragOffset != null)
+            _this._evaluateLockedAxis$1(t4);
+          break;
+      }
+      switch (_this.lockedAxis) {
+        case null:
+        case void 0:
+          t1 = _this._widget;
+          t1.toString;
+          t1 = t2._as(t1).horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragUpdate$1(horizontalDragDetails);
+          break;
+        case C.Axis_0:
+          t1 = _this._widget;
+          t1.toString;
+          t1 = t2._as(t1).horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragUpdate$1(horizontalDragDetails);
+          return;
+        case C.Axis_1:
+          break;
+      }
+      _this.super$ScrollableState$_handleDragUpdate(verticalDragDetails);
+    },
+    _scrollable$_handleDragEnd$1(details) {
+      var t1, dx, dy, verticalDragDetails, horizontalDragDetails, _this = this;
+      type$.DragEndDetails._as(details);
+      _this.lockedAxis = _this.lastDragOffset = null;
+      t1 = details.velocity.pixelsPerSecond;
+      dx = t1._dx;
+      dy = t1._dy;
+      verticalDragDetails = A.DragEndDetails$(C.Offset_0_0, null, dy, new A.Velocity(new A.Offset(0, dy)));
+      horizontalDragDetails = A.DragEndDetails$(C.Offset_0_0, null, dx, new A.Velocity(new A.Offset(dx, 0)));
+      t1 = _this._widget;
+      t1.toString;
+      type$._VerticalOuterDimension._as(t1);
+      switch (t1.diagonalDragBehavior.index) {
+        case 0:
+          break;
+        case 1:
+        case 2:
+        case 3:
+          t1 = t1.horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragEnd$1(horizontalDragDetails);
+          break;
+      }
+      _this.super$ScrollableState$_handleDragEnd(verticalDragDetails);
+    },
+    _scrollable$_handleDragCancel$0() {
+      var t1, _this = this;
+      _this.lockedAxis = _this.lastDragOffset = null;
+      t1 = _this._widget;
+      t1.toString;
+      type$._VerticalOuterDimension._as(t1);
+      switch (t1.diagonalDragBehavior.index) {
+        case 0:
+          break;
+        case 1:
+        case 2:
+        case 3:
+          t1 = t1.horizontalKey.get$currentState();
+          t1.toString;
+          t1._scrollable$_handleDragCancel$0();
+          break;
+      }
+      _this.super$ScrollableState$_handleDragCancel();
+    },
+    setCanDrag$1(value) {
+      var _this = this,
+        t1 = _this._widget;
+      t1.toString;
+      switch (type$._VerticalOuterDimension._as(t1).diagonalDragBehavior.index) {
+        case 0:
+          _this.super$ScrollableState$setCanDrag(value);
+          return;
+        case 1:
+        case 2:
+        case 3:
+          if (value) {
+            _this._scrollable$_gestureRecognizers = A.LinkedHashMap_LinkedHashMap$_literal([C.Type_PanGestureRecognizer_9Ie, new A.GestureRecognizerFactoryWithHandlers(new B._VerticalOuterDimensionState_setCanDrag_closure(_this), new B._VerticalOuterDimensionState_setCanDrag_closure0(_this), type$.GestureRecognizerFactoryWithHandlers_PanGestureRecognizer)], type$.Type, type$.GestureRecognizerFactory_GestureRecognizer);
+            _this._scrollable$_handleDragCancel$0();
+            _this._lastCanDrag = true;
+            _this._scrollable$_lastAxisDirection = A.axisDirectionToAxis(_this._widget.axisDirection);
+            t1 = _this._gestureDetectorKey;
+            if (t1.get$currentState() != null)
+              t1.get$currentState().replaceGestureRecognizers$1(_this._scrollable$_gestureRecognizers);
+          }
+          return;
+      }
+    },
+    _buildChrome$2(context, child) {
+      var _this = this,
+        t1 = _this._widget.axisDirection,
+        t2 = _this.get$_scrollable$_effectiveScrollController(),
+        t3 = _this._widget.clipBehavior,
+        t4 = _this.__ScrollableState__configuration_A;
+      t4 === $ && A.throwLateFieldNI("_configuration");
+      return t4.buildOverscrollIndicator$3(context, child, new A.ScrollableDetails(t1, t2, null, t3));
+    }
+  };
+  B._HorizontalInnerDimension.prototype = {
+    createState$0() {
+      var t2, _null = null,
+        t1 = new A._RestorableScrollOffset($.$get$ChangeNotifier__emptyListeners());
+      A.ChangeNotifier_maybeDispatchObjectCreation(t1);
+      t2 = type$.LabeledGlobalKey_State_StatefulWidget;
+      return new B._HorizontalInnerDimensionState(t1, new A.LabeledGlobalKey(_null, t2), new A.LabeledGlobalKey(_null, type$.LabeledGlobalKey_RawGestureDetectorState), new A.LabeledGlobalKey(_null, t2), C.Map_empty5, _null, A.LinkedHashMap_LinkedHashMap$_empty(type$.RestorableProperty_nullable_Object, type$.void_Function), _null, true, _null, _null, _null, C._StateLifecycle_0);
+    }
+  };
+  B._HorizontalInnerDimensionState.prototype = {
+    didChangeDependencies$0() {
+      var t1 = B.Scrollable_of(this.get$context());
+      this.___HorizontalInnerDimensionState_verticalScrollable_A = t1;
+      A.assertHelper(A.axisDirectionToAxis(t1._widget.axisDirection) === C.Axis_1);
+      this.super$ScrollableState$didChangeDependencies();
+    },
+    _performEnsureVisible$6$alignment$alignmentPolicy$curve$duration$targetRenderObject(object, alignment, alignmentPolicy, curve, duration, targetRenderObject) {
+      var t1 = this._scrollable$_position.ensureVisible$5$alignment$alignmentPolicy$curve$duration(object, alignment, alignmentPolicy, curve, duration),
+        t2 = this.___HorizontalInnerDimensionState_verticalScrollable_A;
+      t2 === $ && A.throwLateFieldNI("verticalScrollable");
+      return new A._Record_2(A._setArrayType([t1, t2._scrollable$_position.ensureVisible$5$alignment$alignmentPolicy$curve$duration(object, alignment, alignmentPolicy, curve, duration)], type$.JSArray_Future_void), this.___HorizontalInnerDimensionState_verticalScrollable_A);
+    },
+    setCanDrag$1(value) {
+      var _this = this,
+        t1 = _this._widget;
+      t1.toString;
+      type$._HorizontalInnerDimension._as(t1);
+      switch (t1.diagonalDragBehavior.index) {
+        case 0:
+          _this.super$ScrollableState$setCanDrag(value);
+          return;
+        case 1:
+        case 2:
+        case 3:
+          if (value) {
+            _this._scrollable$_gestureRecognizers = C.Map_empty5;
+            t1.verticalOuterKey.get$currentState().setCanDrag$1(true);
+            _this._scrollable$_handleDragCancel$0();
+            _this._lastCanDrag = true;
+            _this._scrollable$_lastAxisDirection = A.axisDirectionToAxis(_this._widget.axisDirection);
+            t1 = _this._gestureDetectorKey;
+            if (t1.get$currentState() != null)
+              t1.get$currentState().replaceGestureRecognizers$1(_this._scrollable$_gestureRecognizers);
+          }
+          return;
+      }
+    },
+    _buildChrome$2(context, child) {
+      var _this = this,
+        t1 = _this._widget.axisDirection,
+        t2 = _this.get$_scrollable$_effectiveScrollController(),
+        t3 = _this._widget.clipBehavior,
+        t4 = _this.__ScrollableState__configuration_A;
+      t4 === $ && A.throwLateFieldNI("_configuration");
+      return t4.buildOverscrollIndicator$3(context, child, new A.ScrollableDetails(t1, t2, null, t3));
+    }
+  };
+  B.EmptyTextSelectionControls.prototype = {
+    getHandleSize$1(textLineHeight) {
+      return C.Size_0_0;
+    },
+    buildToolbar$8(context, globalEditableRegion, textLineHeight, selectionMidpoint, endpoints, delegate, clipboardStatus, lastSecondaryTapDownPosition) {
+      type$.List_TextSelectionPoint._as(endpoints);
+      type$.nullable_ValueListenable_ClipboardStatus._as(clipboardStatus);
+      return C.SizedBox_0_0_null_null;
+    },
+    buildHandle$4(context, type, textLineHeight, onTap) {
+      type$.nullable_void_Function._as(onTap);
+      return C.SizedBox_0_0_null_null;
+    },
+    getHandleAnchor$2(type, textLineHeight) {
+      return C.Offset_0_0;
+    }
+  };
+  B.TwoDimensionalScrollView.prototype = {
+    build$1(context) {
+      var t2, effectivePrimary, t3, mainAxisDetails, scrollable, scrollableResult, _this = this,
+        t1 = _this.verticalDetails;
+      if (A.assertTest(A.axisDirectionToAxis(t1.direction) === C.Axis_1))
+        A.assertThrow("TwoDimensionalScrollView.verticalDetails are not Axis.vertical.");
+      t2 = _this.horizontalDetails;
+      if (A.assertTest(A.axisDirectionToAxis(t2.direction) === C.Axis_0))
+        A.assertThrow("TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.");
+      switch (1) {
+        case 1:
+          break;
+      }
+      effectivePrimary = _this.primary;
+      effectivePrimary = t1.controller == null && A.PrimaryScrollController_shouldInherit(context, C.Axis_1);
+      if (effectivePrimary) {
+        if (A.assertTest(t1.controller == null))
+          A.assertThrow("TwoDimensionalScrollView.primary was explicitly set to true, but a ScrollController was provided in the ScrollableDetails of the TwoDimensionalScrollView.mainAxis.");
+        t3 = A.PrimaryScrollController_of(context);
+        mainAxisDetails = new A.ScrollableDetails(t1.direction, t3, t1.physics, t1.decorationClipBehavior);
+      } else
+        mainAxisDetails = t1;
+      switch (1) {
+        case 1:
+          break;
+      }
+      switch (1) {
+        case 1:
+          break;
+      }
+      scrollable = new B.TwoDimensionalScrollable(_this.diagonalDragBehavior, t2, mainAxisDetails, _this.get$buildViewport(), C.HitTestBehavior_1, C.DragStartBehavior_1, null);
+      scrollableResult = effectivePrimary ? A.PrimaryScrollController$none(scrollable) : scrollable;
+      if (_this.keyboardDismissBehavior === C.ScrollViewKeyboardDismissBehavior_1)
+        return new A.NotificationListener(new B.TwoDimensionalScrollView_build_closure(context), scrollableResult, null, type$.NotificationListener_ScrollUpdateNotification);
+      return scrollableResult;
+    },
+    debugFillProperties$1(properties) {
+      var t1, _this = this, _null = null;
+      _this.super$Widget$debugFillProperties(properties);
+      properties.add$1(0, A.EnumProperty$("mainAxis", C.Axis_1, C.C__NoDefaultValue, C.DiagnosticLevel_3, type$.Axis));
+      properties.add$1(0, A.EnumProperty$("diagonalDragBehavior", _this.diagonalDragBehavior, C.C__NoDefaultValue, C.DiagnosticLevel_3, type$.DiagonalDragBehavior));
+      properties.add$1(0, A.FlagProperty$("primary", _null, _null, "using primary controller", C.DiagnosticLevel_3, true, _this.primary));
+      t1 = type$.ScrollableDetails;
+      properties.add$1(0, A.DiagnosticsProperty$("verticalDetails", _this.verticalDetails, true, C.C__NoDefaultValue, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, false, true, C.DiagnosticsTreeStyle_8, _null, t1));
+      properties.add$1(0, A.DiagnosticsProperty$("horizontalDetails", _this.horizontalDetails, true, C.C__NoDefaultValue, _null, false, _null, _null, C.DiagnosticLevel_3, _null, false, false, true, C.DiagnosticsTreeStyle_8, _null, t1));
+    }
+  };
+  B.TwoDimensionalViewport.prototype = {
+    createElement$0() {
+      var t1 = type$.Element;
+      t1 = new B._TwoDimensionalViewportElement(A.LinkedHashMap_LinkedHashMap$_empty(type$.ChildVicinity, t1), A.LinkedHashMap_LinkedHashMap$_empty(type$.Key, t1), this, C._ElementLifecycle_0, A.HashSet_HashSet(t1));
+      $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object("Element", "package:flutter/widgets.dart", t1);
+      return t1;
+    }
+  };
+  B._TwoDimensionalViewportElement.prototype = {
+    get$renderObject() {
+      return type$.RenderTwoDimensionalViewport._as(A.RenderObjectElement.prototype.get$renderObject.call(this));
+    },
+    performRebuild$0() {
+      this.super$RenderObjectElement$performRebuild();
+      var t1 = type$.RenderTwoDimensionalViewport._as(A.RenderObjectElement.prototype.get$renderObject.call(this));
+      t1._needsDelegateRebuild = true;
+      t1.super$RenderBox$markNeedsLayout();
+    },
+    forgetChild$1(child) {
+      var _this = this;
+      A.assertHelper(!(_this._newKeyToChild != null && _this._newVicinityToChild != null));
+      _this.super$Element$forgetChild(child);
+      _this._vicinityToChild.remove$1(0, child._slot);
+      if (child.get$widget().key != null)
+        _this._keyToChild.remove$1(0, child.get$widget().key);
+    },
+    insertRenderObjectChild$2(child, slot) {
+      var t1, t2;
+      type$.RenderBox._as(child);
+      type$.ChildVicinity._as(slot);
+      t1 = type$.RenderTwoDimensionalViewport._as(A.RenderObjectElement.prototype.get$renderObject.call(this));
+      t2 = t1._two_dimensional_viewport$_children;
+      t1._debugTrackOrphans$1$newOrphan(t2.$index(0, slot));
+      A.assertHelper(!t1._two_dimensional_viewport$_keepAliveBucket.containsValue$1(child));
+      t2.$indexSet(0, slot, child);
+      t1.adoptChild$1(child);
+    },
+    moveRenderObjectChild$3(child, oldSlot, newSlot) {
+      var t1;
+      type$.RenderBox._as(child);
+      t1 = type$.ChildVicinity;
+      t1._as(oldSlot);
+      t1._as(newSlot);
+      type$.RenderTwoDimensionalViewport._as(A.RenderObjectElement.prototype.get$renderObject.call(this))._moveChild$3$from$to(child, oldSlot, newSlot);
+    },
+    removeRenderObjectChild$2(child, slot) {
+      type$.RenderBox._as(child);
+      type$.ChildVicinity._as(slot);
+      type$.RenderTwoDimensionalViewport._as(A.RenderObjectElement.prototype.get$renderObject.call(this))._two_dimensional_viewport$_removeChild$2(child, slot);
+    },
+    visitChildren$1(visitor) {
+      var t1;
+      type$.void_Function_Element._as(visitor);
+      t1 = this._vicinityToChild;
+      new A.LinkedHashMapValuesIterable(t1, A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>")).forEach$1(0, visitor);
+    },
+    debugDescribeChildren$0() {
+      var _i, child,
+        t1 = this._vicinityToChild,
+        t2 = A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>"),
+        children = A.List_List$_of(new A.LinkedHashMapValuesIterable(t1, t2), t2._eval$1("Iterable.E"));
+      C.JSArray_methods.sort$1(children, B.two_dimensional_viewport__TwoDimensionalViewportElement__compareChildren$closure());
+      t1 = A._setArrayType([], type$.JSArray_DiagnosticsNode);
+      for (t2 = children.length, _i = 0; _i < children.length; children.length === t2 || (0, A.throwConcurrentModificationError)(children), ++_i) {
+        child = children[_i];
+        t1.push(child.toDiagnosticsNode$1$name(J.toString$0$(child._slot)));
+      }
+      return t1;
+    },
+    _buildChild$1(vicinity) {
+      var _this = this;
+      A.assertHelper(_this._newKeyToChild != null && _this._newVicinityToChild != null);
+      _this._framework$_owner.buildScope$2(_this, new B._TwoDimensionalViewportElement__buildChild_closure(_this, vicinity));
+    },
+    _retrieveOldElement$2(newWidget, vicinity) {
+      var result, potentialOldElement, _this = this,
+        t1 = newWidget.key;
+      if (t1 != null) {
+        result = _this._keyToChild.remove$1(0, t1);
+        if (result != null)
+          _this._vicinityToChild.remove$1(0, result._slot);
+        return result;
+      }
+      potentialOldElement = _this._vicinityToChild.$index(0, vicinity);
+      if (potentialOldElement != null && potentialOldElement.get$widget().key == null)
+        return _this._vicinityToChild.remove$1(0, vicinity);
+      return null;
+    },
+    _reuseChild$1(vicinity) {
+      var elementToReuse, t1, t2, t3, _this = this;
+      A.assertHelper(_this._newKeyToChild != null && _this._newVicinityToChild != null);
+      elementToReuse = _this._vicinityToChild.remove$1(0, vicinity);
+      if (A.assertTest(elementToReuse != null))
+        A.assertThrow("Expected to re-use an element at " + vicinity.toString$0(0) + ", but none was found.");
+      t1 = _this._newVicinityToChild;
+      t1.toString;
+      elementToReuse.toString;
+      t1.$indexSet(0, vicinity, elementToReuse);
+      if (elementToReuse.get$widget().key != null) {
+        A.assertHelper(_this._keyToChild.containsKey$1(elementToReuse.get$widget().key));
+        A.assertHelper(J.$eq$(_this._keyToChild.$index(0, elementToReuse.get$widget().key), elementToReuse));
+        t1 = _this._newKeyToChild;
+        t1.toString;
+        t2 = elementToReuse.get$widget().key;
+        t2.toString;
+        t3 = _this._keyToChild.remove$1(0, elementToReuse.get$widget().key);
+        t3.toString;
+        t1.$indexSet(0, t2, t3);
+      }
+    },
+    _endLayout$0() {
+      var t1, t2, _this = this, _null = null;
+      A.assertHelper(_this._newKeyToChild != null && _this._newVicinityToChild != null);
+      for (t1 = _this._vicinityToChild, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();) {
+        t2 = t1.__js_helper$_current;
+        if (t2.get$widget().key == null)
+          _this.updateChild$3(t2, _null, _null);
+        else
+          A.assertHelper(_this._keyToChild.containsValue$1(t2));
+      }
+      for (t1 = _this._keyToChild, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();) {
+        t2 = t1.__js_helper$_current;
+        A.assertHelper(t2.get$widget().key != null);
+        _this.updateChild$3(t2, _null, _null);
+      }
+      t1 = _this._newVicinityToChild;
+      t1.toString;
+      _this._vicinityToChild = t1;
+      t1 = _this._newKeyToChild;
+      t1.toString;
+      _this._keyToChild = t1;
+      _this._newKeyToChild = _this._newVicinityToChild = null;
+    },
+    $isTwoDimensionalChildManager: 1
+  };
+  B.TwoDimensionalViewportParentData.prototype = {
+    get$isVisible() {
+      A.assertHelper(new B.TwoDimensionalViewportParentData_isVisible_closure(this).call$0());
+      if (J.$eq$(this._paintExtent, C.Size_0_0)) {
+        var t1 = this._paintExtent;
+        t1 = t1._dy !== 0 || t1._dx !== 0;
+      } else
+        t1 = true;
+      return t1;
+    },
+    toString$0(_) {
+      var t4, t5, _this = this,
+        t1 = _this.vicinity.toString$0(0),
+        t2 = A.S(_this.layoutOffset),
+        t3 = A.S(_this.paintOffset);
+      if (_this._paintExtent == null)
+        t4 = "not visible; ";
+      else {
+        t4 = !_this.get$isVisible() ? "not " : "";
+        t4 = t4 + "visible - paintExtent=" + A.S(_this._paintExtent) + "; ";
+      }
+      t5 = _this.KeepAliveParentDataMixin_keepAlive ? "keepAlive; " : "";
+      return "vicinity=" + t1 + "; layoutOffset=" + t2 + "; paintOffset=" + t3 + "; " + t4 + t5;
+    }
+  };
+  B.RenderTwoDimensionalViewport.prototype = {
+    RenderTwoDimensionalViewport$9$cacheExtent$childManager$clipBehavior$delegate$horizontalAxisDirection$horizontalOffset$mainAxis$verticalAxisDirection$verticalOffset(cacheExtent, childManager, clipBehavior, delegate, horizontalAxisDirection, horizontalOffset, mainAxis, verticalAxisDirection, verticalOffset) {
+      A.assertHelper(new B.RenderTwoDimensionalViewport_closure(this).call$0());
+    },
+    set$horizontalOffset(value) {
+      var _this = this,
+        t1 = _this._horizontalOffset;
+      if (t1 === value)
+        return;
+      if (_this._object$_owner != null)
+        t1.removeListener$1(_this.get$markNeedsLayout());
+      _this._horizontalOffset = value;
+      if (_this._object$_owner != null)
+        value.addListener$1(_this.get$markNeedsLayout());
+      _this.super$RenderBox$markNeedsLayout();
+    },
+    set$horizontalAxisDirection(value) {
+      if (this._horizontalAxisDirection === value)
+        return;
+      this._horizontalAxisDirection = value;
+      this.super$RenderBox$markNeedsLayout();
+    },
+    set$verticalOffset(value) {
+      var _this = this,
+        t1 = _this._verticalOffset;
+      if (t1 === value)
+        return;
+      if (_this._object$_owner != null)
+        t1.removeListener$1(_this.get$markNeedsLayout());
+      _this._verticalOffset = value;
+      if (_this._object$_owner != null)
+        value.addListener$1(_this.get$markNeedsLayout());
+      _this.super$RenderBox$markNeedsLayout();
+    },
+    set$verticalAxisDirection(value) {
+      if (this._verticalAxisDirection === value)
+        return;
+      this._verticalAxisDirection = value;
+      this.super$RenderBox$markNeedsLayout();
+    },
+    set$delegate(value) {
+      var oldDelegate, _this = this,
+        t1 = _this._two_dimensional_viewport$_delegate;
+      if (t1 === value)
+        return;
+      if (_this._object$_owner != null)
+        t1.removeListener$1(_this.get$_handleDelegateNotification());
+      oldDelegate = _this._two_dimensional_viewport$_delegate;
+      _this._two_dimensional_viewport$_delegate = value;
+      if (_this._object$_owner != null)
+        value.addListener$1(_this.get$_handleDelegateNotification());
+      A.getRuntimeTypeOfDartObject(_this._two_dimensional_viewport$_delegate);
+      A.getRuntimeTypeOfDartObject(oldDelegate);
+      _this._needsDelegateRebuild = true;
+      _this.super$RenderBox$markNeedsLayout();
+    },
+    set$mainAxis(value) {
+      if (this._mainAxis === value)
+        return;
+      this._mainAxis = value;
+      this.super$RenderBox$markNeedsLayout();
+    },
+    set$cacheExtent(value) {
+      if (this._two_dimensional_viewport$_cacheExtent == value)
+        return;
+      this._two_dimensional_viewport$_cacheExtent = value;
+      this.super$RenderBox$markNeedsLayout();
+    },
+    set$clipBehavior(value) {
+      var _this = this;
+      if (_this._two_dimensional_viewport$_clipBehavior === value)
+        return;
+      _this._two_dimensional_viewport$_clipBehavior = value;
+      _this.markNeedsPaint$0();
+      _this.markNeedsSemanticsUpdate$0();
+    },
+    get$isRepaintBoundary() {
+      return true;
+    },
+    get$sizedByParent() {
+      return true;
+    },
+    _handleDelegateNotification$0() {
+      this._needsDelegateRebuild = true;
+      this.super$RenderBox$markNeedsLayout();
+      return null;
+    },
+    setupParentData$1(child) {
+      type$.RenderBox._as(child);
+      if (!(child.parentData instanceof B.TwoDimensionalViewportParentData))
+        child.parentData = new B.TwoDimensionalViewportParentData(D.ChildVicinity_m1_m1, false);
+    },
+    parentDataOf$1(child) {
+      var t1 = true;
+      if (!this._two_dimensional_viewport$_children.containsValue$1(child))
+        if (!this._two_dimensional_viewport$_keepAliveBucket.containsValue$1(child)) {
+          t1 = this._debugOrphans;
+          t1.toString;
+          t1 = C.JSArray_methods.contains$1(t1, child);
+        }
+      A.assertHelper(t1);
+      t1 = child.parentData;
+      t1.toString;
+      return type$.TwoDimensionalViewportParentData._as(t1);
+    },
+    attach$1(owner) {
+      var t1, _this = this;
+      _this.super$RenderObject$attach(owner);
+      t1 = _this.get$markNeedsLayout();
+      _this._horizontalOffset.addListener$1(t1);
+      _this._verticalOffset.addListener$1(t1);
+      _this._two_dimensional_viewport$_delegate.addListener$1(_this.get$_handleDelegateNotification());
+      for (t1 = _this._two_dimensional_viewport$_children, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();)
+        t1.__js_helper$_current.attach$1(owner);
+      for (t1 = _this._two_dimensional_viewport$_keepAliveBucket, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();)
+        t1.__js_helper$_current.attach$1(owner);
+    },
+    detach$0() {
+      var t1, _this = this;
+      _this.super$RenderObject$detach();
+      t1 = _this.get$markNeedsLayout();
+      _this._horizontalOffset.removeListener$1(t1);
+      _this._verticalOffset.removeListener$1(t1);
+      _this._two_dimensional_viewport$_delegate.removeListener$1(_this.get$_handleDelegateNotification());
+      for (t1 = _this._two_dimensional_viewport$_children, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();)
+        t1.__js_helper$_current.detach$0();
+      for (t1 = _this._two_dimensional_viewport$_keepAliveBucket, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();)
+        t1.__js_helper$_current.detach$0();
+    },
+    redepthChildren$0() {
+      for (var t1 = this._two_dimensional_viewport$_children, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")); t1.moveNext$0();)
+        t1.__js_helper$_current.redepthChildren$0();
+      t1 = this._two_dimensional_viewport$_keepAliveBucket;
+      new A.LinkedHashMapValuesIterable(t1, A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>")).forEach$1(0, this.get$redepthChild());
+    },
+    visitChildren$1(visitor) {
+      var child, t1, t2, t3, t4, _this = this;
+      type$.void_Function_RenderObject._as(visitor);
+      child = _this._two_dimensional_viewport$_firstChild;
+      for (t1 = type$.TwoDimensionalViewportParentData, t2 = _this._two_dimensional_viewport$_children, t3 = _this._two_dimensional_viewport$_keepAliveBucket; child != null;) {
+        visitor.call$1(child);
+        t4 = true;
+        if (!t2.containsValue$1(child))
+          if (!t3.containsValue$1(child)) {
+            t4 = _this._debugOrphans;
+            t4.toString;
+            t4 = C.JSArray_methods.contains$1(t4, child);
+          }
+        A.assertHelper(t4);
+        t4 = child.parentData;
+        t4.toString;
+        child = t1._as(t4)._two_dimensional_viewport$_nextSibling;
+      }
+      new A.LinkedHashMapValuesIterable(t3, A._instanceType(t3)._eval$1("LinkedHashMapValuesIterable<2>")).forEach$1(0, visitor);
+    },
+    visitChildrenForSemantics$1(visitor) {
+      var child, t1, t2, t3, t4, _this = this;
+      type$.void_Function_RenderObject._as(visitor);
+      child = _this._two_dimensional_viewport$_firstChild;
+      for (t1 = type$.TwoDimensionalViewportParentData, t2 = _this._two_dimensional_viewport$_children, t3 = _this._two_dimensional_viewport$_keepAliveBucket; child != null;) {
+        t4 = true;
+        if (!t2.containsValue$1(child))
+          if (!t3.containsValue$1(child)) {
+            t4 = _this._debugOrphans;
+            t4.toString;
+            t4 = C.JSArray_methods.contains$1(t4, child);
+          }
+        A.assertHelper(t4);
+        t4 = child.parentData;
+        t4.toString;
+        t1._as(t4);
+        visitor.call$1(child);
+        child = t4._two_dimensional_viewport$_nextSibling;
+      }
+    },
+    debugDescribeChildren$0() {
+      var t1 = this._two_dimensional_viewport$_children,
+        t2 = A._instanceType(t1)._eval$1("LinkedHashMapKeysIterable<1>"),
+        t3 = type$.DiagnosticsNode;
+      t1 = A.List_List$_of(A.MappedIterable_MappedIterable(new A.LinkedHashMapKeysIterable(t1, t2), t2._eval$1("DiagnosticsNode(Iterable.E)")._as(new B.RenderTwoDimensionalViewport_debugDescribeChildren_closure(this)), t2._eval$1("Iterable.E"), t3), t3);
+      return t1;
+    },
+    computeDryLayout$1(constraints) {
+      A.debugCheckHasBoundedAxis(C.Axis_1, constraints);
+      A.debugCheckHasBoundedAxis(C.Axis_0, constraints);
+      return new A.Size(constraints.constrainWidth$0(), constraints.constrainHeight$0());
+    },
+    hitTestChildren$2$position(result, position) {
+      var t1, t2, t3, t4, t5, t6;
+      for (t1 = this._two_dimensional_viewport$_children, t2 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>")), t3 = type$.TwoDimensionalViewportParentData, t4 = this._two_dimensional_viewport$_keepAliveBucket; t2.moveNext$0();) {
+        t5 = t2.__js_helper$_current;
+        t6 = true;
+        if (!t1.containsValue$1(t5))
+          if (!t4.containsValue$1(t5)) {
+            t6 = this._debugOrphans;
+            t6.toString;
+            t6 = C.JSArray_methods.contains$1(t6, t5);
+          }
+        A.assertHelper(t6);
+        t6 = t5.parentData;
+        t6.toString;
+        t3._as(t6);
+        if (!t6.get$isVisible())
+          continue;
+        if (result.addWithPaintOffset$3$hitTest$offset$position(new B.RenderTwoDimensionalViewport_hitTestChildren_closure(position, t6, t5), t6.paintOffset, position))
+          return true;
+      }
+      return false;
+    },
+    performResize$0() {
+      var _this = this,
+        oldSize = _this._box$_size != null ? _this.get$size() : null;
+      _this.super$RenderBox$performResize();
+      _this._horizontalOffset.applyViewportDimension$1(_this.get$size()._dx);
+      _this._verticalOffset.applyViewportDimension$1(_this.get$size()._dy);
+      J.$eq$(oldSize, _this.get$size());
+    },
+    getOffsetToReveal$4$axis$rect(target, alignment, axis, rect) {
+      var t2, _0_1, axisDirection, _0_2, child, rectLocal, t3, targetRect, t4, targetOffset, _this = this, _null = null,
+        t1 = axis.index;
+      switch (t1) {
+        case 1:
+          t2 = _this._verticalOffset._pixels;
+          t2.toString;
+          t2 = new A._Record_2(t2, _this._verticalAxisDirection);
+          break;
+        case 0:
+          t2 = _this._horizontalOffset._pixels;
+          t2.toString;
+          t2 = new A._Record_2(t2, _this._horizontalAxisDirection);
+          break;
+        default:
+          t2 = _null;
+      }
+      _0_1 = t2._0;
+      axisDirection = _null;
+      _0_2 = t2._1;
+      axisDirection = _0_2;
+      if (rect == null)
+        rect = target.get$paintBounds();
+      for (child = target; child.get$parent() !== _this; child = t2) {
+        t2 = child.get$parent();
+        t2.toString;
+      }
+      A.assertHelper(child.get$parent() === _this);
+      type$.RenderBox._as(child);
+      rectLocal = A.MatrixUtils_transformRect(target.getTransformTo$1(child), rect);
+      switch (axisDirection) {
+        case C.AxisDirection_0:
+          t2 = child.get$size()._dy - rectLocal.bottom;
+          break;
+        case C.AxisDirection_3:
+          t2 = child.get$size()._dx - rectLocal.right;
+          break;
+        case C.AxisDirection_1:
+          t2 = rectLocal.left;
+          break;
+        case C.AxisDirection_2:
+          t2 = rectLocal.top;
+          break;
+        default:
+          t2 = _null;
+      }
+      if (typeof t2 !== "number")
+        return A.iae(t2);
+      t3 = _this.parentDataOf$1(child).paintOffset;
+      t3.toString;
+      switch (axisDirection) {
+        case C.AxisDirection_0:
+          A.assertHelper(_this._box$_size != null);
+          t3 = _this.get$size()._dy - t3._dy - child.get$size()._dy;
+          break;
+        case C.AxisDirection_3:
+          A.assertHelper(_this._box$_size != null);
+          t3 = _this.get$size()._dx - t3._dx - child.get$size()._dx;
+          break;
+        case C.AxisDirection_1:
+          t3 = t3._dx;
+          break;
+        case C.AxisDirection_2:
+          t3 = t3._dy;
+          break;
+        default:
+          t3 = _null;
+      }
+      if (typeof t3 !== "number")
+        return A.iae(t3);
+      targetRect = A.MatrixUtils_transformRect(target.getTransformTo$1(_this), rect);
+      switch (t1) {
+        case 0:
+          A.assertHelper(_this._box$_size != null);
+          t4 = _this.get$size()._dx - (rectLocal.right - rectLocal.left);
+          break;
+        case 1:
+          A.assertHelper(_this._box$_size != null);
+          t4 = _this.get$size()._dy - (rectLocal.bottom - rectLocal.top);
+          break;
+        default:
+          t4 = _null;
+      }
+      targetOffset = _0_1 + t2 + t3 - t4 * alignment;
+      switch (t1) {
+        case 0:
+          t1 = _this._horizontalOffset._pixels;
+          t1.toString;
+          t1 -= targetOffset;
+          break;
+        case 1:
+          t1 = _this._verticalOffset._pixels;
+          t1.toString;
+          t1 -= targetOffset;
+          break;
+        default:
+          t1 = _null;
+      }
+      switch (axisDirection) {
+        case C.AxisDirection_0:
+          t1 = targetRect.translate$2(0, -t1);
+          break;
+        case C.AxisDirection_2:
+          t1 = targetRect.translate$2(0, t1);
+          break;
+        case C.AxisDirection_3:
+          t1 = targetRect.translate$2(-t1, 0);
+          break;
+        case C.AxisDirection_1:
+          t1 = targetRect.translate$2(t1, 0);
+          break;
+        default:
+          t1 = _null;
+      }
+      return new A.RevealedOffset(targetOffset, t1);
+    },
+    getOffsetToReveal$3$axis(target, alignment, axis) {
+      return this.getOffsetToReveal$4$axis$rect(target, alignment, axis, null);
+    },
+    showOnScreen$4$curve$descendant$duration$rect(curve, descendant, duration, rect) {
+      var _0_3, _0_1, _0_5_isSet, _0_5, _0_4, t1, axisDirection, _0_7, _0_4_isSet, _0_8, _this = this, _null = null;
+      type$.nullable_RenderObject._as(descendant);
+      type$.nullable_Rect._as(rect);
+      type$.Duration._as(duration);
+      type$.Curve._as(curve);
+      $label0$0: {
+        _0_3 = true;
+        _0_1 = true;
+        _0_5_isSet = true;
+        if (_0_5_isSet) {
+          _0_5 = true;
+          _0_4 = true;
+          t1 = true;
+        } else {
+          _0_4 = _null;
+          _0_5 = _0_4;
+          t1 = false;
+        }
+        axisDirection = _null;
+        if (t1)
+          break $label0$0;
+        _0_7 = !_0_1;
+        t1 = _0_7;
+        if (t1)
+          if (_0_5_isSet) {
+            t1 = _0_5;
+            _0_4_isSet = _0_5_isSet;
+          } else {
+            _0_4 = true;
+            _0_4_isSet = true;
+            t1 = true;
+          }
+        else {
+          _0_4_isSet = _0_5_isSet;
+          t1 = false;
+        }
+        if (t1) {
+          axisDirection = _this._verticalAxisDirection;
+          break $label0$0;
+        }
+        if (_0_3) {
+          if (_0_4_isSet)
+            t1 = _0_4;
+          else {
+            _0_4 = true;
+            _0_4_isSet = true;
+            t1 = true;
+          }
+          _0_8 = !t1;
+          t1 = _0_8;
+        } else {
+          _0_8 = _null;
+          t1 = false;
+        }
+        if (t1) {
+          axisDirection = _this._horizontalAxisDirection;
+          break $label0$0;
+        }
+        if (_0_7)
+          if (_0_3)
+            t1 = _0_8;
+          else {
+            _0_8 = !(!_0_4_isSet || _0_4);
+            t1 = _0_8;
+          }
+        else
+          t1 = false;
+        if (t1)
+          return _this.super$RenderObject$showOnScreen(curve, descendant, duration, rect);
+      }
+      _this.super$RenderObject$showOnScreen(curve, _null, duration, B.RenderTwoDimensionalViewport_showInViewport(axisDirection, curve, descendant, duration, rect, _this));
+    },
+    showOnScreen$0() {
+      return this.showOnScreen$4$curve$descendant$duration$rect(C.Cubic_glB, null, C.Duration_0, null);
+    },
+    showOnScreen$1$rect(rect) {
+      return this.showOnScreen$4$curve$descendant$duration$rect(C.Cubic_glB, null, C.Duration_0, rect);
+    },
+    showOnScreen$3$curve$duration$rect(curve, duration, rect) {
+      return this.showOnScreen$4$curve$descendant$duration$rect(curve, null, duration, rect);
+    },
+    showOnScreen$2$descendant$rect(descendant, rect) {
+      return this.showOnScreen$4$curve$descendant$duration$rect(C.Cubic_glB, descendant, C.Duration_0, rect);
+    },
+    markNeedsLayout$1$withDelegateRebuild(withDelegateRebuild) {
+      A._asBool(withDelegateRebuild);
+      this._needsDelegateRebuild = this._needsDelegateRebuild || withDelegateRebuild;
+      this.super$RenderBox$markNeedsLayout();
+    },
+    markNeedsLayout$0() {
+      return this.markNeedsLayout$1$withDelegateRebuild(false);
+    },
+    performLayout$0() {
+      var t1, t2, t3, t4, child, _this = this;
+      _this._two_dimensional_viewport$_lastChild = _this._two_dimensional_viewport$_firstChild = null;
+      _this._activeChildrenForLayoutPass.clear$0(0);
+      t1 = _this._two_dimensional_viewport$_childManager;
+      A.assertHelper(!(t1._newKeyToChild != null && t1._newVicinityToChild != null));
+      t2 = type$.Element;
+      t1._newVicinityToChild = A.LinkedHashMap_LinkedHashMap$_empty(type$.ChildVicinity, t2);
+      t1._newKeyToChild = A.LinkedHashMap_LinkedHashMap$_empty(type$.Key, t2);
+      t2 = _this._horizontalOffset._pixels;
+      t2.toString;
+      t1 = _this._verticalOffset._pixels;
+      t1.toString;
+      A.assertHelper(_this._box$_size != null);
+      t3 = _this.get$size();
+      A.assertHelper(_this._box$_size != null);
+      t4 = _this.get$size();
+      child = _this.buildOrObtainChildFor$1(D.ChildVicinity_0_0);
+      child.layout$2$parentUsesSize(C.BoxConstraints_0Yu, true);
+      _this.parentDataOf$1(child).layoutOffset = new A.Offset(-t2, -t1);
+      _this._horizontalOffset.applyContentDimensions$2(0, A.clampDouble(child.get$size()._dx - t3._dx, 0, 1 / 0));
+      _this._verticalOffset.applyContentDimensions$2(0, A.clampDouble(child.get$size()._dy - t4._dy, 0, 1 / 0));
+      _this._debugCheckContentDimensions$0();
+      _this._needsDelegateRebuild = false;
+      _this._cacheKeepAlives$0();
+      _this.invokeLayoutCallback$1$1(new B.RenderTwoDimensionalViewport_performLayout_closure(_this), type$.BoxConstraints);
+    },
+    _cacheKeepAlives$0() {
+      var remainingChildren, t5, _i, child, t6, _this = this,
+        t1 = _this._two_dimensional_viewport$_children,
+        t2 = A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>"),
+        t3 = _this._activeChildrenForLayoutPass,
+        t4 = A._instanceType(t3)._eval$1("LinkedHashMapValuesIterable<2>");
+      t4 = A.LinkedHashSet_LinkedHashSet$of(new A.LinkedHashMapValuesIterable(t1, t2), t2._eval$1("Iterable.E")).difference$1(A.LinkedHashSet_LinkedHashSet$of(new A.LinkedHashMapValuesIterable(t3, t4), t4._eval$1("Iterable.E")));
+      remainingChildren = A.List_List$_of(t4, A._instanceType(t4)._precomputed1);
+      for (t2 = remainingChildren.length, t3 = type$.TwoDimensionalViewportParentData, t4 = _this._two_dimensional_viewport$_keepAliveBucket, t5 = _this._two_dimensional_viewport$_childManager, _i = 0; _i < remainingChildren.length; remainingChildren.length === t2 || (0, A.throwConcurrentModificationError)(remainingChildren), ++_i) {
+        child = remainingChildren[_i];
+        t6 = true;
+        if (!t1.containsValue$1(child))
+          if (!t4.containsValue$1(child)) {
+            t6 = _this._debugOrphans;
+            t6.toString;
+            t6 = C.JSArray_methods.contains$1(t6, child);
+          }
+        A.assertHelper(t6);
+        t6 = child.parentData;
+        t6.toString;
+        t3._as(t6);
+        if (t6.KeepAliveParentDataMixin_keepAlive) {
+          t4.$indexSet(0, t6.vicinity, child);
+          t5._reuseChild$1(t6.vicinity);
+        }
+      }
+    },
+    _reifyChildren$0() {
+      var previousChild, t1, minorIndex, t2, majorIndex, previousChild0, _this = this;
+      A.assertHelper(_this._leadingXIndex != null);
+      A.assertHelper(_this._trailingXIndex != null);
+      A.assertHelper(_this._leadingYIndex != null);
+      A.assertHelper(_this._trailingYIndex != null);
+      A.assertHelper(_this._two_dimensional_viewport$_firstChild == null);
+      A.assertHelper(_this._two_dimensional_viewport$_lastChild == null);
+      previousChild = null;
+      switch (_this._mainAxis.index) {
+        case 1:
+          t1 = _this._leadingYIndex;
+          t1.toString;
+          minorIndex = t1;
+          while (true) {
+            t1 = _this._trailingYIndex;
+            t1.toString;
+            if (!(minorIndex <= t1))
+              break;
+            t1 = _this._leadingXIndex;
+            t1.toString;
+            t2 = minorIndex >= -1;
+            majorIndex = t1;
+            while (true) {
+              t1 = _this._trailingXIndex;
+              t1.toString;
+              if (!(majorIndex <= t1))
+                break;
+              A.assertHelper(majorIndex >= -1);
+              A.assertHelper(t2);
+              previousChild0 = _this._completeChildParentData$2$previousChild(new B.ChildVicinity(majorIndex, minorIndex), previousChild);
+              previousChild = previousChild0 == null ? previousChild : previousChild0;
+              ++majorIndex;
+            }
+            ++minorIndex;
+          }
+          break;
+        case 0:
+          t1 = _this._leadingXIndex;
+          t1.toString;
+          minorIndex = t1;
+          while (true) {
+            t1 = _this._trailingXIndex;
+            t1.toString;
+            if (!(minorIndex <= t1))
+              break;
+            t1 = _this._leadingYIndex;
+            t1.toString;
+            t2 = minorIndex >= -1;
+            majorIndex = t1;
+            while (true) {
+              t1 = _this._trailingYIndex;
+              t1.toString;
+              if (!(majorIndex <= t1))
+                break;
+              A.assertHelper(t2);
+              A.assertHelper(majorIndex >= -1);
+              previousChild0 = _this._completeChildParentData$2$previousChild(new B.ChildVicinity(minorIndex, majorIndex), previousChild);
+              previousChild = previousChild0 == null ? previousChild : previousChild0;
+              ++majorIndex;
+            }
+            ++minorIndex;
+          }
+          break;
+      }
+      _this._two_dimensional_viewport$_lastChild = previousChild;
+      if (previousChild != null)
+        _this.parentDataOf$1(previousChild)._two_dimensional_viewport$_nextSibling = null;
+      _this._trailingYIndex = _this._leadingYIndex = _this._trailingXIndex = _this._leadingXIndex = null;
+    },
+    _completeChildParentData$2$previousChild(vicinity, previousChild) {
+      var t1, childParentData, t2, _this = this;
+      A.assertHelper(!vicinity.$eq(0, D.ChildVicinity_m1_m1));
+      t1 = _this._two_dimensional_viewport$_children;
+      if (t1.containsKey$1(vicinity)) {
+        t1 = t1.$index(0, vicinity);
+        t1.toString;
+        A.assertHelper(_this.parentDataOf$1(t1).vicinity.$eq(0, vicinity));
+        childParentData = _this.parentDataOf$1(t1);
+        if (A.assertTest(childParentData.layoutOffset != null)) {
+          t2 = childParentData.vicinity;
+          A.assertThrow("The child with ChildVicinity(xIndex: " + t2.xIndex + ", yIndex: " + t2.yIndex + ") was not provided a layoutOffset. This should be set during layoutChildSequence, representing the position of the child.");
+        }
+        A.assertHelper(t1._box$_size != null);
+        t2 = childParentData.layoutOffset;
+        t2.toString;
+        childParentData._paintExtent = _this.computeChildPaintExtent$2(t2, t1.get$size());
+        t2 = childParentData.layoutOffset;
+        t2.toString;
+        childParentData.paintOffset = _this.computeAbsolutePaintOffsetFor$2$layoutOffset(t1, t2);
+        _this._two_dimensional_viewport$_hasVisualOverflow = _this._two_dimensional_viewport$_hasVisualOverflow || !J.$eq$(childParentData.layoutOffset, childParentData._paintExtent) || !childParentData.get$isVisible();
+        if (previousChild == null) {
+          A.assertHelper(_this._two_dimensional_viewport$_firstChild == null);
+          _this._two_dimensional_viewport$_firstChild = t1;
+        } else {
+          _this.parentDataOf$1(previousChild)._two_dimensional_viewport$_nextSibling = t1;
+          _this.parentDataOf$1(t1);
+        }
+        return t1;
+      }
+      return null;
+    },
+    _debugCheckContentDimensions$0() {
+      A.assertHelper(new B.RenderTwoDimensionalViewport__debugCheckContentDimensions_closure(this).call$0());
+      A.assertHelper(new B.RenderTwoDimensionalViewport__debugCheckContentDimensions_closure0(this).call$0());
+      return true;
+    },
+    buildOrObtainChildFor$1(vicinity) {
+      var t1, t2, t3, t4, _this = this;
+      A.assertHelper(!vicinity.$eq(0, D.ChildVicinity_m1_m1));
+      A.assertHelper(_this._debugDoingThisLayout);
+      t1 = _this._leadingXIndex != null;
+      t2 = true;
+      if (t1)
+        if (_this._trailingXIndex != null)
+          t2 = _this._trailingYIndex == null;
+      t3 = vicinity.xIndex;
+      t4 = vicinity.yIndex;
+      if (t2) {
+        _this._trailingXIndex = _this._leadingXIndex = t3;
+        _this._trailingYIndex = _this._leadingYIndex = t4;
+      } else {
+        A.assertHelper(t1);
+        A.assertHelper(_this._trailingXIndex != null);
+        A.assertHelper(_this._leadingYIndex != null);
+        A.assertHelper(_this._trailingYIndex != null);
+        t1 = _this._leadingXIndex;
+        t1.toString;
+        _this._leadingXIndex = Math.min(t3, t1);
+        t1 = _this._trailingXIndex;
+        t1.toString;
+        _this._trailingXIndex = Math.max(t3, t1);
+        t1 = _this._leadingYIndex;
+        t1.toString;
+        _this._leadingYIndex = Math.min(t4, t1);
+        t1 = _this._trailingYIndex;
+        t1.toString;
+        _this._trailingYIndex = Math.max(t4, t1);
+      }
+      if (!_this._needsDelegateRebuild)
+        t1 = !_this._two_dimensional_viewport$_children.containsKey$1(vicinity) && !_this._two_dimensional_viewport$_keepAliveBucket.containsKey$1(vicinity);
+      else
+        t1 = true;
+      if (t1)
+        _this.invokeLayoutCallback$1$1(new B.RenderTwoDimensionalViewport_buildOrObtainChildFor_closure(_this, vicinity), type$.BoxConstraints);
+      else {
+        _this._two_dimensional_viewport$_keepAliveBucket.remove$1(0, vicinity);
+        _this._two_dimensional_viewport$_childManager._reuseChild$1(vicinity);
+      }
+      t1 = _this._two_dimensional_viewport$_children;
+      if (!t1.containsKey$1(vicinity))
+        return null;
+      A.assertHelper(t1.containsKey$1(vicinity));
+      t1 = t1.$index(0, vicinity);
+      t1.toString;
+      _this._activeChildrenForLayoutPass.$indexSet(0, vicinity, t1);
+      _this.parentDataOf$1(t1).vicinity = vicinity;
+      return t1;
+    },
+    computeChildPaintExtent$2(layoutOffset, childSize) {
+      var t1, width, t2, t3, t4, height, _this = this;
+      if (childSize.$eq(0, C.Size_0_0) || childSize._dy === 0 || childSize._dx === 0)
+        return C.Size_0_0;
+      t1 = layoutOffset._dx;
+      if (t1 < 0) {
+        width = t1 + childSize._dx;
+        if (width <= 0)
+          return C.Size_0_0;
+      } else {
+        A.assertHelper(_this._box$_size != null);
+        if (t1 >= _this.get$size()._dx)
+          return C.Size_0_0;
+        else {
+          if (t1 >= 0) {
+            A.assertHelper(_this._box$_size != null);
+            t2 = t1 < _this.get$size()._dx;
+          } else
+            t2 = false;
+          A.assertHelper(t2);
+          width = childSize._dx;
+          t2 = t1 + width;
+          A.assertHelper(_this._box$_size != null);
+          t3 = _this.get$size();
+          t4 = _this._box$_size == null;
+          if (t2 > t3._dx) {
+            A.assertHelper(!t4);
+            width = _this.get$size()._dx - t1;
+          } else {
+            A.assertHelper(!t4);
+            A.assertHelper(t2 <= _this.get$size()._dx);
+          }
+        }
+      }
+      t1 = layoutOffset._dy;
+      if (t1 < 0) {
+        height = t1 + childSize._dy;
+        if (height <= 0)
+          return C.Size_0_0;
+      } else {
+        A.assertHelper(_this._box$_size != null);
+        if (t1 >= _this.get$size()._dy)
+          return C.Size_0_0;
+        else {
+          if (t1 >= 0) {
+            A.assertHelper(_this._box$_size != null);
+            t2 = t1 < _this.get$size()._dy;
+          } else
+            t2 = false;
+          A.assertHelper(t2);
+          height = childSize._dy;
+          t2 = t1 + height;
+          A.assertHelper(_this._box$_size != null);
+          t3 = _this.get$size();
+          t4 = _this._box$_size == null;
+          if (t2 > t3._dy) {
+            A.assertHelper(!t4);
+            height = _this.get$size()._dy - t1;
+          } else {
+            A.assertHelper(!t4);
+            A.assertHelper(t2 <= _this.get$size()._dy);
+          }
+        }
+      }
+      return new A.Size(width, height);
+    },
+    computeAbsolutePaintOffsetFor$2$layoutOffset(child, layoutOffset) {
+      var _0_0, t1, _1_0, t2, _this = this,
+        _s22_ = "This should not happen";
+      A.assertHelper(_this._box$_size != null);
+      A.assertHelper(child._box$_size != null);
+      _0_0 = _this._horizontalAxisDirection;
+      $label0$0: {
+        if (C.AxisDirection_1 === _0_0) {
+          t1 = layoutOffset._dx;
+          break $label0$0;
+        }
+        if (C.AxisDirection_3 === _0_0) {
+          A.assertHelper(_this._box$_size != null);
+          t1 = _this.get$size()._dx - (layoutOffset._dx + child.get$size()._dx);
+          break $label0$0;
+        }
+        t1 = C.AxisDirection_0 === _0_0 || C.AxisDirection_2 === _0_0 ? A.throwExpression(A.Exception_Exception(_s22_)) : null;
+      }
+      _1_0 = _this._verticalAxisDirection;
+      $label1$1: {
+        if (C.AxisDirection_0 === _1_0) {
+          A.assertHelper(_this._box$_size != null);
+          t2 = _this.get$size()._dy - (layoutOffset._dy + child.get$size()._dy);
+          break $label1$1;
+        }
+        if (C.AxisDirection_2 === _1_0) {
+          t2 = layoutOffset._dy;
+          break $label1$1;
+        }
+        t2 = C.AxisDirection_1 === _1_0 || C.AxisDirection_3 === _1_0 ? A.throwExpression(A.Exception_Exception(_s22_)) : null;
+      }
+      return new A.Offset(t1, t2);
+    },
+    paint$2(context, offset) {
+      var t1, t2, t3, _this = this;
+      if (_this._two_dimensional_viewport$_children.__js_helper$_length === 0)
+        return;
+      t1 = _this._two_dimensional_viewport$_hasVisualOverflow && _this._two_dimensional_viewport$_clipBehavior !== C.Clip_0;
+      t2 = _this._two_dimensional_viewport$_clipRectLayer;
+      if (t1) {
+        A.assertHelper(!_this._needsCompositingBitsUpdate);
+        t1 = _this.__RenderObject__needsCompositing_A;
+        t1 === $ && A.throwLateFieldNI("_needsCompositing");
+        A.assertHelper(_this._box$_size != null);
+        t3 = _this.get$size();
+        t2.set$layer(context.pushClipRect$6$clipBehavior$oldLayer(t1, offset, new A.Rect(0, 0, 0 + t3._dx, 0 + t3._dy), _this.get$_paintChildren(), _this._two_dimensional_viewport$_clipBehavior, t2._layer));
+      } else {
+        t2.set$layer(null);
+        _this._paintChildren$2(context, offset);
+      }
+    },
+    _paintChildren$2(context, offset) {
+      var t1, t2, t3, t4, t5, t6, t7, _this = this,
+        child = _this._two_dimensional_viewport$_firstChild;
+      for (t1 = type$.TwoDimensionalViewportParentData, t2 = _this._two_dimensional_viewport$_children, t3 = _this._two_dimensional_viewport$_keepAliveBucket, t4 = offset._dx, t5 = offset._dy; child != null;) {
+        t6 = true;
+        if (!t2.containsValue$1(child))
+          if (!t3.containsValue$1(child)) {
+            t6 = _this._debugOrphans;
+            t6.toString;
+            t6 = C.JSArray_methods.contains$1(t6, child);
+          }
+        A.assertHelper(t6);
+        t6 = child.parentData;
+        t6.toString;
+        t1._as(t6);
+        if (t6.get$isVisible()) {
+          t7 = t6.paintOffset;
+          context.paintChild$2(child, new A.Offset(t4 + t7._dx, t5 + t7._dy));
+        }
+        child = t6._two_dimensional_viewport$_nextSibling;
+      }
+    },
+    _moveChild$3$from$to(child, from, to) {
+      var t1, _this = this,
+        childParentData = _this.parentDataOf$1(child);
+      if (!(childParentData.KeepAliveParentDataMixin_keepAlive && !childParentData.get$isVisible())) {
+        t1 = _this._two_dimensional_viewport$_children;
+        if (t1.$index(0, from) === child)
+          t1.remove$1(0, from);
+        _this._debugTrackOrphans$2$newOrphan$noLongerOrphan(t1.$index(0, to), child);
+        t1.$indexSet(0, to, child);
+        return;
+      }
+      t1 = _this._two_dimensional_viewport$_keepAliveBucket;
+      if (t1.$index(0, childParentData.vicinity) === child)
+        t1.remove$1(0, childParentData.vicinity);
+      A.assertHelper(new B.RenderTwoDimensionalViewport__moveChild_closure(_this, child).call$0());
+      A.assertHelper(new B.RenderTwoDimensionalViewport__moveChild_closure0(_this, childParentData).call$0());
+      t1.$indexSet(0, childParentData.vicinity, child);
+    },
+    _two_dimensional_viewport$_removeChild$2(child, slot) {
+      var t1, _this = this,
+        childParentData = _this.parentDataOf$1(child);
+      if (!(childParentData.KeepAliveParentDataMixin_keepAlive && !childParentData.get$isVisible())) {
+        t1 = _this._two_dimensional_viewport$_children;
+        if (t1.$index(0, slot) === child)
+          t1.remove$1(0, slot);
+        _this._debugTrackOrphans$1$noLongerOrphan(child);
+        t1 = _this._two_dimensional_viewport$_keepAliveBucket;
+        if (t1.$index(0, childParentData.vicinity) === child)
+          t1.remove$1(0, childParentData.vicinity);
+        A.assertHelper(t1.$index(0, childParentData.vicinity) !== child);
+        _this.dropChild$1(child);
+        return;
+      }
+      t1 = _this._two_dimensional_viewport$_keepAliveBucket;
+      A.assertHelper(t1.$index(0, childParentData.vicinity) === child);
+      A.assertHelper(new B.RenderTwoDimensionalViewport__removeChild_closure(_this, child).call$0());
+      t1.remove$1(0, childParentData.vicinity);
+      _this.dropChild$1(child);
+    },
+    _debugTrackOrphans$2$newOrphan$noLongerOrphan(newOrphan, noLongerOrphan) {
+      A.assertHelper(new B.RenderTwoDimensionalViewport__debugTrackOrphans_closure(this, newOrphan, noLongerOrphan).call$0());
+      return true;
+    },
+    _debugTrackOrphans$1$noLongerOrphan(noLongerOrphan) {
+      return this._debugTrackOrphans$2$newOrphan$noLongerOrphan(null, noLongerOrphan);
+    },
+    _debugTrackOrphans$1$newOrphan(newOrphan) {
+      return this._debugTrackOrphans$2$newOrphan$noLongerOrphan(newOrphan, null);
+    },
+    debugThrowIfNotCheckingIntrinsics$0() {
+      A.assertHelper(new B.RenderTwoDimensionalViewport_debugThrowIfNotCheckingIntrinsics_closure(this).call$0());
+      return true;
+    },
+    computeMinIntrinsicWidth$1(height) {
+      A._asDouble(height);
+      this.debugThrowIfNotCheckingIntrinsics$0();
+      return 0;
+    },
+    computeMaxIntrinsicWidth$1(height) {
+      A._asDouble(height);
+      this.debugThrowIfNotCheckingIntrinsics$0();
+      return 0;
+    },
+    computeMinIntrinsicHeight$1(width) {
+      A._asDouble(width);
+      this.debugThrowIfNotCheckingIntrinsics$0();
+      return 0;
+    },
+    computeMaxIntrinsicHeight$1(width) {
+      A._asDouble(width);
+      this.debugThrowIfNotCheckingIntrinsics$0();
+      return 0;
+    },
+    applyPaintTransform$2(child, transform) {
+      var paintOffset = this.parentDataOf$1(type$.RenderBox._as(child)).paintOffset;
+      transform.translate$2(paintOffset._dx, paintOffset._dy);
+    },
+    dispose$0() {
+      this._two_dimensional_viewport$_clipRectLayer.set$layer(null);
+      this.super$RenderObject$dispose();
+    },
+    $isRenderAbstractViewport: 1
+  };
+  B.ChildVicinity.prototype = {
+    $eq(_, other) {
+      if (other == null)
+        return false;
+      return other instanceof B.ChildVicinity && other.xIndex === this.xIndex && other.yIndex === this.yIndex;
+    },
+    get$hashCode(_) {
+      return A.Object_hash(this.xIndex, this.yIndex, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue, C.C_SentinelValue);
+    },
+    compareTo$1(_, other) {
+      var t1, t2;
+      type$.ChildVicinity._as(other);
+      t1 = this.xIndex;
+      t2 = other.xIndex;
+      if (t1 === t2)
+        return this.yIndex - other.yIndex;
+      return t1 - t2;
+    },
+    toString$0(_) {
+      return "(xIndex: " + this.xIndex + ", yIndex: " + this.yIndex + ")";
+    },
+    $isComparable: 1
+  };
+  B._TwoDimensionalViewportParentData_ParentData_KeepAliveParentDataMixin.prototype = {};
+  B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin.prototype = {};
+  B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin_ViewportElementMixin.prototype = {};
+  B.ArtWidget.prototype = {
+    createState$0() {
+      return new B._ArtWidgetState(C._StateLifecycle_0);
+    }
+  };
+  B._ArtWidgetState.prototype = {
+    expand$0(_) {
+      this.setState$1(new B._ArtWidgetState_expand_closure(this));
+    },
+    minimize$0() {
+      this.setState$1(new B._ArtWidgetState_minimize_closure(this));
+    },
+    getArt$1(context) {
+      var _null = null,
+        t1 = A.Primitives_objectHashCode(this),
+        t2 = this._widget.art;
+      return A.Hero$(new B.AnimatedContainer(t2, _null, _null, C.C__Linear, C.Duration_300000, _null, _null), _null, _null, _null, "art_art_" + t1, false);
+    },
+    build$1(context) {
+      var t1, width, height, platform, t2, t3, _this = this, _null = null;
+      A.debugCheckHasMediaQuery(context);
+      t1 = type$.MediaQuery;
+      width = A.InheritedModel_inheritFrom(context, _null, t1).data.size._dx;
+      A.debugCheckHasMediaQuery(context);
+      height = A.InheritedModel_inheritFrom(context, _null, t1).data.size._dy;
+      if (_this.contain) {
+        t1 = A.Primitives_objectHashCode(_this);
+        return A.GestureDetector$(_null, new A.SizedBox(width, height, A.Center$(new B._Frame(H.SizedBox$expand(F.FittedBox$(_this.getArt$1(context), C.BoxFit_6)), true, new A.ValueKey("art_" + t1, type$.ValueKey_String)), _null, _null), _null), C.DragStartBehavior_1, false, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _this.get$minimize(), _null, _null, _null, _null, _null, _null, false, C.Offset_sFH);
+      } else {
+        platform = A.Theme_of(context).platform;
+        t1 = platform === C.TargetPlatform_0 || platform === C.TargetPlatform_2 || platform === C.TargetPlatform_1;
+        t2 = type$.ValueKey_String;
+        t3 = _this.get$expand(_this);
+        if (t1) {
+          t1 = A.Primitives_objectHashCode(_this);
+          t3 = A.GestureDetector$(_null, new B._Frame(_this.getArt$1(context), false, new A.ValueKey("art_" + t1, t2)), C.DragStartBehavior_1, false, _null, t3, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, false, C.Offset_sFH);
+          A.assertHelper(isFinite(0.333));
+          A.assertHelper(!isNaN(1.5));
+          t1 = C.EdgeInsets_0_0_0_0.get$horizontal();
+          if (t1 == 1 / 0 || t1 == -1 / 0) {
+            t1 = C.EdgeInsets_0_0_0_0.get$_top() + C.EdgeInsets_0_0_0_0.get$_bottom();
+            t1 = t1 == 1 / 0 || t1 == -1 / 0;
+          } else
+            t1 = false;
+          if (!t1)
+            t1 = isFinite(0);
+          else
+            t1 = true;
+          A.assertHelper(t1);
+          return new A.SizedBox(width, height, new B.InteractiveViewer(new A.SelectableRegion(C.TextMagnifierConfiguration_null_true, _null, t3, _null, new B.EmptyTextSelectionControls(), _null, _null), 1.5, 0.333, _null), _null);
+        } else {
+          t1 = A.Primitives_objectHashCode(_this);
+          return new A.SizedBox(width, height, new B.SingleChildTwoDimensionalScrollView(A.Center$(new A.SelectableRegion(C.TextMagnifierConfiguration_null_true, _null, A.GestureDetector$(_null, new B._Frame(_this.getArt$1(context), false, new A.ValueKey("art_" + t1, t2)), C.DragStartBehavior_1, false, _null, t3, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, _null, false, C.Offset_sFH), _null, new B.EmptyTextSelectionControls(), _null, _null), _null, _null), _null), _null);
+        }
+      }
+    }
+  };
+  B._Frame.prototype = {
+    build$1(context) {
+      var _null = null,
+        t1 = A.BoxDecoration$(A.Border_Border$all(C.Color_vnR, -1, 1), _null, _null, _null, _null, _null, C.BoxShape_0),
+        t2 = this.contain ? C.Alignment_0_m1 : C.Alignment_m1_0;
+      return A.Container$(t2, this.child, C.Clip_0, _null, _null, t1, _null, _null, _null, _null, _null, _null, _null, _null);
+    }
+  };
+  B.ArtHolder.prototype = {
+    element$1(context) {
+      return new B.ArtWidget(this.super$SpanHoldingCode$renderSpans(context, C.CrossAxisAlignment_2), null);
+    }
+  };
+  B.SingleChildTwoDimensionalScrollView.prototype = {
+    build$1(context) {
+      var _null = null, t1 = {};
+      t1.contents = this.child;
+      t1 = new B.TwoDimensionalChildBuilderDelegate(new B.SingleChildTwoDimensionalScrollView_build_closure(t1), $.$get$ChangeNotifier__emptyListeners());
+      A.ChangeNotifier_maybeDispatchObjectCreation(t1);
+      return new B._SingleChild2DScrollView(t1, D.DiagonalDragBehavior_0, _null, new A.ScrollableDetails(C.AxisDirection_2, _null, _null, C.Clip_1), new A.ScrollableDetails(C.AxisDirection_1, _null, _null, C.Clip_1), C.ScrollViewKeyboardDismissBehavior_0, C.Clip_1, _null);
+    }
+  };
+  B._SingleChild2DScrollView.prototype = {
+    buildViewport$3(context, verticalOffset, horizontalOffset) {
+      var t1, t2, _this = this;
+      type$.BuildContext._as(context);
+      t1 = type$.ViewportOffset;
+      t1._as(verticalOffset);
+      t1._as(horizontalOffset);
+      t1 = _this.verticalDetails.direction;
+      t2 = _this.horizontalDetails.direction;
+      if (A.assertTest(t1 === C.AxisDirection_2 || t1 === C.AxisDirection_0))
+        A.assertThrow(string$.TwoDimv);
+      if (A.assertTest(t2 === C.AxisDirection_3 || t2 === C.AxisDirection_1))
+        A.assertThrow(string$.TwoDimh);
+      return new B._SingleChild2DViewPort(verticalOffset, t1, horizontalOffset, t2, C.Axis_1, null, _this.clipBehavior, _this.delegate, null);
+    }
+  };
+  B._SingleChild2DViewPort.prototype = {
+    createRenderObject$1(context) {
+      var _this = this;
+      return B._RenderSingleChild2DViewPort$(_this.cacheExtent, type$.TwoDimensionalChildManager._as(context), _this.clipBehavior, _this.delegate, _this.horizontalAxisDirection, _this.horizontalOffset, _this.mainAxis, _this.verticalAxisDirection, _this.verticalOffset);
+    },
+    updateRenderObject$2(context, renderObject) {
+      var _this = this;
+      type$._RenderSingleChild2DViewPort._as(renderObject);
+      renderObject.set$horizontalOffset(_this.horizontalOffset);
+      renderObject.set$horizontalAxisDirection(_this.horizontalAxisDirection);
+      renderObject.set$verticalOffset(_this.verticalOffset);
+      renderObject.set$verticalAxisDirection(_this.verticalAxisDirection);
+      renderObject.set$mainAxis(_this.mainAxis);
+      renderObject.set$cacheExtent(_this.cacheExtent);
+      renderObject.set$clipBehavior(_this.clipBehavior);
+      renderObject.set$delegate(_this.delegate);
+    }
+  };
+  B._RenderSingleChild2DViewPort.prototype = {
+    dispose$0() {
+      this._single_child_2d_scroll_view$_clipRectLayer.set$layer(null);
+      this.super$RenderTwoDimensionalViewport$dispose();
+    },
+    _shouldClipAtPaintOffset$1(offset) {
+      var t1, t2, _this = this;
+      A.assertHelper(_this._two_dimensional_viewport$_firstChild != null);
+      switch (_this._two_dimensional_viewport$_clipBehavior.index) {
+        case 0:
+          return false;
+        default:
+          t1 = offset._dx;
+          if (!(t1 < 0)) {
+            t2 = offset._dy;
+            t1 = t2 < 0 || t1 + _this._two_dimensional_viewport$_firstChild.get$size()._dx > _this.get$size()._dx || t2 + _this._two_dimensional_viewport$_firstChild.get$size()._dy > _this.get$size()._dy;
+          } else
+            t1 = true;
+          return t1;
+      }
+    },
+    paint$2(context, offset) {
+      var t1, t2, t3, t4, _this = this,
+        child = _this._two_dimensional_viewport$_firstChild;
+      if (child == null)
+        return;
+      t1 = _this.parentDataOf$1(child).paintOffset;
+      t1.toString;
+      t2 = new B._RenderSingleChild2DViewPort_paint_paintChild(child, t1);
+      t3 = _this._single_child_2d_scroll_view$_clipRectLayer;
+      if (_this._shouldClipAtPaintOffset$1(t1)) {
+        A.assertHelper(!_this._needsCompositingBitsUpdate);
+        t1 = _this.__RenderObject__needsCompositing_A;
+        t1 === $ && A.throwLateFieldNI("_needsCompositing");
+        A.assertHelper(_this._box$_size != null);
+        t4 = _this.get$size();
+        t3.set$layer(context.pushClipRect$6$clipBehavior$oldLayer(t1, offset, new A.Rect(0, 0, 0 + t4._dx, 0 + t4._dy), t2, _this._two_dimensional_viewport$_clipBehavior, t3._layer));
+      } else {
+        t3.set$layer(null);
+        t2.call$2(context, offset);
+      }
+    },
+    showOnScreen$4$curve$descendant$duration$rect(curve, descendant, duration, rect) {
+      var newRect, t1, t2, _this = this;
+      type$.nullable_RenderObject._as(descendant);
+      type$.nullable_Rect._as(rect);
+      type$.Duration._as(duration);
+      type$.Curve._as(curve);
+      B.RenderTwoDimensionalViewport_showInViewport(C.AxisDirection_1, curve, descendant, duration, null, _this);
+      newRect = B.RenderTwoDimensionalViewport_showInViewport(C.AxisDirection_2, curve, descendant, duration, null, _this);
+      if (newRect == null && descendant instanceof A.RenderBox) {
+        t1 = _this.getOffsetToReveal$3$axis(descendant, 0, C.Axis_0);
+        t2 = _this.getOffsetToReveal$3$axis(descendant, 0, C.Axis_1);
+        if (t1.offset === 0 && t2.offset === 0) {
+          t1 = descendant.get$size();
+          newRect = new A.Rect(0, 0, 0 + t1._dx, 0 + t1._dy);
+        }
+      }
+      _this.super$RenderTwoDimensionalViewport$showOnScreen(curve, null, duration, newRect);
+    },
+    showOnScreen$0() {
+      return this.showOnScreen$4$curve$descendant$duration$rect(C.Cubic_glB, null, C.Duration_0, null);
+    },
+    showOnScreen$1$rect(rect) {
+      return this.showOnScreen$4$curve$descendant$duration$rect(C.Cubic_glB, null, C.Duration_0, rect);
+    },
+    showOnScreen$3$curve$duration$rect(curve, duration, rect) {
+      return this.showOnScreen$4$curve$descendant$duration$rect(curve, null, duration, rect);
+    },
+    showOnScreen$2$descendant$rect(descendant, rect) {
+      return this.showOnScreen$4$curve$descendant$duration$rect(C.Cubic_glB, descendant, C.Duration_0, rect);
+    },
+    describeApproximatePaintClip$1(child) {
+      var t1 = false;
+      if (child instanceof A.RenderBox) {
+        t1 = this.parentDataOf$1(child).paintOffset;
+        t1.toString;
+        t1 = this._shouldClipAtPaintOffset$1(t1);
+      }
+      if (t1) {
+        t1 = this.get$size();
+        return new A.Rect(0, 0, 0 + t1._dx, 0 + t1._dy);
+      }
+      return null;
+    },
+    describeSemanticsClip$1(child) {
+      var maxScrollXExtent, maxScrollYExtent, t2, t3, t4, _this = this,
+        t1 = _this._two_dimensional_viewport$_firstChild.get$size();
+      A.assertHelper(_this._box$_size != null);
+      maxScrollXExtent = A.clampDouble(t1._dx - _this.get$size()._dx, 0, 1 / 0);
+      t1 = _this._two_dimensional_viewport$_firstChild.get$size();
+      A.assertHelper(_this._box$_size != null);
+      maxScrollYExtent = A.clampDouble(t1._dy - _this.get$size()._dy, 0, 1 / 0);
+      t1 = _this._horizontalOffset._pixels;
+      t1.toString;
+      t2 = _this._verticalOffset._pixels;
+      t2.toString;
+      _this.get$size();
+      t3 = _this._horizontalOffset._pixels;
+      t3.toString;
+      _this.get$size();
+      t4 = _this._verticalOffset._pixels;
+      t4.toString;
+      return new A.Rect(0 - t3, 0 - t4, 0 + _this.get$size()._dx + (maxScrollXExtent - t1), 0 + _this.get$size()._dy + (maxScrollYExtent - t2));
+    }
+  };
+  B.Quad.prototype = {};
+  B.Quaternion.prototype = {
+    setFrom$1(source) {
+      var sourceStorage = source._qStorage,
+        t1 = this._qStorage,
+        t2 = sourceStorage[0];
+      t1.$flags & 2 && A.throwUnsupportedOperation(t1);
+      t1[0] = t2;
+      t1[1] = sourceStorage[1];
+      t1[2] = sourceStorage[2];
+      t1[3] = sourceStorage[3];
+    },
+    setFromRotation$1(rotationMatrix) {
+      var s, i, j, k, t4, t5, t6,
+        rotationMatrixStorage = rotationMatrix._m3storage,
+        t1 = rotationMatrixStorage[0],
+        t2 = rotationMatrixStorage[4],
+        t3 = rotationMatrixStorage[8],
+        t = 0 + t1 + t2 + t3;
+      if (t > 0) {
+        s = Math.sqrt(t + 1);
+        t1 = this._qStorage;
+        t1.$flags & 2 && A.throwUnsupportedOperation(t1);
+        t1[3] = s * 0.5;
+        s = 0.5 / s;
+        t1[0] = (rotationMatrixStorage[5] - rotationMatrixStorage[7]) * s;
+        t1[1] = (rotationMatrixStorage[6] - rotationMatrixStorage[2]) * s;
+        t1[2] = (rotationMatrixStorage[1] - rotationMatrixStorage[3]) * s;
+      } else {
+        if (t1 < t2)
+          i = t2 < t3 ? 2 : 1;
+        else
+          i = t1 < t3 ? 2 : 0;
+        j = (i + 1) % 3;
+        k = (i + 2) % 3;
+        t1 = i * 3;
+        t2 = t1 + i;
+        if (!(t2 < 9))
+          return A.ioore(rotationMatrixStorage, t2);
+        t2 = rotationMatrixStorage[t2];
+        t3 = j * 3;
+        t4 = t3 + j;
+        if (!(t4 < 9))
+          return A.ioore(rotationMatrixStorage, t4);
+        t4 = rotationMatrixStorage[t4];
+        t5 = k * 3;
+        t6 = t5 + k;
+        if (!(t6 < 9))
+          return A.ioore(rotationMatrixStorage, t6);
+        s = Math.sqrt(t2 - t4 - rotationMatrixStorage[t6] + 1);
+        t6 = this._qStorage;
+        t6.$flags & 2 && A.throwUnsupportedOperation(t6);
+        t6[i] = s * 0.5;
+        s = 0.5 / s;
+        t4 = t3 + k;
+        if (!(t4 < 9))
+          return A.ioore(rotationMatrixStorage, t4);
+        t4 = rotationMatrixStorage[t4];
+        t2 = t5 + j;
+        if (!(t2 < 9))
+          return A.ioore(rotationMatrixStorage, t2);
+        t6[3] = (t4 - rotationMatrixStorage[t2]) * s;
+        t2 = t1 + j;
+        if (!(t2 < 9))
+          return A.ioore(rotationMatrixStorage, t2);
+        t2 = rotationMatrixStorage[t2];
+        t3 += i;
+        if (!(t3 < 9))
+          return A.ioore(rotationMatrixStorage, t3);
+        t6[j] = (t2 + rotationMatrixStorage[t3]) * s;
+        t1 += k;
+        if (!(t1 < 9))
+          return A.ioore(rotationMatrixStorage, t1);
+        t1 = rotationMatrixStorage[t1];
+        t5 += i;
+        if (!(t5 < 9))
+          return A.ioore(rotationMatrixStorage, t5);
+        t6[k] = (t1 + rotationMatrixStorage[t5]) * s;
+      }
+    },
+    normalize$0() {
+      var d, t1, t2,
+        l = Math.sqrt(this.get$length2());
+      if (l === 0)
+        return 0;
+      d = 1 / l;
+      t1 = this._qStorage;
+      t2 = t1[0];
+      t1.$flags & 2 && A.throwUnsupportedOperation(t1);
+      t1[0] = t2 * d;
+      t1[1] = t1[1] * d;
+      t1[2] = t1[2] * d;
+      t1[3] = t1[3] * d;
+      return l;
+    },
+    get$length2() {
+      var t1 = this._qStorage,
+        x = t1[0],
+        y = t1[1],
+        z = t1[2],
+        w = t1[3];
+      return x * x + y * y + z * z + w * w;
+    },
+    get$length(_) {
+      var t1 = this._qStorage,
+        x = t1[0],
+        y = t1[1],
+        z = t1[2],
+        w = t1[3];
+      return Math.sqrt(x * x + y * y + z * z + w * w);
+    },
+    scaled$1(scale) {
+      var t1 = new Float64Array(4),
+        t2 = new B.Quaternion(t1);
+      t2.setFrom$1(this);
+      t1[3] = t1[3] * scale;
+      t1[2] = t1[2] * scale;
+      t1[1] = t1[1] * scale;
+      t1[0] = t1[0] * scale;
+      return t2;
+    },
+    $mul(_, other) {
+      var t1, _w, _z, _y, _x, otherStorage, ow, oz, oy, ox, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17;
+      type$.Quaternion._as(other);
+      t1 = this._qStorage;
+      _w = t1[3];
+      _z = t1[2];
+      _y = t1[1];
+      _x = t1[0];
+      otherStorage = other.get$_qStorage();
+      ow = otherStorage.$index(0, 3);
+      oz = otherStorage.$index(0, 2);
+      oy = otherStorage.$index(0, 1);
+      ox = otherStorage.$index(0, 0);
+      t1 = C.JSNumber_methods.$mul(_w, ox);
+      t2 = C.JSNumber_methods.$mul(_x, ow);
+      t3 = C.JSNumber_methods.$mul(_y, oz);
+      t4 = C.JSNumber_methods.$mul(_z, oy);
+      t5 = C.JSNumber_methods.$mul(_w, oy);
+      t6 = C.JSNumber_methods.$mul(_y, ow);
+      t7 = C.JSNumber_methods.$mul(_z, ox);
+      t8 = C.JSNumber_methods.$mul(_x, oz);
+      t9 = C.JSNumber_methods.$mul(_w, oz);
+      t10 = C.JSNumber_methods.$mul(_z, ow);
+      t11 = C.JSNumber_methods.$mul(_x, oy);
+      t12 = C.JSNumber_methods.$mul(_y, ox);
+      t13 = C.JSNumber_methods.$mul(_w, ow);
+      t14 = C.JSNumber_methods.$mul(_x, ox);
+      t15 = C.JSNumber_methods.$mul(_y, oy);
+      t16 = C.JSNumber_methods.$mul(_z, oz);
+      t17 = new Float64Array(4);
+      t17[0] = t1 + t2 + t3 - t4;
+      t17[1] = t5 + t6 + t7 - t8;
+      t17[2] = t9 + t10 + t11 - t12;
+      t17[3] = t13 - t14 - t15 - t16;
+      return new B.Quaternion(t17);
+    },
+    $add(_, other) {
+      var t1, t2, argStorage;
+      type$.Quaternion._as(other);
+      t1 = new Float64Array(4);
+      t2 = new B.Quaternion(t1);
+      t2.setFrom$1(this);
+      argStorage = other._qStorage;
+      t1[0] = t1[0] + argStorage[0];
+      t1[1] = t1[1] + argStorage[1];
+      t1[2] = t1[2] + argStorage[2];
+      t1[3] = t1[3] + argStorage[3];
+      return t2;
+    },
+    $sub(_, other) {
+      var t1, t2, argStorage;
+      type$.Quaternion._as(other);
+      t1 = new Float64Array(4);
+      t2 = new B.Quaternion(t1);
+      t2.setFrom$1(this);
+      argStorage = other._qStorage;
+      t1[0] = t1[0] - argStorage[0];
+      t1[1] = t1[1] - argStorage[1];
+      t1[2] = t1[2] - argStorage[2];
+      t1[3] = t1[3] - argStorage[3];
+      return t2;
+    },
+    $index(_, i) {
+      var t1;
+      A._asInt(i);
+      t1 = this._qStorage;
+      if (!(i < 4))
+        return A.ioore(t1, i);
+      return t1[i];
+    },
+    toString$0(_) {
+      var t1 = this._qStorage;
+      return A.S(t1[0]) + ", " + A.S(t1[1]) + ", " + A.S(t1[2]) + " @ " + A.S(t1[3]);
+    }
+  };
+  var typesOffset = hunkHelpers.updateTypes(["~()", "double(double)", "AlignmentGeometryTween(@)", "EdgeInsetsGeometryTween(@)", "~({curve:Curve,descendant:RenderObject?,duration:Duration,rect:Rect?})", "BoxConstraintsTween(@)", "Matrix4Tween(@)", "~(ScaleStartDetails)", "~(ScaleUpdateDetails)", "~(ScaleEndDetails)", "~(PointerSignalEvent)", "_HorizontalInnerDimension(BuildContext,ViewportOffset)", "~(DragDownDetails)", "~(DragStartDetails)", "~(DragUpdateDetails)", "~(DragEndDetails)", "~({withDelegateRebuild:bool})", "~(PaintingContext,Offset)", "DiagnosticsNode(ChildVicinity)", "Widget(BuildContext,ChildVicinity)", "Widget(BuildContext,ViewportOffset,ViewportOffset)", "int(Element,Element)"]);
+  B._AnimatedContainerState_forEachTween_closure.prototype = {
+    call$1(value) {
+      return new B.AlignmentGeometryTween(type$.AlignmentGeometry._as(value), null);
+    },
+    $signature: typesOffset + 2
+  };
+  B._AnimatedContainerState_forEachTween_closure0.prototype = {
+    call$1(value) {
+      return new E.EdgeInsetsGeometryTween(type$.EdgeInsetsGeometry._as(value), null);
+    },
+    $signature: typesOffset + 3
+  };
+  B._AnimatedContainerState_forEachTween_closure1.prototype = {
+    call$1(value) {
+      return new A.DecorationTween(type$.Decoration._as(value), null);
+    },
+    $signature: 266
+  };
+  B._AnimatedContainerState_forEachTween_closure2.prototype = {
+    call$1(value) {
+      return new A.DecorationTween(type$.Decoration._as(value), null);
+    },
+    $signature: 266
+  };
+  B._AnimatedContainerState_forEachTween_closure3.prototype = {
+    call$1(value) {
+      return new B.BoxConstraintsTween(type$.BoxConstraints._as(value), null);
+    },
+    $signature: typesOffset + 5
+  };
+  B._AnimatedContainerState_forEachTween_closure4.prototype = {
+    call$1(value) {
+      return new E.EdgeInsetsGeometryTween(type$.EdgeInsetsGeometry._as(value), null);
+    },
+    $signature: typesOffset + 3
+  };
+  B._AnimatedContainerState_forEachTween_closure5.prototype = {
+    call$1(value) {
+      return new B.Matrix4Tween(type$.Matrix4._as(value), null);
+    },
+    $signature: typesOffset + 6
+  };
+  B._AnimatedContainerState_forEachTween_closure6.prototype = {
+    call$1(value) {
+      return new B.AlignmentGeometryTween(type$.AlignmentGeometry._as(value), null);
+    },
+    $signature: typesOffset + 2
+  };
+  B._InteractiveViewerState__handleTransformation_closure.prototype = {
+    call$0() {
+    },
+    $signature: 0
+  };
+  B.__InteractiveViewerState_State_TickerProviderStateMixin_dispose_closure.prototype = {
+    call$0() {
+      var t3, t4,
+        t1 = this.$this,
+        t2 = t1.TickerProviderStateMixin__tickers;
+      if (t2 != null)
+        for (t2 = A._LinkedHashSetIterator$(t2, t2._collection$_modifications, A._instanceType(t2)._precomputed1), t3 = t2.$ti._precomputed1; t2.moveNext$0();) {
+          t4 = t2._collection$_current;
+          if (t4 == null)
+            t4 = t3._as(t4);
+          if (t4._ticker$_future != null)
+            throw A.wrapException(A.FlutterError$fromParts(A._setArrayType([A.ErrorSummary$(t1.toString$0(0) + " was disposed with an active Ticker."), A.ErrorDescription$(A.getRuntimeTypeOfDartObject(t1).toString$0(0) + " created a Ticker via its TickerProviderStateMixin, but at the time dispose() was called on the mixin, that Ticker was still active. All Tickers must be disposed before calling super.dispose()."), A.ErrorHint$("Tickers used by AnimationControllers should be disposed by calling dispose() on the AnimationController itself. Otherwise, the ticker will leak."), t4.describeForError$1("The offending ticker was")], type$.JSArray_DiagnosticsNode)));
+        }
+      return true;
+    },
+    $signature: 1
+  };
+  B.Scrollable_of_closure.prototype = {
+    call$0() {
+      if (this.scrollableState == null) {
+        var t1 = A.ErrorSummary$("Scrollable.of() was called with a context that does not contain a Scrollable widget.");
+        t1 = A._setArrayType([t1, A.ErrorDescription$("No Scrollable widget ancestor could be found starting from the context that was passed to Scrollable.of(). This can happen because you are using a widget that looks for a Scrollable ancestor, but no such ancestor exists.\nThe context used was:\n  " + this.context.toString$0(0))], type$.JSArray_DiagnosticsNode);
+        throw A.wrapException(A.FlutterError$fromParts(t1));
+      }
+      return true;
+    },
+    $signature: 1
+  };
+  B.TwoDimensionalScrollableState_build_closure.prototype = {
+    call$2(context, verticalOffset) {
+      var t1, t2, t3, t4, t5, t6, t7, t8;
+      type$.BuildContext._as(context);
+      type$.ViewportOffset._as(verticalOffset);
+      t1 = this.$this;
+      t2 = t1._widget;
+      t3 = t2.horizontalDetails;
+      t4 = t3.direction;
+      t5 = t3.controller;
+      if (t5 == null) {
+        t5 = t1._horizontalFallbackController;
+        t5.toString;
+      }
+      t6 = t3.decorationClipBehavior;
+      if (t6 == null)
+        t6 = C.Clip_1;
+      t7 = t2.dragStartBehavior;
+      t8 = t2.diagonalDragBehavior;
+      t2 = t2.hitTestBehavior;
+      A.assertHelper(t4 === C.AxisDirection_3 || t4 === C.AxisDirection_1);
+      return new B._HorizontalInnerDimension(t1._verticalOuterScrollableKey, t8, t4, t5, t3.physics, new B.TwoDimensionalScrollableState_build__closure(t1, verticalOffset), null, false, t2, null, t7, "InnerHorizontalTwoDimensionalScrollable", null, t6, t1._horizontalInnerScrollableKey);
+    },
+    $signature: typesOffset + 11
+  };
+  B.TwoDimensionalScrollableState_build__closure.prototype = {
+    call$2(context, horizontalOffset) {
+      type$.BuildContext._as(context);
+      type$.ViewportOffset._as(horizontalOffset);
+      return this.$this._widget.viewportBuilder$3(context, this.verticalOffset, horizontalOffset);
+    },
+    $signature: 218
+  };
+  B._VerticalOuterDimensionState_setCanDrag_closure.prototype = {
+    call$0() {
+      var t1 = this.$this.__ScrollableState__configuration_A;
+      t1 === $ && A.throwLateFieldNI("_configuration");
+      return A.PanGestureRecognizer$(null, t1.get$dragDevices());
+    },
+    $signature: 123
+  };
+  B._VerticalOuterDimensionState_setCanDrag_closure0.prototype = {
+    call$1(instance) {
+      var t1, t2;
+      type$.PanGestureRecognizer._as(instance);
+      t1 = this.$this;
+      instance.set$onDown(t1.get$_scrollable$_handleDragDown());
+      instance.set$onStart(t1.get$_scrollable$_handleDragStart());
+      instance.set$onUpdate(t1.get$_scrollable$_handleDragUpdate());
+      instance.set$onEnd(t1.get$_scrollable$_handleDragEnd());
+      instance.set$onCancel(t1.get$_scrollable$_handleDragCancel());
+      t2 = t1._physics;
+      instance.minFlingDistance = t2 == null ? null : t2.get$minFlingDistance();
+      t2 = t1._physics;
+      instance.minFlingVelocity = t2 == null ? null : t2.get$minFlingVelocity();
+      t2 = t1._physics;
+      instance.maxFlingVelocity = t2 == null ? null : t2.get$maxFlingVelocity();
+      t2 = t1.__ScrollableState__configuration_A;
+      t2 === $ && A.throwLateFieldNI("_configuration");
+      instance.set$velocityTrackerBuilder(t2.velocityTrackerBuilder$1(t1.get$context()));
+      instance.dragStartBehavior = t1._widget.dragStartBehavior;
+      instance.gestureSettings = t1._mediaQueryGestureSettings;
+    },
+    $signature: 124
+  };
+  B.TwoDimensionalScrollView_build_closure.prototype = {
+    call$1(notification) {
+      var currentScope, t1;
+      type$.ScrollUpdateNotification._as(notification);
+      currentScope = A.FocusScope_of(this.context);
+      if (notification.dragDetails != null && !currentScope.get$hasPrimaryFocus() && currentScope.get$hasFocus()) {
+        t1 = A.BindingBase_checkInstance($.WidgetsBinding__instance, type$.WidgetsBinding).WidgetsBinding__buildOwner.focusManager._primaryFocus;
+        if (t1 != null)
+          t1.unfocus$0();
+      }
+      return false;
+    },
+    $signature: 133
+  };
+  B._TwoDimensionalViewportElement__buildChild_closure.prototype = {
+    call$0() {
+      var t3, newWidget, newChild,
+        t1 = this.$this,
+        t2 = t1._widget;
+      t2.toString;
+      t3 = this.vicinity;
+      newWidget = type$.TwoDimensionalViewport._as(t2).delegate.build$2(t1, t3);
+      if (newWidget == null)
+        return;
+      newChild = t1.updateChild$3(t1._retrieveOldElement$2(newWidget, t3), newWidget, t3);
+      A.assertHelper(newChild != null);
+      A.assertHelper(t1._newVicinityToChild.$index(0, t3) == null);
+      t2 = t1._newVicinityToChild;
+      t2.toString;
+      newChild.toString;
+      t2.$indexSet(0, t3, newChild);
+      t2 = newWidget.key;
+      if (t2 != null) {
+        A.assertHelper(t1._newKeyToChild.$index(0, t2) == null);
+        t1._newKeyToChild.$indexSet(0, t2, newChild);
+      }
+    },
+    $signature: 0
+  };
+  B.TwoDimensionalViewportParentData_isVisible_closure.prototype = {
+    call$0() {
+      if (this.$this._paintExtent == null)
+        throw A.wrapException(A.FlutterError$fromParts(A._setArrayType([A.ErrorSummary$("The paint extent of the child has not been determined yet."), A.ErrorDescription$("The paint extent, and therefore the visibility, of a child of a RenderTwoDimensionalViewport is computed after RenderTwoDimensionalViewport.layoutChildSequence.")], type$.JSArray_DiagnosticsNode)));
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport_closure.prototype = {
+    call$0() {
+      this.$this.__RenderTwoDimensionalViewport__debugDanglingKeepAlives_A = type$.List_RenderBox._as(A._setArrayType([], type$.JSArray_RenderBox));
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport_debugDescribeChildren_closure.prototype = {
+    call$1(vicinity) {
+      var t1;
+      type$.ChildVicinity._as(vicinity);
+      t1 = this.$this._two_dimensional_viewport$_children.$index(0, vicinity);
+      t1.toString;
+      return A.DiagnosticableTreeNode$("(xIndex: " + vicinity.xIndex + ", yIndex: " + vicinity.yIndex + ")", null, t1);
+    },
+    $signature: typesOffset + 18
+  };
+  B.RenderTwoDimensionalViewport_hitTestChildren_closure.prototype = {
+    call$2(result, transformed) {
+      var t1 = this.childParentData.paintOffset;
+      t1.toString;
+      A.assertHelper(transformed.$eq(0, this.position.$sub(0, t1)));
+      return this.child.hitTest$2$position(result, transformed);
+    },
+    $signature: 19
+  };
+  B.RenderTwoDimensionalViewport_showInViewport_showVertical.prototype = {
+    call$1(rect) {
+      var _this = this;
+      return B.RenderTwoDimensionalViewport__showInViewportForAxisDirection(C.Axis_1, _this.curve, _this.descendant, _this.duration, rect, _this.viewport);
+    },
+    $signature: 267
+  };
+  B.RenderTwoDimensionalViewport_showInViewport_showHorizontal.prototype = {
+    call$1(rect) {
+      var _this = this;
+      return B.RenderTwoDimensionalViewport__showInViewportForAxisDirection(C.Axis_0, _this.curve, _this.descendant, _this.duration, rect, _this.viewport);
+    },
+    $signature: 267
+  };
+  B.RenderTwoDimensionalViewport_performLayout_closure.prototype = {
+    call$1(__wc0_formal) {
+      var t1, t2, t3;
+      type$.BoxConstraints._as(__wc0_formal);
+      t1 = this.$this;
+      t1._two_dimensional_viewport$_childManager._endLayout$0();
+      t2 = t1._debugOrphans;
+      t2 = t2 == null ? null : t2.length === 0;
+      A.assertHelper(t2 !== false);
+      t2 = t1.__RenderTwoDimensionalViewport__debugDanglingKeepAlives_A;
+      t2 === $ && A.throwLateFieldNI("_debugDanglingKeepAlives");
+      A.assertHelper(t2.length === 0);
+      t2 = t1._two_dimensional_viewport$_keepAliveBucket;
+      t3 = A._instanceType(t2)._eval$1("LinkedHashMapValuesIterable<2>");
+      A.assertHelper(!new A.WhereIterable(new A.LinkedHashMapValuesIterable(t2, t3), t3._eval$1("bool(Iterable.E)")._as(new B.RenderTwoDimensionalViewport_performLayout__closure(t1)), t3._eval$1("WhereIterable<Iterable.E>")).get$iterator(0).moveNext$0());
+      t1._reifyChildren$0();
+    },
+    $signature: 129
+  };
+  B.RenderTwoDimensionalViewport_performLayout__closure.prototype = {
+    call$1(child) {
+      return !this.$this.parentDataOf$1(type$.RenderBox._as(child)).KeepAliveParentDataMixin_keepAlive;
+    },
+    $signature: 99
+  };
+  B.RenderTwoDimensionalViewport__debugCheckContentDimensions_closure.prototype = {
+    call$0() {
+      var t1 = this.$this._verticalOffset;
+      if (!(t1._minScrollExtent != null && t1._maxScrollExtent != null))
+        throw A.wrapException(A.FlutterError$fromParts(A._setArrayType([A.ErrorSummary$("The verticalOffset was not given content dimensions during layoutChildSequence."), A.ErrorHint$(string$.Subcla)], type$.JSArray_DiagnosticsNode)));
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport__debugCheckContentDimensions_closure0.prototype = {
+    call$0() {
+      var t1 = this.$this._horizontalOffset;
+      if (!(t1._minScrollExtent != null && t1._maxScrollExtent != null))
+        throw A.wrapException(A.FlutterError$fromParts(A._setArrayType([A.ErrorSummary$("The horizontalOffset was not given content dimensions during layoutChildSequence."), A.ErrorHint$(string$.Subcla)], type$.JSArray_DiagnosticsNode)));
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport_buildOrObtainChildFor_closure.prototype = {
+    call$1(__wc0_formal) {
+      type$.BoxConstraints._as(__wc0_formal);
+      this.$this._two_dimensional_viewport$_childManager._buildChild$1(this.vicinity);
+    },
+    $signature: 129
+  };
+  B.RenderTwoDimensionalViewport__moveChild_closure.prototype = {
+    call$0() {
+      var t1 = this.$this.__RenderTwoDimensionalViewport__debugDanglingKeepAlives_A;
+      t1 === $ && A.throwLateFieldNI("_debugDanglingKeepAlives");
+      C.JSArray_methods.remove$1(t1, this.child);
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport__moveChild_closure0.prototype = {
+    call$0() {
+      var t1 = this.$this,
+        t2 = t1._two_dimensional_viewport$_keepAliveBucket,
+        t3 = this.childParentData;
+      if (t2.containsKey$1(t3.vicinity)) {
+        t1 = t1.__RenderTwoDimensionalViewport__debugDanglingKeepAlives_A;
+        t1 === $ && A.throwLateFieldNI("_debugDanglingKeepAlives");
+        t3 = t2.$index(0, t3.vicinity);
+        t3.toString;
+        C.JSArray_methods.add$1(t1, t3);
+      }
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport__removeChild_closure.prototype = {
+    call$0() {
+      var t1 = this.$this.__RenderTwoDimensionalViewport__debugDanglingKeepAlives_A;
+      t1 === $ && A.throwLateFieldNI("_debugDanglingKeepAlives");
+      C.JSArray_methods.remove$1(t1, this.child);
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport__debugTrackOrphans_closure.prototype = {
+    call$0() {
+      var t3,
+        t1 = this.$this,
+        t2 = t1._debugOrphans;
+      if (t2 == null)
+        t2 = t1._debugOrphans = A._setArrayType([], type$.JSArray_RenderBox);
+      t3 = this.newOrphan;
+      if (t3 != null)
+        C.JSArray_methods.add$1(t2, t3);
+      t2 = this.noLongerOrphan;
+      if (t2 != null) {
+        t1 = t1._debugOrphans;
+        t1.toString;
+        C.JSArray_methods.remove$1(t1, t2);
+      }
+      return true;
+    },
+    $signature: 1
+  };
+  B.RenderTwoDimensionalViewport_debugThrowIfNotCheckingIntrinsics_closure.prototype = {
+    call$0() {
+      if (!$.RenderObject_debugCheckingIntrinsics)
+        throw A.wrapException(A.FlutterError$fromParts(A._setArrayType([A.ErrorSummary$(A.getRuntimeTypeOfDartObject(this.$this).toString$0(0) + " does not support returning intrinsic dimensions."), A.ErrorDescription$("Calculating the intrinsic dimensions would require instantiating every child of the viewport, which defeats the point of viewports being lazy.")], type$.JSArray_DiagnosticsNode)));
+      return true;
+    },
+    $signature: 1
+  };
+  B._ArtWidgetState_expand_closure.prototype = {
+    call$0() {
+      this.$this.contain = true;
+    },
+    $signature: 0
+  };
+  B._ArtWidgetState_minimize_closure.prototype = {
+    call$0() {
+      this.$this.contain = false;
+    },
+    $signature: 0
+  };
+  B.SingleChildTwoDimensionalScrollView_build_closure.prototype = {
+    call$2(_, __) {
+      type$.BuildContext._as(_);
+      type$.ChildVicinity._as(__);
+      return this._box_0.contents;
+    },
+    $signature: typesOffset + 19
+  };
+  B._RenderSingleChild2DViewPort_paint_paintChild.prototype = {
+    call$2(context, offset) {
+      context.paintChild$2(this.child, offset.$add(0, this.paintOffset));
+    },
+    $signature: 89
+  };
+  (function aliases() {
+    var _ = B.__InteractiveViewerState_State_TickerProviderStateMixin.prototype;
+    _.super$__InteractiveViewerState_State_TickerProviderStateMixin$dispose = _.dispose$0;
+    _ = B.RenderTwoDimensionalViewport.prototype;
+    _.super$RenderTwoDimensionalViewport$showOnScreen = _.showOnScreen$4$curve$descendant$duration$rect;
+    _.super$RenderTwoDimensionalViewport$dispose = _.dispose$0;
+  })();
+  (function installTearOffs() {
+    var _instance_1_u = hunkHelpers._instance_1u,
+      _instance_0_u = hunkHelpers._instance_0u,
+      _static_2 = hunkHelpers._static_2,
+      _instance = hunkHelpers.installInstanceTearOff,
+      _instance_2_u = hunkHelpers._instance_2u,
+      _instance_0_i = hunkHelpers._instance_0i;
+    var _;
+    _instance_1_u(_ = B._InteractiveViewerState.prototype, "get$_onScaleStart", "_onScaleStart$1", 7);
+    _instance_1_u(_, "get$_onScaleUpdate", "_onScaleUpdate$1", 8);
+    _instance_1_u(_, "get$_onScaleEnd", "_onScaleEnd$1", 9);
+    _instance_1_u(_, "get$_interactive_viewer$_receivedPointerSignal", "_interactive_viewer$_receivedPointerSignal$1", 10);
+    _instance_0_u(_, "get$_handleInertiaAnimation", "_handleInertiaAnimation$0", 0);
+    _instance_0_u(_, "get$_handleScaleAnimation", "_handleScaleAnimation$0", 0);
+    _instance_0_u(_, "get$_handleTransformation", "_handleTransformation$0", 0);
+    _instance_1_u(_ = B._VerticalOuterDimensionState.prototype, "get$_scrollable$_handleDragDown", "_scrollable$_handleDragDown$1", 12);
+    _instance_1_u(_, "get$_scrollable$_handleDragStart", "_scrollable$_handleDragStart$1", 13);
+    _instance_1_u(_, "get$_scrollable$_handleDragUpdate", "_scrollable$_handleDragUpdate$1", 14);
+    _instance_1_u(_, "get$_scrollable$_handleDragEnd", "_scrollable$_handleDragEnd$1", 15);
+    _instance_0_u(_, "get$_scrollable$_handleDragCancel", "_scrollable$_handleDragCancel$0", 0);
+    _static_2(B, "two_dimensional_viewport__TwoDimensionalViewportElement__compareChildren$closure", "_TwoDimensionalViewportElement__compareChildren", 21);
+    _instance_0_u(_ = B.RenderTwoDimensionalViewport.prototype, "get$_handleDelegateNotification", "_handleDelegateNotification$0", 0);
+    _instance(_, "get$showOnScreen", 0, 0, null, ["call$4$curve$descendant$duration$rect", "call$0", "call$1$rect", "call$3$curve$duration$rect", "call$2$descendant$rect"], ["showOnScreen$4$curve$descendant$duration$rect", "showOnScreen$0", "showOnScreen$1$rect", "showOnScreen$3$curve$duration$rect", "showOnScreen$2$descendant$rect"], 4, 0, 0);
+    _instance(_, "get$markNeedsLayout", 0, 0, null, ["call$1$withDelegateRebuild", "call$0"], ["markNeedsLayout$1$withDelegateRebuild", "markNeedsLayout$0"], 16, 0, 0);
+    _instance_2_u(_, "get$_paintChildren", "_paintChildren$2", 17);
+    _instance_1_u(_, "get$computeMinIntrinsicWidth", "computeMinIntrinsicWidth$1", 1);
+    _instance_1_u(_, "get$computeMaxIntrinsicWidth", "computeMaxIntrinsicWidth$1", 1);
+    _instance_1_u(_, "get$computeMinIntrinsicHeight", "computeMinIntrinsicHeight$1", 1);
+    _instance_1_u(_, "get$computeMaxIntrinsicHeight", "computeMaxIntrinsicHeight$1", 1);
+    _instance_0_i(_ = B._ArtWidgetState.prototype, "get$expand", "expand$0", 0);
+    _instance_0_u(_, "get$minimize", "minimize$0", 0);
+    _instance(B._SingleChild2DScrollView.prototype, "get$buildViewport", 0, 3, null, ["call$3"], ["buildViewport$3"], 20, 0, 0);
+    _instance(B._RenderSingleChild2DViewPort.prototype, "get$showOnScreen", 0, 0, null, ["call$4$curve$descendant$duration$rect", "call$0", "call$1$rect", "call$3$curve$duration$rect", "call$2$descendant$rect"], ["showOnScreen$4$curve$descendant$duration$rect", "showOnScreen$0", "showOnScreen$1$rect", "showOnScreen$3$curve$duration$rect", "showOnScreen$2$descendant$rect"], 4, 0, 0);
+  })();
+  (function inheritance() {
+    var _mixinHard = hunkHelpers.mixinHard,
+      _mixin = hunkHelpers.mixin,
+      _inheritMany = hunkHelpers.inheritMany,
+      _inherit = hunkHelpers.inherit;
+    _inheritMany(A.Tween, [B.AlignmentGeometryTween, B.BoxConstraintsTween, B.Matrix4Tween]);
+    _inherit(B.AnimatedContainer, A.ImplicitlyAnimatedWidget);
+    _inherit(B._AnimatedContainerState, A.AnimatedWidgetBaseState);
+    _inheritMany(A.Closure, [B._AnimatedContainerState_forEachTween_closure, B._AnimatedContainerState_forEachTween_closure0, B._AnimatedContainerState_forEachTween_closure1, B._AnimatedContainerState_forEachTween_closure2, B._AnimatedContainerState_forEachTween_closure3, B._AnimatedContainerState_forEachTween_closure4, B._AnimatedContainerState_forEachTween_closure5, B._AnimatedContainerState_forEachTween_closure6, B._VerticalOuterDimensionState_setCanDrag_closure0, B.TwoDimensionalScrollView_build_closure, B.RenderTwoDimensionalViewport_debugDescribeChildren_closure, B.RenderTwoDimensionalViewport_showInViewport_showVertical, B.RenderTwoDimensionalViewport_showInViewport_showHorizontal, B.RenderTwoDimensionalViewport_performLayout_closure, B.RenderTwoDimensionalViewport_performLayout__closure, B.RenderTwoDimensionalViewport_buildOrObtainChildFor_closure]);
+    _inheritMany(A.StatefulWidget, [B.InteractiveViewer, B.TwoDimensionalScrollable, B.ArtWidget]);
+    _inheritMany(A.State, [B.__InteractiveViewerState_State_TickerProviderStateMixin, B.TwoDimensionalScrollableState, B._ArtWidgetState]);
+    _inherit(B._InteractiveViewerState, B.__InteractiveViewerState_State_TickerProviderStateMixin);
+    _inheritMany(A.Closure0Args, [B._InteractiveViewerState__handleTransformation_closure, B.__InteractiveViewerState_State_TickerProviderStateMixin_dispose_closure, B.Scrollable_of_closure, B._VerticalOuterDimensionState_setCanDrag_closure, B._TwoDimensionalViewportElement__buildChild_closure, B.TwoDimensionalViewportParentData_isVisible_closure, B.RenderTwoDimensionalViewport_closure, B.RenderTwoDimensionalViewport__debugCheckContentDimensions_closure, B.RenderTwoDimensionalViewport__debugCheckContentDimensions_closure0, B.RenderTwoDimensionalViewport__moveChild_closure, B.RenderTwoDimensionalViewport__moveChild_closure0, B.RenderTwoDimensionalViewport__removeChild_closure, B.RenderTwoDimensionalViewport__debugTrackOrphans_closure, B.RenderTwoDimensionalViewport_debugThrowIfNotCheckingIntrinsics_closure, B._ArtWidgetState_expand_closure, B._ArtWidgetState_minimize_closure]);
+    _inheritMany(A.StatelessWidget, [B._InteractiveViewerBuilt, B.TwoDimensionalScrollView, B._Frame, B.SingleChildTwoDimensionalScrollView]);
+    _inherit(B.TransformationController, A.ValueNotifier);
+    _inheritMany(A._Enum, [B._GestureType, B.PanAxis, B.DiagonalDragBehavior]);
+    _inherit(B.TwoDimensionalChildDelegate, A.ChangeNotifier);
+    _inherit(B.TwoDimensionalChildBuilderDelegate, B.TwoDimensionalChildDelegate);
+    _inheritMany(A.Closure2Args, [B.TwoDimensionalScrollableState_build_closure, B.TwoDimensionalScrollableState_build__closure, B.RenderTwoDimensionalViewport_hitTestChildren_closure, B.SingleChildTwoDimensionalScrollView_build_closure, B._RenderSingleChild2DViewPort_paint_paintChild]);
+    _inherit(B._TwoDimensionalScrollableScope, A.InheritedWidget);
+    _inheritMany(A.Scrollable, [B._VerticalOuterDimension, B._HorizontalInnerDimension]);
+    _inheritMany(A.ScrollableState, [B._VerticalOuterDimensionState, B._HorizontalInnerDimensionState]);
+    _inherit(B.EmptyTextSelectionControls, A.TextSelectionControls);
+    _inherit(B.TwoDimensionalViewport, A.RenderObjectWidget);
+    _inherit(B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin, A.RenderObjectElement);
+    _inherit(B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin_ViewportElementMixin, B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin);
+    _inherit(B._TwoDimensionalViewportElement, B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin_ViewportElementMixin);
+    _inherit(B._TwoDimensionalViewportParentData_ParentData_KeepAliveParentDataMixin, A.ParentData);
+    _inherit(B.TwoDimensionalViewportParentData, B._TwoDimensionalViewportParentData_ParentData_KeepAliveParentDataMixin);
+    _inherit(B.RenderTwoDimensionalViewport, A.RenderBox);
+    _inheritMany(A.Object, [B.ChildVicinity, B.Quad, B.Quaternion]);
+    _inherit(B.ArtHolder, G.SpanHoldingCode);
+    _inherit(B._SingleChild2DScrollView, B.TwoDimensionalScrollView);
+    _inherit(B._SingleChild2DViewPort, B.TwoDimensionalViewport);
+    _inherit(B._RenderSingleChild2DViewPort, B.RenderTwoDimensionalViewport);
+    _mixinHard(B.__InteractiveViewerState_State_TickerProviderStateMixin, A.TickerProviderStateMixin);
+    _mixin(B._TwoDimensionalViewportParentData_ParentData_KeepAliveParentDataMixin, A.KeepAliveParentDataMixin);
+    _mixin(B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin, A.NotifiableElementMixin);
+    _mixin(B.__TwoDimensionalViewportElement_RenderObjectElement_NotifiableElementMixin_ViewportElementMixin, A.ViewportElementMixin);
+  })();
+  A._Universe_addRules(init.typeUniverse, JSON.parse('{"AlignmentGeometryTween":{"Tween":["AlignmentGeometry?"],"Animatable":["AlignmentGeometry?"],"Animatable.T":"AlignmentGeometry?","Tween.T":"AlignmentGeometry?"},"BoxConstraintsTween":{"Tween":["BoxConstraints"],"Animatable":["BoxConstraints"],"Animatable.T":"BoxConstraints","Tween.T":"BoxConstraints"},"Matrix4Tween":{"Tween":["Matrix4"],"Animatable":["Matrix4"],"Animatable.T":"Matrix4","Tween.T":"Matrix4"},"AnimatedContainer":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_AnimatedContainerState":{"ImplicitlyAnimatedWidgetState":["AnimatedContainer"],"State":["AnimatedContainer"],"Diagnosticable":[],"TickerProvider":[],"State.T":"AnimatedContainer","ImplicitlyAnimatedWidgetState.T":"AnimatedContainer"},"InteractiveViewer":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_InteractiveViewerState":{"TickerProviderStateMixin":["InteractiveViewer"],"State":["InteractiveViewer"],"Diagnosticable":[],"TickerProvider":[],"State.T":"InteractiveViewer"},"_InteractiveViewerBuilt":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"TransformationController":{"ValueNotifier":["Matrix4"],"ChangeNotifier":[],"ValueListenable":["Matrix4"],"Listenable":[],"ValueNotifier.T":"Matrix4"},"_GestureType":{"Enum":[]},"PanAxis":{"Enum":[]},"TwoDimensionalChildDelegate":{"ChangeNotifier":[],"Listenable":[]},"TwoDimensionalChildBuilderDelegate":{"TwoDimensionalChildDelegate":[],"ChangeNotifier":[],"Listenable":[]},"DiagonalDragBehavior":{"Enum":[]},"TwoDimensionalScrollable":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_HorizontalInnerDimension":{"Scrollable":[],"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"TwoDimensionalScrollableState":{"State":["TwoDimensionalScrollable"],"Diagnosticable":[],"State.T":"TwoDimensionalScrollable"},"_TwoDimensionalScrollableScope":{"InheritedWidget":[],"ProxyWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_VerticalOuterDimension":{"Scrollable":[],"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_VerticalOuterDimensionState":{"ScrollableState":[],"TickerProviderStateMixin":["Scrollable"],"RestorationMixin":["Scrollable"],"State":["Scrollable"],"Diagnosticable":[],"TickerProvider":[],"ScrollContext":[],"State.T":"Scrollable"},"_HorizontalInnerDimensionState":{"ScrollableState":[],"TickerProviderStateMixin":["Scrollable"],"RestorationMixin":["Scrollable"],"State":["Scrollable"],"Diagnosticable":[],"TickerProvider":[],"ScrollContext":[],"State.T":"Scrollable"},"EmptyTextSelectionControls":{"TextSelectionControls":[]},"TwoDimensionalScrollView":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"ChildVicinity":{"Comparable":["ChildVicinity"]},"TwoDimensionalViewport":{"RenderObjectWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_TwoDimensionalViewportElement":{"RenderObjectElement":[],"NotifiableElementMixin":[],"Element":[],"DiagnosticableTree":[],"Diagnosticable":[],"BuildContext":[],"TwoDimensionalChildManager":[]},"TwoDimensionalViewportParentData":{"KeepAliveParentDataMixin":[],"ParentData":[]},"RenderTwoDimensionalViewport":{"RenderBox":[],"RenderAbstractViewport":[],"RenderObject":[],"DiagnosticableTree":[],"Diagnosticable":[],"HitTestTarget":[]},"ArtWidget":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_ArtWidgetState":{"State":["ArtWidget"],"Diagnosticable":[],"State.T":"ArtWidget"},"_Frame":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"ArtHolder":{"SpanHoldingCode":[],"Holder":[]},"SingleChildTwoDimensionalScrollView":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_SingleChild2DScrollView":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_SingleChild2DViewPort":{"TwoDimensionalViewport":[],"RenderObjectWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_RenderSingleChild2DViewPort":{"RenderTwoDimensionalViewport":[],"RenderBox":[],"RenderAbstractViewport":[],"RenderObject":[],"DiagnosticableTree":[],"Diagnosticable":[],"HitTestTarget":[]}}'));
+  var string$ = {
+    Subcla: "Subclasses should call applyContentDimensions on the verticalOffset and horizontalOffset to set the min and max scroll offset. If the contents exceed one or both sides of the viewportDimension, ensure the viewportDimension height or width is subtracted in that axis for the correct extent.",
+    TwoDimh: "TwoDimensionalViewport.horizontalAxisDirection is not Axis.horizontal.",
+    TwoDimv: "TwoDimensionalViewport.verticalAxisDirection is not Axis.vertical."
+  };
+  var type$ = (function rtii() {
+    var findType = A.findType;
+    return {
+      AlignmentGeometry: findType("AlignmentGeometry"),
+      AlignmentGeometryTween: findType("AlignmentGeometryTween"),
+      Animation_double: findType("Animation<double>"),
+      Axis: findType("Axis"),
+      BoxConstraints: findType("BoxConstraints"),
+      BoxConstraintsTween: findType("BoxConstraintsTween"),
+      BuildContext: findType("BuildContext"),
+      ChildVicinity: findType("ChildVicinity"),
+      Clip: findType("Clip"),
+      ClipRectLayer: findType("ClipRectLayer"),
+      ContainerLayer: findType("ContainerLayer"),
+      Curve: findType("Curve"),
+      Decoration: findType("Decoration"),
+      DecorationTween: findType("DecorationTween"),
+      DiagnosticsNode: findType("DiagnosticsNode"),
+      DiagonalDragBehavior: findType("DiagonalDragBehavior"),
+      DragDownDetails: findType("DragDownDetails"),
+      DragEndDetails: findType("DragEndDetails"),
+      DragStartDetails: findType("DragStartDetails"),
+      DragUpdateDetails: findType("DragUpdateDetails"),
+      Duration: findType("Duration"),
+      EdgeInsetsGeometry: findType("EdgeInsetsGeometry"),
+      EdgeInsetsGeometryTween: findType("EdgeInsetsGeometryTween"),
+      Element: findType("Element"),
+      GestureRecognizerFactoryWithHandlers_PanGestureRecognizer: findType("GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>"),
+      GestureRecognizerFactory_GestureRecognizer: findType("GestureRecognizerFactory<GestureRecognizer>"),
+      InteractiveViewer: findType("InteractiveViewer"),
+      JSArray_DiagnosticsNode: findType("JSArray<DiagnosticsNode>"),
+      JSArray_Future_void: findType("JSArray<Future<~>>"),
+      JSArray_RenderBox: findType("JSArray<RenderBox>"),
+      Key: findType("Key"),
+      LabeledGlobalKey_RawGestureDetectorState: findType("LabeledGlobalKey<RawGestureDetectorState>"),
+      LabeledGlobalKey_ScrollableState: findType("LabeledGlobalKey<ScrollableState>"),
+      LabeledGlobalKey_State_StatefulWidget: findType("LabeledGlobalKey<State<StatefulWidget>>"),
+      List_RenderBox: findType("List<RenderBox>"),
+      List_TextSelectionPoint: findType("List<TextSelectionPoint>"),
+      Matrix4: findType("Matrix4"),
+      Matrix4Tween: findType("Matrix4Tween"),
+      MediaQuery: findType("MediaQuery"),
+      NotificationListener_ScrollUpdateNotification: findType("NotificationListener<ScrollUpdateNotification>"),
+      PanGestureRecognizer: findType("PanGestureRecognizer"),
+      PointerScaleEvent: findType("PointerScaleEvent"),
+      PointerScrollEvent: findType("PointerScrollEvent"),
+      PointerSignalEvent: findType("PointerSignalEvent"),
+      Quaternion: findType("Quaternion"),
+      RenderBox: findType("RenderBox"),
+      RenderTwoDimensionalViewport: findType("RenderTwoDimensionalViewport"),
+      RestorableProperty_nullable_Object: findType("RestorableProperty<Object?>"),
+      ScrollUpdateNotification: findType("ScrollUpdateNotification"),
+      ScrollableDetails: findType("ScrollableDetails"),
+      Set_Ticker: findType("Set<Ticker>"),
+      Tween_Offset: findType("Tween<Offset>"),
+      Tween_double: findType("Tween<double>"),
+      TwoDimensionalChildManager: findType("TwoDimensionalChildManager"),
+      TwoDimensionalScrollable: findType("TwoDimensionalScrollable"),
+      TwoDimensionalViewport: findType("TwoDimensionalViewport"),
+      TwoDimensionalViewportParentData: findType("TwoDimensionalViewportParentData"),
+      Type: findType("Type"),
+      ValueKey_String: findType("ValueKey<String>"),
+      ViewportOffset: findType("ViewportOffset"),
+      WidgetsBinding: findType("WidgetsBinding"),
+      _HorizontalInnerDimension: findType("_HorizontalInnerDimension"),
+      _RenderSingleChild2DViewPort: findType("_RenderSingleChild2DViewPort"),
+      _TwoDimensionalScrollableScope: findType("_TwoDimensionalScrollableScope"),
+      _VerticalOuterDimension: findType("_VerticalOuterDimension"),
+      nullable_AlignmentGeometryTween: findType("AlignmentGeometryTween?"),
+      nullable_BoxConstraintsTween: findType("BoxConstraintsTween?"),
+      nullable_DecorationTween: findType("DecorationTween?"),
+      nullable_EdgeInsetsGeometryTween: findType("EdgeInsetsGeometryTween?"),
+      nullable_Matrix4Tween: findType("Matrix4Tween?"),
+      nullable_Rect: findType("Rect?"),
+      nullable_RenderObject: findType("RenderObject?"),
+      nullable_Tween_dynamic_Function_3_nullable_Tween_dynamic_and_dynamic_and_Tween_dynamic_Function_dynamic: findType("Tween<@>?(Tween<@>?,@,Tween<@>(@))"),
+      nullable_ValueListenable_ClipboardStatus: findType("ValueListenable<ClipboardStatus>?"),
+      nullable_void_Function: findType("~()?"),
+      void_Function: findType("~()"),
+      void_Function_Element: findType("~(Element)"),
+      void_Function_RenderObject: findType("~(RenderObject)")
+    };
+  })();
+  (function constants() {
+    D.ChildVicinity_0_0 = new B.ChildVicinity(0, 0);
+    D.ChildVicinity_m1_m1 = new B.ChildVicinity(-1, -1);
+    D.DiagonalDragBehavior_0 = new B.DiagonalDragBehavior(0, "none");
+    D.PanAxis_3 = new B.PanAxis(3, "free");
+    D._GestureType_0 = new B._GestureType(0, "pan");
+    D._GestureType_1 = new B._GestureType(1, "scale");
+    D._GestureType_2 = new B._GestureType(2, "rotate");
+  })();
+};
+;
+((d, h) => {
+  d[h] = d.current;
+  d.eventLog.push({p: "main.dart.js_27", e: "endPart", h: h});
+})($__dart_deferred_initializers__, "k7J/E2WaVkBdj50A2wdubCsRQ8I=");
+;

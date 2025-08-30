@@ -1,12 +1,12 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/app_cta_overlay.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/mc_fab.dart';
 
 import '../pages/drawer.dart';
-import '../pages/scrollers/adserve.dart';
-import '../theme/theme.dart';
+import '../parts/noir_theme.dart';
+import '../scrollers/adserve.dart';
 
 class AdSupportingScaffold extends StatefulWidget {
   final String? source;
@@ -71,7 +71,7 @@ class _AdSupportingScaffoldState extends State<AdSupportingScaffold> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-        data: theme,
+        data: noirTheme,
         child: Scaffold(
             endDrawer: MenuDrawer(source: widget.source),
             //If the ad is being shown, the FAB needs to be above the ad.

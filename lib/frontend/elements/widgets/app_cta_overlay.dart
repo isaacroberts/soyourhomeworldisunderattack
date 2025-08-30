@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/theme/colors.dart';
 import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
+
+import '../../parts/noir_colors.dart';
 
 class McKinseyAppIcon extends StatelessWidget {
   const McKinseyAppIcon({
@@ -14,14 +15,14 @@ class McKinseyAppIcon extends StatelessWidget {
         child: Material(
             child: Container(
                 // shape: RoundedRectangleBorder(
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(7)),
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(7)),
                     // color: KevinColor.shade5,
                     gradient: LinearGradient(
                         colors: [
-                          primary.shade700,
-                          primary.shade500,
-                          primary.shade400,
+                          NoirPrimary.shade7,
+                          NoirPrimary.shade5,
+                          NoirPrimary.shade4,
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter)),

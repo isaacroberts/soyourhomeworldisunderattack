@@ -25,6 +25,9 @@ abstract class Holder {
   Widget element(BuildContext context);
   Widget fallback(BuildContext context);
 
+  //12 px of padding will be added if true
+  bool get wantsPadding => true;
+
   Future load() async {
     return null;
   }
@@ -43,6 +46,14 @@ abstract class Holder {
 //Will add json data later
 abstract class CodeHolder extends Holder {
   const CodeHolder();
+//Default
+  @override
+  bool get wantsPadding => false;
+
+  @override
+  Widget fallback(BuildContext context) {
+    return element(context);
+  }
 }
 
 class IsFallbackProvider extends InheritedWidget {

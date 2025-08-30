@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/mc_fab.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../backend/error_handler.dart';
 import '../pages/debug_drawer.dart';
-import '../theme/theme.dart';
+import '../parts/noir_theme.dart';
 
 // final talker = Talker();
 
@@ -32,8 +33,7 @@ class _McDebugScaffoldState extends State<McDebugScaffold>
     //Avoid showing ErrorSnackbar immediately upon open
     Future.delayed(
         const Duration(seconds: kDebugMode ? 1 : 10), startErrorChecking);
-    ViewSettings.instance.infiniteScrollNotifier
-        .addListener(rebuildViewSettings);
+    ViewSettings.instance.scrollModeNotifier.addListener(rebuildViewSettings);
   }
 
   void startErrorChecking() {
@@ -47,7 +47,7 @@ class _McDebugScaffoldState extends State<McDebugScaffold>
 
   @override
   dispose() {
-    ViewSettings.instance.infiniteScrollNotifier
+    ViewSettings.instance.scrollModeNotifier
         .removeListener(rebuildViewSettings);
     timer?.cancel();
     super.dispose();
@@ -56,7 +56,7 @@ class _McDebugScaffoldState extends State<McDebugScaffold>
   @override
   Widget build(BuildContext context) {
     return Theme(
-        data: theme,
+        data: noirTheme,
         child: Scaffold(
             endDrawer: const DebugDrawer(),
             floatingActionButton: const McFAB(),
@@ -76,22 +76,6 @@ class TopLevelWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(data: theme, child: child);
-  }
-}
-
-class McFAB extends StatelessWidget {
-  const McFAB({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-        key: const Key("McScaffoldFAB"),
-        heroTag: 'DrawerMcFab',
-        // backgroundColor: theme.colorScheme.primary,
-        // splashColor: Color(0x0),
-        // backgroundColor: Color(0xffff0000),
-        onPressed: () => Scaffold.of(context).openEndDrawer(),
-        child: const Icon(Icons.menu));
+    return Theme(data: noirTheme, child: child);
   }
 }

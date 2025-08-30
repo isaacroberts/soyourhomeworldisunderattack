@@ -142,13 +142,6 @@ def parse_custom(span, obj):
         # assert False, 'Unhandled custom parse function '+str(obj)
         # return None
 
-def post_matching_step(spans, styles):
-    pass
-
-def chapter_processing(spans, styles):
-    pass
-
-
 
 class BlankParsedBlock(ParsedCodeBlockBase):
     def __init__(self, span):

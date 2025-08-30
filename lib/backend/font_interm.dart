@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/text_utils.dart';
 
+import '../frontend/theme/base_colors.dart';
 import '../frontend/theme/base_text_theme.dart';
-import '../frontend/theme/colors.dart';
 import 'font_cache.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +13,6 @@ import 'font_cache.dart';
 //Second enum for bold /ital
 
 class FontInterm {
-  // final String family;
   final int fileId;
   final double size;
   // final bool? bold;
@@ -23,12 +22,13 @@ class FontInterm {
   bool get strikethrough => wousi.strikethrough;
   bool get underline => wousi.underline;
   bool get overline => wousi.overline;
-  int get weight => wousi.weight;
+
+  final FontWeight weight;
   final WousiByte wousi;
 
   final Color? color;
 
-  FontFile? file;
+  FontFile? _file;
 
   //TODO: Save fontCache object
   // FontFile? fontCache;
@@ -39,7 +39,8 @@ class FontInterm {
       required this.wousi,
       // required this.italic,
       // this.weight,
-      this.color});
+      this.color})
+      : weight = FontCache.intToWeight(wousi.weight);
 
   @override
   String toString() {
@@ -47,6 +48,11 @@ class FontInterm {
   }
 
   //FontFile ====================
+
+  FontFile? get file {
+    _file ??= FontCache.getInstance().getFontFile(fileId);
+    return _file;
+  }
 
   String? get family => file?.family;
 
@@ -56,7 +62,6 @@ class FontInterm {
       file?.loadStatus() ?? (file == null ? "Null file" : 'Unfetched/Default');
 
   Future load() async {
-    file ??= await getFontFile();
     await file?.load();
     return file;
   }
@@ -67,19 +72,11 @@ class FontInterm {
 
   bool isFailed() => file?.failed() ?? false;
 
-  FontWeight? get fontWeight {
-    if (fileId == 0) {
-      return FontCache.intToWeight(weight - 100);
-    } else {
-      return FontCache.intToWeight(weight);
-    }
-  }
-
   TextStyle instance() {
     return TextStyle(
       fontFamily: family,
       fontSize: size * fontScale,
-      fontWeight: fontWeight,
+      fontWeight: weight,
       fontStyle: italic ? FontStyle.italic : FontStyle.normal,
       color: color ?? textColor,
       decoration: wousi.textDecoration(),
@@ -91,7 +88,7 @@ class FontInterm {
     return TextStyle(
       fontFamily: fallbackFamily,
       fontSize: size * fontScale,
-      fontWeight: fontWeight,
+      fontWeight: weight,
       color: color ?? fallbackTextColor,
       fontStyle: italic ? FontStyle.italic : FontStyle.normal,
       decoration: wousi.textDecoration(),
@@ -103,7 +100,7 @@ class FontInterm {
     return TextStyle(
       fontFamily: family,
       fontSize: size * fontScale,
-      fontWeight: fontWeight,
+      fontWeight: weight,
       fontStyle: italic ? FontStyle.italic : FontStyle.normal,
       color: color ?? textColor,
       backgroundColor: bgColor,
@@ -115,7 +112,7 @@ class FontInterm {
   TextStyle fallbackWithColor(Color? bgColor) {
     return TextStyle(
       fontSize: size * fontScale,
-      fontWeight: fontWeight,
+      fontWeight: weight,
       fontStyle: italic ? FontStyle.italic : FontStyle.normal,
       color: color ?? fallbackTextColor,
       fontFamily: 'Rubik',
@@ -124,31 +121,25 @@ class FontInterm {
       decorationColor: color ?? fallbackTextColor,
     );
   }
-
-  //==== Internals ============
-
-  //TODO: Save this Future I think
-  Future<FontFile?> getFontFile() async {
-    if (file == null) {
-      return FontCache.getInstance().getFontFile(fileId);
-    }
-    return file;
-  }
 }
 
 class FontPremadeInterm {
   final TextStyle style;
-  FontFile? file;
+  FontFile? _file;
 
   String get family => style.fontFamily!;
 
   FontPremadeInterm({required this.style}) : assert(style.fontFamily != null);
 
+  FontFile? get file {
+    _file ??= FontCache.getInstance().getFontFileFromFamily(family);
+    return _file;
+  }
+
   String loadStatus() =>
       file?.loadStatus() ?? (file == null ? "Null file" : 'Unfetched/Default');
 
   Future load() async {
-    file ??= await getFontFile();
     await file!.load();
     return file!;
   }
@@ -158,12 +149,4 @@ class FontPremadeInterm {
   bool isDoneLoading() => file?.doneLoading() ?? true;
 
   bool isFailed() => file?.failed() ?? false;
-
-  //TODO: Save this Future I think
-  Future<FontFile?> getFontFile() async {
-    if (file == null) {
-      return FontCache.getInstance().getFontFileFromFamily(family);
-    }
-    return file;
-  }
 }

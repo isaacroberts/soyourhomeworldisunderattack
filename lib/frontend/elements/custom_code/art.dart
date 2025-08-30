@@ -23,7 +23,7 @@ class ArtWidget extends StatefulWidget {
 
 class _ArtWidgetState extends State<ArtWidget> {
   Widget get art => widget.art;
-  bool contain = true;
+  bool contain = false;
 
   void expand() {
     setState(() {
@@ -111,15 +111,9 @@ class _Frame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: contain ? const Color(0xffccbbaa) : const Color(0xff776655),
-          border: Border.all(
-              color:
-                  contain ? const Color(0xff776600) : const Color(0xff554400),
-              width: 15),
-        ),
+        decoration:
+            BoxDecoration(border: Border.all(color: const Color(0xff000000))),
+        alignment: contain ? Alignment.topCenter : Alignment.centerLeft,
         child: child);
   }
 }

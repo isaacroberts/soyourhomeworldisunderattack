@@ -51,8 +51,7 @@ class DebugDrawer extends StatelessWidget {
       }
     }
     listTiles.add(ScrollModeDropdown(
-        label: 'Scroll mode',
-        value: ViewSettings.instance.infiniteScrollNotifier));
+        label: 'Scroll mode', value: ViewSettings.instance.scrollModeNotifier));
     listTiles.add(NotifiedSwitch(
       label: 'Dev Rig',
       value: ViewSettings.instance.testRigNotifier,

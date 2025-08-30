@@ -4,14 +4,13 @@ import 'dart:developer' as dev;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/greenland_game.dart'
-    deferred as greenland_game_lib;
 //Deferred
 
 //Deferred Loads
-import 'package:soyourhomeworld/frontend/pages/dev_page.dart'
-    deferred as dev_page_lib;
+import 'package:soyourhomeworld/dev_page.dart' deferred as dev_page_lib;
+import 'package:soyourhomeworld/frontend/elements/special_widgets/greenland_game.dart'
+    deferred as greenland_game_lib;
+import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
 import 'package:soyourhomeworld/frontend/pages/icon_viewer.dart'
     deferred as icon_viewer_lib;
 import 'package:soyourhomeworld/frontend/pages/redirect_page.dart'
@@ -21,11 +20,17 @@ import 'backend/error_handler.dart';
 // import 'frontend/pages/games/valinor_website/valinor_website.dart'
 //     deferred as valinor_lib;
 import 'frontend/pages/index.dart' deferred as index_lib;
-import 'frontend/pages/scrollers/scroller_door.dart';
 import 'frontend/pages/server_error_page.dart' deferred as error_page_lib;
 import 'frontend/pages/title/title.dart' deferred as title_lib;
+import 'frontend/scrollers/scroller_door.dart';
 
-const bool devLoadToMain = false;
+// const String devMain = '/dev_page/';
+//noir
+// const String devMain = '/scroll/4';
+//greenland
+const String devMain = '/scroll/34';
+//noir image
+// const String devMain = '/scroll/20';
 
 Page _errorPageBuilder(BuildContext context, GoRouterState state) {
   return MaterialPage(
@@ -40,14 +45,28 @@ GoRouter router() {
   //TODO: I think this needs error handling
   return GoRouter(
       errorPageBuilder: _errorPageBuilder,
-      initialLocation: (kDebugMode && !devLoadToMain)
-          ? '/scroll/3'
-          // '/dev_page/'
-
-          : '/',
+      initialLocation: (kDebugMode) ? devMain : '/',
       debugLogDiagnostics: true,
       redirect: redirector,
       routes: routes());
+}
+
+Widget scrollDoorBuilder(BuildContext context, GoRouterState state) {
+  try {
+    String numStr = state.pathParameters['chid'] ?? '0';
+
+    int? number = int.tryParse(numStr);
+    dev.log('Go parsed $number');
+    return ScrollDoor.nullSafe(
+      key: const Key("ScrollDoor!"),
+      startChapter: number,
+    );
+  } catch (exception) {
+    dev.log("Exception!");
+    dev.log('$exception');
+    ErrorList.logError(exception);
+    return ErrorList.instance.page(context);
+  }
 }
 
 List<GoRoute> routes() {
@@ -73,23 +92,8 @@ List<GoRoute> routes() {
         name: 'Reader',
         // path: '/scroll',
         path: '/scroll/:chid',
-        builder: (context, state) {
-          try {
-            String numStr = state.pathParameters['chid'] ?? '0';
+        builder: scrollDoorBuilder),
 
-            int? number = int.tryParse(numStr);
-            dev.log('Go parsed $number');
-            return ScrollDoor.nullSafe(
-              key: const Key("ScrollDoor!"),
-              startChapter: number,
-            );
-          } catch (exception) {
-            dev.log("Exception!");
-            dev.log('$exception');
-            ErrorList.logError(exception);
-            return ErrorList.instance.page(context);
-          }
-        }),
     GoRoute(
         name: 'Chapter Search',
         // path: '/scroll',

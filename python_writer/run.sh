@@ -19,6 +19,10 @@ then
   exit 1
 fi
 
+# Log file directory
+rm -r log/
+mkdir log/
+
 # python odt_to_xml.py $1 &&
 odt_file="$1"
 echo cp "$odt_file" temp/
@@ -26,13 +30,8 @@ cp "$odt_file" temp/
 odt_file=temp/${odt_file##*/}
 echo "$odt_file"
 
-
 # Remove ext
 dir="${odt_file%.*}"
-
-# Log file directory
-rm -r log/
-mkdir log/
 
 # Remove existing unzipped book
 rm -r "$dir" #2>/dev/null
@@ -46,20 +45,22 @@ python reader.py "$dir" &&
 # spans_raw.json && fonts_raw.json
 
 python font_counter.py &&
-# spans_raw.json && fonts_cleaned.json
+# spans_raw.json && fonts_clean.json
 
 python cleaner.py &&
-# spans_clean.json && fonts_cleaned.json
+# spans_clean.json && fonts_clean.json
 python code_parser.py &&
 
 python book_inspector.py &&
 
-# spans_coded.json && fonts_cleaned.json
+# spans_coded.json && fonts_clean.json
 python chapter_breaker.py &&
-# chapters.json && fonts_cleaned.json
+# chapters.json && fonts_clean.json
 python chaptered_writer.py &&
 # generated/**.dart
 # echo "Moving" &&
+
+python prepare_font_csv.py &&
 
 # python index_writer.py &&
 
@@ -68,8 +69,10 @@ echo "Fmt runner done" &&
 ./move.sh &&
 echo "Moved" &&
 
+
+
+rm -r "$dir" 2>/dev/null &&
+rm -r "$odt_file" &&
+
+
 notify
-
-
-rm -r "$dir" 2>/dev/null
-rm -r "$odt_file"

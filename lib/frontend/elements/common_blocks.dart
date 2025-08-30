@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 import '../icons.dart';
+import '../parts/noir_colors.dart';
 import '../theme/base_text_theme.dart';
-import '../theme/colors.dart';
 
 Widget blankHeader(BuildContext context) {
   return const Text('...', style: headerFont);
@@ -34,7 +34,7 @@ class ColoredIconCard extends StatelessWidget {
     return Container(
         height: 400,
         alignment: Alignment.center,
-        color: color ?? canvasColor,
+        color: color ?? NoirPrimary.shade2,
         child: child);
   }
 

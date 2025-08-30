@@ -268,7 +268,9 @@ class _ElvenChorusState extends State<ElvenChorus>
       elements = text();
     }
 
-    return SizedBox(
+    return 
+    Tooltip(message: "\"Passing of the Elves\"\nfrom Lord of the Rings", child: 
+    SizedBox(
         height: 48 + 12 * 2,
         width: screenWidth,
         // alignment: Alignment.centerRight,
@@ -278,7 +280,7 @@ class _ElvenChorusState extends State<ElvenChorus>
                 controller: controller,
                 scrollDirection: Axis.horizontal,
                 // physics: const NeverScrollableScrollPhysics(),
-                children: elements)));
+                children: elements))));
   }
 
   Widget stackIfDebug(BuildContext context, {required Widget child}) {

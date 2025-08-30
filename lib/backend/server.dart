@@ -3,33 +3,31 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'error_handler.dart';
+import 'server_conditional/server_url_linux.dart'
+    if (dart.library.html) 'server_conditional/server_url_web.dart';
 
-//TODO: Try multiple URLs
-String get displayURL {
-  return 'homeworld.nfshost.com';
+// if (dart.library.io) 'server_conditional/server_url_linux.dart';
+
+String get serverUrl => getServerURL();
+
+String get serverDisplayURL {
+  return 'homeworld.help';
 }
 
-String getURL() {
-  if (kDebugMode || kProfileMode) {
-    return 'http://127.0.0.1:5000';
-  } else {
-    return 'https://homeworld.nfshost.com';
-  }
+String getServerURL() {
+  return getServerURLPlatformSpecific();
 }
-
-String get serverUrl => getURL();
 
 String fontUrl(String filename) {
-  return "${getURL()}/hosted_fonts/$filename";
+  return "${getServerURL()}/hosted_fonts/$filename";
 }
 
 String imageUrl(String filename) {
   filename = filename.replaceAll('.', '_phone.');
-  return "${getURL()}/images/$filename";
+  return "${getServerURL()}/images/$filename";
 }
 
 String _stripLeadingSlashes(String endpoint) {
@@ -45,7 +43,7 @@ String _stripLeadingSlashes(String endpoint) {
 Future<http.Response> send(String endpoint,
     [Map<String, dynamic>? body]) async {
   endpoint = _stripLeadingSlashes(endpoint);
-  return http.post(Uri.parse('${getURL()}/$endpoint/'),
+  return http.post(Uri.parse('${getServerURL()}/$endpoint/'),
       headers: {
         "Accept": "application/json",
         "Access-Control-Allow-Origin": "*"
@@ -56,7 +54,7 @@ Future<http.Response> send(String endpoint,
 Future<http.Response> sendGet(String endpoint,
     [Map<String, dynamic>? body]) async {
   endpoint = _stripLeadingSlashes(endpoint);
-  return http.get(Uri.parse('${getURL()}/$endpoint'), headers: {
+  return http.get(Uri.parse('${getServerURL()}/$endpoint'), headers: {
     "Accept": "application/json",
     "Access-Control-Allow-Origin": "*", // Required for CORS support to work
     // "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
@@ -66,7 +64,7 @@ Future<http.Response> sendGet(String endpoint,
   });
 }
 
-Future<Map<String, dynamic>?> sendAndHandleErrors(String endpoint,
+Future<dynamic> sendAndHandleErrors(String endpoint,
     [Map<String, dynamic>? body]) async {
   // dev.log("Sending $endpoint {$body}");
   var response = await send(endpoint, body);
@@ -85,7 +83,7 @@ Future<Map<String, dynamic>?> sendAndHandleErrors(String endpoint,
 }
 
 Future<ByteBuffer> getFileFromServer(String path) async {
-  var uri = Uri.parse('${getURL()}/$path');
+  var uri = Uri.parse('${getServerURL()}/$path');
   final client = http.Client();
   final request = http.Request('GET', uri);
   final response = await client.send(request);
@@ -105,6 +103,24 @@ Future<ByteBuffer> getFileFromServer(String path) async {
     Uint8List bytes = await response.stream.toBytes();
     return bytes.buffer;
     // return response.bodyBytes.buffer;
+  } else {
+    throw Exception(
+        'Error getting file from server: code ${response.statusCode} ${response.reasonPhrase}');
+  }
+}
+
+Future<dynamic> getJsonFileFromServer(String path) async {
+  final http.Response response = await http
+      .post(Uri.parse('${getServerURL()}/$path'), headers: {
+    "Accept": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  });
+
+  if (response.contentLength == 0) {
+    throw Exception('No file data sent. File=$path');
+  }
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
   } else {
     throw Exception(
         'Error getting file from server: code ${response.statusCode} ${response.reasonPhrase}');

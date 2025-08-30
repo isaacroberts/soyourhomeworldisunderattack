@@ -16,6 +16,7 @@ class SignWidget extends StatelessWidget {
   Widget signBack(BuildContext context) {
     return Container(
       height: 600,
+      width: 600,
       alignment: Alignment.center,
       decoration: BoxDecoration(color: dark ? darkColor : lightColor),
     );
@@ -25,6 +26,7 @@ class SignWidget extends StatelessWidget {
     int signAlpha = 0xbb + rNG.nextInt(0x25);
     return Container(
         height: 600,
+        width: 600,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: (dark ? darkColor : lightColor).withAlpha(signAlpha),
@@ -61,16 +63,19 @@ class SignWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double lPad = (rNG.nextInt(50) - rNG.nextInt(50)).toDouble();
     int nTape = rNG.nextInt(4);
-    return Stack(
-      alignment: Alignment.center,
-      fit: StackFit.loose,
-      children: [
-        signBack(context),
-        picket(context),
-        for (int n = 0; n < nTape; ++n) tape(context, n, lPad),
-        sign(context),
-      ],
-    );
+    return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Stack(
+              key: const Key("SignStack"),
+              alignment: Alignment.center,
+              fit: StackFit.loose,
+              children: [
+                signBack(context),
+                picket(context),
+                for (int n = 0; n < nTape; ++n) tape(context, n, lPad),
+                sign(context),
+              ],
+            ));
   }
 }
 

@@ -2,29 +2,22 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../../backend/chapter_data.dart';
-
 class LengthSummaryWidget extends StatelessWidget {
   final int numDots;
   final double dotSize;
-  final Color color;
+  final Color? color;
   const LengthSummaryWidget(
-      {super.key,
-      required this.numDots,
-      this.color = Colors.white,
-      this.dotSize = 1});
+      {super.key, required this.numDots, this.color, this.dotSize = 1});
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-        message:
-            'Reading length: ${ChapterData.readingLengthDescriptor(numDots)}',
-        //Because there's no onClick
-        excludeFromSemantics: true,
-        child: CustomPaint(
-          foregroundPainter: DotSquarePainter(
-              numDots: numDots, dotColor: color, dotSize: dotSize),
-        ));
+    // Color bgColor =
+    //     this.bgColor ?? Theme.of(context).colorScheme.primaryFixedDim;
+    Color color = this.color ?? Theme.of(context).colorScheme.onPrimaryFixed;
+    return CustomPaint(
+      foregroundPainter:
+          DotSquarePainter(numDots: numDots, dotColor: color, dotSize: dotSize),
+    );
   }
 
   static int clampDotAmt(int numDots) => math.min(9, math.max(0, numDots));
@@ -44,14 +37,6 @@ class DotSquarePainter extends CustomPainter {
 
     // double maxSpan = dotRadius * 8;
     // double lmargin = dotRadius;
-
-    // var paint = Paint()
-    //   ..color = canvasColor
-    //   ..strokeWidth = 1;
-    // canvas.drawRect(
-    //     Rect.fromLTRB(
-    //         -dotRadius, -dotRadius, sqrSize + dotRadius, sqrSize + dotRadius),
-    //     paint);
 
     int numDots = LengthSummaryWidget.clampDotAmt(this.numDots);
 
@@ -81,6 +66,8 @@ class DotSquarePainter extends CustomPainter {
 
     //I <3 cheap hacks
     int dotsDrawn = 0;
+
+    //TODO: Tighten up when there are more dots
 
     for (int y = 0; y < numRows; y++) {
       double ypos = y0 + y * (dotRadius * 3);

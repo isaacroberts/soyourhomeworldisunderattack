@@ -1,3 +1,5 @@
+import 'package:soyourhomeworld/backend/part_id.dart';
+
 typedef ChapterKey = int;
 
 //TODO: Move into ChapterHolder
@@ -7,6 +9,7 @@ class ChapterInfo {
   final String displayName;
   final String filename;
   final String varName;
+  final PartId partId;
   final bool isPart;
   final bool hidePart;
   final int? next;
@@ -17,8 +20,12 @@ class ChapterInfo {
       required this.displayName,
       required this.filename,
       required this.next,
+      //TODO: This is intentionally Blocking value
+      required PartId partId,
+      // required this.partId,
       required this.isPart,
-      required this.hidePart});
+      required this.hidePart})
+      : partId = PartId.noir;
 
 // ChapterInfo.blank()
 //     : id = 0,

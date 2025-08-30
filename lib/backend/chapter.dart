@@ -4,10 +4,12 @@ import 'dart:typed_data';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/part_id.dart';
 import 'package:soyourhomeworld/backend/server.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
 //Deferred loads
+import '../frontend/parts/part.dart';
 import 'binary_utils/buffer_ptr.dart' deferred as buffer_lib;
 import 'chapter_data.dart';
 import 'chapter_info.dart';
@@ -36,6 +38,12 @@ class Chapter {
   String get displayTitle => info.displayName;
   String get filename => info.filename;
   bool get isPart => info.isPart;
+  PartId get part => info.partId;
+
+  @override
+  String toString() {
+    return 'Chapter $varName ($id)';
+  }
 
 //Can't be final because of object creation
   Chapter? next;
@@ -51,7 +59,7 @@ class Chapter {
       : globalKey = GlobalKey(debugLabel: 'Chapter_${info.varName}');
 
   static Chapter of(BuildContext context) {
-    return ChapterProvider.of(context).chapter;
+    return ChapterProvider.of(context).chapter!;
   }
 
   static Chapter? maybeOf(BuildContext context) {
@@ -201,10 +209,18 @@ class Chapter {
 }
 
 class ChapterProvider extends InheritedWidget {
-  final Chapter chapter;
+  final Chapter? chapter;
+  final Part part;
 
   const ChapterProvider(
-      {required super.key, required this.chapter, required super.child});
+      {required super.key,
+      required this.chapter,
+      required this.part,
+      required super.child});
+
+  @override
+  // TODO: implement child
+  Widget get child => Theme(data: part.theme, child: super.child);
 
   static ChapterProvider of(BuildContext context) {
     return maybeOf(context)!;
@@ -217,7 +233,7 @@ class ChapterProvider extends InheritedWidget {
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     if (oldWidget is ChapterProvider) {
-      return oldWidget.chapter.id != chapter.id;
+      return oldWidget.chapter?.id != chapter?.id;
     } else {
       return true;
     }

@@ -9,8 +9,8 @@ import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import 'backend/error_handler.dart';
 import 'frontend/elements/debug_scaffold.dart';
-import 'frontend/pages/scrollers/sliver_scroller.dart';
-import 'frontend/theme/theme.dart';
+import 'frontend/parts/noir_theme.dart';
+import 'frontend/scrollers/sliver_scroller.dart';
 import 'router.dart' as router_lib;
 
 Future<void> main() async {
@@ -54,10 +54,10 @@ class DebugApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: theme,
+        theme: noirTheme,
         title: 'Help! My Debugging!',
         home: const McDebugScaffold(
-            child: StdBookWaiter(
+            child: BookWaiter(
           child: SliverScroller(
             startChapter: 0,
           ),
@@ -75,11 +75,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       key: const Key('ROUTER'),
       title: 'Help! My Homeworld!',
-      scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
-      theme: theme,
-      themeMode: ThemeMode.dark,
       routerConfig: router_lib.router(),
-      // showPerformanceOverlay: true,
+
+      theme: noirTheme,
+      themeMode: ThemeMode.dark,
+      //Blocks the drawer
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: NoThumbScrollBehavior().copyWith(scrollbars: false),
     );
   }
 }

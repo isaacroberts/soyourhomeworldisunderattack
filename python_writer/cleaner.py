@@ -1,7 +1,3 @@
-
-from bs4 import BeautifulSoup
-import bs4
-
 import os
 
 from objects import *
@@ -15,19 +11,14 @@ import python_script_tools as pst
 
 logger_start('cleaner')
 
-if __name__=="__main__":
-    # pst.DEBUG=True
-    pass
-
 
 REDACT=False
 # TODO: This required some extra maintenance
 COLORED_BOXES=False
 
-spans, fonts = cf.read_spans_and_fonts('spans_raw.json', 'fonts_cleaned.json')
 
 health_inspection_count = 0
-def health_inspection():
+def health_inspection(spans):
     global health_inspection_count
     health_inspection_count+=1
     print("Health inspection! {",health_inspection_count,"}")
@@ -35,109 +26,147 @@ def health_inspection():
     cf.common_health_inspection(spans)
 
 
-health_inspection()
+def clean_files(in_span_file='spans_raw.json', in_font_file='fonts_clean.json', out_span_file='spans_clean.json'):
+    spans, _ = cf.read_spans_and_fonts(in_span_file, in_font_file)
+    spans = clean(spans)
+    # Write spans
+    cf.write_spans(spans, out_span_file)
 
-change_log_file('headers')
+def clean(spans):
+    health_inspection(spans)
+    spans = clean_headers(spans)
+    health_inspection(spans)
+    spans = smooth_text(spans)
+    health_inspection(spans)
+    return spans
 
+def clean_headers(spans):
+    change_log_file('headers')
+    health_inspection(spans)
+    spans = upgrade_to_headers(spans)
+    print('//////')
+    spans = combine_headers(spans)
+    # spans = delete_empty_headers(spans)
+    print('That\'s the headers')
+    health_inspection(spans)
+    logger_end()
+    return spans
 
-print('Upgrade to Headers')
-# for sp in spans:
-for i in range(len(spans)):
+def smooth_text(spans):
+    change_log_file('text smoothing')
+    # I don't wanna fuck with the order!!!
+    spans = find_colored_boxes(spans)
+    spans = join_text(spans)
+    spans = break_long_text(spans)
+    spans = empty_text_to_newline(spans)
+    spans = convert_newlines_and_boxes(spans)
+    spans = join_newlines(spans)
+    spans = remove_comments(spans)
+    spans = redact(spans)
+    spans = multispans(spans)
+    spans = remove_endofpara_spacers(spans)
+    spans = extract_tabs(spans)
+    logger_end()
+    return spans
 
-    if isinstance(spans[i], TextSpan):
-        if spans[i].font.isHeading():
-            # This is an attribute from the style manager
-            if not spans[i].font.markedNotHeading:
-                print('->Heading', spans[i])
-                spans[i] = Header(spans[i].font, spans[i].text, spans[i].align())
+def multispans(spans):
+    # Create & clean
+    spans = create_multi_spans(spans)
+    spans = check_multispan_frags(spans)
+    return spans
 
-print('//////')
-print ("Combining Headers")
+# ==== Sub cleaners ===========
+def upgrade_to_headers(spans):
+    print('Upgrade to Headers')
+    # for sp in spans:
+    for i in range(len(spans)):
 
-prev = spans[0]
-# pi = 0
-i = 1
-while i < len(spans):
-    if isinstance(spans[i], Header):
-        # print('i:', i, 'pi:', pi)
-        if isinstance(prev, Header):
-            # Combine
-            # if '\n' in spans[pi].text:
-            #     # Assume two diff headers; keep next
-            #     exhdr = spans[i]
-            #     spans[i] = TextSpan(exhdr.font, exhdr.font)
-            #     print('Demote consecutive header', spans[i])
-            # else:
-
-            print('H:Combined:', prev.text, spans[i].text)
-            prev.text += spans[i].text
-            spans.pop(i)
-            i -= 1
-    prev = spans[i]
-    # pi+=1
-    i+=1
-"""
-print()
-print ("Disabling Repeated Headers")
-
-recentHeader = None
-# pi = 0
-i = 1
-while i < len(spans):
-    if isinstance(spans[i], Header):
-        # print('i:', i, 'pi:', pi)
-        if recentHeader is not None:
-            # Combine
-            # Assume two diff headers; keep next
-            exhdr = spans[i]
-            print('Demote consecutive header', spans[i])
-            spans[i] = TextSpan(exhdr.font, exhdr.text, exhdr.align())
-        else:
-            recentHeader = spans[i]
-            # else:
-    elif recentHeader is not None:
-        # If any real text between lines
         if isinstance(spans[i], TextSpan):
-            # Break
-            if len(spans[i].text.strip()) > 0:
-                # print('Break:', spans[i].text)
+            if spans[i].font.isHeading():
+                # This is an attribute from the style manager
+                if not spans[i].font.markedNotHeading:
+                    print('->Heading', spans[i])
+                    spans[i] = Header(spans[i].font, spans[i].text, spans[i].align())
+    health_inspection(spans)
+    return spans
+
+def combine_headers(spans):
+    print ("Combining Headers")
+
+    prev = spans[0]
+    # pi = 0
+    i = 1
+    while i < len(spans):
+        if isinstance(spans[i], Header):
+            if isinstance(prev, Header):
+                # Combine
+                print('H:Combined:', prev.text, spans[i].text)
+                prev.text += spans[i].text
+                spans.pop(i)
+                i -= 1
+        prev = spans[i]
+        # pi+=1
+        i+=1
+    health_inspection(spans)
+    return spans
+
+def disable_repeated_headers(spans):
+    # Unused
+    print()
+    print ("Disabling Repeated Headers")
+
+    recentHeader = None
+    # pi = 0
+    i = 1
+    while i < len(spans):
+        if isinstance(spans[i], Header):
+            # print('i:', i, 'pi:', pi)
+            if recentHeader is not None:
+                # Combine
+                # Assume two diff headers; keep next
+                exhdr = spans[i]
+                print('Demote consecutive header', spans[i])
+                spans[i] = TextSpan(exhdr.font, exhdr.text, exhdr.align())
+            else:
+                recentHeader = spans[i]
+                # else:
+        elif recentHeader is not None:
+            # If any real text between lines
+            if isinstance(spans[i], TextSpan):
+                # Break
+                if len(spans[i].text.strip()) > 0:
+                    # print('Break:', spans[i].text)
+                    recentHeader = None
+            if isinstance(spans[i], MultiSpan):
+                # Break
+                # print('Break:')
                 recentHeader = None
-        if isinstance(spans[i], MultiSpan):
-            # Break
-            # print('Break:')
-            recentHeader = None
-    # pi+=1
-    i+=1
-"""
-print()
-print('Deleting empty headers')
+        # pi+=1
+        i+=1
+    health_inspection(spans)
+    return spans
 
-i = 0
-while i < len(spans):
-    if isinstance(spans[i], Header):
-        print(spans[i])
-        if len(spans[i].chp_name())==0:
-            print('delete empty header')
-            spans.pop(i)
-            i-=0
-            pst.click()
-    i += 1
+def delete_empty_headers(spans):
+    # Unused
+    print()
+    print('Deleting empty headers')
 
-print('That\'s the headers')
+    i = 0
+    while i < len(spans):
+        if isinstance(spans[i], Header):
+            print(spans[i])
+            if len(spans[i].chp_name())==0:
+                print('delete empty header')
+                spans.pop(i)
+                i-=0
+                pst.click(1)
+        i += 1
+    health_inspection(spans)
+    return spans
 
-health_inspection()
-
-pst.button()
-# print("Replacing headers")
-# for i in range(len(spans)):
-
-# pst.unfinished()
-# print('\n'.join(str(s) for s in spans))
-
-
-change_log_file('text smoothing')
-
-if COLORED_BOXES:
+def find_colored_boxes(spans):
+    if not COLORED_BOXES:
+        return spans
     print('Finding colored boxes')
 
     i0 = 0
@@ -182,201 +211,209 @@ if COLORED_BOXES:
                     spans.insert(i0+1, rsp)
                     i0 += 1
         i0 += 1
+    health_inspection(spans)
+    return spans
 
-health_inspection()
 print('Joining Text')
 
-i0 = 0
-while i0 < len(spans)-1:
-    i1 = i0+1
-    if spans[i0].hasFont() and spans[i0].hasText():
-            if '\n' not in spans[i0].text:
-                # if not spans[i1].isNL() and not spans[i1].isCode():
-                if spans[i1].hasFont() and spans[i1].hasText():
-                    if spans[i0].font == spans[i1].font:# and i1 < len(spans)-1:
-                        print('join', spans[i0].text,'+', spans[i1].text)
-                        spans[i0].text += spans[i1].text
-                        spans.pop(i1)
-                        i0-=1
-    i0+=1
-pst.click()
-
-health_inspection()
-
-print('Breaking Long Text')
-i = 0
-max_newlines = 4
-max_newline_str = '\n' * max_newlines
-while i < len(spans):
-    if not spans[i].isNL():
-        t = spans[i].text
-        nlix = t.find(max_newline_str)
-        if nlix != -1:
-            nlix2 = nlix+1
-            while nlix2 < len(t) and t[nlix2]=='\n':
-                nlix2+=1
-            print('break', spans[i])
-            print('\tt="', t, '"')
-            spans[i].text = t[:nlix]
-            nl = NewLine(spans[i].font)
-            nl.amt = nlix2-nlix
-            print('\tamt:', nl.amt)
-            spans.insert(i+1, nl)
-            if nlix2 < len(t):
-                print('\tadd after:')
-                tt = TextSpan(spans[i].font, t[nlix2:], spans[i].align())
-                print('\t', tt)
-                spans.insert(i+2, tt)
-            i+=1
-
-    i+=1
-
-pst.click()
-
-health_inspection()
-print('Checking for empty ')
+def join_text(spans):
+    i0 = 0
+    while i0 < len(spans)-1:
+        i1 = i0+1
+        if spans[i0].hasFont() and spans[i0].hasText():
+                if '\n' not in spans[i0].text:
+                    # if not spans[i1].isNL() and not spans[i1].isCode():
+                    if spans[i1].hasFont() and spans[i1].hasText():
+                        if spans[i0].font == spans[i1].font:# and i1 < len(spans)-1:
+                            print('join', spans[i0].text,'+', spans[i1].text)
+                            spans[i0].text += spans[i1].text
+                            spans.pop(i1)
+                            i0-=1
+        i0+=1
+    health_inspection(spans)
+    return spans
 
 
-i = 0
-while i < len(spans):
-    if spans[i].hasText():
-        if len(spans[i].text)==0:
-            spans[i] = NewLine(spans[i].font)
-            # spans.pop(i)
-            # i-=1
-    i+=1
+def break_long_text(spans):
+    print('Breaking Long Text')
+    i = 0
+    max_newlines = 4
+    max_newline_str = '\n' * max_newlines
+    while i < len(spans):
+        if not spans[i].isNL():
+            t = spans[i].text
+            nlix = t.find(max_newline_str)
+            if nlix != -1:
+                nlix2 = nlix+1
+                while nlix2 < len(t) and t[nlix2]=='\n':
+                    nlix2+=1
+                print('break', spans[i])
+                print('\tt="', t, '"')
+                spans[i].text = t[:nlix]
+                nl = NewLine(spans[i].font)
+                nl.amt = nlix2-nlix
+                print('\tamt:', nl.amt)
+                spans.insert(i+1, nl)
+                if nlix2 < len(t):
+                    print('\tadd after:')
+                    tt = TextSpan(spans[i].font, t[nlix2:], spans[i].align())
+                    print('\t', tt)
+                    spans.insert(i+2, tt)
+                i+=1
 
-health_inspection()
+        i+=1
+    health_inspection(spans)
+    return spans
 
-print('Converting newlines & boxes')
+def empty_text_to_newline(spans):
+    i = 0
+    while i < len(spans):
+        if spans[i].hasText():
+            if len(spans[i].text)==0:
+                spans[i] = NewLine(spans[i].font)
+                # spans.pop(i)
+                # i-=1
+        i+=1
+    health_inspection(spans)
+    return spans
 
-import font_lookup as fldb
-
-def convert_to_sized_newline(i):
-    assert isinstance(spans[i], NewLine)
-    font = spans[i].font
+def convert_to_sized_newline(span):
+    assert isinstance(span, NewLine)
+    font = span.font
     i_size = int(round(font.size / 12))
     palatino_height = 40
     height = palatino_height * i_size
 
-    # height = fldb.get_total_font_height(spans[i].font)
+    # height = fldb.get_total_font_height(span.font)
     # print(height, type(height))
-    spans[i] = NewLineSized(height)
+    span = NewLineSized(height)
+    return span
 
-def convert_to_sized_box(i):
-    assert isinstance(spans[i], ColoredBoxSpan)
-    width = fldb.get_box_width(spans[i].text, spans[i]._font)
+def convert_to_sized_box(span):
+
+    import font_lookup as fldb
+
+    assert isinstance(span, ColoredBoxSpan)
+    width = fldb.get_box_width(span.text, span._font)
     # We want this to be the same value as the rest of the text
-    height = fldb.get_total_font_height(spans[i]._font)
+    height = fldb.get_total_font_height(span._font)
 
-    spans[i].width = width
-    spans[i].height = height
+    span.width = width
+    span.height = height
     # Unceremoniously remove text
-    spans[i].text = None
-    del spans[i]._font
+    span.text = None
+    del span._font
+    return span
 
-for i in range(len(spans)):
-    if isinstance(spans[i], NewLine):
-        convert_to_sized_newline(i)
-    if isinstance(spans[i], ColoredBoxSpan):
-        convert_to_sized_box(i)
+def convert_newlines_and_boxes(spans):
 
-health_inspection()
+    import font_lookup as fldb
 
-fldb.end_step()
+    print('Converting newlines & boxes')
 
-print("Joining Newlines")
-# TODO: Do some actual cleaning, and straighten some of the lines
-# TODO: Give flutter actual size of fonts
+    for i in range(len(spans)):
+        if isinstance(spans[i], NewLine):
+            spans[i] = convert_to_sized_newline(spans[i])
+        if isinstance(spans[i], ColoredBoxSpan):
+            spans[i] = convert_to_sized_box(spans[i])
 
-""" TODO:
-Round newline heights to these values:
+    fldb.end_step()
+    health_inspection(spans)
+    return spans
 
-// L =  Line's actual size.
-l (line))
-    * [ 1, 2, 3, 5, 7, 10, 12 ],
+def join_newlines(spans):
+    print("Joining Newlines")
+    # TODO: Do some actual cleaning, and straighten some of the lines
+    # TODO: Give flutter actual size of fonts
 
-u (bundle = 12 palatino lines)
-    * [
-        1u = break
-        2u = dramatic tension
-        3u = page
-    ],
+    """ TODO:
+    Round newline heights to these values:
 
-d = 2u
-    // For computer-added spacing
+    // L =  Line's actual size.
+    l (line))
+        * [ 1, 2, 3, 5, 7, 10, 12 ],
 
+    u (bundle = 12 palatino lines)
+        * [
+            1u = break
+            2u = dramatic tension
+            3u = page
+        ],
 
-// L line size
-
-I feel like if previous & next are different, you wanna compute the value for both, and then find the midpoint of L and the midpoint of the units.
-
-I feel like you wanna take the RMS, and maybe include Palatino.
-"""
-
-health_inspection()
-
-i0 = 0
-while i0 < len(spans)-1:
-    i1 = i0+1
-    if isinstance(spans[i0], NewLineSized):
-        if isinstance(spans[i1], NewLineSized):
-            if i0>0:
-                print(spans[i0-1])
-            print('Combine NL', i0, i1, spans[i0].height, spans[i1].height, end=' = ')
-            spans[i0].height += spans[i1].height
-            print(spans[i0].height)
-            spans.pop(i1)
-            i0-=1
-    i0 += 1
-pst.click()
-
-health_inspection()
-
-print ('Removing comments')
-print()
-import re
-regex = re.compile("/\n\/\/.*\n/gm")
+    d = 2u
+        // For computer-added spacing
 
 
-i = 0
-while i < len(spans):
-    if spans[i].hasText():
-        if spans[i].text.startswith('//'):
-            if '///' in spans[i].text:
-                pass
-            elif '\n' in spans[i].text:
-                print('Removing comment line:')
-                nn = spans[i].text.index('\n')
-                print('Del :', spans[i].text[:nn])
-                print('Keep:', spans[i].text[nn+1:])
-                spans[i].text = spans[i].text[nn:]
+    // L line size
+
+    I feel like if previous & next are different, you wanna compute the value for both, and then find the midpoint of L and the midpoint of the units.
+
+    I feel like you wanna take the RMS, and maybe include Palatino.
+    """
+
+    i0 = 0
+    while i0 < len(spans)-1:
+        i1 = i0+1
+        if isinstance(spans[i0], NewLineSized):
+            if isinstance(spans[i1], NewLineSized):
+                if i0>0:
+                    print(spans[i0-1])
+                print('Combine NL', i0, i1, spans[i0].height, spans[i1].height, end=' = ')
+                spans[i0].height += spans[i1].height
+                print(spans[i0].height)
+                spans.pop(i1)
+                i0-=1
+        i0 += 1
+    health_inspection(spans)
+    return spans
+
+def remove_comments(spans):
+    print ('Removing comments')
+    print()
+    import re
+    regex = re.compile("/\n\/\/.*\n/gm")
+
+
+    i = 0
+    while i < len(spans):
+        if spans[i].hasText():
+            if spans[i].text.startswith('//'):
+                if '///' in spans[i].text:
+                    pass
+                elif '\n' in spans[i].text:
+                    print('Removing comment line:')
+                    nn = spans[i].text.index('\n')
+                    print('Del :', spans[i].text[:nn])
+                    print('Keep:', spans[i].text[nn+1:])
+                    spans[i].text = spans[i].text[nn:]
+                else:
+                    print('Deleting comment:')
+                    print('Cmnt:', spans[i].text)
+                    spans.pop(i)
+                    i-=1
             else:
-                print('Deleting comment:')
-                print('Cmnt:', spans[i].text)
-                spans.pop(i)
-                i-=1
-        else:
 
-            # result = regex.match(spans[i].text)
-            tt = re.sub(regex, '', spans[i].text)
-            if tt != spans[i].text:
-                print('Replaced comment')
-                print('Orig:', spans[i].text)
-                print('Repl:', tt)
-            else:
-                if '//' in spans[i].text:
-                    print('Mightve missed:')
-                    print(spans[i].text)
-            spans[i].text = tt
-    i+=1
-print()
-print()
+                # result = regex.match(spans[i].text)
+                tt = re.sub(regex, '', spans[i].text)
+                if tt != spans[i].text:
+                    print('Replaced comment')
+                    print('Orig:', spans[i].text)
+                    print('Repl:', tt)
+                else:
+                    if '//' in spans[i].text:
+                        print('Mightve missed:')
+                        print(spans[i].text)
+                spans[i].text = tt
+        i+=1
+    print()
+    print()
+    health_inspection(spans)
+    return spans
 
-health_inspection()
-print('Redacting')
 
-if REDACT:
+def redact(spans):
+    if not REDACT:
+        return spans
     word_repl = {'White House': 'White Hoe', 'Pentagon': 'Septagon', 'CIA':'CἹÅ', 'FBI': 'Female Body Inspectors', "Wray": 'Wrey', 'Bill Burns': "Bill Boourns"}
 
     print('TODO: Redact')
@@ -390,15 +427,81 @@ if REDACT:
                     text = text.replace(key, word_repl[key])
                     spans[i].text = text
         i+=1
+    return spans
 
-print('Creating Multi Spans')
-# Create multi spans
-# Looking for spans that don't have line breaks
 
-# No headings in spans
-# Dont forget all alignments must match
+def create_multi_spans(spans):
+    print('Creating Multi Spans')
+    # Create multi spans
+    # Looking for spans that don't have line breaks
 
-health_inspection()
+    # No headings in spans
+    # Dont forget all alignments must match
+
+    health_inspection(spans)
+
+    i0= 0
+    while i0 < len(spans):
+        if span0_check(spans[i0]):
+            print(i0, 'check1')
+
+            spanTo = i0+1
+            while spanTo < len(spans):
+                sp= span_check(spans[i0], spans[spanTo])
+                if sp=='last':
+                    spanTo += 1
+                    break
+                elif sp == False:
+                    break
+                elif sp==True:
+                    spanTo += 1
+            # i0 - i1 (exclusive)
+            if spanTo-i0 >= 2:
+
+                multi = MultiSpan(spans[i0:spanTo])
+                spans = spans[:i0] + [multi] + spans[spanTo:]
+
+                print('Spanning', i0, spanTo)
+                print(multi.spans)
+                print()
+                # Clean new span
+                done=False
+                while len(multi.spans)>=2 and not done:
+                    done=True
+                    # Check for newline / spaces
+                    if multi.spans[-1].hasText():
+                        # If entire last span is newline
+                        if multi.spans[-1].text=='\n':
+                            multi.spans[-2].text += '\n'
+                            multi.spans.pop(-1)
+                            print('Move newline')
+                        # If span ends with newline
+                        elif multi.spans[-1].text[-1]=='\n':
+                            sp= multi.spans[-1].text[:-1]
+                            all_space=True
+                            for c in sp:
+                                if c!=' ':
+                                    all_space=False
+                                    break
+                            assert not all_space, 'Shouldve already been removed'
+                            if all_space:
+                                multi.spans[-2].text += '\n'
+                                multi.spans.pop(-1)
+                                print('Move space-newline')
+                    # TODO: Check if color
+                    # if multi.spans[-1].text == ' ':
+                    #     multi.spans.pop(-1)
+                    #     done=False
+                    #     print('Remove space')
+
+                if len(multi.spans)==1:
+                    print('Un-span')
+                    spans[i0] = multi.spans[0]
+
+        i0 += 1
+    return spans
+
+# ============= From Multispan creator ===========
 
 def span0_check(span0):
     t= type(span0).__name__
@@ -447,105 +550,90 @@ def span_check(span0, next):
         # Multispan?
         return False
 
-# Make Multi Spans
-
-i0= 0
-while i0 < len(spans):
-    if span0_check(spans[i0]):
-        print(i0, 'check1')
-
-        spanTo = i0+1
-        while spanTo < len(spans):
-            sp= span_check(spans[i0], spans[spanTo])
-            if sp=='last':
-                spanTo += 1
-                break
-            elif sp == False:
-                break
-            elif sp==True:
-                spanTo += 1
-        # i0 - i1 (exclusive)
-        if spanTo-i0 >= 2:
-
-            multi = MultiSpan(spans[i0:spanTo])
-            spans = spans[:i0] + [multi] + spans[spanTo:]
-
-            print('Spanning', i0, spanTo)
-            print(multi.spans)
-            print()
-            # Clean new span
-            done=False
-            while len(multi.spans)>=2 and not done:
-                done=True
-                # Check for newline / spaces
-                if multi.spans[-1].hasText():
-                    # If entire last span is newline
-                    if multi.spans[-1].text=='\n':
-                        multi.spans[-2].text += '\n'
-                        multi.spans.pop(-1)
-                        print('Move newline')
-                    # If span ends with newline
-                    elif multi.spans[-1].text[-1]=='\n':
-                        sp= multi.spans[-1].text[:-1]
-                        all_space=True
-                        for c in sp:
-                            if c!=' ':
-                                all_space=False
-                                break
-                        assert not all_space, 'Shouldve already been removed'
-                        if all_space:
-                            multi.spans[-2].text += '\n'
-                            multi.spans.pop(-1)
-                            print('Move space-newline')
-                # TODO: Check if color
-                # if multi.spans[-1].text == ' ':
-                #     multi.spans.pop(-1)
-                #     done=False
-                #     print('Remove space')
-
-            if len(multi.spans)==1:
-                print('Un-span')
-                spans[i0] = multi.spans[0]
-
-    i0 += 1
-
-print("Checking MultiSpans for empty Frags")
-
-for span in spans:
-    if span is MultiSpan:
-        i=0
-        while i < len(span.spans):
-            if hasattr(span.spans[i], 'text'):
-                if len(span.spans[i].text)==0:
-                    print("Removing span", i, 'from', span)
-                    span.spans.pop(i)
-                    i-=1
-
-# print ("Joining multi spans")
-
-# for span in spans:
-#     if isinstance(span, MultiSpan):
-
-health_inspection()
-
-# exit(0)
-print("Removing EndOfPara spacers")
-i0 = 0
-while i0 < len(spans):
-    if isinstance(spans[i0], EndOfPara):
-        spans.pop(i0)
-        i0-=1
-    i0 += 1
-pst.click()
 
 
-health_inspection()
-print('Extracting tabs')
+def check_multispan_frags(spans):
+    print("Checking MultiSpans for empty Frags")
 
-# for span in spans:
-i0 = 0
-while i0 < len(spans):
-    span = spans[i0]
+    for span in spans:
+        if span is MultiSpan:
+            i=0
+            while i < len(span.spans):
+                if hasattr(span.spans[i], 'text'):
+                    if len(span.spans[i].text)==0:
+                        print("Removing span", i, 'from', span)
+                        span.spans.pop(i)
+                        i-=1
+
+    health_inspection(spans)
+    return spans
+
+def remove_endofpara_spacers(spans):
+    print("Removing EndOfPara spacers")
+    i0 = 0
+    while i0 < len(spans):
+        if isinstance(spans[i0], EndOfPara):
+            spans.pop(i0)
+            i0-=1
+        i0 += 1
+    return spans
+
+def extract_tabs(spans):
+    print('Extracting tabs')
+    # for span in spans:
+    i0 = 0
+    while i0 < len(spans):
+        spans[i0] = extract_tabs_from_span(spans[i0])
+        i0+=1
+    health_inspection(spans)
+    return spans
+
+# ============ Nested functions===========
+def extract_tabs_from_multispan(span):
+
+    import font_lookup as fldb
+
+    assert len(span.spans)>0
+    newline_height = 0
+
+    # Start removing
+    while True:
+        # Make sure MultiSpan not empty
+        if len(span.spans)==0:
+            # assert newline_height == 0
+            return NewLineSized(newline_height)
+        # Make sure first span not empty
+        elif span.spans[0].text is None:
+            # Likely a ColoredBoxSpan
+            newline_height = span.spans[0].height
+            if span.spans[0].color is None:
+                print("Damn, somebody should convert this to a newline")
+            # Done
+            return span
+        elif span.spans[0].text == '':
+            # Calculate font height in case the MultiSpan gets emptied later
+            if not span.spans[0].hasFont():
+                print("MultiSpan:")
+                print(span)
+                print("Offending Subspan:")
+                print(span.spans[0])
+                print("No font??? In a MultiSpan?? Idgi")
+                exit(1)
+            height = fldb.get_total_font_height(span.spans[0].font)
+            newline_height = max(newline_height, height)
+            # Remove empty leading span
+            span.spans.pop(0)
+        # Check for leading tab
+        elif span.spans[0].text[0] == '\t':
+            span.tabs+=1
+            span.spans[0].text = span.spans[0].text[1:]
+        # Else
+        else:
+            # Done
+            return span
+    return span
+
+def extract_tabs_from_span(span):
     if isinstance(span, TextSpan):
         while len(span.text)>0 and span.text[0]=='\t':
             span.tabs+=1
@@ -554,61 +642,13 @@ while i0 < len(spans):
             print(f'Extracted {span.tabs} tabs from {span}')
         if len(span.text) == 0:
             print(f'Removing all-tabbed span ({span.tabs})')
-            spans[i0] = NewLine(span.font)
-            convert_to_sized_newline(i0)
+            span= NewLine(span.font)
+            return convert_to_sized_newline(span)
     elif isinstance(span, MultiSpan):
-        assert len(span.spans)>0
-        done = False
-        newline_height = 0
+        return extract_tabs_from_multispan(span)
+    return span
 
-        # Start removing
-        while not done:
-            # Make sure MultiSpan not empty
-            if len(span.spans)==0:
-                # assert newline_height == 0
-                spans[i0] = NewLineSized(newline_height)
-                done = True
-            # Make sure first span not empty
-            elif span.spans[0].text is None:
-                # Likely a ColoredBoxSpan
-                newline_height = span.spans[0].height
-                if span.spans[0].color is None:
-                    print("Damn, somebody should convert this to a newline")
-                done = True
-            elif span.spans[0].text == '':
-                # Calculate font height in case the MultiSpan gets emptied later
-                if not span.spans[0].hasFont():
-                    print("MultiSpan:")
-                    print(span)
-                    print("Offending Subspan:")
-                    print(span.spans[0])
-                    print("No font??? In a MultiSpan?? Idgi")
-                    exit(1)
-                height = fldb.get_total_font_height(span.spans[0].font)
-                newline_height = max(newline_height, height)
-                # Remove empty leading span
-                span.spans.pop(0)
-            # Check for leading tab
-            elif span.spans[0].text[0] == '\t':
-                span.tabs+=1
-                span.spans[0].text = span.spans[0].text[1:]
-            # Else done
-            else:
-                done = True
 
-        if span.tabs > 0:
-            print(f'Extracted {span.tabs} tabs from {span}')
-    i0+=1
 
-health_inspection()
-
-print('Writing')
-change_log_file('writing')
-
-cf.save_spans(spans, 'spans_clean.json')
-
-logger_end()
-
-# pst.unfinished(False)
-print('> Cleaner Done: spans_clean.json <')
-pst.end()
+if __name__=="__main__":
+    clean_files()

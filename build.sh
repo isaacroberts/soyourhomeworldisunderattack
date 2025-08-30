@@ -2,6 +2,19 @@
 source ~/.profile
 shopt -s expand_aliases
 
+
+
+build_mode='release'
+if [[ $* == *--profile* ]];
+then
+  build_mode='profile'
+fi
+if [[ $* == *--debug* ]];
+then
+  build_mode='debug'
+fi
+
+
 src_root='/web/'
 local_folder='server/web/'
 
@@ -13,13 +26,14 @@ mv $local_folder $backup_directory
 # rm -r $local_folder
 # mkdir $local_folder
 
-echo "Building"
+
+echo "Building in $build_mode"
 # if [ ! -f "build/web/$versfolder.js" ]; then
 #     # Clean because it doesn't remake flutter.js & canvaskit otherwise
 #     flutter clean
 # fi
 
-flutter build web --release --base-href=$src_root &&
+flutter build web --$build_mode --base-href=$src_root &&
 echo "Moving" &&
 mv ./build/web/ $local_folder &&
 

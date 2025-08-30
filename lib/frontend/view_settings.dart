@@ -25,123 +25,116 @@ enum ScrollMode {
 class ViewSettings {
   static ViewSettings instance = ViewSettings.defaultsThenLoad();
 
-  ScrollMode get useInfiniteScroll => _useInfiniteScroll.value;
-  bool get useTestRig => _useTestRig.value;
-  bool get showFonts => _showFonts.value;
+  ScrollMode get scrollMode => scrollModeNotifier.value;
+  bool get useTestRig => testRigNotifier.value;
+  bool get showFonts => showFontsNotifier.value;
+  bool get showBottomNav => showBottomNavNotifier.value;
 
-  ValueNotifier<ScrollMode> get infiniteScrollNotifier => _useInfiniteScroll;
-  ValueNotifier<bool> get testRigNotifier => _useTestRig;
-  ValueNotifier<bool> get showFontsNotifier => _showFonts;
+  final ValueNotifier<ScrollMode> scrollModeNotifier;
+  final ValueNotifier<bool> testRigNotifier;
+  final ValueNotifier<bool> showFontsNotifier;
+  final ValueNotifier<bool> showBottomNavNotifier;
 
-  set useInfiniteScroll(ScrollMode? set) {
-    if (set != null && set != _useInfiniteScroll.value) {
-      _useInfiniteScroll.value = set;
+  set scrollMode(ScrollMode? set) {
+    if (set != null && set != scrollModeNotifier.value) {
+      scrollModeNotifier.value = set;
       setAllSharedPrefs();
     }
   }
 
   set useTestRig(bool? set) {
-    if (set != null && set != _useTestRig.value) {
-      _useTestRig.value = set;
+    if (set != null && set != testRigNotifier.value) {
+      testRigNotifier.value = set;
       setAllSharedPrefs();
     }
   }
 
   set showFonts(bool? set) {
-    if (set != null && set != _showFonts.value) {
-      _showFonts.value = set;
+    if (set != null && set != showFontsNotifier.value) {
+      showFontsNotifier.value = set;
       setAllSharedPrefs();
     }
   }
 
-  final ValueNotifier<ScrollMode> _useInfiniteScroll;
-  final ValueNotifier<bool> _useTestRig;
-  final ValueNotifier<bool> _showFonts;
+  set showBottomNav(bool? set) {
+    if (set != null && set != showBottomNavNotifier.value) {
+      showBottomNavNotifier.value = set;
+      setAllSharedPrefs();
+    }
+  }
 
-  // ViewSettings.defaults()
-  //     : _useInfiniteScroll = true,
-  //       _useTestRig = false,
-  //       _showFonts = true;
+  set _scrollMode(ScrollMode? set) {
+    if (set != null && set != scrollModeNotifier.value) {
+      scrollModeNotifier.value = set;
+    }
+  }
+
+  set _useTestRig(bool? set) {
+    if (set != null && set != testRigNotifier.value) {
+      testRigNotifier.value = set;
+    }
+  }
+
+  set _showFonts(bool? set) {
+    if (set != null && set != showFontsNotifier.value) {
+      showFontsNotifier.value = set;
+    }
+  }
+
+  set _showBottomNav(bool? set) {
+    if (set != null && set != showBottomNavNotifier.value) {
+      showBottomNavNotifier.value = set;
+    }
+  }
+
   ViewSettings.defaultsThenLoad()
-      : _useInfiniteScroll =
+      : scrollModeNotifier =
             ValueNotifier<ScrollMode>(ScrollMode.defaultScroll),
-        _useTestRig = ValueNotifier<bool>(false),
-        _showFonts = ValueNotifier<bool>(true) {
+        testRigNotifier = ValueNotifier<bool>(false),
+        showFontsNotifier = ValueNotifier<bool>(true),
+        showBottomNavNotifier = ValueNotifier<bool>(true) {
     getFromSharedPrefs();
   }
 
   ViewSettings.values(
-      {ScrollMode? useInfiniteScroll, bool? useTestRig, bool? showFonts})
-      : _useInfiniteScroll = ValueNotifier<ScrollMode>(
+      {ScrollMode? useInfiniteScroll,
+      bool? useTestRig,
+      bool? showFonts,
+      bool? showBottomNav})
+      : scrollModeNotifier = ValueNotifier<ScrollMode>(
             useInfiniteScroll ?? ScrollMode.defaultScroll),
-        _useTestRig = ValueNotifier<bool>(useTestRig ?? false),
-        _showFonts = ValueNotifier<bool>(showFonts ?? true);
-
-  void subscribeToListeners(VoidCallback listener,
-      {bool? testRig, bool? infiniteScroll, bool? showFonts}) {
-    if (testRig ?? false) {
-      _useTestRig.addListener(listener);
-    }
-    if (infiniteScroll ?? false) {
-      _useInfiniteScroll.addListener(listener);
-    }
-    if (showFonts ?? false) {
-      _showFonts.addListener(listener);
-    }
-  }
-
-  void unsubscribeFromListeners(VoidCallback listener,
-      {bool? testRig, bool? infiniteScroll, bool? showFonts}) {
-    if (testRig ?? false) {
-      _useTestRig.removeListener(listener);
-    }
-    if (infiniteScroll ?? false) {
-      _useInfiniteScroll.removeListener(listener);
-    }
-    if (showFonts ?? false) {
-      _showFonts.removeListener(listener);
-    }
-  }
+        testRigNotifier = ValueNotifier<bool>(useTestRig ?? false),
+        showFontsNotifier = ValueNotifier<bool>(showFonts ?? true),
+        showBottomNavNotifier = ValueNotifier<bool>(showBottomNav ?? true);
 
   @override
   String toString() {
-    return 'i=_ r=$_useTestRig f=$_showFonts';
+    return 'i=${scrollModeNotifier.value.name} r=$testRigNotifier f=$showFontsNotifier bn=${showBottomNavNotifier.value}';
   }
 
   void getFromSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     int? inf = prefs.getInt('scroll');
-    bool? rig = prefs.getBool('rig');
-    bool? fonts = prefs.getBool('_showFonts');
-    if (inf != null && inf != useInfiniteScroll.index) {
-      _useInfiniteScroll.value = ScrollMode.values[inf];
+    if (inf != null && inf != scrollMode.index) {
+      scrollModeNotifier.value = ScrollMode.values[inf];
     }
-    if (rig != null && rig != useTestRig) {
-      _useTestRig.value = rig;
-    }
-    if (fonts != null && fonts != showFonts) {
-      _showFonts.value = fonts;
-    }
+    _useTestRig = prefs.getBool('debug');
+    _showFonts = prefs.getBool('showFonts');
+    _showBottomNav = prefs.getBool('showBottomNav');
   }
-
-  // String toDense() {
-  //   String d = '';
-  //   d += _useInfiniteScroll ? 'i' : 'n';
-  //   d += _useTestRig ? 't' : 'n';
-  //   d += _showFonts ? 'f' : 'n';
-  //   return d;
-  // }
 
   void setAllSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('scroll', _useInfiniteScroll.value.index);
-    prefs.setBool('rig', _useTestRig.value);
-    prefs.setBool('_showFonts', _showFonts.value);
+    prefs.setInt('scroll', scrollMode.index);
+    prefs.setBool('debug', useTestRig);
+    prefs.setBool('showFonts', showFonts);
+    prefs.setBool('showBottomNav', showBottomNav);
   }
 
   static bool staticUpdateShouldNotify(ViewSettings a, ViewSettings b) {
     return a.useTestRig != b.useTestRig ||
-        a.useInfiniteScroll != b.useInfiniteScroll ||
-        a.showFonts != b.showFonts;
+        a.scrollMode != b.scrollMode ||
+        a.showFonts != b.showFonts ||
+        a.showBottomNav != b.showBottomNav;
   }
 }

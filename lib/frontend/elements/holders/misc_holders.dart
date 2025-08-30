@@ -18,12 +18,13 @@ class NewlineElement extends Holder {
 
   @override
   Widget element(BuildContext context) {
+    // return SelectableNewline(height: height);
     return SizedBox(height: height);
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return element(context);
+    return SizedBox(height: height);
   }
 }
 

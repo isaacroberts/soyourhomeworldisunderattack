@@ -6,7 +6,18 @@ from objects import *
 
 # ==
 
+def read_book_info():
+    # Read book info
+    f= open('temp/book.json', 'r')
+    str1 = f.read()
+    f.close()
 
+    book_info = jsonpickle.decode(str1)
+    ##
+    return book_info
+
+
+# TODO: Remove
 def get_defined_plus_generated_styles(font_name):
 
     f = open('temp/'+font_name, 'r')
@@ -34,7 +45,7 @@ def get_defined_plus_generated_styles(font_name):
 
 
 def get_counted_styles():
-    f = open('temp/fonts_cleaned.json', 'r')
+    f = open('temp/fonts_clean.json', 'r')
     str1 = f.read()
     f.close()
 
@@ -58,6 +69,22 @@ def read_fonts(font_name):
     fonts = jsonpickle.decode(str1)
     return fonts
 
+
+
+def read_spans(span_name):
+    """
+    Not allowed. You need to read both
+    """
+    assert False, "You can't do this because the spans need the fonts popped out"
+    # span_name = 'spans_coded.json', ftname='fontsm.json'
+    f = open('temp/'+span_name, 'r')
+    str1 = f.read()
+    f.close()
+    spans = jsonpickle.decode(str1)
+
+    print(len(spans), 'Spans')
+    _clean_spans(spans, fonts)
+    return spans, fonts
 
 def read_spans_and_fonts(span_name, font_name):
     # span_name = 'spans_coded.json', ftname='fontsm.json'
@@ -107,6 +134,7 @@ def read_chapters_and_fonts(span_name, font_name):
     return chapters, fonts
 
 
+
 # Replace tag with font object
 def tag_to_font(elem, font_tag, fonts,  prev_font):
     """
@@ -146,14 +174,19 @@ def tag_to_font(elem, font_tag, fonts,  prev_font):
     return prev_font
 
 
+# Alternate spelling 
+def write_spans(spans, filename):
+    save_spans(spans, filename)
+
+
 def save_spans(spans, filename):
     """
-        For some reason
-            One of the strings was not being
-            null-terminated perhaps???
-
-            Any character works
+    Pickle & save spans to file
     """
+    # For some reason
+    # One of the strings was not being
+    # null-terminated perhaps???
+    # Any character works
     for sp in spans:
         sp.addTildes()
 
@@ -178,7 +211,6 @@ def print_aligned(s, v, maxlen=40):
     s += ' '*(maxlen-len(s))
     s = s[:maxlen]
     print(s, v)
-
 
 def _clean_spans(spans, fonts):
     # Remove ~ (sep characters)

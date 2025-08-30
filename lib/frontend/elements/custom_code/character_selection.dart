@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../theme/colors.dart';
+import '../../parts/noir_colors.dart';
 import '../../theme/text_theme.dart';
 import '../holders/holder_base.dart';
 
@@ -72,7 +72,7 @@ class _CharacterSelectionState extends State<CharacterSelection> {
         toggleable: true,
         selected: value == _classes[ix],
         activeColor: const Color(0xffffffff),
-        tileColor: canvasColor,
+        tileColor: NoirPrimary.shade2,
         selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
         title: Text(_classes[ix]),
         subtitle: Text(_classDescriptions[ix]),

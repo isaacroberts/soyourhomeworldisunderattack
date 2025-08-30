@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/part_id.dart';
 
-import '../frontend/elements/custom_code/custom_code_router.dart';
+import '../frontend/elements/custom_code/CCRouter.dart';
 import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/binary.dart';
@@ -83,19 +84,28 @@ class ChapterParser {
     // }
     ptr.assertConsume('(', debugId: '?');
 
-    int? index = ptr.consumeTypedInt()!;
-    ptr.assertConsume('=', debugId: 'Chapter$index');
+    int? index = ptr.consumeUint32();
+    // ptr.assertConsume('=', debugId: 'Chapter$index');
     // bin += pack_text(chapter.span.id)
     String? varName = ptr.consumeText();
     if (varName == null) {
       return null;
     }
     // bin += ':'
-    ptr.assertConsume(':', debugId: varName);
+    // ptr.assertConsume(':', debugId: varName);
     // ptr += pack_text(chapter.span.display_name)
     String? displayName = ptr.consumeText();
+    // ptr.assertConsume('^', debugId: debugId);
+    int partId = ptr.consumeUint32();
+    if (partId < 0 || partId >= PartId.values.length) {
+      ErrorList.logWarning(
+          'Invalid PartId in ChapterInfo: $partId (chapter $varName)');
+      partId = 0;
+    }
+    PartId part = PartId.values[partId];
+
     // ptr += '@'
-    ptr.assertConsume('@', debugId: varName);
+    // ptr.assertConsume('@', debugId: varName);
     // ptr += pack_text(chapter.span.filename())
     String? filename = ptr.consumeText();
     if (filename == null) {
@@ -118,10 +128,10 @@ class ChapterParser {
     }
 
     // ptr += '*'
-    ptr.assertConsume('*', debugId: varName);
+    // ptr.assertConsume('*', debugId: varName);
     // ptr += pack_untyped_uint(file_size)
     //int filesize =
-    ptr.consumeUint32();
+    // ptr.consumeUint32();
     // ptr += ')'
     ptr.assertConsume(')', debugId: varName);
     // ptr += ';'
@@ -133,26 +143,28 @@ class ChapterParser {
         filename: filename,
         varName: varName,
         next: nextId,
+        partId: part,
         isPart: isPart,
         hidePart: hidePart);
   }
 
   Future<ChapterExtra> parseHeader({required String filename}) async {
     ptr.assertConsume('\$', debugId: debugId);
-    int index = ptr.consumeInt32();
-    ptr.warnConsume('=', consumeOnMiss: true);
-    String id = ptr.consumeText()!;
-    ptr.warnConsume('/', consumeOnMiss: true);
-    String? display = ptr.consumeText();
+    // int index = ptr.consumeInt32();
+    // ptr.warnConsume('=', consumeOnMiss: true);
+    // String id = ptr.consumeText()!;
+    // ptr.warnConsume('/', consumeOnMiss: true);
+    // String? display = ptr.consumeText();
     ptr.warnConsume('/', consumeOnMiss: true);
 
-    ptr.assertConsume('(', debugId: id);
+    ptr.assertConsume('(', debugId: debugId);
     String? subtitle = ptr.consumeText();
-    ptr.assertConsume(',', debugId: id);
+    ptr.assertConsume(',', debugId: debugId);
     String? where = ptr.consumeText();
-    ptr.assertConsume(',', debugId: id);
+    ptr.assertConsume(',', debugId: debugId);
     String? when = ptr.consumeText();
-    ptr.assertConsume(')', debugId: id);
+    ptr.assertConsume(')', debugId: debugId);
+    ptr.assertConsume('/', debugId: debugId);
 
     //Some chapters have audio
     String? audioUrl;

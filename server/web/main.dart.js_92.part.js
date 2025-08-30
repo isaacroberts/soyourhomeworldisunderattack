@@ -1,668 +1,1361 @@
-((a,b,c)=>{a[b]=a[b]||{}
-a[b][c]=a[b][c]||[]
-a[b][c].push({p:"main.dart.js_92",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var J,B,D,E,F,G,H,I,A={qP:function qP(){},
-b1x(d){return d===1},
-rM:function rM(){},
-Ek:function Ek(){},
-ajK:function ajK(d,e){this.a=d
-this.b=e},
-ajJ:function ajJ(d,e){this.a=d
-this.b=e},
-a_b:function a_b(d,e,f,g,h){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g
-_.e=null
-_.f=h
-_.w=_.r=null},
-RQ:function RQ(d,e,f,g,h){var _=this
-_.f=null
-_.r=d
-_.a=e
-_.b=null
-_.c=f
-_.d=g
-_.e=h},
-a_0:function a_0(d,e,f,g,h){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g
-_.e=null
-_.f=h
-_.w=_.r=null},
-Rm:function Rm(d,e,f,g,h){var _=this
-_.f=null
-_.r=d
-_.a=e
-_.b=null
-_.c=f
-_.d=g
-_.e=h},
-a4C:function a4C(d,e,f,g,h){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g
-_.e=null
-_.f=h
-_.w=_.r=null},
-WO:function WO(d,e,f,g,h){var _=this
-_.f=null
-_.r=d
-_.a=e
-_.b=null
-_.c=f
-_.d=g
-_.e=h},
-b96(d,e,f){var x=e.gO()
-x.toString
-return y.x.a(x).e2(f)},
-nU:function nU(d,e,f,g,h,i,j,k){var _=this
-_.e=d
-_.f=e
-_.r=f
-_.x=g
-_.as=h
-_.ax=i
-_.a=j
-_.$ti=k},
-yM:function yM(d){var _=this
-_.d=null
-_.e=0
-_.c=_.a=null
-_.$ti=d},
-awi:function awi(d){this.a=d},
-awj:function awj(d){this.a=d},
-awk:function awk(d){this.a=d},
-awh:function awh(d){this.a=d},
-Z1:function Z1(d,e){this.a=d
-this.b=e},
-yL:function yL(d,e,f,g,h,i,j,k,l,m,n,o,p,q){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g
-_.e=h
-_.f=i
-_.r=j
-_.w=k
-_.x=l
-_.y=m
-_.z=n
-_.Q=null
-_.as=o
-_.at=p
-_.ax=null
-_.ay=$
-_.ch=null
-_.$ti=q},
-awe:function awe(d){this.a=d},
-awf:function awf(){},
-rb:function rb(d){this.a=d},
-Da:function Da(d){this.a=d},
-JD:function JD(){var _=this
-_.d=!1
-_.e=0
-_.w=_.r=_.f=$
-_.c=_.a=null},
-aya:function aya(d){this.a=d},
-ay9:function ay9(d,e){this.a=d
-this.b=e},
-ayb:function ayb(d){this.a=d},
-zI:function zI(d,e,f){this.c=d
-this.d=e
-this.a=f},
-a31:function a31(){this.c=this.a=null},
-Cn:function Cn(d,e,f){this.c=d
-this.d=e
-this.a=f},
-Z2:function Z2(){this.c=this.a=null},
-awm:function awm(d,e){this.a=d
-this.b=e},
-awl:function awl(d){this.a=d},
-zU:function zU(d,e){this.c=d
-this.a=e},
-adN(d){var x=B.b([],y.m),w=new B.a1b()
-w.QO(d)
-return new A.adM(x,w)},
-nX:function nX(d,e){this.a=d
-this.b=e},
-Db:function Db(d,e,f,g){var _=this
-_.a=d
-_.c=e
-_.d=f
-_.K$=0
-_.J$=g
-_.al$=_.V$=0},
-adM:function adM(d,e){this.d=d
-this.e=e},
-adQ:function adQ(d){this.a=d},
-adR:function adR(d,e){this.a=d
-this.b=e},
-adS:function adS(d,e){this.a=d
-this.b=e},
-adO:function adO(d,e){this.a=d
-this.b=e},
-adP:function adP(d,e){this.a=d
-this.b=e}},C
-J=c[1]
-B=c[0]
-D=c[2]
-E=c[71]
-F=c[51]
-G=c[86]
-H=c[102]
-I=c[104]
-A=a.updateHolder(c[37],A)
-C=c[103]
-A.qP.prototype={
-cr(d){},
-wX(d){},
-aK(){}}
-A.rM.prototype={}
-A.Ek.prototype={
-fV(d){var x=this,w=x.L9(d),v=x.r
-v.toString
-v.m(0,d.gaR(),w)
-$.e8.aG$.auv(d.gaR(),x.gVe())
-w.w=$.e8.aW$.pu(0,d.gaR(),x)},
-amz(d){var x,w,v,u=this.r
-u.toString
-u=u.i(0,d.gaR())
-u.toString
-if(y.A.b(d)){if(!d.gnq())u.c.nU(d.geR(),d.gbi())
-x=u.e
-if(x!=null){u=d.geR()
-w=d.gmv()
-v=d.gbi()
-x.cr(new B.fh(u,w,null,v,v))}else{x=u.f
-x.toString
-u.f=x.W(0,d.gmv())
-u.r=d.geR()
-u.KA()}}else if(y.E.b(d)){if(u.e!=null){x=u.c.yT()
-w=u.e
-w.toString
-u.e=null
-w.wX(new B.eF(x,null,D.f))}else u.r=u.f=null
-this.vM(d.gaR())}else if(y.n.b(d)){x=u.e
-if(x!=null){u.e=null
-x.aK()}else u.r=u.f=null
-this.vM(d.gaR())}},
-fU(d){var x=this.r.i(0,d)
-if(x==null)return
-x.JU(new A.ajK(this,d))},
-amA(d,e){var x,w,v,u,t=this,s=t.r.i(0,e)
-s.toString
-x=t.f!=null?t.cK("onStart",new A.ajJ(t,d)):null
-if(x!=null){s.e=x
-w=s.r
-v=s.f
-v.toString
-u=s.b
-s.r=s.f=null
-x.cr(new B.fh(w,v,null,u,u))}else t.vM(e)
-return x},
-f_(d){var x
-if(this.r.aq(d)){x=this.r.i(0,d)
-x.w=x.r=x.f=null
-this.vM(d)}},
-vM(d){var x,w
-if(this.r==null)return
-$.e8.aG$.NU(d,this.gVe())
-x=this.r.F(0,d)
-w=x.w
-if(w!=null)w.a.kx(w.b,w.c,D.ax)
-x.w=null},
-l(){var x,w=this,v=w.r
-v.toString
-x=B.k(v).h("bn<1>")
-v=B.a4(new B.bn(v,x),x.h("B.E"))
-D.b.aw(v,w.gapL())
-w.r=null
-w.G2()}}
-A.a_b.prototype={
-KA(){var x,w=this
-if(w.f.gdj()>B.kF(w.d,w.a)){x=w.w
-x.a.kx(x.b,x.c,D.bo)}},
-JU(d){d.$1(this.b)}}
-A.RQ.prototype={
-L9(d){var x=d.gbi(),w=d.gcq()
-return new A.a_b(this.b,x,new B.f5(w,B.bj(20,null,!1,y.F)),w,D.f)}}
-A.a_0.prototype={
-KA(){var x,w=this
-if(Math.abs(w.f.a)>B.kF(w.d,w.a)){x=w.w
-x.a.kx(x.b,x.c,D.bo)}},
-JU(d){d.$1(this.b)}}
-A.Rm.prototype={
-L9(d){var x=d.gbi(),w=d.gcq()
-return new A.a_0(this.b,x,new B.f5(w,B.bj(20,null,!1,y.F)),w,D.f)}}
-A.a4C.prototype={
-KA(){var x,w=this
-if(Math.abs(w.f.b)>B.kF(w.d,w.a)){x=w.w
-x.a.kx(x.b,x.c,D.bo)}},
-JU(d){d.$1(this.b)}}
-A.WO.prototype={
-L9(d){var x=d.gbi(),w=d.gcq()
-return new A.a4C(this.b,x,new B.f5(w,B.bj(20,null,!1,y.F)),w,D.f)}}
-A.nU.prototype={
-ax0(d){var x,w=null
-switch(null){case D.ac:x=y.S
-x=new A.Rm(B.u(x,y.V),w,w,A.aMm(),B.u(x,y.z))
-break
-case D.H:x=y.S
-x=new A.WO(B.u(x,y.V),w,w,A.aMm(),B.u(x,y.z))
-break
-case null:case void 0:x=y.S
-x=new A.RQ(B.u(x,y.V),w,w,A.aMm(),B.u(x,y.z))
-break
-default:x=w}x.f=d
-return x},
-a1(){return new A.yM(this.$ti.h("yM<1>"))},
-axI(d,e,f){return this.x.$3(d,e,f)}}
-A.yM.prototype={
-ai(){var x=this
-x.au()
-x.d=x.a.ax0(x.garI())},
-l(){this.SI()
-this.ap()},
-ba(){var x,w=this.d
-w.toString
-x=this.c
-x.toString
-x=B.ci(x,D.jU)
-w.b=x==null?null:x.CW
-this.cu()},
-SI(){if(this.e>0)return
-this.d.l()
-this.d=null},
-aqk(d){var x=this.a,w=this.e
-x=x.as
-if(w>=x)return
-this.d.wa(d)},
-arJ(d){var x,w,v=this,u=v.a,t=v.e,s=u.as
-if(t>=s)return null
-t=v.c
-t.toString
-x=u.axI(u,t,d)
-v.a4(new A.awi(v))
-t=v.c
-t.toString
-v.a.toString
-u=B.agd(t,y.u)
-u.toString
-t=v.a.r
-s=v.c
-s.toString
-w=new A.yL(null,null,x,t,D.f,new A.awj(v),new A.awk(v),u,!0,!0,B.pw(s).a,B.b([],y.M),d,v.$ti.h("yL<1>"))
-s=B.mt(w.gafp(),!1,!1)
-w.ch=s
-u.xy(0,s)
-w.a4e(d)
-v.a.toString
-return w},
-C(d){var x=null,w=this.a,v=this.e,u=w.as
-u=v<u?this.gaqj():x
-return B.rC(D.bE,v===0?w.e:w.f,x,x,u,x,x,x)}}
-A.Z1.prototype={
-L(){return"_DragEndKind."+this.b}}
-A.yL.prototype={
-cr(d){var x=this,w=x.at,v=w.W(0,x.aq3(d.b))
-x.at=v
-x.a4e(v)
-v=x.at.j(0,w)
-if(!v)x.f.$1(d)},
-wX(d){this.a0D(C.adE,this.aq4(d.a))},
-aK(){this.ayt(C.adF)},
-a4e(d){var x,w,v,u,t,s,r,q,p,o=this,n=o.c
-o.ax=d.a_(0,n)
-x=o.w.c
-if(x!=null){x=x.gO()
-x.toString
-o.ay=y.x.a(x).e2(d).a_(0,n)
-o.ch.cL()}w=B.Rk()
-n=$.a3
-n.toString
-n.tQ(w,d.W(0,o.e),o.z)
-n=o.agP(w.a)
-v=B.b(n.slice(0),B.a1(n))
-n=v.length
-x=o.as
-u=x.length
-t=!1
-if(n>=u&&u!==0){u=B.a1(v)
-s=new J.d1(v,n,u.h("d1<1>"))
-n=u.c
-r=0
-while(!0){if(!(r<x.length)){t=!0
-break}s.B()
-u=s.d
-if(u==null)u=n.a(u)
-if(!J.e(u,x[r]))break;++r}}if(t){for(n=x.length,q=0;q<x.length;x.length===n||(0,B.G)(x),++q)x[q].axs(o)
-return}o.UZ()
-n=new B.eA(v,B.a1(v).h("eA<1,awg<z>?>"))
-p=n.xi(n,new A.awe(o),new A.awf())
-for(n=x.length,q=0;q<x.length;x.length===n||(0,B.G)(x),++q)x[q].axs(o)
-o.Q=p},
-agP(d){var x,w,v=B.b([],y.M)
-for(x=d.length,w=0;w<x;++w);return v},
-UZ(){var x,w
-for(x=this.as,w=0;w<x.length;++w)x[w].aFX(this)
-D.b.a5(x)},
-a0D(d,e){var x,w,v=this
-v.UZ()
-v.Q=null
-v.ch.eg(0)
-v.ch.l()
-v.ch=null
-x=e==null?D.cT:e
-w=v.ax
-w.toString
-v.r.$3(x,w,!1)},
-ayt(d){return this.a0D(d,null)},
-afq(d){var x=null,w=this.ay
-w===$&&B.a()
-return B.wR(x,new B.kX(!0,B.j5(this.d,!0,x),x),x,x,w.a,x,w.b,x)},
-aq4(d){return d},
-aq3(d){var x
-switch(this.b){case D.ac:x=new B.h(d.a,0)
-break
-case D.H:x=new B.h(0,d.b)
-break
-case null:case void 0:x=d
-break
-default:x=null}return x}}
-A.rb.prototype={
-C(d){return C.ZD}}
-A.Da.prototype={
-a1(){return new A.JD()}}
-A.JD.prototype={
-ai(){var x,w=this
-B.eG(D.aY,new A.aya(w),y.P)
-x=$.e2().e_(30000001)
-w.e=x
-w.r=A.adN(x)
-w.w=A.adN(w.e)
-w.r.a3c()
-w.w.PN()
-w.au()
-x=B.y8(D.bM,w.gavE())
-w.f!==$&&B.b2()
-w.f=x},
-l(){var x=this.f
-x===$&&B.a()
-x.aK()
-this.ap()},
-avF(d){var x,w,v=this
-if(v.c!=null){x=v.r
-x===$&&B.a()
-w=x.aBE()
-if(w!==v.d)v.a4(new A.ay9(v,w))}},
-PP(){var x=this.c
-if(x!=null&&this.d)B.eX(x).fm("/search/wontickets",null)},
-aEe(){if(this.c!=null)this.a4(new A.ayb(this))},
-C(d){var x,w,v=this,u=null,t=""+v.e,s=y.O,r=v.r
-r===$&&B.a()
-x=v.w
-x===$&&B.a()
-w=y.p
-s=B.aKp(0,F.QL(B.c0(B.b([new A.zI(!0,r,new B.Q("Mod_"+t,s)),C.a3I,new A.zI(!1,x,new B.Q("TicketReference_"+t,s))],w),D.a2,u,D.M,D.X),D.f8))
-t=v.ZH(B.vE(C.a9J,u,v.gaEd(),u),1)
-return B.dY(D.br,B.b([s,t,v.ZH(B.vE(C.a9F,u,v.d?v.ga6I():u,u),0)],w),D.z,D.D5,u)},
-ZH(d,e){var x=null
-return new B.bM(G.e4,x,x,new B.aZ(new B.aj(0,0,16,102+68*e),new B.az(104,52,d,x),x),x)}}
-A.zI.prototype={
-a1(){return new A.a31()}}
-A.a31.prototype={
-ai(){this.au()},
-C(d){var x,w,v,u,t,s,r=null,q=B.b([],y.p)
-for(x=y.O,w=0;w<5;++w){v=C.rp[w]
-for(u=0;t=this.a,s=t.d.d,u<s.length;++u){s=s[u]
-if(s.a===v)q.push(new A.Cn(t.c,s,new B.Q("DrgTicket"+u,x)))}}return B.cG(B.br(D.v,B.dY(D.br,q,D.z,D.D5,r),D.m,C.hK,r,r,r,400,r,r,r,r,r,800),r,r)}}
-A.Cn.prototype={
-a1(){return new A.Z2()}}
-A.Z2.prototype={
-sbi(d){if(!this.a.d.d.j(0,d))this.a4(new A.awm(this,d))},
-C(d){var x,w,v,u,t,s=this,r=null,q=s.a
-if(!q.c){q=q.d
-x=q.d
-return B.wR(r,new A.zU(q,new B.Q("element"+B.cw(q),y.O)),r,r,x.a,r,x.b,r)}q=B.cw(q.d)
-x=y.O
-w=s.a.d
-v=w.d
-u=B.cw(w)
-t=s.a.d
-return B.aIU(new A.nU(new A.zU(t,new B.Q("element"+B.cw(t),x)),new A.zU(w,new B.Q("element"+u,x)),D.a1,A.b9C(),1,new A.awl(s),r,y.R),D.Q,H.pR,new B.Q("ticket_elemAnimPos_"+q,x),v.a,v.b)}}
-A.zU.prototype={
-C(d){var x=null,w=this.c,v=w.a
-if(v===C.q8)return B.br(D.v,x,D.m,x,x,new B.bB(C.rl[w.c],x,B.dK(C.fd,-1,1),x,x,x,D.S),x,100,x,x,x,x,x,400)
-else if(v===C.q9)return new B.az(x,50,B.cG(B.br(D.v,x,D.m,x,x,C.Fy,x,5,x,x,x,x,x,400),x,x),x)
-else if(v===C.qb){w=C.rl[w.c]
-v=B.dK(C.fd,-1,1)
-return B.br(D.v,B.fj(I.qJ,C.hK,x,50),D.m,x,x,new B.bB(w,x,v,x,x,x,D.e7),x,75,x,x,x,x,x,75)}else if(v===C.qa){w=B.dK(C.fd,-1,1)
-return B.br(D.e3,B.ar("T",x,x,x,x,x,D.ap.a_s(C.kN,48,1.2),x,x),D.m,x,x,new B.bB(C.hK,x,w,x,x,x,D.S),x,x,x,x,C.q4,x,x,x)}else if(v===C.qc){w=B.dK(C.fd,-1,1)
-return B.br(D.e3,B.ar("Testimoney Element Concept",x,x,x,x,x,D.ap.a_s(C.kN,24,1.2),x,x),D.m,x,x,new B.bB(C.p5,x,w,x,x,x,D.S),x,x,x,x,C.q4,x,x,x)}return E.my}}
-A.nX.prototype={
-L(){return"ElementType."+this.b},
-gi9(){switch(this.a){case 0:return 400
-case 1:return 400
-case 4:return 200
-case 2:return 30
-case 3:return 75}},
-ghX(){switch(this.a){case 0:return 100
-case 1:return 10
-case 4:return 50
-case 2:return 50
-case 3:return 75}},
-gKL(){switch(this.a){case 0:return!1
-case 2:case 1:case 3:case 4:return!0}}}
-A.Db.prototype={
-k(d){return this.a.k(0)+" "+this.c},
-gb9(){var x,w=this.d,v=w.a
-w=w.b
-x=this.a
-return new B.t(v,w,v+x.gi9(),w+x.ghX())}}
-A.adM.prototype={
-i(d,e){return this.d[e]},
-a3c(){var x,w,v,u,t,s,r,q
-this.Zx()
-for(x=this.d,w=x.length,v=this.e,u=0;u<x.length;x.length===w||(0,B.G)(x),++u){t=x[u]
-s=t.a
-r=s.gi9()
-q=v.kZ()
-s=s.ghX()
-t.d=new B.h(15+q*(770-r),15+v.kZ()*(370-s))}},
-aBE(){var x,w,v,u,t,s,r
-if(this.azL())return!1
-for(x=this.d,w=0;w<x.length;++w){v=x[w]
-u=v.d
-t=u.a
-u=u.b
-v=v.a
-s=t+v.gi9()
-v=u+v.ghX()
-r=new B.t(t,u,s,v)
-if(t<15||u<15||s>785||v>385){r.k(0)
-return!1}}return!0},
-azL(){var x,w,v,u,t,s,r
-for(x=this.d,w=0;w<x.length;++w)if(x[w].a.gKL()){v=x[w]
-u=v.d
-t=u.a
-u=u.b
-v=v.a
-s=new B.t(t,u,t+v.gi9(),u+v.ghX())
-for(r=w+1;r<x.length;++r)if(x[r].a.gKL()){v=x[r]
-u=v.d
-t=u.a
-u=u.b
-v=v.a
-if(s.oz(new B.t(t,u,t+v.gi9(),u+v.ghX())))return!0}}return!1},
-azN(d,e){var x,w,v,u,t,s=d.gb9()
-for(x=this.d,w=0;w<e;++w)if(x[w].a.gKL()){v=x[w]
-if(v!==d){u=v.d
-t=u.a
-u=u.b
-v=v.a
-if(new B.t(t,u,t+v.gi9(),u+v.ghX()).oz(s))return!0}}return!1},
-Zx(){var x,w=this.d
-D.b.a5(w)
-for(x=this.e;w.length<7;)w.push(new A.Db(C.rp[x.e_(5)],1+x.e_(6),D.f,$.al()))},
-PN(){var x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f=this
-f.Zx()
-x=new A.adQ(f)
-w=new A.adR(f,x)
-v=new A.adS(f,x)
-u=f.e
-t=1+u.e_(2)
-s=y.i
-r=J.w6(t,s)
-for(q=0;q<t;++q)r[q]=w.$0()
-t=2+u.e_(5)
-p=J.w6(t,s)
-for(q=0;q<t;++q)p[q]=v.$0()
-D.b.i_(r,0,15)
-D.b.i_(p,0,15)
-o=new A.adO(f,r)
-n=new A.adP(f,p)
-for(u=f.d,m=0;m<u.length;++m)u[m].d=C.a_y
-for(m=0;m<u.length;++m){l=u[m]
-s=l.a
-k=!1
-j=0
-while(!0){if(!(!k&&j<200))break
-i=o.$0()
-h=n.$0()
-if(i+s.gi9()+30>800)i=800-s.gi9()-15
-for(;h+s.ghX()+30>400;)h=n.$0()
-l.d=new B.h(i,h)
-g=f.azN(l,m)
-k=!g;++j}}}}
-var z=a.updateTypes(["~()","~(bg)","~(p)","~(kb)","c(M)","A(awg<z>?)","~(@)","A(p)","h(nU<z>,M,h)"])
-A.ajK.prototype={
-$1(d){return this.a.amA(d,this.b)},
-$S:625}
-A.ajJ.prototype={
-$0(){return this.a.f.$1(this.b)},
-$S:626}
-A.awi.prototype={
-$0(){++this.a.e},
-$S:0}
-A.awj.prototype={
-$1(d){var x=this.a,w=x.c!=null
-if(w)x.a.toString
-if(w)x.a.ax.$1(d)},
-$S:13}
-A.awk.prototype={
-$3(d,e,f){var x=this.a
-if(x.c!=null)x.a4(new A.awh(x))
-else{--x.e
-x.SI()}if(x.c!=null)x.a.toString
-if(f)x.a.toString
-if(!f)x.a.toString},
-$S:627}
-A.awh.prototype={
-$0(){--this.a.e},
-$S:0}
-A.awe.prototype={
-$1(d){return!1},
-$S:z+5}
-A.awf.prototype={
-$0(){return null},
-$S:15}
-A.aya.prototype={
-$0(){var x=this.a
-x.d=!0
-x.PP()},
-$S:15}
-A.ay9.prototype={
-$0(){this.a.d=this.b},
-$S:0}
-A.ayb.prototype={
-$0(){var x=this.a,w=$.e2().e_(30000001)
-x.e=w
-x.r=A.adN(w)
-x.w=A.adN(x.e)
-x.r.a3c()
-x.w.PN()},
-$S:0}
-A.awm.prototype={
-$0(){this.a.a.d.d=this.b},
-$S:0}
-A.awl.prototype={
-$1(d){var x=this.a
-x.sbi(x.a.d.d.W(0,d.b))},
-$S:13}
-A.adQ.prototype={
-$0(){var x=this.a.e,w=1+x.e_(3)
-return(1+x.e_(w))/w},
-$S:46}
-A.adR.prototype={
-$0(){return this.b.$0()*770+15},
-$S:46}
-A.adS.prototype={
-$0(){return this.b.$0()*370+15},
-$S:46}
-A.adO.prototype={
-$0(){var x=this.b
-return x[this.a.e.e_(x.length)]},
-$S:46}
-A.adP.prototype={
-$0(){var x=this.b
-return x[this.a.e.e_(x.length)]},
-$S:46};(function installTearOffs(){var x=a._static_1,w=a._instance_1u,v=a.installStaticTearOff,u=a._instance_0u
-x(A,"aMm","b1x",7)
-var t
-w(t=A.Ek.prototype,"gVe","amz",1)
-w(t,"gapL","vM",2)
-v(A,"b9C",3,null,["$3"],["b96"],8,0)
-w(t=A.yM.prototype,"gaqj","aqk",3)
-w(t,"garI","arJ","yL<1>?(h)")
-w(A.yL.prototype,"gafp","afq",4)
-w(t=A.JD.prototype,"gavE","avF",6)
-u(t,"ga6I","PP",0)
-u(t,"gaEd","aEe",0)})();(function inheritance(){var x=a.inheritMany,w=a.inherit
-x(B.z,[A.qP,A.rM,A.adM])
-w(A.Ek,B.cu)
-x(B.dL,[A.ajK,A.awj,A.awk,A.awe,A.awl])
-x(B.e5,[A.ajJ,A.awi,A.awh,A.awf,A.aya,A.ay9,A.ayb,A.awm,A.adQ,A.adR,A.adS,A.adO,A.adP])
-x(A.rM,[A.a_b,A.a_0,A.a4C])
-x(A.Ek,[A.RQ,A.Rm,A.WO])
-x(B.P,[A.nU,A.Da,A.zI,A.Cn])
-x(B.W,[A.yM,A.JD,A.a31,A.Z2])
-x(B.hR,[A.Z1,A.nX])
-w(A.yL,A.qP)
-x(B.R,[A.rb,A.zU])
-w(A.Db,B.e3)})()
-B.bK(b.typeUniverse,JSON.parse('{"Ek":{"cu":[],"cI":[]},"a_b":{"rM":[]},"RQ":{"cu":[],"cI":[]},"a_0":{"rM":[]},"Rm":{"cu":[],"cI":[]},"a4C":{"rM":[]},"WO":{"cu":[],"cI":[]},"nU":{"P":[],"c":[]},"awg":{"W":["aOB<1>"]},"yM":{"W":["nU<1>"]},"Da":{"P":[],"c":[]},"zI":{"P":[],"c":[]},"Cn":{"P":[],"c":[]},"rb":{"R":[],"c":[]},"JD":{"W":["Da"]},"a31":{"W":["zI"]},"Z2":{"W":["Cn"]},"zU":{"R":[],"c":[]},"Db":{"a6":[]}}'))
-var y=(function rtii(){var x=B.O
-return{R:x("nU<z>"),m:x("r<Db>"),p:x("r<c>"),M:x("r<awg<z>>"),V:x("rM"),P:x("bd"),u:x("rW"),n:x("oM"),z:x("ha"),A:x("oQ"),E:x("li"),x:x("v"),O:x("Q<l>"),i:x("U"),S:x("p"),F:x("zr?")}})();(function constants(){var x=a.makeConstList
-C.fd=new B.n(1,0.21176470588235294,0.12156862745098039,0.3686274509803922,D.e)
-C.Fy=new B.bB(C.fd,null,null,null,null,null,D.S)
-C.hK=new B.n(1,0.36470588235294116,0.30980392156862746,0.6313725490196078,D.e)
-C.p5=new B.n(1,0.32941176470588235,0.25098039215686274,0.4666666666666667,D.e)
-C.kN=new B.n(1,0.8352941176470589,0.8784313725490196,1,D.e)
-C.q4=new B.aj(5,5,5,0)
-C.q8=new A.nX(0,"rect")
-C.q9=new A.nX(1,"divider")
-C.qa=new A.nX(2,"letter")
-C.qb=new A.nX(3,"icon")
-C.qc=new A.nX(4,"text")
-C.Jf=new B.n(1,0.6901960784313725,0.7333333333333333,1,D.e)
-C.J9=new B.n(1,0.6,0.9686274509803922,1,D.e)
-C.Jn=new B.n(1,0.6666666666666666,0.6,1,D.e)
-C.Ij=new B.n(1,1,0.6666666666666666,0.8,D.e)
-C.rl=B.b(x([C.hK,C.Jf,C.kN,C.p5,C.J9,C.Jn,C.Ij]),B.O("r<n>"))
-C.rp=B.b(x([C.q8,C.q9,C.qa,C.qb,C.qc]),B.O("r<nX>"))
-C.acz=new B.Q("greenland_game",y.O)
-C.Mc=new A.Da(C.acz)
-C.ZD=new B.hD("ticketstogreenland",C.Mc,!0,null)
-C.a_y=new B.h(-1000,-1000)
-C.a3I=new B.az(null,25,null,null)
-C.a9F=new B.du("Submit",null,null,null,null,null,null,null,null,null)
-C.a9J=new B.du("Randomize",null,null,null,null,null,null,null,null,null)
-C.adE=new A.Z1(0,"dropped")
-C.adF=new A.Z1(1,"canceled")})()};
-((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_92",e:"endPart",h:b})})($__dart_deferred_initializers__,"G3EKsEBZRKAp0GdWETlSSGSWM1o=");
+// Generated by dart2js (, csp, intern-composite-values), the Dart to JavaScript compiler version: 3.8.1.
+((s, d, e) => {
+  s[d] = s[d] || {};
+  s[d][e] = s[d][e] || [];
+  s[d][e].push({p: "main.dart.js_92", e: "beginPart"});
+})(self, "$__dart_deferred_initializers__", "eventLog");
+$__dart_deferred_initializers__.current = function(hunkHelpers, init, holdersList, $) {
+  var J, B, D, E, F, G, H, I,
+  A = {Drag: function Drag() {
+    },
+    MultiDragGestureRecognizer__defaultButtonAcceptBehavior(buttons) {
+      return buttons === 1;
+    },
+    MultiDragPointerState: function MultiDragPointerState() {
+    },
+    MultiDragPointerState_dispose_closure: function MultiDragPointerState_dispose_closure(t0) {
+      this.$this = t0;
+    },
+    MultiDragGestureRecognizer: function MultiDragGestureRecognizer() {
+    },
+    MultiDragGestureRecognizer_acceptGesture_closure: function MultiDragGestureRecognizer_acceptGesture_closure(t0, t1) {
+      this.$this = t0;
+      this.pointer = t1;
+    },
+    MultiDragGestureRecognizer__startDrag_closure: function MultiDragGestureRecognizer__startDrag_closure(t0, t1) {
+      this.$this = t0;
+      this.initialPosition = t1;
+    },
+    _ImmediatePointerState: function _ImmediatePointerState(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.gestureSettings = t0;
+      _.initialPosition = t1;
+      _._multidrag$_velocityTracker = t2;
+      _.kind = t3;
+      _._multidrag$_client = null;
+      _._pendingDelta = t4;
+      _._arenaEntry = _._multidrag$_lastPendingEventTimestamp = null;
+    },
+    ImmediateMultiDragGestureRecognizer: function ImmediateMultiDragGestureRecognizer(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.onStart = null;
+      _._pointers = t0;
+      _.debugOwner = t1;
+      _.gestureSettings = null;
+      _.supportedDevices = t2;
+      _.allowedButtonsFilter = t3;
+      _._pointerToKind = t4;
+    },
+    _HorizontalPointerState: function _HorizontalPointerState(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.gestureSettings = t0;
+      _.initialPosition = t1;
+      _._multidrag$_velocityTracker = t2;
+      _.kind = t3;
+      _._multidrag$_client = null;
+      _._pendingDelta = t4;
+      _._arenaEntry = _._multidrag$_lastPendingEventTimestamp = null;
+    },
+    HorizontalMultiDragGestureRecognizer: function HorizontalMultiDragGestureRecognizer(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.onStart = null;
+      _._pointers = t0;
+      _.debugOwner = t1;
+      _.gestureSettings = null;
+      _.supportedDevices = t2;
+      _.allowedButtonsFilter = t3;
+      _._pointerToKind = t4;
+    },
+    _VerticalPointerState: function _VerticalPointerState(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.gestureSettings = t0;
+      _.initialPosition = t1;
+      _._multidrag$_velocityTracker = t2;
+      _.kind = t3;
+      _._multidrag$_client = null;
+      _._pendingDelta = t4;
+      _._arenaEntry = _._multidrag$_lastPendingEventTimestamp = null;
+    },
+    VerticalMultiDragGestureRecognizer: function VerticalMultiDragGestureRecognizer(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.onStart = null;
+      _._pointers = t0;
+      _.debugOwner = t1;
+      _.gestureSettings = null;
+      _.supportedDevices = t2;
+      _.allowedButtonsFilter = t3;
+      _._pointerToKind = t4;
+    },
+    childDragAnchorStrategy(draggable, context, position) {
+      var t1;
+      type$.Draggable_Object._as(draggable);
+      t1 = context.findRenderObject$0();
+      t1.toString;
+      return type$.RenderBox._as(t1).globalToLocal$1(position);
+    },
+    Draggable: function Draggable(t0, t1, t2, t3, t4, t5, t6, t7) {
+      var _ = this;
+      _.child = t0;
+      _.childWhenDragging = t1;
+      _.feedback = t2;
+      _.dragAnchorStrategy = t3;
+      _.maxSimultaneousDrags = t4;
+      _.onDragUpdate = t5;
+      _.key = t6;
+      _.$ti = t7;
+    },
+    _DraggableState: function _DraggableState(t0, t1) {
+      var _ = this;
+      _._recognizer = null;
+      _._activeCount = 0;
+      _._widget = null;
+      _._debugLifecycleState = t0;
+      _._framework$_element = null;
+      _.$ti = t1;
+    },
+    _DraggableState__startDrag_closure: function _DraggableState__startDrag_closure(t0) {
+      this.$this = t0;
+    },
+    _DraggableState__startDrag_closure0: function _DraggableState__startDrag_closure0(t0) {
+      this.$this = t0;
+    },
+    _DraggableState__startDrag_closure1: function _DraggableState__startDrag_closure1(t0) {
+      this.$this = t0;
+    },
+    _DraggableState__startDrag__closure: function _DraggableState__startDrag__closure(t0) {
+      this.$this = t0;
+    },
+    _DragEndKind: function _DragEndKind(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    _DragAvatar: function _DragAvatar(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13) {
+      var _ = this;
+      _.data = t0;
+      _.axis = t1;
+      _.dragStartPoint = t2;
+      _.feedback = t3;
+      _.feedbackOffset = t4;
+      _.onDragUpdate = t5;
+      _.onDragEnd = t6;
+      _.overlayState = t7;
+      _.ignoringFeedbackSemantics = t8;
+      _.ignoringFeedbackPointer = t9;
+      _.viewId = t10;
+      _._activeTarget = null;
+      _._enteredTargets = t11;
+      _._drag_target$_position = t12;
+      _._drag_target$_lastOffset = null;
+      _.___DragAvatar__overlayOffset_A = $;
+      _._drag_target$_entry = null;
+      _.$ti = t13;
+    },
+    _DragAvatar_updateDrag_closure: function _DragAvatar_updateDrag_closure(t0) {
+      this.$this = t0;
+    },
+    _DragAvatar_updateDrag_closure0: function _DragAvatar_updateDrag_closure0() {
+    },
+    GreenlandGamePage: function GreenlandGamePage(t0) {
+      this.key = t0;
+    },
+    GreenlandGame: function GreenlandGame(t0) {
+      this.key = t0;
+    },
+    _GreenlandGameState: function _GreenlandGameState(t0) {
+      var _ = this;
+      _.submittable = false;
+      _.seed = 0;
+      _.___GreenlandGameState_reference_A = _.___GreenlandGameState_ticket_A = _.___GreenlandGameState_timer_F = $;
+      _._widget = null;
+      _._debugLifecycleState = t0;
+      _._framework$_element = null;
+    },
+    _GreenlandGameState_initState_closure: function _GreenlandGameState_initState_closure(t0) {
+      this.$this = t0;
+    },
+    _GreenlandGameState_checkValidity_closure: function _GreenlandGameState_checkValidity_closure(t0, t1) {
+      this.$this = t0;
+      this.valid = t1;
+    },
+    _GreenlandGameState_reroll_closure: function _GreenlandGameState_reroll_closure(t0) {
+      this.$this = t0;
+    },
+    _SingleTicket: function _SingleTicket(t0, t1, t2) {
+      this.modifiable = t0;
+      this.ticket = t1;
+      this.key = t2;
+    },
+    _SingleTicketState: function _SingleTicketState(t0) {
+      this._widget = null;
+      this._debugLifecycleState = t0;
+      this._framework$_element = null;
+    },
+    DraggableTicket: function DraggableTicket(t0, t1, t2) {
+      this.modifiable = t0;
+      this.object = t1;
+      this.key = t2;
+    },
+    _DraggableTicketState: function _DraggableTicketState(t0) {
+      this._widget = null;
+      this._debugLifecycleState = t0;
+      this._framework$_element = null;
+    },
+    _DraggableTicketState_position_closure: function _DraggableTicketState_position_closure(t0, t1) {
+      this.$this = t0;
+      this.set = t1;
+    },
+    _DraggableTicketState_build_closure: function _DraggableTicketState_build_closure(t0) {
+      this.$this = t0;
+    },
+    _TicketElement: function _TicketElement(t0, t1) {
+      this.object = t0;
+      this.key = t1;
+    },
+    GreenlandTicket$standard(seed) {
+      var t1 = B._setArrayType([], type$.JSArray_GreenlandObject),
+        t2 = new B._Random();
+      t2._Random$1(seed);
+      return new A.GreenlandTicket(t1, t2);
+    },
+    ElementType: function ElementType(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    GreenlandObject: function GreenlandObject(t0, t1, t2, t3) {
+      var _ = this;
+      _._greenland_ticket$_type = t0;
+      _.color = t1;
+      _.offset = t2;
+      _.ChangeNotifier__count = 0;
+      _.ChangeNotifier__listeners = t3;
+      _.ChangeNotifier__reentrantlyRemovedListeners = _.ChangeNotifier__notificationCallStackDepth = 0;
+      _.ChangeNotifier__debugCreationDispatched = _.ChangeNotifier__debugDisposed = false;
+    },
+    GreenlandTicket: function GreenlandTicket(t0, t1) {
+      this.objects = t0;
+      this.rng = t1;
+    },
+    GreenlandTicket_stylize_randFrac: function GreenlandTicket_stylize_randFrac(t0) {
+      this.$this = t0;
+    },
+    GreenlandTicket_stylize_rfx: function GreenlandTicket_stylize_rfx(t0, t1) {
+      this.$this = t0;
+      this.randFrac = t1;
+    },
+    GreenlandTicket_stylize_rfy: function GreenlandTicket_stylize_rfy(t0, t1) {
+      this.$this = t0;
+      this.randFrac = t1;
+    },
+    GreenlandTicket_stylize_lrx: function GreenlandTicket_stylize_lrx(t0, t1) {
+      this.$this = t0;
+      this.xs = t1;
+    },
+    GreenlandTicket_stylize_lry: function GreenlandTicket_stylize_lry(t0, t1) {
+      this.$this = t0;
+      this.ys = t1;
+    }
+  },
+  C;
+  J = holdersList[1];
+  B = holdersList[0];
+  D = holdersList[2];
+  E = holdersList[57];
+  F = holdersList[88];
+  G = holdersList[104];
+  H = holdersList[105];
+  I = holdersList[106];
+  A = hunkHelpers.updateHolder(holdersList[37], A);
+  C = holdersList[103];
+  A.Drag.prototype = {
+    update$1(details) {
+    },
+    end$1(details) {
+    },
+    cancel$0() {
+    }
+  };
+  A.MultiDragPointerState.prototype = {
+    dispose$0() {
+      var t1, _this = this;
+      $.$get$FlutterMemoryAllocations_instance().dispatchObjectDisposed$1$object(_this);
+      t1 = _this._arenaEntry;
+      if (t1 != null)
+        t1._arena._arena$_resolve$3(t1._arena$_pointer, t1._member, D.GestureDisposition_1);
+      _this._arenaEntry = null;
+      B.assertHelper(new A.MultiDragPointerState_dispose_closure(_this).call$0());
+    }
+  };
+  A.MultiDragGestureRecognizer.prototype = {
+    addAllowedPointer$1($event) {
+      var t1, state, _this = this;
+      B.assertHelper(_this._pointers != null);
+      t1 = _this._pointers;
+      t1.toString;
+      B.assertHelper(!t1.containsKey$1($event.get$pointer()));
+      state = _this.createNewPointerState$1($event);
+      t1 = _this._pointers;
+      t1.toString;
+      t1.$indexSet(0, $event.get$pointer(), state);
+      t1 = type$.GestureBinding;
+      B.BindingBase_checkInstance($.GestureBinding__instance, t1).GestureBinding_pointerRouter.addRoute$2($event.get$pointer(), _this.get$_multidrag$_handleEvent());
+      t1 = B.BindingBase_checkInstance($.GestureBinding__instance, t1).GestureBinding_gestureArena.add$2(0, $event.get$pointer(), _this);
+      B.assertHelper(state._arenaEntry == null);
+      B.assertHelper(state._pendingDelta != null);
+      B.assertHelper(state._multidrag$_client == null);
+      state._arenaEntry = t1;
+    },
+    _multidrag$_handleEvent$1($event) {
+      var t1, t2, t3, details, _this = this, _null = null;
+      type$.PointerEvent._as($event);
+      B.assertHelper(_this._pointers != null);
+      t1 = _this._pointers;
+      t1.toString;
+      B.assertHelper(t1.containsKey$1($event.get$pointer()));
+      t1 = _this._pointers;
+      t1.toString;
+      t1 = t1.$index(0, $event.get$pointer());
+      t1.toString;
+      if (type$.PointerMoveEvent._is($event)) {
+        B.assertHelper(t1._arenaEntry != null);
+        if (!$event.get$synthesized())
+          t1._multidrag$_velocityTracker.addPosition$2($event.get$timeStamp(), $event.get$position());
+        t2 = t1._multidrag$_client;
+        t3 = t1._pendingDelta == null;
+        if (t2 != null) {
+          B.assertHelper(t3);
+          t1 = t1._multidrag$_client;
+          t1.toString;
+          t2 = $event.get$timeStamp();
+          t1.update$1(B.DragUpdateDetails$($event.get$delta(), $event.get$position(), _null, _null, t2));
+        } else {
+          B.assertHelper(!t3);
+          t2 = t1._pendingDelta;
+          t2.toString;
+          t1._pendingDelta = t2.$add(0, $event.get$delta());
+          t1._multidrag$_lastPendingEventTimestamp = $event.get$timeStamp();
+          t1.checkForResolutionAfterMove$0();
+        }
+      } else if (type$.PointerUpEvent._is($event)) {
+        B.assertHelper($event.get$delta().$eq(0, D.Offset_0_0));
+        B.assertHelper(t1._arenaEntry != null);
+        t2 = t1._multidrag$_client;
+        t3 = t1._pendingDelta == null;
+        if (t2 != null) {
+          B.assertHelper(t3);
+          details = B.DragEndDetails$(D.Offset_0_0, _null, _null, t1._multidrag$_velocityTracker.getVelocity$0());
+          t2 = t1._multidrag$_client;
+          t2.toString;
+          t1._multidrag$_client = null;
+          t2.end$1(details);
+        } else {
+          B.assertHelper(!t3);
+          t1._multidrag$_lastPendingEventTimestamp = t1._pendingDelta = null;
+        }
+        _this._removeState$1($event.get$pointer());
+      } else if (type$.PointerCancelEvent._is($event)) {
+        B.assertHelper($event.get$delta().$eq(0, D.Offset_0_0));
+        B.assertHelper(t1._arenaEntry != null);
+        t2 = t1._multidrag$_client;
+        t3 = t1._pendingDelta == null;
+        if (t2 != null) {
+          B.assertHelper(t3);
+          t2 = t1._multidrag$_client;
+          t2.toString;
+          t1._multidrag$_client = null;
+          t2.cancel$0();
+        } else {
+          B.assertHelper(!t3);
+          t1._multidrag$_lastPendingEventTimestamp = t1._pendingDelta = null;
+        }
+        _this._removeState$1($event.get$pointer());
+      } else if (!type$.PointerDownEvent._is($event))
+        B.assertHelper(false);
+    },
+    acceptGesture$1(pointer) {
+      var state;
+      B.assertHelper(this._pointers != null);
+      state = this._pointers.$index(0, pointer);
+      if (state == null)
+        return;
+      state.accepted$1(new A.MultiDragGestureRecognizer_acceptGesture_closure(this, pointer));
+    },
+    _multidrag$_startDrag$2(initialPosition, pointer) {
+      var state, drag, t1, t2, details, _this = this;
+      B.assertHelper(_this._pointers != null);
+      state = _this._pointers.$index(0, pointer);
+      B.assertHelper(state._pendingDelta != null);
+      drag = _this.onStart != null ? _this.invokeCallback$1$2("onStart", new A.MultiDragGestureRecognizer__startDrag_closure(_this, initialPosition), type$.nullable_Drag) : null;
+      if (drag != null) {
+        B.assertHelper(state._arenaEntry != null);
+        B.assertHelper(state._multidrag$_client == null);
+        B.assertHelper(state._pendingDelta != null);
+        state._multidrag$_client = drag;
+        t1 = state._multidrag$_lastPendingEventTimestamp;
+        t2 = state._pendingDelta;
+        t2.toString;
+        details = B.DragUpdateDetails$(t2, state.initialPosition, null, null, t1);
+        state._multidrag$_lastPendingEventTimestamp = state._pendingDelta = null;
+        drag.update$1(details);
+      } else
+        _this._removeState$1(pointer);
+      return drag;
+    },
+    rejectGesture$1(pointer) {
+      var state, _this = this;
+      B.assertHelper(_this._pointers != null);
+      if (_this._pointers.containsKey$1(pointer)) {
+        state = _this._pointers.$index(0, pointer);
+        B.assertHelper(state._arenaEntry != null);
+        B.assertHelper(state._multidrag$_client == null);
+        B.assertHelper(state._pendingDelta != null);
+        state._arenaEntry = state._multidrag$_lastPendingEventTimestamp = state._pendingDelta = null;
+        _this._removeState$1(pointer);
+      }
+    },
+    _removeState$1(pointer) {
+      var t1;
+      B._asInt(pointer);
+      t1 = this._pointers;
+      if (t1 == null)
+        return;
+      B.assertHelper(t1.containsKey$1(pointer));
+      B.BindingBase_checkInstance($.GestureBinding__instance, type$.GestureBinding).GestureBinding_pointerRouter.removeRoute$2(pointer, this.get$_multidrag$_handleEvent());
+      this._pointers.remove$1(0, pointer).dispose$0();
+    },
+    dispose$0() {
+      var t2, _this = this,
+        t1 = _this._pointers;
+      t1.toString;
+      t2 = B._instanceType(t1)._eval$1("LinkedHashMapKeysIterable<1>");
+      t1 = B.List_List$_of(new B.LinkedHashMapKeysIterable(t1, t2), t2._eval$1("Iterable.E"));
+      D.JSArray_methods.forEach$1(t1, _this.get$_removeState());
+      B.assertHelper(_this._pointers.__js_helper$_length === 0);
+      _this._pointers = null;
+      _this.super$GestureRecognizer$dispose();
+    },
+    set$onStart(onStart) {
+      this.onStart = type$.nullable_nullable_Drag_Function_Offset._as(onStart);
+    }
+  };
+  A._ImmediatePointerState.prototype = {
+    checkForResolutionAfterMove$0() {
+      var t1, _this = this;
+      B.assertHelper(_this._pendingDelta != null);
+      if (_this._pendingDelta.get$distance() > B.computeHitSlop(_this.kind, _this.gestureSettings)) {
+        t1 = _this._arenaEntry;
+        t1._arena._arena$_resolve$3(t1._arena$_pointer, t1._member, D.GestureDisposition_0);
+      }
+    },
+    accepted$1(starter) {
+      type$.nullable_Drag_Function_Offset._as(starter).call$1(this.initialPosition);
+    }
+  };
+  A.ImmediateMultiDragGestureRecognizer.prototype = {
+    createNewPointerState$1($event) {
+      var t1 = $event.get$position(),
+        t2 = $event.get$kind();
+      t2 = new A._ImmediatePointerState(this.gestureSettings, t1, new B.VelocityTracker(t2, B.List_List$filled(20, null, false, type$.nullable__PointAtTime)), t2, D.Offset_0_0);
+      $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object("MultiDragPointerState", "package:flutter/gestures.dart", t2);
+      return t2;
+    },
+    get$debugDescription() {
+      return "multidrag";
+    }
+  };
+  A._HorizontalPointerState.prototype = {
+    checkForResolutionAfterMove$0() {
+      var t1, _this = this;
+      B.assertHelper(_this._pendingDelta != null);
+      if (Math.abs(_this._pendingDelta._dx) > B.computeHitSlop(_this.kind, _this.gestureSettings)) {
+        t1 = _this._arenaEntry;
+        t1._arena._arena$_resolve$3(t1._arena$_pointer, t1._member, D.GestureDisposition_0);
+      }
+    },
+    accepted$1(starter) {
+      type$.nullable_Drag_Function_Offset._as(starter).call$1(this.initialPosition);
+    }
+  };
+  A.HorizontalMultiDragGestureRecognizer.prototype = {
+    createNewPointerState$1($event) {
+      var t1 = $event.get$position(),
+        t2 = $event.get$kind();
+      t2 = new A._HorizontalPointerState(this.gestureSettings, t1, new B.VelocityTracker(t2, B.List_List$filled(20, null, false, type$.nullable__PointAtTime)), t2, D.Offset_0_0);
+      $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object("MultiDragPointerState", "package:flutter/gestures.dart", t2);
+      return t2;
+    },
+    get$debugDescription() {
+      return "horizontal multidrag";
+    }
+  };
+  A._VerticalPointerState.prototype = {
+    checkForResolutionAfterMove$0() {
+      var t1, _this = this;
+      B.assertHelper(_this._pendingDelta != null);
+      if (Math.abs(_this._pendingDelta._dy) > B.computeHitSlop(_this.kind, _this.gestureSettings)) {
+        t1 = _this._arenaEntry;
+        t1._arena._arena$_resolve$3(t1._arena$_pointer, t1._member, D.GestureDisposition_0);
+      }
+    },
+    accepted$1(starter) {
+      type$.nullable_Drag_Function_Offset._as(starter).call$1(this.initialPosition);
+    }
+  };
+  A.VerticalMultiDragGestureRecognizer.prototype = {
+    createNewPointerState$1($event) {
+      var t1 = $event.get$position(),
+        t2 = $event.get$kind();
+      t2 = new A._VerticalPointerState(this.gestureSettings, t1, new B.VelocityTracker(t2, B.List_List$filled(20, null, false, type$.nullable__PointAtTime)), t2, D.Offset_0_0);
+      $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object("MultiDragPointerState", "package:flutter/gestures.dart", t2);
+      return t2;
+    },
+    get$debugDescription() {
+      return "vertical multidrag";
+    }
+  };
+  A.Draggable.prototype = {
+    createRecognizer$1(onStart) {
+      var t1, _null = null,
+        _s17_ = "GestureRecognizer",
+        _s29_ = "package:flutter/gestures.dart";
+      type$.nullable_Drag_Function_Offset._as(onStart);
+      switch (null) {
+        case D.Axis_0:
+          t1 = type$.int;
+          t1 = new A.HorizontalMultiDragGestureRecognizer(B.LinkedHashMap_LinkedHashMap$_empty(t1, type$.MultiDragPointerState), _null, _null, A.multidrag_MultiDragGestureRecognizer__defaultButtonAcceptBehavior$closure(), B.LinkedHashMap_LinkedHashMap$_empty(t1, type$.PointerDeviceKind));
+          $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object(_s17_, _s29_, t1);
+          break;
+        case D.Axis_1:
+          t1 = type$.int;
+          t1 = new A.VerticalMultiDragGestureRecognizer(B.LinkedHashMap_LinkedHashMap$_empty(t1, type$.MultiDragPointerState), _null, _null, A.multidrag_MultiDragGestureRecognizer__defaultButtonAcceptBehavior$closure(), B.LinkedHashMap_LinkedHashMap$_empty(t1, type$.PointerDeviceKind));
+          $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object(_s17_, _s29_, t1);
+          break;
+        case null:
+        case void 0:
+          t1 = type$.int;
+          t1 = new A.ImmediateMultiDragGestureRecognizer(B.LinkedHashMap_LinkedHashMap$_empty(t1, type$.MultiDragPointerState), _null, _null, A.multidrag_MultiDragGestureRecognizer__defaultButtonAcceptBehavior$closure(), B.LinkedHashMap_LinkedHashMap$_empty(t1, type$.PointerDeviceKind));
+          $.$get$FlutterMemoryAllocations_instance().dispatchObjectCreated$3$className$library$object(_s17_, _s29_, t1);
+          break;
+        default:
+          t1 = _null;
+      }
+      t1.set$onStart(onStart);
+      return t1;
+    },
+    createState$0() {
+      return new A._DraggableState(D._StateLifecycle_0, this.$ti._eval$1("_DraggableState<1>"));
+    },
+    dragAnchorStrategy$3(arg0, arg1, arg2) {
+      return this.dragAnchorStrategy.call$3(arg0, arg1, arg2);
+    }
+  };
+  A._DraggableState.prototype = {
+    initState$0() {
+      var _this = this;
+      _this.super$State$initState();
+      _this._recognizer = _this._widget.createRecognizer$1(_this.get$_startDrag());
+    },
+    dispose$0() {
+      this._disposeRecognizerIfInactive$0();
+      this.super$State$dispose();
+    },
+    didChangeDependencies$0() {
+      var t2,
+        t1 = this._recognizer;
+      t1.toString;
+      t2 = B.MediaQuery__maybeOf(this.get$context(), D._MediaQueryAspect_18);
+      t1.gestureSettings = t2 == null ? null : t2.gestureSettings;
+      this.super$State$didChangeDependencies();
+    },
+    _disposeRecognizerIfInactive$0() {
+      if (this._activeCount > 0)
+        return;
+      this._recognizer.dispose$0();
+      this._recognizer = null;
+    },
+    _routePointer$1($event) {
+      var t1, t2;
+      type$.PointerDownEvent._as($event);
+      t1 = this._widget;
+      t2 = this._activeCount;
+      t1 = t1.maxSimultaneousDrags;
+      if (t2 >= t1)
+        return;
+      this._recognizer.addPointer$1($event);
+    },
+    _startDrag$1(position) {
+      var dragStartPoint, avatar, _this = this,
+        t1 = _this._widget,
+        t2 = _this._activeCount,
+        t3 = t1.maxSimultaneousDrags;
+      if (t2 >= t3)
+        return null;
+      dragStartPoint = t1.dragAnchorStrategy$3(t1, _this.get$context(), position);
+      _this.setState$1(new A._DraggableState__startDrag_closure(_this));
+      t1 = _this.get$context();
+      t2 = _this._widget;
+      t2.toString;
+      t2 = B.Overlay_of(t1, t2, false);
+      avatar = new A._DragAvatar(null, null, dragStartPoint, _this._widget.feedback, D.Offset_0_0, new A._DraggableState__startDrag_closure0(_this), new A._DraggableState__startDrag_closure1(_this), t2, true, true, B.View_of(_this.get$context()).viewId, B._setArrayType([], type$.JSArray__DragTargetState_Object), position, _this.$ti._eval$1("_DragAvatar<1>"));
+      t1 = B.OverlayEntry$(avatar.get$_drag_target$_build(), false, false);
+      avatar._drag_target$_entry = t1;
+      t2.insert$1(0, t1);
+      avatar.updateDrag$1(position);
+      _this._widget.toString;
+      return avatar;
+    },
+    build$1(context) {
+      var t1, t2, t3, _null = null;
+      B.debugCheckHasOverlay(context);
+      t1 = this._widget;
+      t2 = this._activeCount;
+      t3 = t1.maxSimultaneousDrags;
+      t3 = t2 < t3 ? this.get$_routePointer() : _null;
+      return B.Listener$(D.HitTestBehavior_0, t2 === 0 ? t1.child : t1.childWhenDragging, _null, _null, t3, _null, _null, _null);
+    }
+  };
+  A._DragEndKind.prototype = {
+    _enumToString$0() {
+      return "_DragEndKind." + this._name;
+    }
+  };
+  A._DragAvatar.prototype = {
+    update$1(details) {
+      var _this = this,
+        oldPosition = _this._drag_target$_position,
+        t1 = oldPosition.$add(0, _this._restrictAxis$1(details.delta));
+      _this._drag_target$_position = t1;
+      _this.updateDrag$1(t1);
+      t1 = _this._drag_target$_position.$eq(0, oldPosition);
+      if (!t1)
+        _this.onDragUpdate.call$1(details);
+    },
+    end$1(details) {
+      this.finishDrag$2(C._DragEndKind_0, this._restrictVelocityAxis$1(details.velocity));
+    },
+    cancel$0() {
+      this.finishDrag$1(C._DragEndKind_1);
+    },
+    updateDrag$1(globalPosition) {
+      var t2, result, targets, t3, listsMatch, iterator, i, _i, newTarget, _this = this,
+        t1 = _this.dragStartPoint;
+      _this._drag_target$_lastOffset = globalPosition.$sub(0, t1);
+      t2 = _this.overlayState;
+      if (t2._framework$_element != null) {
+        t2 = t2.get$context().findRenderObject$0();
+        t2.toString;
+        _this.___DragAvatar__overlayOffset_A = type$.RenderBox._as(t2).globalToLocal$1(globalPosition).$sub(0, t1);
+        _this._drag_target$_entry.markNeedsBuild$0();
+      }
+      result = B.HitTestResult$();
+      B.BindingBase_checkInstance($.WidgetsBinding__instance, type$.WidgetsBinding).hitTestInView$3(result, globalPosition.$add(0, _this.feedbackOffset), _this.viewId);
+      t1 = _this._getDragTargets$1(result._path);
+      targets = B._setArrayType(t1.slice(0), B._arrayInstanceType(t1));
+      t1 = targets.length;
+      t2 = _this._enteredTargets;
+      t3 = t2.length;
+      listsMatch = false;
+      if (t1 >= t3 && t3 !== 0) {
+        t3 = B._arrayInstanceType(targets);
+        iterator = new J.ArrayIterator(targets, t1, t3._eval$1("ArrayIterator<1>"));
+        t1 = t3._precomputed1;
+        i = 0;
+        while (true) {
+          if (!(i < t2.length)) {
+            listsMatch = true;
+            break;
+          }
+          iterator.moveNext$0();
+          t3 = iterator._current;
+          if (t3 == null)
+            t3 = t1._as(t3);
+          if (!(i < t2.length))
+            return B.ioore(t2, i);
+          if (!J.$eq$(t3, t2[i]))
+            break;
+          ++i;
+        }
+      }
+      if (listsMatch) {
+        for (t1 = t2.length, _i = 0; _i < t2.length; t2.length === t1 || (0, B.throwConcurrentModificationError)(t2), ++_i)
+          t2[_i].didMove$1(_this);
+        return;
+      }
+      _this._leaveAllEntered$0();
+      t1 = new B.CastList(targets, B._arrayInstanceType(targets)._eval$1("CastList<1,_DragTargetState<Object>?>"));
+      newTarget = t1.firstWhere$2$orElse(t1, new A._DragAvatar_updateDrag_closure(_this), new A._DragAvatar_updateDrag_closure0());
+      for (t1 = t2.length, _i = 0; _i < t2.length; t2.length === t1 || (0, B.throwConcurrentModificationError)(t2), ++_i)
+        t2[_i].didMove$1(_this);
+      _this._activeTarget = newTarget;
+    },
+    _getDragTargets$1(path) {
+      var t1, t2, _i;
+      type$.Iterable_HitTestEntry_HitTestTarget._as(path);
+      t1 = B._setArrayType([], type$.JSArray__DragTargetState_Object);
+      for (t2 = path.length, _i = 0; _i < t2; ++_i)
+        ;
+      return t1;
+    },
+    _leaveAllEntered$0() {
+      var t1, i;
+      for (t1 = this._enteredTargets, i = 0; i < t1.length; ++i)
+        t1[i].didLeave$1(this);
+      D.JSArray_methods.clear$0(t1);
+    },
+    finishDrag$2(endKind, velocity) {
+      var t1, t2, _this = this;
+      _this._leaveAllEntered$0();
+      _this._activeTarget = null;
+      _this._drag_target$_entry.remove$0(0);
+      _this._drag_target$_entry.dispose$0();
+      _this._drag_target$_entry = null;
+      t1 = velocity == null ? D.Velocity_Offset_0_0 : velocity;
+      t2 = _this._drag_target$_lastOffset;
+      t2.toString;
+      _this.onDragEnd.call$3(t1, t2, false);
+    },
+    finishDrag$1(endKind) {
+      return this.finishDrag$2(endKind, null);
+    },
+    _drag_target$_build$1(context) {
+      var t1, _null = null;
+      type$.BuildContext._as(context);
+      t1 = this.___DragAvatar__overlayOffset_A;
+      t1 === $ && B.throwLateFieldNI("_overlayOffset");
+      return B.Positioned$(_null, new B.ExcludeSemantics(true, B.IgnorePointer$(this.feedback, true, _null), _null), _null, _null, t1._dx, _null, t1._dy, _null);
+    },
+    _restrictVelocityAxis$1(velocity) {
+      return velocity;
+    },
+    _restrictAxis$1(offset) {
+      var t1;
+      switch (this.axis) {
+        case D.Axis_0:
+          t1 = new B.Offset(offset._dx, 0);
+          break;
+        case D.Axis_1:
+          t1 = new B.Offset(0, offset._dy);
+          break;
+        case null:
+        case void 0:
+          t1 = offset;
+          break;
+        default:
+          t1 = null;
+      }
+      return t1;
+    }
+  };
+  A.GreenlandGamePage.prototype = {
+    build$1(context) {
+      return C.McScaffold_qfr;
+    }
+  };
+  A.GreenlandGame.prototype = {
+    createState$0() {
+      return new A._GreenlandGameState(D._StateLifecycle_0);
+    }
+  };
+  A._GreenlandGameState.prototype = {
+    initState$0() {
+      var t1, _this = this;
+      B.Future_Future$delayed(D.Duration_100000, new A._GreenlandGameState_initState_closure(_this), type$.Null);
+      t1 = $.$get$rNG().nextInt$1(30000001);
+      _this.seed = t1;
+      _this.___GreenlandGameState_ticket_A = A.GreenlandTicket$standard(t1);
+      _this.___GreenlandGameState_reference_A = A.GreenlandTicket$standard(_this.seed);
+      _this.___GreenlandGameState_ticket_A.randomize$0();
+      _this.___GreenlandGameState_reference_A.stylize$0();
+      _this.super$State$initState();
+      t1 = B.Timer_Timer$periodic(D.Duration_500000, _this.get$checkValidity());
+      _this.___GreenlandGameState_timer_F !== $ && B.throwLateFieldAI("timer");
+      _this.___GreenlandGameState_timer_F = t1;
+    },
+    dispose$0() {
+      var t1 = this.___GreenlandGameState_timer_F;
+      t1 === $ && B.throwLateFieldNI("timer");
+      t1.cancel$0();
+      this.super$State$dispose();
+    },
+    checkValidity$1(t) {
+      var t1, valid, _this = this;
+      if (_this._framework$_element != null) {
+        t1 = _this.___GreenlandGameState_ticket_A;
+        t1 === $ && B.throwLateFieldNI("ticket");
+        valid = t1.meetsGuidelines$0();
+        if (valid !== _this.submittable)
+          _this.setState$1(new A._GreenlandGameState_checkValidity_closure(_this, valid));
+      }
+    },
+    submit$0() {
+      if (this._framework$_element != null && this.submittable) {
+        var inherited = B.GoRouter_maybeOf(this.get$context());
+        if (B.assertTest(inherited != null))
+          B.assertThrow("No GoRouter found in context");
+        inherited.go$2$extra("/search/wontickets", null);
+      }
+    },
+    reroll$0() {
+      if (this._framework$_element != null)
+        this.setState$1(new A._GreenlandGameState_reroll_closure(this));
+    },
+    build$1(context) {
+      var t4, t5, _this = this, _null = null,
+        t1 = "" + _this.seed,
+        t2 = type$.ValueKey_String,
+        t3 = _this.___GreenlandGameState_ticket_A;
+      t3 === $ && B.throwLateFieldNI("ticket");
+      t4 = _this.___GreenlandGameState_reference_A;
+      t4 === $ && B.throwLateFieldNI("reference");
+      t5 = type$.JSArray_Widget;
+      t2 = B.Positioned$fill(0, E.FittedBox$(B.Column$(B._setArrayType([new A._SingleTicket(true, t3, new B.ValueKey("Mod_" + t1, t2)), C.SizedBox_null_25_null_null, new A._SingleTicket(false, t4, new B.ValueKey("TicketReference_" + t1, t2))], t5), D.CrossAxisAlignment_2, _null, D.MainAxisAlignment_0, D.MainAxisSize_1), D.BoxFit_1));
+      t1 = _this.buttonPlacement$2(B.FilledButton$(C.Text_J0k, _null, _this.get$reroll(), _null), 1);
+      return new B.Stack(D.AlignmentDirectional_m1_m1, _null, D.StackFit_1, D.Clip_1, B._setArrayType([t2, t1, _this.buttonPlacement$2(B.FilledButton$(C.Text_D0e, _null, _this.submittable ? _this.get$submit() : _null, _null), 0)], t5), _null);
+    },
+    buttonPlacement$2(child, n) {
+      var _null = null;
+      return B.Align$(F.Alignment_1_1, new B.Padding(new B.EdgeInsets(0, 0, 16, 102 + 68 * n), new B.SizedBox(104, 52, child, _null), _null), _null, _null, _null);
+    }
+  };
+  A._SingleTicket.prototype = {
+    createState$0() {
+      return new A._SingleTicketState(D._StateLifecycle_0);
+    }
+  };
+  A._SingleTicketState.prototype = {
+    initState$0() {
+      this.super$State$initState();
+    },
+    build$1(context) {
+      var t1, _i, type, n, t2, t3, _null = null,
+        children = B._setArrayType([], type$.JSArray_Widget);
+      for (t1 = type$.ValueKey_String, _i = 0; _i < 5; ++_i) {
+        type = C.List_nQI[_i];
+        for (n = 0; t2 = this._widget, t3 = t2.ticket.objects, n < t3.length; ++n) {
+          t3 = t3[n];
+          if (t3._greenland_ticket$_type === type)
+            D.JSArray_methods.add$1(children, new A.DraggableTicket(t2.modifiable, t3, new B.ValueKey("DrgTicket" + n, t1)));
+        }
+      }
+      return B.Center$(B.Container$(D.Alignment_0_0, new B.Stack(D.AlignmentDirectional_m1_m1, _null, D.StackFit_1, D.Clip_1, children, _null), D.Clip_0, C.Color_Frf, _null, _null, _null, 400, _null, _null, _null, _null, _null, 800), _null, _null);
+    }
+  };
+  A.DraggableTicket.prototype = {
+    createState$0() {
+      return new A._DraggableTicketState(D._StateLifecycle_0);
+    }
+  };
+  A._DraggableTicketState.prototype = {
+    set$position(set) {
+      if (!this._widget.object.offset.$eq(0, set))
+        this.setState$1(new A._DraggableTicketState_position_closure(this, set));
+    },
+    build$1(context) {
+      var t2, t3, t4, t5, t6, t7, _this = this, _null = null,
+        t1 = _this._widget;
+      if (!t1.modifiable) {
+        t1 = t1.object;
+        t2 = t1.offset;
+        return B.Positioned$(_null, new A._TicketElement(t1, new B.ValueKey("element" + B.Primitives_objectHashCode(t1), type$.ValueKey_String)), _null, _null, t2._dx, _null, t2._dy, _null);
+      }
+      t1 = B.Primitives_objectHashCode(t1.object);
+      t2 = type$.ValueKey_String;
+      t3 = _this._widget.object;
+      t4 = t3.offset;
+      t5 = B.Primitives_objectHashCode(t3);
+      t6 = _this._widget.object;
+      t7 = B.Primitives_objectHashCode(t6);
+      return B.AnimatedPositioned$(new A.Draggable(new A._TicketElement(t6, new B.ValueKey("element" + t7, t2)), new A._TicketElement(t3, new B.ValueKey("element" + t5, t2)), D.SizedBox_0_0_null_null, A.drag_target__childDragAnchorStrategy$closure(), 1, new A._DraggableTicketState_build_closure(_this), _null, type$.Draggable_Object), D.C__Linear, G.Duration_30000, new B.ValueKey("ticket_elemAnimPos_" + t1, t2), t4._dx, t4._dy);
+    }
+  };
+  A._TicketElement.prototype = {
+    build$1(context) {
+      var _null = null,
+        t1 = this.object,
+        t2 = t1._greenland_ticket$_type;
+      if (t2 === C.ElementType_0) {
+        t1 = t1.color;
+        if (!(t1 >= 0 && t1 < 7))
+          return B.ioore(C.List_OSb, t1);
+        t1 = C.List_OSb[t1];
+        return B.Container$(D.Alignment_0_0, _null, D.Clip_0, _null, _null, B.BoxDecoration$(B.Border_Border$all(C.Color_1Xu, -1, 1), _null, _null, t1, _null, _null, D.BoxShape_0), _null, 100, _null, _null, _null, _null, _null, 400);
+      } else if (t2 === C.ElementType_1)
+        return new B.SizedBox(_null, 50, B.Center$(B.Container$(D.Alignment_0_0, _null, D.Clip_0, _null, _null, C.BoxDecoration_JFy, _null, 5, _null, _null, _null, _null, _null, 400), _null, _null), _null);
+      else if (t2 === C.ElementType_3) {
+        t1 = t1.color;
+        if (!(t1 >= 0 && t1 < 7))
+          return B.ioore(C.List_OSb, t1);
+        t1 = C.List_OSb[t1];
+        t1 = B.BoxDecoration$(B.Border_Border$all(C.Color_1Xu, -1, 1), _null, _null, t1, _null, _null, D.BoxShape_1);
+        return B.Container$(D.Alignment_0_0, B.Icon$(H.IconData_59654_RpgAwesome_null_false, C.Color_Frf, _null, _null, 50), D.Clip_0, _null, _null, t1, _null, 75, _null, _null, _null, _null, _null, 75);
+      } else if (t2 === C.ElementType_2) {
+        t1 = B.BoxDecoration$(B.Border_Border$all(C.Color_1Xu, -1, 1), _null, _null, C.Color_Frf, _null, _null, D.BoxShape_0);
+        return B.Container$(D.Alignment_0_1, B.Text$("T", _null, _null, _null, _null, _null, D.TextStyle_sjH.copyWith$3$color$fontSize$height(C.Color_jYc, 48, 1.2), _null, _null), D.Clip_0, _null, _null, t1, _null, _null, _null, _null, C.EdgeInsets_5_5_5_0, _null, _null, _null);
+      } else if (t2 === C.ElementType_4) {
+        t1 = B.BoxDecoration$(B.Border_Border$all(C.Color_1Xu, -1, 1), _null, _null, C.Color_PUT, _null, _null, D.BoxShape_0);
+        return B.Container$(D.Alignment_0_1, B.Text$("Testimoney Element Concept", _null, _null, _null, _null, _null, D.TextStyle_sjH.copyWith$3$color$fontSize$height(C.Color_jYc, 24, 1.2), _null, _null), D.Clip_0, _null, _null, t1, _null, _null, _null, _null, C.EdgeInsets_5_5_5_0, _null, _null, _null);
+      }
+      B.assertHelper(false);
+      return I.Placeholder_snY;
+    }
+  };
+  A.ElementType.prototype = {
+    _enumToString$0() {
+      return "ElementType." + this._name;
+    },
+    get$width() {
+      switch (this.index) {
+        case 0:
+          return 400;
+        case 1:
+          return 400;
+        case 4:
+          return 200;
+        case 2:
+          return 30;
+        case 3:
+          return 75;
+      }
+    },
+    get$height() {
+      switch (this.index) {
+        case 0:
+          return 100;
+        case 1:
+          return 10;
+        case 4:
+          return 50;
+        case 2:
+          return 50;
+        case 3:
+          return 75;
+      }
+    },
+    get$collides() {
+      switch (this.index) {
+        case 0:
+          return false;
+        case 2:
+        case 1:
+        case 3:
+        case 4:
+          return true;
+      }
+    }
+  };
+  A.GreenlandObject.prototype = {
+    toString$0(_) {
+      return this._greenland_ticket$_type.toString$0(0) + " " + this.color;
+    },
+    get$rect() {
+      var t3,
+        t1 = this.offset,
+        t2 = t1._dx;
+      t1 = t1._dy;
+      t3 = this._greenland_ticket$_type;
+      return new B.Rect(t2, t1, t2 + t3.get$width(), t1 + t3.get$height());
+    }
+  };
+  A.GreenlandTicket.prototype = {
+    $index(_, ix) {
+      var t1;
+      B._asInt(ix);
+      t1 = this.objects;
+      if (!(ix < t1.length))
+        return B.ioore(t1, ix);
+      return t1[ix];
+    },
+    randomize$0() {
+      var t1, t2, t3, _i, obj, t4, t5, t6;
+      this.baseGeneration$0();
+      for (t1 = this.objects, t2 = t1.length, t3 = this.rng, _i = 0; _i < t1.length; t1.length === t2 || (0, B.throwConcurrentModificationError)(t1), ++_i) {
+        obj = t1[_i];
+        t4 = obj._greenland_ticket$_type;
+        t5 = t4.get$width();
+        t6 = t3.nextDouble$0();
+        t4 = t4.get$height();
+        obj.offset = new B.Offset(15 + t6 * (770 - t5), 15 + t3.nextDouble$0() * (370 - t4));
+      }
+    },
+    meetsGuidelines$0() {
+      var t1, a, t2, t3, t4, t5, rect;
+      if (this.hasAnyCollisions$0())
+        return false;
+      for (t1 = this.objects, a = 0; a < t1.length; ++a) {
+        t2 = t1[a];
+        t3 = t2.offset;
+        t4 = t3._dx;
+        t3 = t3._dy;
+        t2 = t2._greenland_ticket$_type;
+        t5 = t4 + t2.get$width();
+        t2 = t3 + t2.get$height();
+        rect = new B.Rect(t4, t3, t5, t2);
+        if (t4 < 15 || t3 < 15 || t5 > 785 || t2 > 385) {
+          rect.toString$0(0);
+          return false;
+        }
+      }
+      return true;
+    },
+    hasAnyCollisions$0() {
+      var t1, a, t2, t3, t4, arect, r;
+      for (t1 = this.objects, a = 0; a < t1.length; ++a)
+        if (t1[a]._greenland_ticket$_type.get$collides()) {
+          if (!(a < t1.length))
+            return B.ioore(t1, a);
+          t2 = t1[a];
+          t3 = t2.offset;
+          t4 = t3._dx;
+          t3 = t3._dy;
+          t2 = t2._greenland_ticket$_type;
+          arect = new B.Rect(t4, t3, t4 + t2.get$width(), t3 + t2.get$height());
+          for (r = a + 1; r < t1.length; ++r)
+            if (t1[r]._greenland_ticket$_type.get$collides()) {
+              if (!(r < t1.length))
+                return B.ioore(t1, r);
+              t2 = t1[r];
+              t3 = t2.offset;
+              t4 = t3._dx;
+              t3 = t3._dy;
+              t2 = t2._greenland_ticket$_type;
+              if (arect.overlaps$1(new B.Rect(t4, t3, t4 + t2.get$width(), t3 + t2.get$height())))
+                return true;
+            }
+        }
+      return false;
+    },
+    hasCollisions$2(obj, originN) {
+      var t1, r, t2, t3, t4,
+        rect = obj.get$rect();
+      for (t1 = this.objects, r = 0; r < originN; ++r) {
+        if (!(r < t1.length))
+          return B.ioore(t1, r);
+        if (t1[r]._greenland_ticket$_type.get$collides()) {
+          if (!(r < t1.length))
+            return B.ioore(t1, r);
+          t2 = t1[r];
+          if (t2 !== obj) {
+            t3 = t2.offset;
+            t4 = t3._dx;
+            t3 = t3._dy;
+            t2 = t2._greenland_ticket$_type;
+            if (new B.Rect(t4, t3, t4 + t2.get$width(), t3 + t2.get$height()).overlaps$1(rect))
+              return true;
+          }
+        }
+      }
+      return false;
+    },
+    baseGeneration$0() {
+      var t2, t3,
+        t1 = this.objects;
+      D.JSArray_methods.clear$0(t1);
+      for (t2 = this.rng; t1.length < 7;) {
+        t3 = t2.nextInt$1(5);
+        if (!(t3 >= 0 && t3 < 5))
+          return B.ioore(C.List_nQI, t3);
+        D.JSArray_methods.add$1(t1, new A.GreenlandObject(C.List_nQI[t3], 1 + t2.nextInt$1(6), D.Offset_0_0, $.$get$ChangeNotifier__emptyListeners()));
+      }
+    },
+    stylize$0() {
+      var randFrac, rfx, rfy, t1, _length, t2, xs, i, ys, lrx, lry, n, obj, allowed, fails, x, y, t3, _this = this;
+      _this.baseGeneration$0();
+      randFrac = new A.GreenlandTicket_stylize_randFrac(_this);
+      rfx = new A.GreenlandTicket_stylize_rfx(_this, randFrac);
+      rfy = new A.GreenlandTicket_stylize_rfy(_this, randFrac);
+      t1 = _this.rng;
+      _length = 1 + t1.nextInt$1(2);
+      t2 = type$.double;
+      xs = J.JSArray_JSArray$allocateGrowable(_length, t2);
+      for (i = 0; i < _length; ++i)
+        xs[i] = rfx.call$0();
+      _length = 2 + t1.nextInt$1(5);
+      ys = J.JSArray_JSArray$allocateGrowable(_length, t2);
+      for (i = 0; i < _length; ++i)
+        ys[i] = rfy.call$0();
+      D.JSArray_methods.insert$2(xs, 0, 15);
+      D.JSArray_methods.insert$2(ys, 0, 15);
+      lrx = new A.GreenlandTicket_stylize_lrx(_this, xs);
+      lry = new A.GreenlandTicket_stylize_lry(_this, ys);
+      for (t1 = _this.objects, n = 0; n < t1.length; ++n)
+        t1[n].offset = C.Offset_m1000_m1000;
+      for (n = 0; n < t1.length; ++n) {
+        obj = t1[n];
+        t2 = obj._greenland_ticket$_type;
+        allowed = false;
+        fails = 0;
+        while (true) {
+          if (!(!allowed && fails < 200))
+            break;
+          x = lrx.call$0();
+          y = lry.call$0();
+          if (x + t2.get$width() + 30 > 800)
+            x = 800 - t2.get$width() - 15;
+          for (; y + t2.get$height() + 30 > 400;)
+            y = lry.call$0();
+          obj.offset = new B.Offset(x, y);
+          t3 = _this.hasCollisions$2(obj, n);
+          allowed = !t3;
+          ++fails;
+        }
+      }
+    }
+  };
+  var typesOffset = hunkHelpers.updateTypes(["~()", "~(PointerEvent)", "~(int)", "~(PointerDownEvent)", "Widget(BuildContext)", "bool(_DragTargetState<Object>?)", "~(@)", "bool(int)", "Offset(Draggable<Object>,BuildContext,Offset)"]);
+  A.MultiDragPointerState_dispose_closure.prototype = {
+    call$0() {
+      this.$this._pendingDelta = null;
+      return true;
+    },
+    $signature: 1
+  };
+  A.MultiDragGestureRecognizer_acceptGesture_closure.prototype = {
+    call$1(initialPosition) {
+      return this.$this._multidrag$_startDrag$2(initialPosition, this.pointer);
+    },
+    $signature: 744
+  };
+  A.MultiDragGestureRecognizer__startDrag_closure.prototype = {
+    call$0() {
+      return this.$this.onStart.call$1(this.initialPosition);
+    },
+    $signature: 745
+  };
+  A._DraggableState__startDrag_closure.prototype = {
+    call$0() {
+      ++this.$this._activeCount;
+    },
+    $signature: 0
+  };
+  A._DraggableState__startDrag_closure0.prototype = {
+    call$1(details) {
+      var t1 = this.$this,
+        t2 = t1._framework$_element != null;
+      if (t2)
+        t1._widget.toString;
+      if (t2)
+        t1._widget.onDragUpdate.call$1(details);
+    },
+    $signature: 18
+  };
+  A._DraggableState__startDrag_closure1.prototype = {
+    call$3(velocity, offset, wasAccepted) {
+      var t1 = this.$this;
+      if (t1._framework$_element != null)
+        t1.setState$1(new A._DraggableState__startDrag__closure(t1));
+      else {
+        --t1._activeCount;
+        t1._disposeRecognizerIfInactive$0();
+      }
+      if (t1._framework$_element != null)
+        t1._widget.toString;
+      if (wasAccepted)
+        t1._widget.toString;
+      if (!wasAccepted)
+        t1._widget.toString;
+    },
+    $signature: 746
+  };
+  A._DraggableState__startDrag__closure.prototype = {
+    call$0() {
+      --this.$this._activeCount;
+    },
+    $signature: 0
+  };
+  A._DragAvatar_updateDrag_closure.prototype = {
+    call$1(target) {
+      type$.nullable__DragTargetState_Object._as(target);
+      return false;
+    },
+    $signature: typesOffset + 5
+  };
+  A._DragAvatar_updateDrag_closure0.prototype = {
+    call$0() {
+      return null;
+    },
+    $signature: 20
+  };
+  A._GreenlandGameState_initState_closure.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      t1.submittable = true;
+      t1.submit$0();
+    },
+    $signature: 20
+  };
+  A._GreenlandGameState_checkValidity_closure.prototype = {
+    call$0() {
+      this.$this.submittable = this.valid;
+    },
+    $signature: 0
+  };
+  A._GreenlandGameState_reroll_closure.prototype = {
+    call$0() {
+      var t1 = this.$this,
+        t2 = $.$get$rNG().nextInt$1(30000001);
+      t1.seed = t2;
+      t1.___GreenlandGameState_ticket_A = A.GreenlandTicket$standard(t2);
+      t1.___GreenlandGameState_reference_A = A.GreenlandTicket$standard(t1.seed);
+      t1.___GreenlandGameState_ticket_A.randomize$0();
+      t1.___GreenlandGameState_reference_A.stylize$0();
+    },
+    $signature: 0
+  };
+  A._DraggableTicketState_position_closure.prototype = {
+    call$0() {
+      this.$this._widget.object.offset = this.set;
+    },
+    $signature: 0
+  };
+  A._DraggableTicketState_build_closure.prototype = {
+    call$1(details) {
+      var t1 = this.$this;
+      t1.set$position(t1._widget.object.offset.$add(0, details.delta));
+    },
+    $signature: 18
+  };
+  A.GreenlandTicket_stylize_randFrac.prototype = {
+    call$0() {
+      var t1 = this.$this.rng,
+        num = 1 + t1.nextInt$1(3);
+      return (1 + t1.nextInt$1(num)) / num;
+    },
+    $signature: 43
+  };
+  A.GreenlandTicket_stylize_rfx.prototype = {
+    call$0() {
+      var t1 = this.randFrac.call$0();
+      if (typeof t1 !== "number")
+        return t1.$mul();
+      return t1 * 770 + 15;
+    },
+    $signature: 43
+  };
+  A.GreenlandTicket_stylize_rfy.prototype = {
+    call$0() {
+      var t1 = this.randFrac.call$0();
+      if (typeof t1 !== "number")
+        return t1.$mul();
+      return t1 * 370 + 15;
+    },
+    $signature: 43
+  };
+  A.GreenlandTicket_stylize_lrx.prototype = {
+    call$0() {
+      var t1 = this.xs,
+        t2 = this.$this.rng.nextInt$1(t1.length);
+      if (!(t2 >= 0 && t2 < t1.length))
+        return B.ioore(t1, t2);
+      return t1[t2];
+    },
+    $signature: 43
+  };
+  A.GreenlandTicket_stylize_lry.prototype = {
+    call$0() {
+      var t1 = this.ys,
+        t2 = this.$this.rng.nextInt$1(t1.length);
+      if (!(t2 >= 0 && t2 < t1.length))
+        return B.ioore(t1, t2);
+      return t1[t2];
+    },
+    $signature: 43
+  };
+  (function installTearOffs() {
+    var _static_1 = hunkHelpers._static_1,
+      _instance_1_u = hunkHelpers._instance_1u,
+      _static = hunkHelpers.installStaticTearOff,
+      _instance_0_u = hunkHelpers._instance_0u;
+    _static_1(A, "multidrag_MultiDragGestureRecognizer__defaultButtonAcceptBehavior$closure", "MultiDragGestureRecognizer__defaultButtonAcceptBehavior", 7);
+    var _;
+    _instance_1_u(_ = A.MultiDragGestureRecognizer.prototype, "get$_multidrag$_handleEvent", "_multidrag$_handleEvent$1", 1);
+    _instance_1_u(_, "get$_removeState", "_removeState$1", 2);
+    _static(A, "drag_target__childDragAnchorStrategy$closure", 3, null, ["call$3"], ["childDragAnchorStrategy"], 8, 0);
+    _instance_1_u(_ = A._DraggableState.prototype, "get$_routePointer", "_routePointer$1", 3);
+    _instance_1_u(_, "get$_startDrag", "_startDrag$1", "_DragAvatar<1>?(Offset)");
+    _instance_1_u(A._DragAvatar.prototype, "get$_drag_target$_build", "_drag_target$_build$1", 4);
+    _instance_1_u(_ = A._GreenlandGameState.prototype, "get$checkValidity", "checkValidity$1", 6);
+    _instance_0_u(_, "get$submit", "submit$0", 0);
+    _instance_0_u(_, "get$reroll", "reroll$0", 0);
+  })();
+  (function inheritance() {
+    var _inheritMany = hunkHelpers.inheritMany,
+      _inherit = hunkHelpers.inherit;
+    _inheritMany(B.Object, [A.Drag, A.MultiDragPointerState, A.GreenlandTicket]);
+    _inheritMany(B.Closure0Args, [A.MultiDragPointerState_dispose_closure, A.MultiDragGestureRecognizer__startDrag_closure, A._DraggableState__startDrag_closure, A._DraggableState__startDrag__closure, A._DragAvatar_updateDrag_closure0, A._GreenlandGameState_initState_closure, A._GreenlandGameState_checkValidity_closure, A._GreenlandGameState_reroll_closure, A._DraggableTicketState_position_closure, A.GreenlandTicket_stylize_randFrac, A.GreenlandTicket_stylize_rfx, A.GreenlandTicket_stylize_rfy, A.GreenlandTicket_stylize_lrx, A.GreenlandTicket_stylize_lry]);
+    _inherit(A.MultiDragGestureRecognizer, B.GestureRecognizer);
+    _inheritMany(B.Closure, [A.MultiDragGestureRecognizer_acceptGesture_closure, A._DraggableState__startDrag_closure0, A._DraggableState__startDrag_closure1, A._DragAvatar_updateDrag_closure, A._DraggableTicketState_build_closure]);
+    _inheritMany(A.MultiDragPointerState, [A._ImmediatePointerState, A._HorizontalPointerState, A._VerticalPointerState]);
+    _inheritMany(A.MultiDragGestureRecognizer, [A.ImmediateMultiDragGestureRecognizer, A.HorizontalMultiDragGestureRecognizer, A.VerticalMultiDragGestureRecognizer]);
+    _inheritMany(B.StatefulWidget, [A.Draggable, A.GreenlandGame, A._SingleTicket, A.DraggableTicket]);
+    _inheritMany(B.State, [A._DraggableState, A._GreenlandGameState, A._SingleTicketState, A._DraggableTicketState]);
+    _inheritMany(B._Enum, [A._DragEndKind, A.ElementType]);
+    _inherit(A._DragAvatar, A.Drag);
+    _inheritMany(B.StatelessWidget, [A.GreenlandGamePage, A._TicketElement]);
+    _inherit(A.GreenlandObject, B.ChangeNotifier);
+  })();
+  B._Universe_addRules(init.typeUniverse, JSON.parse('{"MultiDragGestureRecognizer":{"GestureRecognizer":[],"DiagnosticableTree":[],"GestureArenaMember":[],"Diagnosticable":[]},"_ImmediatePointerState":{"MultiDragPointerState":[]},"ImmediateMultiDragGestureRecognizer":{"GestureRecognizer":[],"DiagnosticableTree":[],"GestureArenaMember":[],"Diagnosticable":[]},"_HorizontalPointerState":{"MultiDragPointerState":[]},"HorizontalMultiDragGestureRecognizer":{"GestureRecognizer":[],"DiagnosticableTree":[],"GestureArenaMember":[],"Diagnosticable":[]},"_VerticalPointerState":{"MultiDragPointerState":[]},"VerticalMultiDragGestureRecognizer":{"GestureRecognizer":[],"DiagnosticableTree":[],"GestureArenaMember":[],"Diagnosticable":[]},"Draggable":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_DragTargetState":{"State":["DragTarget<1>"],"Diagnosticable":[]},"_DragAvatar":{"Drag":[]},"_DraggableState":{"State":["Draggable<1>"],"Diagnosticable":[],"State.T":"Draggable<1>"},"_DragEndKind":{"Enum":[]},"GreenlandGame":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_SingleTicket":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"DraggableTicket":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"GreenlandGamePage":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_GreenlandGameState":{"State":["GreenlandGame"],"Diagnosticable":[],"State.T":"GreenlandGame"},"_SingleTicketState":{"State":["_SingleTicket"],"Diagnosticable":[],"State.T":"_SingleTicket"},"_DraggableTicketState":{"State":["DraggableTicket"],"Diagnosticable":[],"State.T":"DraggableTicket"},"_TicketElement":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"ElementType":{"Enum":[]},"GreenlandObject":{"ChangeNotifier":[],"Listenable":[]}}'));
+  var type$ = (function rtii() {
+    var findType = B.findType;
+    return {
+      BuildContext: findType("BuildContext"),
+      Draggable_Object: findType("Draggable<Object>"),
+      GestureBinding: findType("GestureBinding"),
+      Iterable_HitTestEntry_HitTestTarget: findType("Iterable<HitTestEntry<HitTestTarget>>"),
+      JSArray_GreenlandObject: findType("JSArray<GreenlandObject>"),
+      JSArray_Widget: findType("JSArray<Widget>"),
+      JSArray__DragTargetState_Object: findType("JSArray<_DragTargetState<Object>>"),
+      MultiDragPointerState: findType("MultiDragPointerState"),
+      Null: findType("Null"),
+      PointerCancelEvent: findType("PointerCancelEvent"),
+      PointerDeviceKind: findType("PointerDeviceKind"),
+      PointerDownEvent: findType("PointerDownEvent"),
+      PointerEvent: findType("PointerEvent"),
+      PointerMoveEvent: findType("PointerMoveEvent"),
+      PointerUpEvent: findType("PointerUpEvent"),
+      RenderBox: findType("RenderBox"),
+      ValueKey_String: findType("ValueKey<String>"),
+      WidgetsBinding: findType("WidgetsBinding"),
+      double: findType("double"),
+      int: findType("int"),
+      nullable_Drag: findType("Drag?"),
+      nullable_Drag_Function_Offset: findType("Drag?(Offset)"),
+      nullable__DragTargetState_Object: findType("_DragTargetState<Object>?"),
+      nullable__PointAtTime: findType("_PointAtTime?"),
+      nullable_nullable_Drag_Function_Offset: findType("Drag?(Offset)?")
+    };
+  })();
+  (function constants() {
+    var makeConstList = hunkHelpers.makeConstList;
+    C.Color_1Xu = new B.Color(1, 0.21176470588235294, 0.12156862745098039, 0.3686274509803922, D.ColorSpace_0);
+    C.BoxDecoration_JFy = new B.BoxDecoration(C.Color_1Xu, null, null, null, null, null, D.BoxShape_0);
+    C.Color_Frf = new B.Color(1, 0.36470588235294116, 0.30980392156862746, 0.6313725490196078, D.ColorSpace_0);
+    C.Color_PUT = new B.Color(1, 0.32941176470588235, 0.25098039215686274, 0.4666666666666667, D.ColorSpace_0);
+    C.Color_jYc = new B.Color(1, 0.8352941176470589, 0.8784313725490196, 1, D.ColorSpace_0);
+    C.EdgeInsets_5_5_5_0 = new B.EdgeInsets(5, 5, 5, 0);
+    C.ElementType_0 = new A.ElementType(0, "rect");
+    C.ElementType_1 = new A.ElementType(1, "divider");
+    C.ElementType_2 = new A.ElementType(2, "letter");
+    C.ElementType_3 = new A.ElementType(3, "icon");
+    C.ElementType_4 = new A.ElementType(4, "text");
+    C.Color_cO2 = new B.Color(1, 0.6901960784313725, 0.7333333333333333, 1, D.ColorSpace_0);
+    C.Color_acV = new B.Color(1, 0.6, 0.9686274509803922, 1, D.ColorSpace_0);
+    C.Color_hR9 = new B.Color(1, 0.6666666666666666, 0.6, 1, D.ColorSpace_0);
+    C.Color_8Ax = new B.Color(1, 1, 0.6666666666666666, 0.8, D.ColorSpace_0);
+    C.List_OSb = B._setArrayType(makeConstList([C.Color_Frf, C.Color_cO2, C.Color_jYc, C.Color_PUT, C.Color_acV, C.Color_hR9, C.Color_8Ax]), B.findType("JSArray<Color>"));
+    C.List_nQI = B._setArrayType(makeConstList([C.ElementType_0, C.ElementType_1, C.ElementType_2, C.ElementType_3, C.ElementType_4]), B.findType("JSArray<ElementType>"));
+    C.ValueKey_greenland_game = new B.ValueKey("greenland_game", type$.ValueKey_String);
+    C.GreenlandGame_ValueKey_greenland_game = new A.GreenlandGame(C.ValueKey_greenland_game);
+    C.McScaffold_qfr = new B.McScaffold("ticketstogreenland", C.GreenlandGame_ValueKey_greenland_game, null);
+    C.Offset_m1000_m1000 = new B.Offset(-1000, -1000);
+    C.SizedBox_null_25_null_null = new B.SizedBox(null, 25, null, null);
+    C.Text_D0e = new B.Text("Submit", null, null, null, null, null, null, null, null, null);
+    C.Text_J0k = new B.Text("Randomize", null, null, null, null, null, null, null, null, null);
+    C._DragEndKind_0 = new A._DragEndKind(0, "dropped");
+    C._DragEndKind_1 = new A._DragEndKind(1, "canceled");
+  })();
+};
+;
+((d, h) => {
+  d[h] = d.current;
+  d.eventLog.push({p: "main.dart.js_92", e: "endPart", h: h});
+})($__dart_deferred_initializers__, "ES7gY19U+jJD5+toroLTi2b94iI=");
+;

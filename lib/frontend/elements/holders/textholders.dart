@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../backend/font_interm.dart';
 import '../../../backend/text_utils.dart';
+import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 // import '../custom_code/code_holders.dart';
 
@@ -41,15 +42,23 @@ class BodyTextElement extends TextHolder {
 
   @override
   Widget element(BuildContext context) {
+    //Get the part!
+    Part part = Part.of(context);
     return Text(
       text,
-      style: bodyFont,
+      style: part.bodyFont,
     );
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return element(context);
+    //Get the part!
+    Part part = Part.of(context);
+    return Text(
+      text,
+      style: part.bodyFont,
+    );
+    // return element(context);
   }
 }
 
@@ -83,12 +92,15 @@ class AlignedBodyText extends TextHolder {
 
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(
-        tabs,
-        align,
-        Text(
+    Part part = Part.of(context);
+
+    return WrapInTabs(
+        key: const Key("tabs"),
+        tabs: tabs,
+        align: align,
+        child: Text(
           text,
-          style: bodyFont,
+          style: part.bodyFont,
           textAlign: align,
         ));
   }
@@ -141,19 +153,24 @@ class CustomFontText extends FontWanterTextHolder {
 
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(tabs, align, textElement(context));
+    return WrapInTabs(
+        key: Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child: textElement(context));
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return (wrapInTabs(
-        tabs,
-        align,
-        Text(
+    return WrapInTabs(
+        key: const Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child: Text(
           text,
           style: font.fallback(),
           textAlign: align,
-        )));
+        ));
   }
 }
 
@@ -169,14 +186,22 @@ class HiliteFontText extends FontWanterTextHolder {
 
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(tabs, align,
-        Text(text, style: font.instanceWithColor(color), textAlign: align));
+    return WrapInTabs(
+        key: Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child:
+            Text(text, style: font.instanceWithColor(color), textAlign: align));
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return wrapInTabs(tabs, align,
-        Text(text, style: font.fallbackWithColor(color), textAlign: align));
+    return WrapInTabs(
+        key: Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child:
+            Text(text, style: font.fallbackWithColor(color), textAlign: align));
   }
 }
 
@@ -216,13 +241,21 @@ class SubSuperFontText extends FontWanterTextHolder {
 
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(tabs, align, scriptAlign(context));
+    return WrapInTabs(
+        key: const Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child: scriptAlign(context));
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return wrapInTabs(tabs, align,
-        Text(text, style: font.fallbackWithColor(color), textAlign: align));
+    return WrapInTabs(
+        key: const Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child:
+            Text(text, style: font.fallbackWithColor(color), textAlign: align));
   }
 }
 
@@ -233,6 +266,7 @@ class HeaderOfText extends TextHolder {
 
   @override
   Widget element(BuildContext context) {
+// I don't think we're using this
     return Text(
       text,
       style: headerFont,
@@ -267,17 +301,6 @@ class CustomHeaderOfText extends HeaderOfText {
           style: font.instance(),
           textAlign: align,
         ));
-    return Container(
-        decoration: BoxDecoration(
-            border: Border(
-                bottom: BorderSide(color: font.color ?? headerFont.color!))),
-        child: Align(
-            alignment: textAlignToHoriz(align),
-            child: Text(
-              text,
-              style: font.instance(),
-              textAlign: align,
-            )));
   }
 
   @override
@@ -303,22 +326,35 @@ Alignment textAlignToHoriz(TextAlign align) {
   }
 }
 
-const double tabSize = 50;
-Widget wrapInTabs(int tabs, TextAlign align, Widget child) {
-  Alignment horizAlign = textAlignToHoriz(align);
+class WrapInTabs extends StatelessWidget {
+  final int tabs;
+  final TextAlign align;
+  final Widget child;
+  const WrapInTabs(
+      {required super.key,
+      required this.tabs,
+      required this.align,
+      required this.child});
 
-  Widget alignWrap;
-  if (horizAlign == Alignment.topLeft) {
-    alignWrap = child;
-  } else {
-    alignWrap = Align(alignment: horizAlign, child: child);
-  }
+  @override
+  Widget build(BuildContext context) {
+    Alignment horizAlign = textAlignToHoriz(align);
 
-  if (tabs == 0) {
-    return alignWrap;
-  } else {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15 + tabSize * tabs),
-        child: alignWrap);
+    double tabSize = MediaQuery.sizeOf(context).width / 8;
+
+    Widget alignWrap;
+    if (horizAlign == Alignment.topLeft) {
+      alignWrap = child;
+    } else {
+      alignWrap = Align(alignment: horizAlign, child: child);
+    }
+
+    if (tabs == 0) {
+      return alignWrap;
+    } else {
+      return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15 + tabSize * tabs),
+          child: alignWrap);
+    }
   }
 }

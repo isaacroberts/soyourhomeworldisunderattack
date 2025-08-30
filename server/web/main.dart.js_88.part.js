@@ -1,462 +1,966 @@
-((a,b,c)=>{a[b]=a[b]||{}
-a[b][c]=a[b][c]||[]
-a[b][c].push({p:"main.dart.js_88",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var J,B,D,E,F,A={Ub:function Ub(d,e){var _=this
-_.t$=d
-_.b=_.dy=null
-_.c=0
-_.y=_.d=null
-_.z=!0
-_.Q=null
-_.as=!1
-_.at=null
-_.ay=$
-_.ch=e
-_.CW=!1
-_.cx=$
-_.cy=!0
-_.db=!1
-_.dx=$},Vv:function Vv(d,e,f){this.c=d
-this.d=e
-this.a=f},a34:function a34(d,e){this.c=d
-this.a=e},T5:function T5(d,e,f,g,h,i,j){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g
-_.f=h
-_.r=i
-_.$ti=j},wL:function wL(d,e,f,g,h,i,j){var _=this
-_.w=d
-_.x=e
-_.y=f
-_.z=g
-_.a=h
-_.K$=0
-_.J$=i
-_.al$=_.V$=0
-_.$ti=j},lf:function lf(d,e,f,g){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.$ti=g},lg:function lg(d,e){this.a=d
-this.b=e},
-aYD(d,e,f,g,h,i,j){var x=g==null,w=x?h:new A.a70(i,g,h)
-x=x?i:i+1
-return new A.a7_(w,x,!0,!0,!0,j==null?new A.a71():j,null)},
-a7_:function a7_(d,e,f,g,h,i,j){var _=this
-_.a=d
-_.b=e
-_.c=f
-_.d=g
-_.e=h
-_.r=i
-_.w=j},
-a70:function a70(d,e,f){this.a=d
-this.b=e
-this.c=f},
-a71:function a71(){},
-DW:function DW(d,e,f,g){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.a=g},
-JX:function JX(){this.c=this.a=null},
-QZ:function QZ(d,e){this.c=d
-this.a=e},
-wE:function wE(d){this.a=d},
-aG6(d){var x=d.a.a
-x=x==null?null:x.length
-return x==null?0:x},
-akB:function akB(d,e){this.a=d
-this.b=e},
-wK:function wK(d,e,f,g,h,i,j,k,l){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.f=g
-_.r=h
-_.w=i
-_.x=j
-_.a=k
-_.$ti=l},
-Kv:function Kv(d){var _=this
-_.d=!1
-_.c=_.a=null
-_.$ti=d},
-aAv:function aAv(){},
-aAA:function aAA(d){this.a=d},
-aAB:function aAB(d){this.a=d},
-aAw:function aAw(d,e){this.a=d
-this.b=e},
-aAx:function aAx(d,e){this.a=d
-this.b=e},
-aAy:function aAy(d,e){this.a=d
-this.b=e},
-aAz:function aAz(d){this.a=d},
-aAu:function aAu(d){this.a=d},
-yV:function yV(d,e,f,g){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.a=g},
-EK:function EK(d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x){var _=this
-_.R8=d
-_.RG=e
-_.cy=f
-_.c=g
-_.d=h
-_.e=i
-_.f=j
-_.r=k
-_.w=l
-_.x=m
-_.y=n
-_.z=o
-_.Q=p
-_.as=q
-_.at=r
-_.ax=s
-_.ay=t
-_.ch=u
-_.CW=v
-_.a=w
-_.$ti=x},
-EL:function EL(d,e,f,g,h,i,j,k,l,m,n){var _=this
-_.c=d
-_.d=e
-_.e=f
-_.f=g
-_.r=h
-_.w=i
-_.y=j
-_.z=k
-_.Q=l
-_.a=m
-_.$ti=n},
-akE:function akE(d){this.a=d},
-akC:function akC(d){this.a=d},
-akD:function akD(d){this.a=d},
-P_:function P_(d){this.a=d},
-b1f(d,e,f){return new A.ow(d,f,e)},
-ow:function ow(d,e,f){this.c=d
-this.d=e
-this.a=f},
-K0:function K0(d){var _=this
-_.d=$
-_.e=d
-_.c=_.a=null},
-azn:function azn(d){this.a=d},
-azo:function azo(){}},C,G
-J=c[1]
-B=c[0]
-D=c[2]
-E=c[91]
-F=c[41]
-A=a.updateHolder(c[9],A)
-C=c[90]
-G=c[40]
-A.Ub.prototype={
-aX(){var x,w,v,u=this,t=null,s=y.S.a(B.m.prototype.gH.call(u)),r=s.y-s.e,q=u.t$
-if(q!=null){switch(B.bb(s.a).a){case 0:q=q.a9(D.ab,s.w,q.gbd())
-break
-case 1:q=q.a9(D.aJ,s.w,q.gbI())
-break
-default:q=t}r=Math.max(r,q)
-q=u.t$
-q.toString
-q.fH(s.Zj(r,r))}x=u.nX(s,0,r)
-w=u.lp(s,0,r)
-q=B.f0(w,r>s.r||s.d>0,t,t,x,0,x,0,r,t,t)
-u.dy=q
-v=u.t$
-if(v!=null)u.Pq(v,s,q)}}
-A.Vv.prototype={
-C(d){return new A.a34(this.c,null)}}
-A.a34.prototype={
-aD(d){var x=new A.Ub(null,B.a7(y.v))
-x.aC()
-x.saL(null)
-return x}}
-A.T5.prototype={}
-A.wL.prototype={
-sp(d){if(this.a.gaE()!==d.gaE())this.qz(d.gaE())
-this.np(d)},
-Ze(d,e){var x=this,w=x.a.a
-x.sp(new A.lf(D.b.W(w==null?B.b([],x.$ti.h("r<2>")):w,d),null,e,x.$ti.h("lf<1,2>")))},
-qz(d){var x,w,v,u=this.w,t=u==null?null:u.a.length===0
-if(t!==!1)return
-u.toString
-x=B.fM(u,!0,y.s)
-for(u=x.length,w=0;w<u;++w){v=x[w]
-if(this.w.n(0,v))v.$1(d)}},
-a2w(d){var x,w,v,u=this.x,t=u==null?null:u.a.length===0
-if(t!==!1)return
-u.toString
-x=B.fM(u,!0,this.$ti.h("~(1)"))
-for(u=x.length,w=0;w<u;++w){v=x[w]
-if(this.x.n(0,v))v.$1(d)}},
-l(){this.x=this.w=null
-this.dL()}}
-A.lf.prototype={
-gaE(){var x=this,w=x.gI0()&&x.c!=null
-if(w)return C.xV
-if(x.gI0()&&x.c==null)return C.a_Y
-w=x.gAv()
-if(w==null)return C.xU
-x.gI0()
-if(x.gAv()!=null&&x.gAv()===0)return C.a_Z
-else return C.a0_},
-k(d){return"PagingState(itemList: \u2524"+B.o(this.a)+"\u251c, error: "+B.o(this.b)+", nextPageKey: "+B.o(this.c)+")"},
-j(d,e){var x,w,v
-if(e==null)return!1
-if(this===e)return!0
-x=!1
-if(e instanceof A.lf){w=e.a
-v=this.a
-if(w==null?v==null:w===v)x=e.c==this.c}return x},
-gD(d){return B.X(J.L(this.a),D.r5.gD(this.b),J.L(this.c),D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a,D.a)},
-gAv(){var x=this.a
-return x==null?null:x.length},
-gI0(){var x=this.gAv()
-return x!=null&&x>0}}
-A.lg.prototype={
-L(){return"PagingStatus."+this.b}}
-A.a7_.prototype={}
-A.DW.prototype={
-a1(){return new A.JX()}}
-A.JX.prototype={
-ai(){var x=this
-x.au()
-x.a.c.S(x.gHP())
-x.U_()},
-aF(d){var x,w,v=this
-v.aM(d)
-x=d.c
-if(v.a.c!==x){w=v.gHP()
-x.G(w)
-v.a.c.S(w)}},
-l(){this.a.c.G(this.gHP())
-this.ap()},
-U_(){this.a.d.$0()},
-C(d){return this.a.e}}
-A.QZ.prototype={
-C(d){return new B.aZ(C.Lk,B.cG(this.c,null,null),null)}}
-A.wE.prototype={
-C(d){return C.M8}}
-A.akB.prototype={
-L(){return"PagedLayoutProtocol."+this.b}}
-A.wK.prototype={
-a1(){return new A.Kv(this.$ti.h("Kv<1,2>"))},
-aBk(d,e,f,g){return this.e.$4(d,e,f,g)},
-ay5(d,e,f,g){return this.f.$4(d,e,f,g)},
-aw5(d,e,f,g){return this.r.$4(d,e,f,g)}}
-A.Kv.prototype={
-gagk(){var x=this.a.d
-return x.b},
-gaog(){var x=this.a.d
-return x.c},
-gaof(){var x=this.a.d
-return x.d},
-gamM(){this.a.toString
-return new A.aAv()},
-gaoi(){var x=this.a.d
-return x.f},
-C(d){var x=this,w=x.a.c
-return new A.DW(w,new A.aAA(x),new B.n4(w,new A.aAB(x),null,null,x.$ti.h("n4<lf<1,2>>")),null)},
-GD(d,e,f){var x,w,v,u,t=this
-if(!t.d){x=A.aG6(t.a.c)
-w=t.a.c
-v=e===Math.max(0,x-w.y)
-if(w.a.c!=null&&v){$.a3.k3$.push(new A.aAu(t))
-t.d=!0}}u=f[e]
-return t.a.d.a.$3(d,u,e)},
-aoh(d){return this.gaog().$1(d)}}
-A.yV.prototype={
-C(d){var x
-if(this.e===C.xT){x=this.c.$1(d)
-return new A.Vv(x,!1,null)}else{x=B.cG(this.c.$1(d),null,null)
-return x}}}
-A.EK.prototype={
-Kn(d){var x=null
-return new A.EL(this.R8,this.RG,x,!0,!0,!0,x,x,!1,x,this.$ti.h("EL<1,2>"))}}
-A.EL.prototype={
-C(d){var x=this
-return new A.wK(x.c,x.d,new A.akC(x),new A.akD(x),new A.akE(x),!1,C.xT,null,x.$ti.h("wK<1,2>"))},
-GF(d,e,f){var x=A.aYD(!0,!0,!0,f,d,e,null),w=B.aRl(x)
-return w}}
-A.P_.prototype={
-C(d){return C.a_U}}
-A.ow.prototype={
-a1(){return new A.K0(B.iw(null,0,!1))}}
-A.K0.prototype={
-ai(){var x,w,v,u,t,s=this
-s.au()
-x=s.a.d
-w=B.b([],y.Z)
-v=B.b([],y.z)
-u=new B.aQ(v,y.g)
-t=$.al()
-s.d!==$&&B.b2()
-s.d=new A.wL(new B.aQ(w,y.e),u,1,x,new A.lf(null,null,x,y.w),t,y.h)
-u.b=!0
-v.push(new A.azn(s))
-$.i1().b.S(s.ga3W())},
-l(){$.i1().b.G(this.ga3W())
-this.ap()},
-aEE(){this.a4(new A.azo())},
-C(d){var x=this,w=null,v=B.ki(d).L5(!1),u=x.d
-u===$&&B.a()
-return new B.hD("Scroll",B.aom(v,new A.EK(u,new A.T5(x.gqs(),x.gagi(),x.gamK(),x.gagl(),x.gamT(),x.gamV(),y.c),w,D.H,!1,x.e,w,w,w,!1,w,0,w,w,D.a3,D.jg,w,D.z,D.ay,C.abP,y.U)),!0,C.abH)},
-qt(d,e,f){if(f===0)return new B.h_(e,C.aa0,C.abk)
-if($.i1().b.a)return new B.h_(e,C.KA,new B.Q("Chp"+e.a.a,y.O))
-return new B.h_(e,C.a0W,new B.Q("Chp"+e.a.a,y.O))},
-Hs(d){return this.ag7(d)},
-ag7(d){var x=0,w=B.K(y.H),v=this,u,t,s,r,q,p
-var $async$Hs=B.F(function(e,f){if(e===1)return B.H(f,w)
-while(true)switch(x){case 0:if(v.a.c.a1e(d))try{u=v.a.c.d[d]
-u.ic()
-q=u.r
-t=q==null?null:q.a.a
-q=v.d
-q===$&&B.a()
-q.Ze(B.b([u],y.C),t)}catch(o){s=B.ai(o)
-r=B.aC(o)
-J.dn(s)
-B.abS(s,r)}else{q=v.d
-q===$&&B.a()
-q.Ze(B.b([],y.C),null)}return B.I(null,w)}})
-return B.J($async$Hs,w)},
-agj(d){return C.LP},
-amL(d){return C.LQ},
-amU(d){return C.XE},
-amW(d){return B.aK6(this.gamX())},
-amY(d,e){return C.HJ},
-agm(d){return C.XF}}
-var z=a.updateTypes(["c(M)","~()","wE(M)","c(M,fC,p)","c(M,a2)"])
-A.a70.prototype={
-$2(d,e){if(e===this.a)return this.b.$1(d)
-return this.c.$2(d,e)},
-$S:76}
-A.a71.prototype={
-$2(d,e){return e},
-$S:194}
-A.aAv.prototype={
-$1(d){return C.ZV},
-$S:z+2}
-A.aAA.prototype={
-$0(){var x,w=this.a,v=w.a.c.a.gaE()
-if(v===C.xU){x=w.a.c
-x.a2w(x.z)}if(v===C.xV)w.d=!1},
-$S:0}
-A.aAB.prototype={
-$3(d,e,f){var x,w,v=this.a,u=v.a.c.a.a
-switch(e.gaE().a){case 3:x=v.a
-w=x.aBk(d,new A.aAw(v,u),A.aG6(x.c),v.gamM())
-break
-case 0:x=v.a
-w=x.aw5(d,new A.aAx(v,u),A.aG6(x.c),v.a.d.r)
-break
-case 2:w=new A.yV(v.gaof(),!1,v.a.x,null)
-break
-case 5:x=v.a
-w=x.ay5(d,new A.aAy(v,u),A.aG6(x.c),new A.aAz(v))
-break
-case 1:w=new A.yV(v.gaoi(),!1,v.a.x,null)
-break
-default:w=new A.yV(v.gagk(),!1,v.a.x,null)}v.a.toString
-return w},
-$S(){return this.a.$ti.h("c(M,lf<1,2>,c?)")}}
-A.aAw.prototype={
-$2(d,e){var x=this.b
-x.toString
-return this.a.GD(d,e,x)},
-$S:76}
-A.aAx.prototype={
-$2(d,e){var x=this.b
-x.toString
-return this.a.GD(d,e,x)},
-$S:76}
-A.aAy.prototype={
-$2(d,e){var x=this.b
-x.toString
-return this.a.GD(d,e,x)},
-$S:76}
-A.aAz.prototype={
-$1(d){return this.a.aoh(d)},
-$S:10}
-A.aAu.prototype={
-$1(d){var x=this.a,w=x.a.c,v=w.a.c
-w.a2w(v==null?x.$ti.c.a(v):v)},
-$S:6}
-A.akE.prototype={
-$4(d,e,f,g){return this.a.GF(e,f,g)},
-$S:630}
-A.akC.prototype={
-$4(d,e,f,g){return this.a.GF(e,f,g)},
-$S:191}
-A.akD.prototype={
-$4(d,e,f,g){return this.a.GF(e,f,g)},
-$S:191}
-A.azn.prototype={
-$1(d){this.a.Hs(d)},
-$S:21}
-A.azo.prototype={
-$0(){},
-$S:0};(function installTearOffs(){var x=a._instance_0u,w=a.installInstanceTearOff,v=a._instance_1u,u=a._instance_2u
-x(A.wL.prototype,"gd9","l",1)
-x(A.JX.prototype,"gHP","U_",1)
-var t
-x(t=A.K0.prototype,"ga3W","aEE",1)
-w(t,"gqs",0,3,null,["$3"],["qt"],3,0,0)
-v(t,"gagi","agj",0)
-v(t,"gamK","amL",0)
-v(t,"gamT","amU",0)
-v(t,"gamV","amW",0)
-u(t,"gamX","amY",4)
-v(t,"gagl","agm",0)})();(function inheritance(){var x=a.inherit,w=a.inheritMany
-x(A.Ub,B.FE)
-w(B.R,[A.Vv,A.QZ,A.wE,A.yV,A.EL,A.P_])
-x(A.a34,B.aM)
-w(B.z,[A.T5,A.lf])
-x(A.wL,B.bI)
-w(B.hR,[A.lg,A.akB])
-x(A.a7_,B.GB)
-w(B.jR,[A.a70,A.a71,A.aAw,A.aAx,A.aAy])
-w(B.P,[A.DW,A.wK,A.ow])
-w(B.W,[A.JX,A.Kv,A.K0])
-w(B.dL,[A.aAv,A.aAB,A.aAz,A.aAu,A.akE,A.akC,A.akD,A.azn])
-w(B.e5,[A.aAA,A.azo])
-x(A.EK,B.B8)})()
-B.bK(b.typeUniverse,JSON.parse('{"Ub":{"bL":[],"av":["v"],"m":[],"ae":[]},"Vv":{"R":[],"c":[]},"a34":{"aM":[],"af":[],"c":[]},"wL":{"bI":["lf<1,2>"],"a6":[]},"DW":{"P":[],"c":[]},"JX":{"W":["DW"]},"QZ":{"R":[],"c":[]},"wE":{"R":[],"c":[]},"wK":{"P":[],"c":[]},"Kv":{"W":["wK<1,2>"]},"yV":{"R":[],"c":[]},"EK":{"R":[],"c":[]},"EL":{"R":[],"c":[]},"P_":{"R":[],"c":[]},"ow":{"P":[],"c":[]},"K0":{"W":["ow"]}}'))
-var y=(function rtii(){var x=B.O
-return{v:x("dq"),C:x("r<fC>"),Z:x("r<~(lg)>"),z:x("r<~(p)>"),e:x("aQ<~(lg)>"),g:x("aQ<~(p)>"),c:x("T5<fC>"),U:x("EK<p,fC>"),h:x("wL<p,fC>"),w:x("lf<p,fC>"),S:x("kk"),O:x("Q<l>"),H:x("~"),s:x("~(lg)")}})();(function constants(){C.HJ=new A.P_(null)
-C.abn=new B.Q("DebugReader",y.O)
-C.KA=new F.ve(C.abn)
-C.Lk=new B.aj(0,16,0,16)
-C.LP=new B.CB("First Page InfScroll Error",null)
-C.LQ=new B.CB("New Page InfScroll Error",null)
-C.HP=new B.lZ(null,null,null,null,null,null,null,null,null,null)
-C.M8=new A.QZ(C.HP,null)
-C.XE=new B.ot("No chapters...",D.jG)
-C.XF=new B.ot("Loading first page...",D.jG)
-C.ZV=new A.wE(null)
-C.Lm=new B.aj(0,25,0,100)
-C.Ul=new B.dA(D.lQ,50,E.kx,null,null,null)
-C.HF=new B.i5(D.v,null,null,C.Ul,null)
-C.a_U=new B.aZ(C.Lm,C.HF,null)
-C.xT=new A.akB(0,"sliver")
-C.a_Y=new A.lg(0,"completed")
-C.a_Z=new A.lg(1,"noItemsFound")
-C.xU=new A.lg(2,"loadingFirstPage")
-C.xV=new A.lg(3,"ongoing")
-C.a0_=new A.lg(4,"firstPageError")
-C.abW=new B.Q("Reader",y.O)
-C.a0W=new G.x5(C.abW)
-C.acT=new B.Q("title",y.O)
-C.aa0=new B.tH(C.acT)
-C.abk=new B.Q("ChpTitle",y.O)
-C.abH=new B.Q("InfScrollScaffold!",y.O)
-C.abP=new B.Q("InfPagedListView!",y.O)})()};
-((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_88",e:"endPart",h:b})})($__dart_deferred_initializers__,"Ek7aEH/niMi3tMLusfu1xrkayB0=");
+// Generated by dart2js (, csp, intern-composite-values), the Dart to JavaScript compiler version: 3.8.1.
+((s, d, e) => {
+  s[d] = s[d] || {};
+  s[d][e] = s[d][e] || [];
+  s[d][e].push({p: "main.dart.js_88", e: "beginPart"});
+})(self, "$__dart_deferred_initializers__", "eventLog");
+$__dart_deferred_initializers__.current = function(hunkHelpers, init, holdersList, $) {
+  var J, B, D, F, G, E,
+  A = {RenderSliverFillRemaining: function RenderSliverFillRemaining(t0, t1) {
+      var _ = this;
+      _.RenderObjectWithChildMixin__child = t0;
+      _._geometry = null;
+      _._debugDisposed = false;
+      _.parentData = null;
+      _._depth = 0;
+      _.debugCreator = _._object$_parent = null;
+      _._debugDoingThisLayout = _._debugDoingThisResize = false;
+      _._debugCanParentUseSize = null;
+      _._debugMutationsLocked = false;
+      _._object$_owner = null;
+      _._needsLayout = true;
+      _._isRelayoutBoundary = null;
+      _._doingThisLayoutWithCallback = false;
+      _._constraints = null;
+      _._debugDoingThisPaint = false;
+      _.__RenderObject__wasRepaintBoundary_A = $;
+      _._layerHandle = t1;
+      _._needsCompositingBitsUpdate = false;
+      _.__RenderObject__needsCompositing_A = $;
+      _._needsPaint = true;
+      _._needsCompositedLayerUpdate = false;
+      _.__RenderObject__semantics_FI = $;
+    }, SliverFillRemaining: function SliverFillRemaining(t0, t1, t2) {
+      this.child = t0;
+      this.hasScrollBody = t1;
+      this.key = t2;
+    }, _SliverFillRemainingWithoutScrollable: function _SliverFillRemainingWithoutScrollable(t0, t1) {
+      this.child = t0;
+      this.key = t1;
+    }, PagedChildBuilderDelegate: function PagedChildBuilderDelegate(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.itemBuilder = t0;
+      _.firstPageErrorIndicatorBuilder = t1;
+      _.newPageErrorIndicatorBuilder = t2;
+      _.firstPageProgressIndicatorBuilder = t3;
+      _.noItemsFoundIndicatorBuilder = t4;
+      _.noMoreItemsIndicatorBuilder = t5;
+      _.$ti = t6;
+    }, PagingController: function PagingController(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _._statusListeners = t0;
+      _._pageRequestListeners = t1;
+      _.invisibleItemsThreshold = t2;
+      _.firstPageKey = t3;
+      _._change_notifier$_value = t4;
+      _.ChangeNotifier__count = 0;
+      _.ChangeNotifier__listeners = t5;
+      _.ChangeNotifier__reentrantlyRemovedListeners = _.ChangeNotifier__notificationCallStackDepth = 0;
+      _.ChangeNotifier__debugCreationDispatched = _.ChangeNotifier__debugDisposed = false;
+      _.$ti = t6;
+    }, PagingController__debugAssertNotDisposed_closure: function PagingController__debugAssertNotDisposed_closure(t0) {
+      this.$this = t0;
+    }, PagingState: function PagingState(t0, t1, t2, t3) {
+      var _ = this;
+      _.itemList = t0;
+      _.error = t1;
+      _.nextPageKey = t2;
+      _.$ti = t3;
+    }, PagingStatus: function PagingStatus(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    AppendedSliverChildBuilderDelegate$(addAutomaticKeepAlives, addRepaintBoundaries, addSemanticIndexes, appendixBuilder, builder, childCount, semanticIndexCallback) {
+      var t1 = appendixBuilder == null,
+        t2 = t1 ? builder : new A.AppendedSliverChildBuilderDelegate_closure(childCount, appendixBuilder, builder);
+      t1 = t1 ? childCount : childCount + 1;
+      return new A.AppendedSliverChildBuilderDelegate(t2, t1, true, true, true, semanticIndexCallback == null ? new A.AppendedSliverChildBuilderDelegate_closure0() : semanticIndexCallback, null);
+    },
+    AppendedSliverChildBuilderDelegate: function AppendedSliverChildBuilderDelegate(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _.builder = t0;
+      _.childCount = t1;
+      _.addAutomaticKeepAlives = t2;
+      _.addRepaintBoundaries = t3;
+      _.addSemanticIndexes = t4;
+      _.semanticIndexCallback = t5;
+      _.findChildIndexCallback = t6;
+    },
+    AppendedSliverChildBuilderDelegate_closure: function AppendedSliverChildBuilderDelegate_closure(t0, t1, t2) {
+      this.childCount = t0;
+      this.appendixBuilder = t1;
+      this.builder = t2;
+    },
+    AppendedSliverChildBuilderDelegate_closure0: function AppendedSliverChildBuilderDelegate_closure0() {
+    },
+    ListenableListener: function ListenableListener(t0, t1, t2, t3) {
+      var _ = this;
+      _.listenable = t0;
+      _.listener = t1;
+      _.child = t2;
+      _.key = t3;
+    },
+    _ListenableListenerState: function _ListenableListenerState(t0) {
+      this._widget = null;
+      this._debugLifecycleState = t0;
+      this._framework$_element = null;
+    },
+    FooterTile: function FooterTile(t0, t1) {
+      this.child = t0;
+      this.key = t1;
+    },
+    NewPageProgressIndicator: function NewPageProgressIndicator(t0) {
+      this.key = t0;
+    },
+    _extension_0_get_itemCount(_this) {
+      var t1 = _this._change_notifier$_value.itemList;
+      t1 = t1 == null ? null : t1.length;
+      return t1 == null ? 0 : t1;
+    },
+    PagedLayoutProtocol: function PagedLayoutProtocol(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    PagedLayoutBuilder: function PagedLayoutBuilder(t0, t1, t2, t3, t4, t5, t6, t7, t8) {
+      var _ = this;
+      _.pagingController = t0;
+      _.builderDelegate = t1;
+      _.loadingListingBuilder = t2;
+      _.errorListingBuilder = t3;
+      _.completedListingBuilder = t4;
+      _.shrinkWrapFirstPageIndicators = t5;
+      _.layoutProtocol = t6;
+      _.key = t7;
+      _.$ti = t8;
+    },
+    _PagedLayoutBuilderState: function _PagedLayoutBuilderState(t0, t1) {
+      var _ = this;
+      _._hasRequestedNextPage = false;
+      _._widget = null;
+      _._debugLifecycleState = t0;
+      _._framework$_element = null;
+      _.$ti = t1;
+    },
+    _PagedLayoutBuilderState__newPageProgressIndicatorBuilder_closure: function _PagedLayoutBuilderState__newPageProgressIndicatorBuilder_closure() {
+    },
+    _PagedLayoutBuilderState_build_closure: function _PagedLayoutBuilderState_build_closure(t0) {
+      this.$this = t0;
+    },
+    _PagedLayoutBuilderState_build_closure0: function _PagedLayoutBuilderState_build_closure0(t0) {
+      this.$this = t0;
+    },
+    _PagedLayoutBuilderState_build__closure: function _PagedLayoutBuilderState_build__closure(t0, t1) {
+      this.$this = t0;
+      this.itemList = t1;
+    },
+    _PagedLayoutBuilderState_build__closure0: function _PagedLayoutBuilderState_build__closure0(t0, t1) {
+      this.$this = t0;
+      this.itemList = t1;
+    },
+    _PagedLayoutBuilderState_build__closure1: function _PagedLayoutBuilderState_build__closure1(t0, t1) {
+      this.$this = t0;
+      this.itemList = t1;
+    },
+    _PagedLayoutBuilderState_build__closure2: function _PagedLayoutBuilderState_build__closure2(t0) {
+      this.$this = t0;
+    },
+    _PagedLayoutBuilderState__buildListItemWidget_closure: function _PagedLayoutBuilderState__buildListItemWidget_closure(t0) {
+      this.$this = t0;
+    },
+    _FirstPageStatusIndicatorBuilder: function _FirstPageStatusIndicatorBuilder(t0, t1, t2, t3) {
+      var _ = this;
+      _.builder = t0;
+      _.shrinkWrap = t1;
+      _.layoutProtocol = t2;
+      _.key = t3;
+    },
+    PagedListView: function PagedListView(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20) {
+      var _ = this;
+      _.pagingController = t0;
+      _.builderDelegate = t1;
+      _.padding = t2;
+      _.scrollDirection = t3;
+      _.reverse = t4;
+      _.controller = t5;
+      _.primary = t6;
+      _.physics = t7;
+      _.scrollBehavior = t8;
+      _.shrinkWrap = t9;
+      _.center = t10;
+      _.anchor = t11;
+      _.cacheExtent = t12;
+      _.semanticChildCount = t13;
+      _.dragStartBehavior = t14;
+      _.keyboardDismissBehavior = t15;
+      _.restorationId = t16;
+      _.clipBehavior = t17;
+      _.hitTestBehavior = t18;
+      _.key = t19;
+      _.$ti = t20;
+    },
+    PagedSliverList: function PagedSliverList(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10) {
+      var _ = this;
+      _.pagingController = t0;
+      _.builderDelegate = t1;
+      _._separatorBuilder = t2;
+      _.addAutomaticKeepAlives = t3;
+      _.addRepaintBoundaries = t4;
+      _.addSemanticIndexes = t5;
+      _.itemExtent = t6;
+      _.prototypeItem = t7;
+      _.shrinkWrapFirstPageIndicators = t8;
+      _.key = t9;
+      _.$ti = t10;
+    },
+    PagedSliverList_build_closure1: function PagedSliverList_build_closure1(t0) {
+      this.$this = t0;
+    },
+    PagedSliverList_build_closure: function PagedSliverList_build_closure(t0) {
+      this.$this = t0;
+    },
+    PagedSliverList_build_closure0: function PagedSliverList_build_closure0(t0) {
+      this.$this = t0;
+    },
+    ChapterEnd: function ChapterEnd(t0) {
+      this.key = t0;
+    },
+    MasterScroller$(book, key, startChapter) {
+      return new A.MasterScroller(book, startChapter, key);
+    },
+    MasterScroller: function MasterScroller(t0, t1, t2) {
+      this.book = t0;
+      this.startChapter = t1;
+      this.key = t2;
+    },
+    _MasterScrollerState: function _MasterScrollerState(t0, t1) {
+      var _ = this;
+      _.___MasterScrollerState__pagingController_F = $;
+      _._infinite_scroller$_scrollController = t0;
+      _._widget = null;
+      _._debugLifecycleState = t1;
+      _._framework$_element = null;
+    },
+    _MasterScrollerState_initState_closure: function _MasterScrollerState_initState_closure(t0) {
+      this.$this = t0;
+    },
+    _MasterScrollerState_testRigChanged_closure: function _MasterScrollerState_testRigChanged_closure() {
+    }
+  },
+  C, H;
+  J = holdersList[1];
+  B = holdersList[0];
+  D = holdersList[2];
+  F = holdersList[96];
+  G = holdersList[42];
+  E = holdersList[48];
+  A = hunkHelpers.updateHolder(holdersList[9], A);
+  C = holdersList[95];
+  H = holdersList[41];
+  A.RenderSliverFillRemaining.prototype = {
+    performLayout$0() {
+      var paintedChildSize, cacheExtent, t2, _this = this, _null = null,
+        constraints = type$.SliverConstraints._as(B.RenderObject.prototype.get$constraints.call(_this)),
+        extent = constraints.viewportMainAxisExtent - constraints.precedingScrollExtent,
+        t1 = _this.RenderObjectWithChildMixin__child;
+      if (t1 != null) {
+        switch (B.axisDirectionToAxis(constraints.axisDirection).index) {
+          case 0:
+            t1 = t1.getMaxIntrinsicWidth$1(constraints.crossAxisExtent);
+            break;
+          case 1:
+            t1 = t1.getMaxIntrinsicHeight$1(constraints.crossAxisExtent);
+            break;
+          default:
+            t1 = _null;
+        }
+        extent = Math.max(extent, t1);
+        t1 = _this.RenderObjectWithChildMixin__child;
+        t1.toString;
+        t1.layout$1(constraints.asBoxConstraints$2$maxExtent$minExtent(extent, extent));
+      }
+      if (B.assertTest(isFinite(extent)))
+        B.assertThrow("The calculated extent for the child of SliverFillRemaining is not finite. This can happen if the child is a scrollable, in which case, the hasScrollBody property of SliverFillRemaining should not be set to false.");
+      paintedChildSize = _this.calculatePaintOffset$3$from$to(constraints, 0, extent);
+      B.assertHelper(isFinite(paintedChildSize));
+      B.assertHelper(paintedChildSize >= 0);
+      cacheExtent = _this.calculateCacheOffset$3$from$to(constraints, 0, extent);
+      _this.set$geometry(B.SliverGeometry$(cacheExtent, _null, extent > constraints.remainingPaintExtent || constraints.scrollOffset > 0, _null, _null, paintedChildSize, 0, paintedChildSize, 0, extent, _null, _null));
+      t1 = _this.RenderObjectWithChildMixin__child;
+      if (t1 != null) {
+        t2 = _this._geometry;
+        t2.toString;
+        _this.setChildParentData$3(t1, constraints, t2);
+      }
+    }
+  };
+  A.SliverFillRemaining.prototype = {
+    build$1(context) {
+      return new A._SliverFillRemainingWithoutScrollable(this.child, null);
+    },
+    debugFillProperties$1(properties) {
+      var t1, _null = null;
+      this.super$Widget$debugFillProperties(properties);
+      properties.add$1(0, B.DiagnosticsProperty$("child", this.child, true, D.C__NoDefaultValue, _null, false, _null, _null, D.DiagnosticLevel_3, _null, false, true, true, D.DiagnosticsTreeStyle_8, _null, type$.Widget));
+      t1 = B._setArrayType([], type$.JSArray_String);
+      if (t1.length === 0)
+        D.JSArray_methods.add$1(t1, "nonscrollable");
+      properties.add$1(0, B.IterableProperty$("mode", t1, D.C__NoDefaultValue, "[]", D.DiagnosticLevel_3, D.DiagnosticsTreeStyle_8, type$.String));
+    }
+  };
+  A._SliverFillRemainingWithoutScrollable.prototype = {
+    createRenderObject$1(context) {
+      var t1 = new A.RenderSliverFillRemaining(null, B.LayerHandle$(type$.ContainerLayer));
+      t1.RenderObject$0();
+      t1.set$child(null);
+      return t1;
+    }
+  };
+  A.PagedChildBuilderDelegate.prototype = {};
+  A.PagingController.prototype = {
+    set$value(newValue) {
+      var _this = this;
+      _this.$ti._eval$1("PagingState<1,2>")._as(newValue);
+      if (_this._change_notifier$_value.get$status() !== newValue.get$status())
+        _this.notifyStatusListeners$1(newValue.get$status());
+      _this.super$ValueNotifier$value(newValue);
+    },
+    appendPage$2(newItems, nextPageKey) {
+      var previousItems,
+        t1 = this.$ti;
+      t1._eval$1("List<2>")._as(newItems);
+      t1._eval$1("1?")._as(nextPageKey);
+      previousItems = this._change_notifier$_value.itemList;
+      this.set$value(new A.PagingState(D.JSArray_methods.$add(previousItems == null ? B._setArrayType([], t1._eval$1("JSArray<2>")) : previousItems, newItems), null, nextPageKey, t1._eval$1("PagingState<1,2>")));
+    },
+    _paging_controller$_debugAssertNotDisposed$0() {
+      B.assertHelper(new A.PagingController__debugAssertNotDisposed_closure(this).call$0());
+      return true;
+    },
+    notifyStatusListeners$1($status) {
+      var t1, t2, localListeners, _i, listener;
+      this._paging_controller$_debugAssertNotDisposed$0();
+      t1 = this._statusListeners;
+      t2 = t1 == null ? null : t1._list.length === 0;
+      if (t2 !== false)
+        return;
+      t1.toString;
+      localListeners = B.List_List$from(t1, true, type$.void_Function_PagingStatus);
+      for (t1 = localListeners.length, _i = 0; _i < t1; ++_i) {
+        listener = localListeners[_i];
+        if (this._statusListeners.contains$1(0, listener))
+          listener.call$1($status);
+      }
+    },
+    notifyPageRequestListeners$1(pageKey) {
+      var t2, t3, localListeners, _i, listener, _this = this,
+        t1 = _this.$ti;
+      t1._precomputed1._as(pageKey);
+      _this._paging_controller$_debugAssertNotDisposed$0();
+      t2 = _this._pageRequestListeners;
+      t3 = t2 == null ? null : t2._list.length === 0;
+      if (t3 !== false)
+        return;
+      t2.toString;
+      localListeners = B.List_List$from(t2, true, t1._eval$1("~(1)"));
+      for (t1 = localListeners.length, _i = 0; _i < t1; ++_i) {
+        listener = localListeners[_i];
+        if (_this._pageRequestListeners.contains$1(0, listener))
+          listener.call$1(pageKey);
+      }
+    },
+    dispose$0() {
+      var _this = this;
+      _this._paging_controller$_debugAssertNotDisposed$0();
+      _this._pageRequestListeners = _this._statusListeners = null;
+      _this.super$ChangeNotifier$dispose();
+    }
+  };
+  A.PagingState.prototype = {
+    get$status() {
+      var _this = this,
+        t1 = _this.get$_hasItems() && _this.nextPageKey != null;
+      if (t1)
+        return C.PagingStatus_3;
+      if (_this.get$_hasItems() && _this.nextPageKey == null)
+        return C.PagingStatus_0;
+      t1 = _this.get$_itemCount();
+      if (t1 == null)
+        return C.PagingStatus_2;
+      _this.get$_hasItems();
+      if (_this.get$_itemCount() != null && _this.get$_itemCount() === 0)
+        return C.PagingStatus_1;
+      else
+        return C.PagingStatus_4;
+    },
+    toString$0(_) {
+      var _this = this;
+      return B.objectRuntimeType(_this, "PagingState") + "(itemList: \u2524" + B.S(_this.itemList) + "\u251c, error: " + B.S(_this.error) + ", nextPageKey: " + B.S(_this.nextPageKey) + ")";
+    },
+    $eq(_, other) {
+      var t1, t2, t3;
+      if (other == null)
+        return false;
+      if (this === other)
+        return true;
+      t1 = false;
+      if (other instanceof A.PagingState) {
+        t2 = other.itemList;
+        t3 = this.itemList;
+        if (t2 == null ? t3 == null : t2 === t3)
+          t1 = other.nextPageKey == this.nextPageKey;
+      }
+      return t1;
+    },
+    get$hashCode(_) {
+      return B.Object_hash(J.get$hashCode$(this.itemList), D.JSNull_methods.get$hashCode(this.error), J.get$hashCode$(this.nextPageKey), D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue, D.C_SentinelValue);
+    },
+    get$_itemCount() {
+      var t1 = this.itemList;
+      return t1 == null ? null : t1.length;
+    },
+    get$_hasItems() {
+      var itemCount = this.get$_itemCount();
+      return itemCount != null && itemCount > 0;
+    }
+  };
+  A.PagingStatus.prototype = {
+    _enumToString$0() {
+      return "PagingStatus." + this._name;
+    }
+  };
+  A.AppendedSliverChildBuilderDelegate.prototype = {};
+  A.ListenableListener.prototype = {
+    createState$0() {
+      return new A._ListenableListenerState(D._StateLifecycle_0);
+    }
+  };
+  A._ListenableListenerState.prototype = {
+    initState$0() {
+      var _this = this;
+      _this.super$State$initState();
+      _this._widget.listenable.addListener$1(_this.get$_listenable_listener$_handleChange());
+      _this._listenable_listener$_handleChange$0();
+    },
+    didUpdateWidget$1(oldWidget) {
+      var t1, t2, _this = this;
+      type$.ListenableListener._as(oldWidget);
+      _this.super$State$didUpdateWidget(oldWidget);
+      t1 = oldWidget.listenable;
+      if (_this._widget.listenable !== t1) {
+        t2 = _this.get$_listenable_listener$_handleChange();
+        t1.removeListener$1(t2);
+        _this._widget.listenable.addListener$1(t2);
+      }
+    },
+    dispose$0() {
+      this._widget.listenable.removeListener$1(this.get$_listenable_listener$_handleChange());
+      this.super$State$dispose();
+    },
+    _listenable_listener$_handleChange$0() {
+      this._widget.listener.call$0();
+    },
+    build$1(context) {
+      return this._widget.child;
+    }
+  };
+  A.FooterTile.prototype = {
+    build$1(context) {
+      return new B.Padding(C.EdgeInsets_0_16_0_16, B.Center$(this.child, null, null), null);
+    }
+  };
+  A.NewPageProgressIndicator.prototype = {
+    build$1(context) {
+      return C.FooterTile_h62;
+    }
+  };
+  A.PagedLayoutProtocol.prototype = {
+    _enumToString$0() {
+      return "PagedLayoutProtocol." + this._name;
+    }
+  };
+  A.PagedLayoutBuilder.prototype = {
+    createState$0() {
+      return new A._PagedLayoutBuilderState(D._StateLifecycle_0, this.$ti._eval$1("_PagedLayoutBuilderState<1,2>"));
+    },
+    loadingListingBuilder$4(arg0, arg1, arg2, arg3) {
+      return this.loadingListingBuilder.call$4(arg0, arg1, arg2, arg3);
+    },
+    errorListingBuilder$4(arg0, arg1, arg2, arg3) {
+      return this.errorListingBuilder.call$4(arg0, arg1, arg2, arg3);
+    },
+    completedListingBuilder$4(arg0, arg1, arg2, arg3) {
+      return this.completedListingBuilder.call$4(arg0, arg1, arg2, arg3);
+    }
+  };
+  A._PagedLayoutBuilderState.prototype = {
+    get$_firstPageErrorIndicatorBuilder() {
+      var t1 = this._widget.builderDelegate;
+      return t1.firstPageErrorIndicatorBuilder;
+    },
+    get$_paged_layout_builder$_newPageErrorIndicatorBuilder() {
+      var t1 = this._widget.builderDelegate;
+      return t1.newPageErrorIndicatorBuilder;
+    },
+    get$_paged_layout_builder$_firstPageProgressIndicatorBuilder() {
+      var t1 = this._widget.builderDelegate;
+      return t1.firstPageProgressIndicatorBuilder;
+    },
+    get$_newPageProgressIndicatorBuilder() {
+      this._widget.toString;
+      return new A._PagedLayoutBuilderState__newPageProgressIndicatorBuilder_closure();
+    },
+    get$_paged_layout_builder$_noItemsFoundIndicatorBuilder() {
+      var t1 = this._widget.builderDelegate;
+      return t1.noItemsFoundIndicatorBuilder;
+    },
+    build$1(context) {
+      var _this = this,
+        t1 = _this._widget.pagingController;
+      return new A.ListenableListener(t1, new A._PagedLayoutBuilderState_build_closure(_this), new B.ValueListenableBuilder(t1, new A._PagedLayoutBuilderState_build_closure0(_this), null, null, _this.$ti._eval$1("ValueListenableBuilder<PagingState<1,2>>")), null);
+    },
+    _buildListItemWidget$3(context, index, itemList) {
+      var t2, t3, isBuildingTriggerIndexItem, item, _this = this,
+        t1 = _this.$ti;
+      t1._eval$1("List<2>")._as(itemList);
+      if (!_this._hasRequestedNextPage) {
+        t2 = A._extension_0_get_itemCount(_this._widget.pagingController);
+        t3 = _this._widget.pagingController;
+        isBuildingTriggerIndexItem = index === Math.max(0, t2 - t3.invisibleItemsThreshold);
+        if (t3._change_notifier$_value.nextPageKey != null && isBuildingTriggerIndexItem) {
+          B.BindingBase_checkInstance($.WidgetsBinding__instance, type$.WidgetsBinding).addPostFrameCallback$1(new A._PagedLayoutBuilderState__buildListItemWidget_closure(_this));
+          _this._hasRequestedNextPage = true;
+        }
+      }
+      if (!(index >= 0 && index < itemList.length))
+        return B.ioore(itemList, index);
+      item = itemList[index];
+      return t1._eval$1("Widget(BuildContext,2,int)")._as(_this._widget.builderDelegate.itemBuilder).call$3(context, item, index);
+    },
+    _paged_layout_builder$_newPageErrorIndicatorBuilder$1(arg0) {
+      return this.get$_paged_layout_builder$_newPageErrorIndicatorBuilder().call$1(arg0);
+    }
+  };
+  A._FirstPageStatusIndicatorBuilder.prototype = {
+    build$1(context) {
+      var t1;
+      if (this.layoutProtocol === C.PagedLayoutProtocol_0) {
+        t1 = this.builder.call$1(context);
+        return new A.SliverFillRemaining(t1, false, null);
+      } else {
+        t1 = B.Center$(this.builder.call$1(context), null, null);
+        return t1;
+      }
+    }
+  };
+  A.PagedListView.prototype = {
+    buildChildLayout$1(context) {
+      var _null = null,
+        t1 = new A.PagedSliverList(this.pagingController, this.builderDelegate, _null, true, true, true, _null, _null, false, _null, this.$ti._eval$1("PagedSliverList<1,2>"));
+      return t1;
+    }
+  };
+  A.PagedSliverList.prototype = {
+    build$1(context) {
+      var _this = this;
+      return new A.PagedLayoutBuilder(_this.pagingController, _this.builderDelegate, new A.PagedSliverList_build_closure(_this), new A.PagedSliverList_build_closure0(_this), new A.PagedSliverList_build_closure1(_this), false, C.PagedLayoutProtocol_0, null, _this.$ti._eval$1("PagedLayoutBuilder<1,2>"));
+    },
+    _buildSliverList$3$statusIndicatorBuilder(itemBuilder, itemCount, statusIndicatorBuilder) {
+      var delegate, t1;
+      type$.Widget_Function_BuildContext_int._as(itemBuilder);
+      delegate = A.AppendedSliverChildBuilderDelegate$(true, true, true, type$.nullable_Widget_Function_BuildContext._as(statusIndicatorBuilder), itemBuilder, itemCount, null);
+      t1 = B.SliverList$(delegate);
+      return t1;
+    }
+  };
+  A.ChapterEnd.prototype = {
+    build$1(context) {
+      return C.Padding_VmP;
+    }
+  };
+  A.MasterScroller.prototype = {
+    createState$0() {
+      return new A._MasterScrollerState(B.ScrollController$(null, 0, false), D._StateLifecycle_0);
+    }
+  };
+  A._MasterScrollerState.prototype = {
+    initState$0() {
+      var t1, t2, _this = this;
+      _this.super$State$initState();
+      t1 = _this._widget.startChapter;
+      t2 = type$.PagingController_int_Chapter;
+      t1 = new A.PagingController(new B.ObserverList(B._setArrayType([], type$.JSArray_of_void_Function_PagingStatus), type$.ObserverList_of_void_Function_PagingStatus), new B.ObserverList(B._setArrayType([], type$.JSArray_of_void_Function_int), type$.ObserverList_of_void_Function_int), 1, t1, new A.PagingState(null, null, t1, type$.PagingState_int_Chapter), $.$get$ChangeNotifier__emptyListeners(), t2);
+      B.ChangeNotifier_maybeDispatchObjectCreation(t1);
+      t2._as(t1);
+      _this.___MasterScrollerState__pagingController_F !== $ && B.throwLateFieldAI("_pagingController");
+      _this.___MasterScrollerState__pagingController_F = t1;
+      t2 = type$.void_Function_int._as(new A._MasterScrollerState_initState_closure(_this));
+      t1._paging_controller$_debugAssertNotDisposed$0();
+      t1 = t1._pageRequestListeners;
+      if (t1 != null) {
+        t1.$ti._precomputed1._as(t2);
+        t1._isDirty = true;
+        D.JSArray_methods.add$1(t1._list, t2);
+      }
+      $.$get$ViewSettings_instance().testRigNotifier.addListener$1(_this.get$testRigChanged());
+    },
+    dispose$0() {
+      $.$get$ViewSettings_instance().testRigNotifier.removeListener$1(this.get$testRigChanged());
+      this.super$State$dispose();
+    },
+    testRigChanged$0() {
+      this.setState$1(new A._MasterScrollerState_testRigChanged_closure());
+    },
+    build$1(context) {
+      var _this = this, _null = null,
+        t1 = B.ScrollConfiguration_of(context).copyWith$1$scrollbars(false),
+        t2 = _this.___MasterScrollerState__pagingController_F;
+      t2 === $ && B.throwLateFieldNI("_pagingController");
+      return B.McScaffold$(B.ScrollConfiguration$(t1, new A.PagedListView(t2, new A.PagedChildBuilderDelegate(_this.get$itemBuilder(), _this.get$_firstPageErrorIndicator(), _this.get$_newPageErrorIndicatorBuilder(), _this.get$_firstPageProgressIndicatorBuilder(), _this.get$_noItemsFoundIndicatorBuilder(), _this.get$_noMoreItemsIndicatorBuilder(), type$.PagedChildBuilderDelegate_Chapter), _null, D.Axis_1, false, _this._infinite_scroller$_scrollController, _null, _null, _null, false, _null, 0, _null, _null, D.DragStartBehavior_1, D.ScrollViewKeyboardDismissBehavior_0, _null, D.Clip_1, D.HitTestBehavior_1, C.ValueKey_MZv, type$.PagedListView_int_Chapter)), C.ValueKey_IWE, "Scroll");
+    },
+    itemBuilder$3(context, chapter, index) {
+      type$.Chapter._as(chapter);
+      if (index === 0)
+        return new E.ChapterAndPartProvider(chapter, C.TitleWidget_ValueKey_title, C.ValueKey_ChpTitle);
+      if ($.$get$ViewSettings_instance().testRigNotifier._change_notifier$_value)
+        return new E.ChapterAndPartProvider(chapter, C.DebugReaderScreen_ValueKey_DebugReader, new B.ValueKey("Chp" + chapter.info.id, type$.ValueKey_String));
+      return new E.ChapterAndPartProvider(chapter, C.ReaderScreen_ValueKey_Reader, new B.ValueKey("Chp" + chapter.info.id, type$.ValueKey_String));
+    },
+    _fetchPage$1(pageKey) {
+      return this._fetchPage$body$_MasterScrollerState(pageKey);
+    },
+    _fetchPage$body$_MasterScrollerState(pageKey) {
+      var $async$goto = 0,
+        $async$completer = B._makeAsyncAwaitCompleter(type$.void),
+        $async$returnValue, $async$self = this, chap, nextPageKey, exception, stackTrace, t1, exception0;
+      var $async$_fetchPage$1 = B._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return B._asyncRethrow($async$result, $async$completer);
+        while (true)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              if ($async$self._widget.book.hasKey$1(pageKey))
+                try {
+                  t1 = $async$self._widget.book.chapters;
+                  if (!(pageKey >= 0 && pageKey < t1.length)) {
+                    $async$returnValue = B.ioore(t1, pageKey);
+                    // goto return
+                    $async$goto = 1;
+                    break;
+                  }
+                  chap = t1[pageKey];
+                  chap.getOrLoadChapter$0();
+                  t1 = chap.next;
+                  nextPageKey = t1 == null ? null : t1.info.id;
+                  t1 = $async$self.___MasterScrollerState__pagingController_F;
+                  t1 === $ && B.throwLateFieldNI("_pagingController");
+                  t1.appendPage$2(B._setArrayType([chap], type$.JSArray_Chapter), nextPageKey);
+                } catch (exception0) {
+                  exception = B.unwrapException(exception0);
+                  stackTrace = B.getTraceFromException(exception0);
+                  J.toString$0$(exception);
+                  B.ErrorList_showError(exception, stackTrace);
+                }
+              else {
+                t1 = $async$self.___MasterScrollerState__pagingController_F;
+                t1 === $ && B.throwLateFieldNI("_pagingController");
+                t1.appendPage$2(t1.$ti._eval$1("List<2>")._as(B._setArrayType([], type$.JSArray_Chapter)), null);
+              }
+            case 1:
+              // return
+              return B._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return B._asyncStartSync($async$_fetchPage$1, $async$completer);
+    },
+    _firstPageErrorIndicator$1(context) {
+      type$.BuildContext._as(context);
+      return C.ErrorBox_JCe;
+    },
+    _newPageErrorIndicatorBuilder$1(context) {
+      type$.BuildContext._as(context);
+      return C.ErrorBox_XqC;
+    },
+    _noItemsFoundIndicatorBuilder$1(context) {
+      type$.BuildContext._as(context);
+      return C.LoadingPage_Y3I;
+    },
+    _noMoreItemsIndicatorBuilder$1(context) {
+      type$.BuildContext._as(context);
+      return B.LayoutBuilder$(this.get$_noMoreItemsIndicatorLayoutBuilder());
+    },
+    _noMoreItemsIndicatorLayoutBuilder$2(context, constraints) {
+      return C.ChapterEnd_null;
+    },
+    _firstPageProgressIndicatorBuilder$1(context) {
+      type$.BuildContext._as(context);
+      return C.LoadingPage_Yn9;
+    }
+  };
+  var typesOffset = hunkHelpers.updateTypes(["Widget(BuildContext)", "~()", "NewPageProgressIndicator(BuildContext)", "Widget(BuildContext,Chapter,int)", "Widget(BuildContext,BoxConstraints)"]);
+  A.PagingController__debugAssertNotDisposed_closure.prototype = {
+    call$0() {
+      var t1 = this.$this;
+      if (t1._pageRequestListeners == null || t1._statusListeners == null)
+        throw B.wrapException(B.Exception_Exception("A PagingController was used after being disposed.\nOnce you have called dispose() on a PagingController, it can no longer be used.\nIf you\u2019re using a Future, it probably completed after the disposal of the owning widget.\nMake sure dispose() has not been called yet before using the PagingController."));
+      return true;
+    },
+    $signature: 1
+  };
+  A.AppendedSliverChildBuilderDelegate_closure.prototype = {
+    call$2(context, index) {
+      type$.BuildContext._as(context);
+      B._asInt(index);
+      if (index === this.childCount)
+        return this.appendixBuilder.call$1(context);
+      return this.builder.call$2(context, index);
+    },
+    $signature: 93
+  };
+  A.AppendedSliverChildBuilderDelegate_closure0.prototype = {
+    call$2(_, index) {
+      return index;
+    },
+    $signature: 264
+  };
+  A._PagedLayoutBuilderState__newPageProgressIndicatorBuilder_closure.prototype = {
+    call$1(_) {
+      type$.BuildContext._as(_);
+      return C.NewPageProgressIndicator_null;
+    },
+    $signature: typesOffset + 2
+  };
+  A._PagedLayoutBuilderState_build_closure.prototype = {
+    call$0() {
+      var t2,
+        t1 = this.$this,
+        $status = t1._widget.pagingController._change_notifier$_value.get$status();
+      if ($status === C.PagingStatus_2) {
+        t2 = t1._widget.pagingController;
+        t2.notifyPageRequestListeners$1(t2.firstPageKey);
+      }
+      if ($status === C.PagingStatus_3)
+        t1._hasRequestedNextPage = false;
+    },
+    $signature: 0
+  };
+  A._PagedLayoutBuilderState_build_closure0.prototype = {
+    call$3(context, pagingState, _) {
+      var itemList, t2, child,
+        t1 = this.$this;
+      t1.$ti._eval$1("PagingState<1,2>")._as(pagingState);
+      itemList = t1._widget.pagingController._change_notifier$_value.itemList;
+      switch (pagingState.get$status().index) {
+        case 3:
+          t2 = t1._widget;
+          child = t2.loadingListingBuilder$4(context, new A._PagedLayoutBuilderState_build__closure(t1, itemList), A._extension_0_get_itemCount(t2.pagingController), t1.get$_newPageProgressIndicatorBuilder());
+          break;
+        case 0:
+          t2 = t1._widget;
+          child = t2.completedListingBuilder$4(context, new A._PagedLayoutBuilderState_build__closure0(t1, itemList), A._extension_0_get_itemCount(t2.pagingController), t1._widget.builderDelegate.noMoreItemsIndicatorBuilder);
+          break;
+        case 2:
+          child = new A._FirstPageStatusIndicatorBuilder(t1.get$_paged_layout_builder$_firstPageProgressIndicatorBuilder(), false, t1._widget.layoutProtocol, null);
+          break;
+        case 5:
+          t2 = t1._widget;
+          child = t2.errorListingBuilder$4(context, new A._PagedLayoutBuilderState_build__closure1(t1, itemList), A._extension_0_get_itemCount(t2.pagingController), new A._PagedLayoutBuilderState_build__closure2(t1));
+          break;
+        case 1:
+          child = new A._FirstPageStatusIndicatorBuilder(t1.get$_paged_layout_builder$_noItemsFoundIndicatorBuilder(), false, t1._widget.layoutProtocol, null);
+          break;
+        default:
+          child = new A._FirstPageStatusIndicatorBuilder(t1.get$_firstPageErrorIndicatorBuilder(), false, t1._widget.layoutProtocol, null);
+      }
+      t1._widget.toString;
+      return child;
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("Widget(BuildContext,PagingState<1,2>,Widget?)");
+    }
+  };
+  A._PagedLayoutBuilderState_build__closure.prototype = {
+    call$2(context, index) {
+      var t1;
+      type$.BuildContext._as(context);
+      B._asInt(index);
+      t1 = this.itemList;
+      t1.toString;
+      return this.$this._buildListItemWidget$3(context, index, t1);
+    },
+    $signature: 93
+  };
+  A._PagedLayoutBuilderState_build__closure0.prototype = {
+    call$2(context, index) {
+      var t1;
+      type$.BuildContext._as(context);
+      B._asInt(index);
+      t1 = this.itemList;
+      t1.toString;
+      return this.$this._buildListItemWidget$3(context, index, t1);
+    },
+    $signature: 93
+  };
+  A._PagedLayoutBuilderState_build__closure1.prototype = {
+    call$2(context, index) {
+      var t1;
+      type$.BuildContext._as(context);
+      B._asInt(index);
+      t1 = this.itemList;
+      t1.toString;
+      return this.$this._buildListItemWidget$3(context, index, t1);
+    },
+    $signature: 93
+  };
+  A._PagedLayoutBuilderState_build__closure2.prototype = {
+    call$1(context) {
+      return this.$this._paged_layout_builder$_newPageErrorIndicatorBuilder$1(type$.BuildContext._as(context));
+    },
+    $signature: 13
+  };
+  A._PagedLayoutBuilderState__buildListItemWidget_closure.prototype = {
+    call$1(_) {
+      var t1, t2, t3;
+      type$.Duration._as(_);
+      t1 = this.$this;
+      t2 = t1._widget.pagingController;
+      t3 = t2._change_notifier$_value.nextPageKey;
+      t2.notifyPageRequestListeners$1(t3 == null ? t1.$ti._precomputed1._as(t3) : t3);
+    },
+    $signature: 4
+  };
+  A.PagedSliverList_build_closure1.prototype = {
+    call$4(context, itemBuilder, itemCount, noMoreItemsIndicatorBuilder) {
+      type$.BuildContext._as(context);
+      return this.$this._buildSliverList$3$statusIndicatorBuilder(type$.Widget_Function_BuildContext_int._as(itemBuilder), B._asInt(itemCount), type$.nullable_Widget_Function_BuildContext._as(noMoreItemsIndicatorBuilder));
+    },
+    $signature: 750
+  };
+  A.PagedSliverList_build_closure.prototype = {
+    call$4(context, itemBuilder, itemCount, progressIndicatorBuilder) {
+      type$.BuildContext._as(context);
+      return this.$this._buildSliverList$3$statusIndicatorBuilder(type$.Widget_Function_BuildContext_int._as(itemBuilder), B._asInt(itemCount), type$.Widget_Function_BuildContext._as(progressIndicatorBuilder));
+    },
+    $signature: 265
+  };
+  A.PagedSliverList_build_closure0.prototype = {
+    call$4(context, itemBuilder, itemCount, errorIndicatorBuilder) {
+      type$.BuildContext._as(context);
+      return this.$this._buildSliverList$3$statusIndicatorBuilder(type$.Widget_Function_BuildContext_int._as(itemBuilder), B._asInt(itemCount), type$.Widget_Function_BuildContext._as(errorIndicatorBuilder));
+    },
+    $signature: 265
+  };
+  A._MasterScrollerState_initState_closure.prototype = {
+    call$1(pageKey) {
+      this.$this._fetchPage$1(B._asInt(pageKey));
+    },
+    $signature: 27
+  };
+  A._MasterScrollerState_testRigChanged_closure.prototype = {
+    call$0() {
+    },
+    $signature: 0
+  };
+  (function installTearOffs() {
+    var _instance_0_u = hunkHelpers._instance_0u,
+      _instance = hunkHelpers.installInstanceTearOff,
+      _instance_1_u = hunkHelpers._instance_1u,
+      _instance_2_u = hunkHelpers._instance_2u;
+    _instance_0_u(A.PagingController.prototype, "get$dispose", "dispose$0", 1);
+    _instance_0_u(A._ListenableListenerState.prototype, "get$_listenable_listener$_handleChange", "_listenable_listener$_handleChange$0", 1);
+    var _;
+    _instance_0_u(_ = A._MasterScrollerState.prototype, "get$testRigChanged", "testRigChanged$0", 1);
+    _instance(_, "get$itemBuilder", 0, 3, null, ["call$3"], ["itemBuilder$3"], 3, 0, 0);
+    _instance_1_u(_, "get$_firstPageErrorIndicator", "_firstPageErrorIndicator$1", 0);
+    _instance_1_u(_, "get$_newPageErrorIndicatorBuilder", "_newPageErrorIndicatorBuilder$1", 0);
+    _instance_1_u(_, "get$_noItemsFoundIndicatorBuilder", "_noItemsFoundIndicatorBuilder$1", 0);
+    _instance_1_u(_, "get$_noMoreItemsIndicatorBuilder", "_noMoreItemsIndicatorBuilder$1", 0);
+    _instance_2_u(_, "get$_noMoreItemsIndicatorLayoutBuilder", "_noMoreItemsIndicatorLayoutBuilder$2", 4);
+    _instance_1_u(_, "get$_firstPageProgressIndicatorBuilder", "_firstPageProgressIndicatorBuilder$1", 0);
+  })();
+  (function inheritance() {
+    var _inherit = hunkHelpers.inherit,
+      _inheritMany = hunkHelpers.inheritMany;
+    _inherit(A.RenderSliverFillRemaining, B.RenderSliverSingleBoxAdapter);
+    _inheritMany(B.StatelessWidget, [A.SliverFillRemaining, A.FooterTile, A.NewPageProgressIndicator, A._FirstPageStatusIndicatorBuilder, A.PagedSliverList, A.ChapterEnd]);
+    _inherit(A._SliverFillRemainingWithoutScrollable, B.SingleChildRenderObjectWidget);
+    _inheritMany(B.Object, [A.PagedChildBuilderDelegate, A.PagingState]);
+    _inherit(A.PagingController, B.ValueNotifier);
+    _inheritMany(B.Closure0Args, [A.PagingController__debugAssertNotDisposed_closure, A._PagedLayoutBuilderState_build_closure, A._MasterScrollerState_testRigChanged_closure]);
+    _inheritMany(B._Enum, [A.PagingStatus, A.PagedLayoutProtocol]);
+    _inherit(A.AppendedSliverChildBuilderDelegate, B.SliverChildBuilderDelegate);
+    _inheritMany(B.Closure2Args, [A.AppendedSliverChildBuilderDelegate_closure, A.AppendedSliverChildBuilderDelegate_closure0, A._PagedLayoutBuilderState_build__closure, A._PagedLayoutBuilderState_build__closure0, A._PagedLayoutBuilderState_build__closure1]);
+    _inheritMany(B.StatefulWidget, [A.ListenableListener, A.PagedLayoutBuilder, A.MasterScroller]);
+    _inheritMany(B.State, [A._ListenableListenerState, A._PagedLayoutBuilderState, A._MasterScrollerState]);
+    _inheritMany(B.Closure, [A._PagedLayoutBuilderState__newPageProgressIndicatorBuilder_closure, A._PagedLayoutBuilderState_build_closure0, A._PagedLayoutBuilderState_build__closure2, A._PagedLayoutBuilderState__buildListItemWidget_closure, A.PagedSliverList_build_closure1, A.PagedSliverList_build_closure, A.PagedSliverList_build_closure0, A._MasterScrollerState_initState_closure]);
+    _inherit(A.PagedListView, B.BoxScrollView);
+  })();
+  B._Universe_addRules(init.typeUniverse, JSON.parse('{"RenderSliverFillRemaining":{"RenderSliver":[],"RenderObjectWithChildMixin":["RenderBox"],"RenderObject":[],"DiagnosticableTree":[],"Diagnosticable":[],"HitTestTarget":[],"RenderObjectWithChildMixin.0":"RenderBox"},"SliverFillRemaining":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_SliverFillRemainingWithoutScrollable":{"SingleChildRenderObjectWidget":[],"RenderObjectWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"PagingController":{"ValueNotifier":["PagingState<1,2>"],"ChangeNotifier":[],"ValueListenable":["PagingState<1,2>"],"Listenable":[],"ValueNotifier.T":"PagingState<1,2>"},"PagingStatus":{"Enum":[]},"AppendedSliverChildBuilderDelegate":{"SliverChildBuilderDelegate":[],"SliverChildDelegate":[]},"ListenableListener":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_ListenableListenerState":{"State":["ListenableListener"],"Diagnosticable":[],"State.T":"ListenableListener"},"FooterTile":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"NewPageProgressIndicator":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"PagedLayoutBuilder":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"PagedLayoutProtocol":{"Enum":[]},"_PagedLayoutBuilderState":{"State":["PagedLayoutBuilder<1,2>"],"Diagnosticable":[],"State.T":"PagedLayoutBuilder<1,2>"},"_FirstPageStatusIndicatorBuilder":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"PagedListView":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"PagedSliverList":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"ChapterEnd":{"StatelessWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"MasterScroller":{"StatefulWidget":[],"Widget":[],"DiagnosticableTree":[],"Diagnosticable":[]},"_MasterScrollerState":{"State":["MasterScroller"],"Diagnosticable":[],"State.T":"MasterScroller"}}'));
+  var type$ = (function rtii() {
+    var findType = B.findType;
+    return {
+      BuildContext: findType("BuildContext"),
+      Chapter: findType("Chapter"),
+      ContainerLayer: findType("ContainerLayer"),
+      Duration: findType("Duration"),
+      JSArray_Chapter: findType("JSArray<Chapter>"),
+      JSArray_String: findType("JSArray<String>"),
+      JSArray_of_void_Function_PagingStatus: findType("JSArray<~(PagingStatus)>"),
+      JSArray_of_void_Function_int: findType("JSArray<~(int)>"),
+      ListenableListener: findType("ListenableListener"),
+      ObserverList_of_void_Function_PagingStatus: findType("ObserverList<~(PagingStatus)>"),
+      ObserverList_of_void_Function_int: findType("ObserverList<~(int)>"),
+      PagedChildBuilderDelegate_Chapter: findType("PagedChildBuilderDelegate<Chapter>"),
+      PagedListView_int_Chapter: findType("PagedListView<int,Chapter>"),
+      PagingController_int_Chapter: findType("PagingController<int,Chapter>"),
+      PagingState_int_Chapter: findType("PagingState<int,Chapter>"),
+      SliverConstraints: findType("SliverConstraints"),
+      String: findType("String"),
+      ValueKey_String: findType("ValueKey<String>"),
+      Widget: findType("Widget"),
+      Widget_Function_BuildContext: findType("Widget(BuildContext)"),
+      Widget_Function_BuildContext_int: findType("Widget(BuildContext,int)"),
+      WidgetsBinding: findType("WidgetsBinding"),
+      nullable_Widget_Function_BuildContext: findType("Widget(BuildContext)?"),
+      void: findType("~"),
+      void_Function_PagingStatus: findType("~(PagingStatus)"),
+      void_Function_int: findType("~(int)")
+    };
+  })();
+  (function constants() {
+    C.ChapterEnd_null = new A.ChapterEnd(null);
+    C.ValueKey_DebugReader = new B.ValueKey("DebugReader", type$.ValueKey_String);
+    C.DebugReaderScreen_ValueKey_DebugReader = new G.DebugReaderScreen(C.ValueKey_DebugReader);
+    C.EdgeInsets_0_16_0_16 = new B.EdgeInsets(0, 16, 0, 16);
+    C.ErrorBox_JCe = new B.ErrorBox("First Page InfScroll Error", null);
+    C.ErrorBox_XqC = new B.ErrorBox("New Page InfScroll Error", null);
+    C.CircularProgressIndicator_wYG = new B.CircularProgressIndicator(null, null, null, null, null, null, null, null, null, null);
+    C.FooterTile_h62 = new A.FooterTile(C.CircularProgressIndicator_wYG, null);
+    C.LoadingPage_Y3I = new B.LoadingPage("No chapters...", D.ValueKey_LoadingPage);
+    C.LoadingPage_Yn9 = new B.LoadingPage("Loading first page...", D.ValueKey_LoadingPage);
+    C.NewPageProgressIndicator_null = new A.NewPageProgressIndicator(null);
+    C.EdgeInsets_0_25_0_100 = new B.EdgeInsets(0, 25, 0, 100);
+    C.Icon_m1r = new B.Icon(D.IconData_59729_RpgAwesome_null_false, 50, F.Color_JRH, null, null, null);
+    C.Center_d4S = new B.Center(D.Alignment_0_0, null, null, C.Icon_m1r, null);
+    C.Padding_VmP = new B.Padding(C.EdgeInsets_0_25_0_100, C.Center_d4S, null);
+    C.PagedLayoutProtocol_0 = new A.PagedLayoutProtocol(0, "sliver");
+    C.PagingStatus_0 = new A.PagingStatus(0, "completed");
+    C.PagingStatus_1 = new A.PagingStatus(1, "noItemsFound");
+    C.PagingStatus_2 = new A.PagingStatus(2, "loadingFirstPage");
+    C.PagingStatus_3 = new A.PagingStatus(3, "ongoing");
+    C.PagingStatus_4 = new A.PagingStatus(4, "firstPageError");
+    C.ValueKey_Reader = new B.ValueKey("Reader", type$.ValueKey_String);
+    C.ReaderScreen_ValueKey_Reader = new H.ReaderScreen(C.ValueKey_Reader);
+    C.ValueKey_title = new B.ValueKey("title", type$.ValueKey_String);
+    C.TitleWidget_ValueKey_title = new B.TitleWidget(C.ValueKey_title);
+    C.ValueKey_ChpTitle = new B.ValueKey("ChpTitle", type$.ValueKey_String);
+    C.ValueKey_IWE = new B.ValueKey("InfScrollScaffold!", type$.ValueKey_String);
+    C.ValueKey_MZv = new B.ValueKey("InfPagedListView!", type$.ValueKey_String);
+  })();
+};
+;
+((d, h) => {
+  d[h] = d.current;
+  d.eventLog.push({p: "main.dart.js_88", e: "endPart", h: h});
+})($__dart_deferred_initializers__, "uU3sXBnuvZEmKPcENc5X4XEG9PU=");
+;

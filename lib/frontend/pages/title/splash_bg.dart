@@ -2,9 +2,10 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/theme/colors.dart';
+import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
 
 import '../../../backend/utils.dart';
+import '../../parts/noir_colors.dart';
 
 const Color begin = Color(0x8afad906);
 // const Color charcoal = Color(0x5a121212);
@@ -55,7 +56,7 @@ class SplashPainter extends CustomPainter {
     const double seaLength = .75;
     // dev.log("Painting");
     double colorPt = math.min(1, anim * 2 / 3);
-    canvasColor;
+
     Color sky =
         Color.lerp(const Color(0xffc12121), const Color(0xFF1C1C43), colorPt)!;
     //canvasColor = 0xFF060615
@@ -63,7 +64,7 @@ class SplashPainter extends CustomPainter {
         Color.lerp(const Color(0xfff6900a), const Color(0xFF060615), colorPt)!;
     Color lines = greenLines(colorPt);
     //0xff192d7c
-    Color earthColor = Color.lerp(canvasColor, const Color(0xFF1D1D67),
+    Color earthColor = Color.lerp(NoirPrimary.shade2, const Color(0xFF1D1D67),
         math.min(1, math.max(0, (anim - seaStart) / (seaLength))))!;
 
     Paint bg = Paint()

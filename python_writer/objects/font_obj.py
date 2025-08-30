@@ -484,6 +484,7 @@ RDR_ATTRIBUTES = {
 'text-line-through-type': 'line-through',
 'text-line-through-color': 'line-through',
 'text-underline-style': 'text-underline',
+'text-underline-type': 'text-underline',
 'text-underline-width': 'text-underline',
 'text-underline-color': 'text-underline',
 'text-overline-style': 'text-overline',

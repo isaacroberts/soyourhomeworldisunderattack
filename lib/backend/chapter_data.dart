@@ -21,6 +21,10 @@ class ChapterExtra {
       required this.where,
       required this.when,
       this.audioUrl});
+
+  bool get hasAnyChips {
+    return subtitle != null || where != null || when != null;
+  }
 }
 
 class ChapterData extends ChangeNotifier {
@@ -32,6 +36,8 @@ class ChapterData extends ChangeNotifier {
   String? get subtitle => extra.subtitle;
   String? get where => extra.where;
   String? get when => extra.when;
+
+  bool get hasAnyChips => extra.hasAnyChips;
 
   final List<Holder> lines = [];
   HeaderOfText? header; // = const HeaderOfText('Loading...');

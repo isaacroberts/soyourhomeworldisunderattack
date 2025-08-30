@@ -1,6 +1,7 @@
 import jsonpickle
 
 from objects import *
+import common 
 import common.files as cf
 from common.logger import *
 
@@ -23,15 +24,11 @@ from common.fmt_writer_functions import *
 
 change_log_file('spans')
 
-chapters, fonts = cf.read_chapters_and_fonts('chapters.json', 'fonts_cleaned.json')
+chapters, fonts = cf.read_chapters_and_fonts('chapters.json', 'fonts_clean.json')
 
 
 # Read book info
-f= open('temp/book.json', 'r')
-str1 = f.read()
-f.close()
-
-book_info = jsonpickle.decode(str1)
+book_info = cf.read_book_info()
 book_id = book_info['id']
 ##
 

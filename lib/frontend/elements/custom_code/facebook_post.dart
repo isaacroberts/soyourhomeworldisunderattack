@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
+
+// import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 import '../../../backend/chapter.dart';
-import '../../theme/colors.dart';
+import '../../parts/noir_colors.dart';
+import '../../parts/part.dart';
+import '../../theme/base_text_theme.dart';
 import '../holders/holder_base.dart';
 
 class _Comment {
@@ -32,6 +35,7 @@ class _Comment {
 }
 
 class FacebookHolder extends CodeHolder {
+  ///Presumed to be in the Noir Part
   final _Comment post;
   final List<_Comment> comments;
 
@@ -107,23 +111,24 @@ class FacebookHolder extends CodeHolder {
   @override
   Widget element(BuildContext context) {
     return FacebookElement(key: Key('FB_Post_$hashCode'), holder: this);
-    ;
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return FacebookElement(key: Key('FB_Fallback_$hashCode'), holder: this);
-    ;
+    return FacebookElement(key: Key('FB_Post_$hashCode'), holder: this);
   }
+
+  @override
+  bool get wantsPadding => false;
 }
 
 class _FBHilite extends WidgetStateProperty<Color> {
   @override
   Color resolve(Set<WidgetState> states) {
     if (states.contains(WidgetState.hovered)) {
-      return Primary.shadec;
+      return NoirPrimary.shadec;
     }
-    return Primary.shadef;
+    return NoirPrimary.shadef;
   }
 }
 
@@ -141,10 +146,15 @@ class FacebookElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        key: const Key("FBPost"),
+        width: 600,
         decoration: BoxDecoration(
-            color: Primary.shade3,
-            border: Border.all(color: Primary.shadec, width: 1)),
+            color: NoirPrimary.shade3,
+            border: Border.all(color: NoirPrimary.shade5, width: 1)),
+        margin: const EdgeInsets.only(bottom: 12, left: 6, right: 6),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
         child: Column(
+          key: const Key("primaryCol"),
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -153,6 +163,7 @@ class FacebookElement extends StatelessWidget {
             for (_Comment comment in holder.comments)
               _CommentWidget(
                   key: Key("fb_comment ${comment.hashCode}"), post: comment),
+            //Spacer
             const SizedBox(height: 48),
           ],
         ));
@@ -169,19 +180,25 @@ class _MainFBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle bodyFont = Part.of(context).bodyFont;
+
     return Padding(
-        padding: const EdgeInsets.only(top: 24, bottom: 0, left: 0, right: 0),
+        key: const Key("PostPad"),
+        padding: const EdgeInsets.only(top: 24),
         child: Column(
+          key: const Key('PostCol'),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MainUsernameRow(
-                key: Key("mainUser${post.user}"), username: post.user),
+                key: const Key("mainUserName"), username: post.user),
             if (post.comment != null)
               Padding(
+                  key: const Key("PostTextPad"),
                   padding: const EdgeInsets.only(left: 12),
                   child: Text(
+                    key: const Key("PostText"),
                     post.comment ?? '',
-                    style: bodyFont.copyWith(fontSize: 48),
+                    style: bodyFont.copyWith(fontSize: 24 * fontScale),
                   )),
           ],
         ));
@@ -196,26 +213,38 @@ class MainUsernameRow extends StatelessWidget {
   Widget build(BuildContext context) {
     String? when = Chapter.maybeOf(context)?.data?.when;
     when ??= DateTime.now().toString();
+    TextStyle bodyFont = Part.of(context).bodyFont;
 
     return SizedBox(
+        key: const Key("UserNameSpace"),
         height: 60,
         child: Row(
+          key: const Key("UsernameRow"),
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(
+                key: Key('userIconPad'),
                 padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                child: Icon(Icons.circle, size: 48, color: Primary.shade0)),
+                child: Icon(
+                    key: Key("UserIcon"),
+                    Icons.circle,
+                    size: 48,
+                    color: NoirPrimary.shade1)),
             Column(
+              key: const Key("UserTextCol"),
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                _FBUsername(name: username, isMain: true),
+                _FBUsername(
+                    key: const Key("username"), name: username, isMain: true),
                 Text(
+                  key: const Key("Date"),
                   when,
-                  style: bodyFont.copyWith(fontSize: 12, color: Primary.shade7),
+                  style: bodyFont.copyWith(
+                      fontSize: 8 * fontScale, color: NoirPrimary.shade7),
                 )
               ],
             )
@@ -233,9 +262,12 @@ class _CommentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool realUser = post.user.isNotEmpty;
+    TextStyle bodyFont = Part.of(context).bodyFont;
 
+    bool realUser = post.user.isNotEmpty;
     Widget child = Row(
+        key: const Key("CommentRow"),
+
         // decoration: BoxDecoration(
         //     border: Border(top: BorderSide(color: Primary.shaded, width: 1))),
         // padding: const EdgeInsets.only(top: 0, bottom: 6, left: 48, right: 12),
@@ -244,21 +276,26 @@ class _CommentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+              key: const Key("CommentPad"),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
               child: Icon(
+                key: const Key("CommentIcon"),
                 realUser ? Icons.circle : Icons.circle_outlined,
-                size: 48,
-                color: Primary.shade0,
+                size: 24 * fontScale,
+                color: NoirPrimary.shade1,
               )),
           Expanded(
               child: Column(
+            key: const Key("CommentTextCol"),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Divider(),
-              _FBUsername(name: post.user, isMain: false),
+              _FBUsername(
+                  key: const Key("username"), name: post.user, isMain: false),
               Text(
+                key: const Key("commentText"),
                 post.comment ?? '',
-                style: bodyFont.copyWith(fontSize: 24),
+                style: bodyFont.copyWith(fontSize: 12 * fontScale),
               ),
             ],
           ))
@@ -266,17 +303,22 @@ class _CommentWidget extends StatelessWidget {
 
     if (post.replying) {
       child = Column(
+        key: const Key("replyRow"),
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
+              key: Key("replySpacing"),
+
               //(Icon size (48) + Icon padding(12) )/2
               padding: EdgeInsets.only(left: -1 + 6 + 24),
               // alignment: Alignment(-.5, -1),
               child: ColoredBox(
-                  color: Primary.shade5,
+                  key: Key("replyLineColor"),
+                  color: NoirPrimary.shade5,
                   child: SizedBox(
+                    key: Key("replyLineSize"),
                     width: 3,
                     height: 24,
                   ))),
@@ -285,7 +327,10 @@ class _CommentWidget extends StatelessWidget {
       );
       return child;
     } else {
-      return Padding(padding: const EdgeInsets.only(top: 24), child: child);
+      return Padding(
+          key: const Key("CommentPad"),
+          padding: const EdgeInsets.only(top: 24),
+          child: child);
     }
   }
 }
@@ -298,15 +343,18 @@ class _FBUsername extends StatelessWidget {
   void nullClick() {}
   @override
   Widget build(BuildContext context) {
+    TextStyle bodyFont = Part.of(context).bodyFont;
     //Only main comment should have colon
     String colon = isMain ? ':' : '';
     return TextButton(
+        key: const Key("UsernameTextButton"),
         onPressed: nullClick,
         style: blankButton,
         child: Text(
+          key: const Key("UsernameText"),
           '@$name$colon',
           style: bodyFont.copyWith(
-              color: Primary.shadea, decoration: TextDecoration.underline),
+              color: NoirPrimary.shadea, decoration: TextDecoration.underline),
           textAlign: TextAlign.start,
         ));
   }

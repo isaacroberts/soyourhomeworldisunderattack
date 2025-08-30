@@ -5,6 +5,26 @@ import 'package:flutter/material.dart';
 
 Random rNG = Random(13846268498318);
 
+int clampInt(int min, int i, int max) {
+  if (i < min) {
+    return min;
+  }
+  if (i > max) {
+    return max;
+  }
+  return i;
+}
+
+double clampDouble(double min, double i, double max) {
+  if (i < min) {
+    return min;
+  }
+  if (i > max) {
+    return max;
+  }
+  return i;
+}
+
 enum LoaderColorMode { normal, grey }
 
 enum DeviceSize {

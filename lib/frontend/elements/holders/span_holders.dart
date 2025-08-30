@@ -1,6 +1,7 @@
 // import 'dart:math' as math;
 // import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/components/selectable_span.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
 import '../../../backend/font_interm.dart';
@@ -40,30 +41,35 @@ class SpanOfText extends Holder {
     return true;
   }
 
+  ///Uses a selectionSpan that allows copying
+  Widget selectableElement(BuildContext context) =>
+      SelectableSpan(key: Key("span$hashCode"), spans: spans, align: align);
+
+  ///Skips SelectionSpan in case it's not working
+  Widget unselectableElement(BuildContext context) => RichText(
+        text: TextSpan(children: [
+          for (int n = 0; n < spans.length; ++n) spans[n].fallback(context),
+        ]),
+        textAlign: align,
+      );
+
   @override
   Widget element(BuildContext context) {
-    return wrapInTabs(
-        tabs,
-        align,
-        RichText(
-          textAlign: align,
-          text: TextSpan(children: [
-            for (int n = 0; n < spans.length; ++n) spans[n].span(context),
-          ]),
-        ));
+    return WrapInTabs(
+        key: const Key('tabs'),
+        tabs: tabs,
+        align: align,
+        child: selectableElement(context));
   }
 
   @override
   Widget fallback(BuildContext context) {
-    return wrapInTabs(
-        tabs,
-        align,
-        RichText(
-          textAlign: align,
-          text: TextSpan(children: [
-            for (int n = 0; n < spans.length; ++n) spans[n].fallback(context),
-          ]),
-        ));
+    return WrapInTabs(
+        key: const Key('tabs'),
+        tabs: tabs,
+        align: align,
+        //Do not use selectable JIC
+        child: unselectableElement(context));
   }
 
   @override

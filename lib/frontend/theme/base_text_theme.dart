@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
+import '../parts/noir_colors.dart';
 
-const double fontScale = 2;
-
+const double fontScale = 1.5;
+const double k = 12 * fontScale;
 // const Color appTextColor = Color(0xffffffff);
 // const Color textColor = Color(0xddffffff);
 // const Color fallbackTextColor = Color(0xb2ffffff);
 // const Color labelTextColor = Color(0x88ffffff);
-const Color appTextColor = Primary.shaded;
-const Color textColor = Primary.shadef;
-const Color fallbackTextColor = Primary.shadee;
-const Color labelTextColor = Primary.shadec;
+//TODO: Remove all of these
+const Color appTextColor = NoirPrimary.shaded;
+const Color textColor = NoirPrimary.shadef;
+const Color fallbackTextColor = NoirPrimary.shadee;
+const Color labelTextColor = NoirPrimary.shadec;
+
+const double bookLetterSpacing = 1.1;
 
 const TextStyle bodyFont = TextStyle(
   fontFamily: 'Palatino',
   fontSize: 12 * fontScale,
   height: 1.5,
+  letterSpacing: 1.05,
   color: textColor,
   fontWeight: FontWeight.w300,
   inherit: false,
@@ -24,7 +28,7 @@ const TextStyle bodyFont = TextStyle(
 
 const TextStyle headerFont = TextStyle(
   fontFamily: 'Palatino',
-  fontSize: 12 * fontScale,
+  fontSize: 24,
   color: textColor,
   fontWeight: FontWeight.w500,
 );
