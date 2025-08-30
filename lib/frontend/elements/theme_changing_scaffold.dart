@@ -19,12 +19,14 @@ class ThemeChangingScaffold extends StatefulWidget {
   final Widget child;
   final bool showFAB;
   final Widget? bottomNavigationBar;
+  final Color? background;
   const ThemeChangingScaffold(
       {super.key,
       required this.source,
       this.showFAB = true,
       required this.child,
       required this.part,
+      this.background,
       this.bottomNavigationBar});
 
   @override
@@ -69,6 +71,7 @@ class _ThemedScaffoldState extends State<ThemeChangingScaffold>
         data: widget.part.theme,
         child: Scaffold(
             key: const Key("Scaffold"),
+            backgroundColor: widget.background,
             bottomNavigationBar: widget.bottomNavigationBar,
             // persistentFooterButtons: [
             //   IconButton(onPressed: () {}, icon: Icon(Icons.add))

@@ -330,6 +330,17 @@ class RenderChapterSliver extends RenderProxySliver {
           },
         );
       }
+
+      if (squashForever) {
+        //Fill gutter below page
+        if (desiredHeight < height) {
+          Paint bg = Paint()..color = part.primary.s1;
+          Rect gutter = Rect.fromLTRB(0, offset.dy + desiredHeight,
+              crossAxisExtent, offset.dy + height);
+          context.canvas.drawRect(gutter.intersect(rect), bg);
+        }
+      }
+
       if (!squashForever) {
         //Halo to show extra content
         if ((desiredHeight > height)) {

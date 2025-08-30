@@ -57,7 +57,7 @@ void parseBookLoader(BookLoader that, BufferPtr ptr) {
 
   // dev.log('--1-');
   String? id = ptr.consumeText();
-  assert(id == that.id);
+  assert(id == that.id, "Ids dont match $id ${that.id}");
 
   ptr.assertConsume('T', debugId: that.id);
   ptr.assertConsume(':', debugId: that.id);

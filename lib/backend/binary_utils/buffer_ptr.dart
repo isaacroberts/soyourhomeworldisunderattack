@@ -61,10 +61,10 @@ class BufferPtr {
     if (typedCodeComparison(0, code)) {
       consume(1);
     } else {
-      consume(1);
-      // throw ChapterFormatException(
-      //     'Expected $code in ChapterFormat (got ${getChar()} pos=$start)',
-      //     debugId: debugId);
+      // consume(1);
+      throw ChapterFormatException(
+          'Expected $code in ChapterFormat (got ${getChar()} pos=$start)',
+          debugId: debugId);
     }
   }
 

@@ -1,1 +1,1 @@
-c,ElvenChorus,c,ElvenChorus,a,o,d,d,m,d,d,d,d,d,d,d
+c,ElvenChorus,c,ElvenChorus\,c,ElvenChorus,d,d,o,d,d,m,d,d,d,d,d,d,d

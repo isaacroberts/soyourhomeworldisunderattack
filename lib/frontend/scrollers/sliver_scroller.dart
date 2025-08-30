@@ -13,6 +13,7 @@ import '../../../backend/chapter.dart';
 import '../elements/chapter_heading/heading_data.dart';
 import '../icons.dart';
 import '../pages/title/title.dart';
+import '../parts/noir_colors.dart';
 import '../parts/noir_part.dart';
 import '../parts/part.dart';
 import '../slivers/chapter_sliver.dart';
@@ -366,6 +367,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     return ThemeChangingScaffold(
         key: const Key("SliverScaffold"),
         source: 'scroll',
+        background: NoirPrimary.shade4,
         //TODO: Future loader
         part: part,
         showFAB: currentChapter == null,
