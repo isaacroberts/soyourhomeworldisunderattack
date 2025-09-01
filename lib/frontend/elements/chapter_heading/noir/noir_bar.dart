@@ -21,7 +21,7 @@ class NoirBar extends StatelessWidget {
     return const SliverAppBarChop(
       key: Key("NoirAppBar"),
       systemOverlayStyle: SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xff14102b), // Navigation bar
+        systemNavigationBarColor: NoirPrimary.shade3, // Navigation bar
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
 

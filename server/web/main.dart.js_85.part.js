@@ -37,7 +37,7 @@ _.d=u
 _.e=v
 _.f=w},a97:function a97(d,e){this.a=d
 this.b=e},
-b60(d,e){return new B.py(d,e,null)},
+b61(d,e){return new B.py(d,e,null)},
 py:function py(d,e,f){this.c=d
 this.d=e
 this.a=f},
@@ -80,7 +80,7 @@ t=A.jq(D.bN)
 s=A.b([],y.w)
 r=$.aj()
 q=$.ai
-A.f2(o).hE(new B.PG(!0,this.ga5V(),p,D.DO,D.DN,x,A.av(y.B),new A.aG(p,y.r),new A.aG(p,y.z),new A.ls(),p,0,new A.aX(new A.a9(w,v),u),t,s,!0,C.a1V,new A.bz(p,r,y.l),new A.aX(new A.a9(q,v),u),new A.aX(new A.a9(q,v),u)))},
+A.f2(o).hE(new B.PG(!0,this.ga5V(),p,D.DN,D.DM,x,A.av(y.B),new A.aG(p,y.r),new A.aG(p,y.z),new A.ls(),p,0,new A.aX(new A.a9(w,v),u),t,s,!0,C.a1V,new A.bz(p,r,y.l),new A.aX(new A.a9(q,v),u),new A.aX(new A.a9(q,v),u)))},
 B(d){var x=this.d
 x===$&&A.a()
 return new A.MQ(x,this.gaEe(),new A.x("TextSquare_"+x,y.q))}}
@@ -90,7 +90,7 @@ glu(){return!0},
 go8(){return"Barrier"},
 gl6(){return!1},
 o9(d,e,f){var x=null
-return new A.dC(e,!1,H.aPY(x,new A.as(300,400,new A.aH(E.lo,new A.v6(new B.a97(this,d),!0,x),x),x),16,new A.cG(A.hx(40),D.p)),x)},
+return new A.dC(e,!1,H.aPZ(x,new A.as(300,400,new A.aH(E.ln,new A.v5(new B.a97(this,d),!0,x),x),x),16,new A.cG(A.hx(40),D.p)),x)},
 gjv(){return D.bR}}
 B.py.prototype={
 Y(){return new B.MH()}}
@@ -108,7 +108,7 @@ apM(){var x=this,w=x.e
 if(w!=null)x.Z(new B.aFS(x,w))
 else x.lf(x.a.d)},
 B(d){var x,w,v,u,t=this,s=null,r=t.d
-if(r==null)return G.aKL(s,D.m0,"Null Chapter (start="+t.a.d+")")
+if(r==null)return G.aKM(s,D.m_,"Null Chapter (start="+t.a.d+")")
 else{r=D.h.k(r.a.a)
 x=t.d
 w=x.a
@@ -116,8 +116,8 @@ v=w.b
 if(v===null)v=" ? "
 u=x.b
 u=u==null?s:u.gH(0)
-v=A.ah(""+w.a+":  "+v,s,1,s,s,s,C.Dz,s,s)
-return new L.o0(x,A.aoR(A.aP4(A.b([A.ah("("+A.o(u)+" elements)",s,s,s,s,s,C.Dz,s,s),A.kd(s,s,C.UL,s,s,t.gapL(),s,s,s),new B.BO(t.ga6o(),s),A.kd(s,s,C.UQ,s,s,t.gann(),s,s,s),A.kd(s,s,K.UF,s,s,t.gaq9(),s,s,s),C.a41],y.u),s,s,!0,s,s,1,s,s,s,!1,s,!1,s,s,C.acQ,s,75,!0,s,s,s,s,s,v,s,s,s,1,s,!0),s,C.a3K,s,C.a_6,!1,D.mx,C.acP),new A.x("Chp_"+r,y.q))}}}
+v=A.ah(""+w.a+":  "+v,s,1,s,s,s,C.Dy,s,s)
+return new L.o0(x,A.aoR(A.aP5(A.b([A.ah("("+A.o(u)+" elements)",s,s,s,s,s,C.Dy,s,s),A.kd(s,s,C.UL,s,s,t.gapL(),s,s,s),new B.BO(t.ga6o(),s),A.kd(s,s,C.UQ,s,s,t.gann(),s,s,s),A.kd(s,s,K.UF,s,s,t.gaq9(),s,s,s),C.a41],y.u),s,s,!0,s,s,1,s,s,s,!1,s,!1,s,s,C.acQ,s,75,!0,s,s,s,s,s,v,s,s,s,1,s,!0),s,C.a3K,s,C.a_6,!1,D.mw,C.acP),new A.x("Chp_"+r,y.q))}}}
 var z=a.updateTypes(["~()","~(p)","~(@)"])
 B.a97.prototype={
 $1(d){var x,w=this.a
@@ -153,14 +153,14 @@ return{w:x("r<kl>"),u:x("r<c>"),E:x("r<aa<A>()>"),z:x("aG<S<P>>"),r:x("aG<iR<@>>
 C.UL=new A.dI(C.MW,null,null,null,null,null)
 C.MX=new A.f(58397,"MaterialIcons",null,!0)
 C.UQ=new A.dI(C.MX,null,null,null,null,null)
-C.a_6=new A.wR("Scroll",null)
+C.a_6=new A.wQ("Scroll",null)
 C.a1V=new A.hN("ChapterSelectorGrid",null)
 C.abR=new A.x("DbgRdr",y.q)
-C.KR=new I.vy(C.abR)
+C.KR=new I.vx(C.abR)
 C.a3K=new A.y3(D.P,null,null,C.KR,null)
 C.a41=new A.as(50,null,null,null)
-C.Dz=new A.q(!0,F.fr,null,"Palatino",null,null,12,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+C.Dy=new A.q(!0,F.fr,null,"Palatino",null,null,12,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 C.acP=new A.x("TestRig",y.q)
 C.acQ=new A.x("TestRigAppBar",y.q)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_85",e:"endPart",h:b})})($__dart_deferred_initializers__,"dQy6LdP2s0B8ZzNrAMC0NNJ8liI=");
+a.eventLog.push({p:"main.dart.js_85",e:"endPart",h:b})})($__dart_deferred_initializers__,"8Wf6rnB9hwyRg9L180xH55M/TB4=");

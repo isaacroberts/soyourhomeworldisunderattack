@@ -98,9 +98,9 @@ class MenuDrawer extends StatelessWidget {
       label: 'Fonts',
       value: ViewSettings.instance.showFontsNotifier,
     )); //Drawer
-    listTiles.add(NotifiedSwitch(
-        label: 'Social Media',
-        value: ViewSettings.instance.showBottomNavNotifier)); //Drawer
+    // listTiles.add(NotifiedSwitch(
+    //     label: 'Social Media',
+    //     value: ViewSettings.instance.showBottomNavNotifier)); //Drawer
     //Dev
 
     for ((String, String) tup in devItems) {
