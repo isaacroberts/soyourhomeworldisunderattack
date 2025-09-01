@@ -138,8 +138,8 @@ alu:function alu(d){this.a=d},
 als:function als(d){this.a=d},
 alt:function alt(d){this.a=d},
 PD:function PD(d){this.a=d},
-b30(d,e,f){return new A.oI(d,f,e)},
-oI:function oI(d,e,f){this.c=d
+b30(d,e,f){return new A.oH(d,f,e)},
+oH:function oH(d,e,f){this.c=d
 this.d=e
 this.a=f},
 KD:function KD(d){var _=this
@@ -166,7 +166,7 @@ break
 default:q=t}r=Math.max(r,q)
 q=u.q$
 q.toString
-q.hE(s.avx(r,r))}x=u.te(s,0,r)
+q.hD(s.avx(r,r))}x=u.te(s,0,r)
 w=u.mu(s,0,r)
 q=B.fw(w,t,r>s.r||s.d>0,t,t,x,0,x,0,r,t,t)
 u.dy=q
@@ -289,7 +289,7 @@ H3(d,e,f){var x=A.b_f(!0,!0,!0,f,d,e,null),w=B.aSY(x)
 return w}}
 A.PD.prototype={
 B(d){return C.a0q}}
-A.oI.prototype={
+A.oH.prototype={
 Y(){return new A.KD(B.iz(null,0,!1))}}
 A.KD.prototype={
 ah(){var x,w,v,u,t,s=this
@@ -311,8 +311,8 @@ B(d){var x=this,w=null,v=B.ks(d).Lq(!1),u=x.d
 u===$&&B.a()
 return new B.ir("Scroll",B.app(v,new A.Fm(u,new A.TK(x.gqr(),x.gagN(),x.gani(),x.gagQ(),x.ganr(),x.gant(),y.c),w,D.P,!1,x.e,w,w,w,!1,w,0,w,w,D.a5,D.jm,w,D.w,D.aw,C.ack,y.U)),C.acd)},
 qs(d,e,f){if(f===0)return new E.o0(e,C.aat,C.abM)
-if($.fZ().b.a)return new E.o0(e,C.KS,new B.w("Chp"+e.a.a,y.O))
-return new E.o0(e,C.a1q,new B.w("Chp"+e.a.a,y.O))},
+if($.fZ().b.a)return new E.o0(e,C.KS,new B.x("Chp"+e.a.a,y.O))
+return new E.o0(e,C.a1q,new B.x("Chp"+e.a.a,y.O))},
 HR(d){return this.agC(d)},
 agC(d){var x=0,w=B.O(y.H),v=this,u,t,s,r,q,p
 var $async$HR=B.I(function(e,f){if(e===1)return B.L(f,w)
@@ -332,7 +332,7 @@ return B.N($async$HR,w)},
 agO(d){return C.Me},
 anj(d){return C.Mf},
 ans(d){return C.Y6},
-anu(d){return new B.oB(this.ganv(),null)},
+anu(d){return new B.rF(this.ganv(),null)},
 anw(d,e){return C.I2},
 agR(d){return C.Y7}}
 var z=a.updateTypes(["c(F)","~()","wZ(F)","c(F,fl,p)","c(F,a1)"])
@@ -342,7 +342,7 @@ return this.c.$2(d,e)},
 $S:94}
 A.a7U.prototype={
 $2(d,e){return e},
-$S:240}
+$S:214}
 A.aC1.prototype={
 $1(d){return C.a_k},
 $S:z+2}
@@ -393,16 +393,16 @@ w.a36(v==null?x.$ti.c.a(v):v)},
 $S:5}
 A.alu.prototype={
 $4(d,e,f,g){return this.a.H3(e,f,g)},
-$S:656}
+$S:655}
 A.als.prototype={
 $4(d,e,f,g){return this.a.H3(e,f,g)},
-$S:241}
+$S:245}
 A.alt.prototype={
 $4(d,e,f,g){return this.a.H3(e,f,g)},
-$S:241}
+$S:245}
 A.aAR.prototype={
 $1(d){this.a.HR(d)},
-$S:21}
+$S:20}
 A.aAS.prototype={
 $0(){},
 $S:0};(function installTearOffs(){var x=a._instance_0u,w=a.installInstanceTearOff,v=a._instance_1u,u=a._instance_2u
@@ -425,23 +425,23 @@ x(A.x7,B.bz)
 w(B.hV,[A.lu,A.alr])
 x(A.a7S,B.H7)
 w(B.k0,[A.a7T,A.a7U,A.aC2,A.aC3,A.aC4])
-w(B.P,[A.Ex,A.x6,A.oI])
+w(B.P,[A.Ex,A.x6,A.oH])
 w(B.S,[A.Kz,A.L7,A.KD])
 w(B.dH,[A.aC1,A.aC7,A.aC5,A.aC0,A.alu,A.als,A.alt,A.aAR])
 w(B.e7,[A.aC6,A.aAS])
 x(A.Fm,B.BF)})()
-B.bL(b.typeUniverse,JSON.parse('{"UR":{"bK":[],"ao":["v"],"m":[],"ab":[]},"Wf":{"Q":[],"c":[]},"a3Q":{"aE":[],"ae":[],"c":[]},"x7":{"bz":["lt<1,2>"],"a7":[]},"Ex":{"P":[],"c":[]},"Kz":{"S":["Ex"]},"RD":{"Q":[],"c":[]},"wZ":{"Q":[],"c":[]},"x6":{"P":[],"c":[]},"L7":{"S":["x6<1,2>"]},"zm":{"Q":[],"c":[]},"Fm":{"Q":[],"c":[]},"Fn":{"Q":[],"c":[]},"PD":{"Q":[],"c":[]},"oI":{"P":[],"c":[]},"KD":{"S":["oI"]}}'))
+B.bL(b.typeUniverse,JSON.parse('{"UR":{"bK":[],"ao":["v"],"m":[],"ab":[]},"Wf":{"Q":[],"c":[]},"a3Q":{"aE":[],"ae":[],"c":[]},"x7":{"bz":["lt<1,2>"],"a7":[]},"Ex":{"P":[],"c":[]},"Kz":{"S":["Ex"]},"RD":{"Q":[],"c":[]},"wZ":{"Q":[],"c":[]},"x6":{"P":[],"c":[]},"L7":{"S":["x6<1,2>"]},"zm":{"Q":[],"c":[]},"Fm":{"Q":[],"c":[]},"Fn":{"Q":[],"c":[]},"PD":{"Q":[],"c":[]},"oH":{"P":[],"c":[]},"KD":{"S":["oH"]}}'))
 var y=(function rtii(){var x=B.T
-return{v:x("dg"),C:x("r<fl>"),Z:x("r<~(lu)>"),z:x("r<~(p)>"),e:x("aP<~(lu)>"),g:x("aP<~(p)>"),c:x("TK<fl>"),U:x("Fm<p,fl>"),h:x("x7<p,fl>"),w:x("lt<p,fl>"),S:x("jy"),O:x("w<l>"),H:x("~"),s:x("~(lu)")}})();(function constants(){C.I2=new A.PD(null)
-C.abT=new B.w("DebugReader",y.O)
+return{v:x("dg"),C:x("r<fl>"),Z:x("r<~(lu)>"),z:x("r<~(p)>"),e:x("aP<~(lu)>"),g:x("aP<~(p)>"),c:x("TK<fl>"),U:x("Fm<p,fl>"),h:x("x7<p,fl>"),w:x("lt<p,fl>"),S:x("jy"),O:x("x<l>"),H:x("~"),s:x("~(lu)")}})();(function constants(){C.I2=new A.PD(null)
+C.abT=new B.x("DebugReader",y.O)
 C.KS=new G.vy(C.abT)
 C.LE=new B.ac(0,16,0,16)
 C.Me=new B.D6("First Page InfScroll Error",null)
 C.Mf=new B.D6("New Page InfScroll Error",null)
 C.I8=new B.mb(null,null,null,null,null,null,null,null,null,null)
 C.My=new A.RD(C.I8,null)
-C.Y6=new B.oF("No chapters...",D.jS)
-C.Y7=new B.oF("Loading first page...",D.jS)
+C.Y6=new B.oE("No chapters...",D.jS)
+C.Y7=new B.oE("Loading first page...",D.jS)
 C.a_k=new A.wZ(null)
 C.LH=new B.ac(0,25,0,100)
 C.UM=new B.dI(D.m0,50,F.kH,null,null,null)
@@ -453,12 +453,12 @@ C.a0u=new A.lu(1,"noItemsFound")
 C.y1=new A.lu(2,"loadingFirstPage")
 C.y2=new A.lu(3,"ongoing")
 C.a0v=new A.lu(4,"firstPageError")
-C.acy=new B.w("Reader",y.O)
+C.acy=new B.x("Reader",y.O)
 C.a1q=new H.xs(C.acy)
-C.ae3=new B.w("title",y.O)
-C.aat=new B.tU(C.ae3)
-C.abM=new B.w("ChpTitle",y.O)
-C.acd=new B.w("InfScrollScaffold!",y.O)
-C.ack=new B.w("InfPagedListView!",y.O)})()};
+C.ae2=new B.x("title",y.O)
+C.aat=new B.tU(C.ae2)
+C.abM=new B.x("ChpTitle",y.O)
+C.acd=new B.x("InfScrollScaffold!",y.O)
+C.ack=new B.x("InfPagedListView!",y.O)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_89",e:"endPart",h:b})})($__dart_deferred_initializers__,"RNVn29WCtu5BxmOh3cx1NqPm9wQ=");
+a.eventLog.push({p:"main.dart.js_89",e:"endPart",h:b})})($__dart_deferred_initializers__,"H0bRMtDNPhV2OYj39QYk5cu27CA=");

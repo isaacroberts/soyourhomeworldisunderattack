@@ -6,7 +6,7 @@ b6y(d){var x=new D.Xf(),w=H.aLs(d),v=A.b(w.split(":"),y.h),u=v[0]
 if(B.c.m(u,"@"))x.a=A.fY(u,"@","")
 else if(B.c.m(w,"@"))A.af(new I.CC("Not implemented - Username in tweet hard to reach. list=("+A.o(v)+'}) text="'+w+'"'))
 else x.a=u
-if(v.length>1)x.b=B.b.bz(B.b.f6(v,1),":")
+if(v.length>1)x.b=B.b.bz(B.b.f5(v,1),":")
 else x.b="Exception: Tweet JSON unparseable."
 return x},
 Xf:function Xf(){this.b=this.a=$},
@@ -86,4 +86,4 @@ C.nF=new A.q(!0,C.p1,null,null,null,null,12,B.cr,null,null,null,null,null,null,n
 C.JM=new A.n(1,0.00392156862745098,0,0.00392156862745098,B.e)
 C.a9_=new A.q(!0,C.JM,null,"Roboto",null,null,12,B.bz,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_39",e:"endPart",h:b})})($__dart_deferred_initializers__,"+/tfLThU2YLLAyTKDbbJksxjPrU=");
+a.eventLog.push({p:"main.dart.js_39",e:"endPart",h:b})})($__dart_deferred_initializers__,"fgxWK5C4isEm1Mp+MclRjI/6HpM=");

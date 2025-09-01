@@ -18,11 +18,11 @@ Y(){return new B.J2()}}
 B.J2.prototype={
 O3(d){this.Z(new B.awf(this,d))},
 Gf(){var x,w,v=this.d
-if(v!=null){x=D.b.hc(C.m8,v)
+if(v!=null){x=D.b.hb(C.m8,v)
 v=this.c
 v.toString
 w=C.WR[x]
-A.f0(v).f3("/search/"+w,null)}},
+A.f0(v).f2("/search/"+w,null)}},
 B(d){var x,w,v,u,t,s,r,q,p,o=this,n=null,m=$.aOD(),l=A.b([],y.e)
 for(x=o.gO2(),w=y.g,v=0;v<3;++v){u=o.d
 t=C.m8[v]
@@ -57,4 +57,4 @@ C.X_=A.b(x(["You rush headlong into danger. You fear not for your own safety, bu
 C.aaj=new A.dM("Continue",null,null,D.at,null,null,null,null,null,null)
 C.a0o=new A.aH(D.dG,C.aaj,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_69",e:"endPart",h:b})})($__dart_deferred_initializers__,"pC7GwR159ifQRqmcp3vWg4RtRBk=");
+a.eventLog.push({p:"main.dart.js_69",e:"endPart",h:b})})($__dart_deferred_initializers__,"ZzYsP1fAVB8tlgtmrRM2EOXZ/1M=");
