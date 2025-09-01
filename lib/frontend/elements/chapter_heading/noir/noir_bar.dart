@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/subtitle.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/title.dart';
 
@@ -19,6 +20,13 @@ class NoirBar extends StatelessWidget {
 // SliverAppBar;
     return const SliverAppBarChop(
       key: Key("NoirAppBar"),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: Color(0xff14102b), // Navigation bar
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+
+        statusBarColor: NoirPrimary.shade5, // Status bar
+      ),
       // shape:
       //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       flexibleSpace: NoirAppBar(key: Key("AppBar")),
