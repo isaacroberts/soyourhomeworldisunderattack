@@ -4,7 +4,7 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f0d24">
 <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#040210">
 <head>
-
+<!--
   <style>
     body {
       height: 500vh !important;  /* Bigger than 100% to allow scroll */
@@ -37,19 +37,7 @@
     }
 
   </style>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
+-->
 
   <base href="/web/">
 
@@ -92,8 +80,28 @@
   <title>soyourhomeworld</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <script src="flutter_bootstrap.js" async></script>
+
+  <!--Get scroll to work-->
+  <script>
+    var element = document.getElementsByTagName('body')[0];
+
+    var handleScroll = function() {
+      	element.scrollTo(0, 0);  // required when scroll bar is drgged
+    };
+
+    element.addEventListener('scroll', handleScroll, false);
+
+    var handleEvent = function(e) {
+    	e.preventDefault();      // disables scrolling by mouse wheel and touch move
+    };
+
+    element.addEventListener('scroll', handleEvent,{passive: false});
+    element.addEventListener('mousewheel', handleEvent,{passive: false});
+    element.addEventListener('touchmove', handleEvent, {passive: false});
+  </script>
 </body>
 
 </html>
