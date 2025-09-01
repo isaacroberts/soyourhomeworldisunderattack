@@ -354,7 +354,7 @@ class _SliverScrollerState extends State<SliverScroller> {
 
   @override
   Widget build(BuildContext context) {
-    return builder(context, null);
+    // return builder(context, null);
     return LayoutBuilder(key: const Key("size_response"), builder: builder);
   }
 
@@ -394,7 +394,7 @@ class _SliverScrollerState extends State<SliverScroller> {
                     child: CustomScrollView(
                       dragStartBehavior: DragStartBehavior.down,
                       restorationId: 'sliverScroll',
-                      primary: true,
+                      // primary: true,
 
                       key: const Key("SliverCustomScrollView"),
                       //Loads & lays out sooner

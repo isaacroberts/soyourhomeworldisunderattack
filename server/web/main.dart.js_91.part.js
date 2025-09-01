@@ -2,8 +2,8 @@
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_91",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
 $__dart_deferred_initializers__.current=function(a,b,c,$){var A,D,E,F,B={
-b3K(d,e){return new B.oR(d,e)},
-oR:function oR(d,e){this.c=d
+b3K(d,e){return new B.oS(d,e)},
+oS:function oS(d,e){this.c=d
 this.a=e},
 L8:function L8(){var _=this
 _.d=0
@@ -19,7 +19,7 @@ E=c[53]
 F=c[42]
 B=a.updateHolder(c[9],B)
 C=c[99]
-B.oR.prototype={
+B.oS.prototype={
 Y(){return new B.L8()}}
 B.L8.prototype={
 ah(){this.au()
@@ -39,7 +39,7 @@ aBl(){this.lf(this.d+1)},
 B(d){var x,w=this,v=null,u=w.e,t=w.f
 t===$&&A.a()
 x=w.d
-return new E.o0(u,A.pv(A.bR(A.b([C.a1r,A.ck(new A.as(v,200,A.ck(A.kd(v,v,C.UE,v,C.ac4,w.gaBk(),v,v,v),v,v,v),v),v,v,v)],y.e),D.aR,new A.x("Chp"+x+" ScrollHoldCol",y.a),D.J,D.a6),t,v,v,D.P),C.ad8)}}
+return new E.o0(u,A.pw(A.bR(A.b([C.a1r,A.ck(new A.as(v,200,A.ck(A.kd(v,v,C.UE,v,C.ac4,w.gaBk(),v,v,v),v,v,v),v),v,v,v)],y.e),D.aR,new A.w("Chp"+x+" ScrollHoldCol",y.a),D.J,D.a6),t,v,v,D.P),C.ad8)}}
 var z=a.updateTypes(["~()"])
 B.aC8.prototype={
 $0(){var x=this.a
@@ -47,16 +47,16 @@ x.d=this.b
 x.e=this.c},
 $S:0};(function installTearOffs(){var x=a._instance_0u
 x(B.L8.prototype,"gaBk","aBl",0)})();(function inheritance(){var x=a.inherit
-x(B.oR,A.P)
+x(B.oS,A.P)
 x(B.L8,A.S)
 x(B.aC8,A.e7)})()
-A.bL(b.typeUniverse,JSON.parse('{"oR":{"P":[],"c":[]},"L8":{"S":["oR"]}}'))
-var y={e:A.T("r<c>"),a:A.T("x<l>"),f:A.T("~")};(function constants(){C.MN=new A.f(57499,"MaterialIcons",null,!0)
-C.abK=new A.x("ChapterNextIcon",y.a)
+A.bL(b.typeUniverse,JSON.parse('{"oS":{"P":[],"c":[]},"L8":{"S":["oS"]}}'))
+var y={e:A.T("r<c>"),a:A.T("w<l>"),f:A.T("~")};(function constants(){C.MN=new A.f(57499,"MaterialIcons",null,!0)
+C.abK=new A.w("ChapterNextIcon",y.a)
 C.UE=new A.dI(C.MN,50,D.j,null,null,C.abK)
-C.adq=new A.x("FinScr_Reader}",y.a)
+C.adq=new A.w("FinScr_Reader}",y.a)
 C.a1r=new F.xs(C.adq)
-C.ac4=new A.x("Chapter NextButton",y.a)
-C.ad8=new A.x("chpPartLoader",y.a)})()};
+C.ac4=new A.w("Chapter NextButton",y.a)
+C.ad8=new A.w("chpPartLoader",y.a)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_91",e:"endPart",h:b})})($__dart_deferred_initializers__,"Y3pDd+7zyXuxtNpJv76xkkk2SxQ=");
+a.eventLog.push({p:"main.dart.js_91",e:"endPart",h:b})})($__dart_deferred_initializers__,"Ks9S1NF1kgj33Io1UUkwfMN/36U=");

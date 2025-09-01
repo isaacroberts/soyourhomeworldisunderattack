@@ -25,11 +25,11 @@ Y(){return new B.IO()}}
 B.IO.prototype={
 O3(d){this.Z(new B.avi(this,d))},
 Gf(){var x,w,v=this.d
-if(v!=null){x=D.b.hb(C.m9,v)
+if(v!=null){x=D.b.hc(C.m9,v)
 v=this.c
 v.toString
 w=C.Y1[x]
-A.f0(v).f2("/search/"+w,null)}},
+A.f0(v).f3("/search/"+w,null)}},
 B(d){var x,w,v,u,t,s=this,r=null,q=A.b([],y.e),p=s.gO2(),o=y.g,n=0
 while(!0){if(!(n<(s.a.c.a?5:2)))break
 x=s.d
@@ -62,4 +62,4 @@ C.Y1=A.b(x(["HumanJack","AnarchistsWin","TransgenderRabbit","AIWinsElection","Po
 C.aac=new A.dM("Vote",null,null,D.at,null,null,null,null,null,null)
 C.a0s=new A.aH(D.dG,C.aac,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_64",e:"endPart",h:b})})($__dart_deferred_initializers__,"LOflxQyNZtfrHWvzaRFWlPCSgQE=");
+a.eventLog.push({p:"main.dart.js_64",e:"endPart",h:b})})($__dart_deferred_initializers__,"1HkcEQHBe0ICNwegOef0AYd5nrk=");
