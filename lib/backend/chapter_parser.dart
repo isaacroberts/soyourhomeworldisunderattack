@@ -41,7 +41,7 @@ class ChapterParser {
 */
   Future<ChapterData> parseWithExistingChapterInfo(ChapterInfo info,
       {required bool handleErrors}) async {
-    dev.log("Parsing ${info.varName} (fromExisting)");
+    // dev.log("Parsing ${info.varName} (fromExisting)");
     if (!ptr.hasMore()) {
       throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
           debugId: debugId);
@@ -59,7 +59,7 @@ class ChapterParser {
 
   Future<ChapterAndStream> getChapterAndStream(ChapterInfo info,
       {required bool handleErrors}) async {
-    dev.log("Parsing ${info.varName} (fromExisting)");
+    // dev.log("Parsing ${info.varName} (fromExisting)");
     if (!ptr.hasMore()) {
       throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
           debugId: debugId);

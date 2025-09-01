@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/font_cache.dart';
 
-import '_book_libs.dart' deferred as book_lib;
+import '_json_book_libs.dart' as book_lib;
+// import '_binary_book_libs.dart' as book_lib;
 import 'chapter.dart';
 import 'chapter_data.dart';
 import 'chapter_info.dart';
@@ -113,19 +114,11 @@ class Book {
   int? findChapterBySearchTerm(String name) {
     name = name.toLowerCase();
     for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].varName.toLowerCase() == name) {
+      if (chapters[ix].matchesSearchTerm(name)) {
         return ix;
       }
     }
-    //Oops! Now check other methods
-    for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].varName.toLowerCase() == name) {
-        return ix;
-      } else {
-        dev.log(
-            '  > Search Chapter: ${chapters[ix].varName.toLowerCase()} =/= $name');
-      }
-    }
+    dev.log("Couldn't find chapter: $name");
     return null;
   }
 
@@ -216,6 +209,7 @@ class BookLoader {
     for (int n = 1; n < chapterHolders.length; ++n) {
       chapterHolders[n].previous ??= chapterHolders[n - 1];
     }
+    //Set partname
 
     return Book(
         id: id,
@@ -260,7 +254,8 @@ class BookLoader {
     if (book != null) {
       return book;
     }
-    await book_lib.loadLibrary();
-    return book_lib.loadBookLoader(this);
+    // await book_lib.loadLibrary();
+    book = await book_lib.loadBookLoader(this);
+    return book;
   }
 }

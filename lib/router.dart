@@ -28,17 +28,16 @@ import 'frontend/scrollers/scroller_door.dart';
 //noir
 // const String devMain = '/scroll/4';
 //greenland
-const String devMain = '/scroll/34';
+// const String devMain = '/scroll/34';
 //noir image
-// const String devMain = '/scroll/20';
+const String devMain = '/scroll/20';
 
-Page _errorPageBuilder(BuildContext context, GoRouterState state) {
-  return MaterialPage(
-      child: DeferredPage(
-          key: const Key("DeferredErrorPage"),
-          loader: error_page_lib.loadLibrary,
-          builder: (context) => error_page_lib.errorPageBuilder(
-              context, state.error, state.extra)));
+Widget devPageBuilder(BuildContext context, GoRouterState routerState) {
+  /// Dev Page
+  return DeferredPage(
+      key: const Key("DeferredDevPage"),
+      loader: dev_page_lib.loadLibrary,
+      builder: (context) => dev_page_lib.DevPage(routerState: routerState));
 }
 
 GoRouter router() {
@@ -51,25 +50,11 @@ GoRouter router() {
       routes: routes());
 }
 
-Widget scrollDoorBuilder(BuildContext context, GoRouterState state) {
-  try {
-    String numStr = state.pathParameters['chid'] ?? '0';
-
-    int? number = int.tryParse(numStr);
-    dev.log('Go parsed $number');
-    return ScrollDoor.nullSafe(
-      key: const Key("ScrollDoor!"),
-      startChapter: number,
-    );
-  } catch (exception) {
-    dev.log("Exception!");
-    dev.log('$exception');
-    ErrorList.logError(exception);
-    return ErrorList.instance.page(context);
-  }
-}
-
 List<GoRoute> routes() {
+  /// ====================================
+  /// Routes
+  /// ====================================
+
   return [
     //Book
     GoRoute(
@@ -160,6 +145,24 @@ List<GoRoute> routes() {
   ];
 }
 
+Widget scrollDoorBuilder(BuildContext context, GoRouterState state) {
+  try {
+    String numStr = state.pathParameters['chid'] ?? '0';
+
+    int? number = int.tryParse(numStr);
+    dev.log('Go parsed $number');
+    return ScrollDoor.nullSafe(
+      key: const Key("ScrollDoor!"),
+      startChapter: number,
+    );
+  } catch (exception) {
+    dev.log("Exception!");
+    dev.log('$exception');
+    ErrorList.logError(exception);
+    return ErrorList.instance.page(context);
+  }
+}
+
 FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
   String path = state.uri.path;
   dev.log("Redirector $path} ${state.path}");
@@ -174,11 +177,13 @@ FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
   }
 }
 
-Widget devPageBuilder(BuildContext context, GoRouterState routerState) {
-  return DeferredPage(
-      key: const Key("DeferredDevPage"),
-      loader: dev_page_lib.loadLibrary,
-      builder: (context) => dev_page_lib.DevPage(routerState: routerState));
+Page _errorPageBuilder(BuildContext context, GoRouterState state) {
+  return MaterialPage(
+      child: DeferredPage(
+          key: const Key("DeferredErrorPage"),
+          loader: error_page_lib.loadLibrary,
+          builder: (context) => error_page_lib.errorPageBuilder(
+              context, state.error, state.extra)));
 }
 
 Widget greenlandPageBuilder(BuildContext context, GoRouterState routerState) {

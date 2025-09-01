@@ -93,9 +93,14 @@ class _ChapterSliverState extends State<ChapterSliver> {
                   sliver: SliverReaderWidth(
                       key: const Key("width"),
                       sliver: SliverToBoxAdapter(
-                          child: TriWizardLoader(
-                              key: const Key("Loader"),
-                              message: chapter!.displayName)))),
+                          child: SizedBox(
+                              key: const Key('height'),
+                              height: 600,
+                              child: Center(
+                                  key: const Key('center'),
+                                  child: TriWizardLoader(
+                                      key: const Key("Loader"),
+                                      message: chapter!.displayName)))))),
             ]));
       }
     } else {

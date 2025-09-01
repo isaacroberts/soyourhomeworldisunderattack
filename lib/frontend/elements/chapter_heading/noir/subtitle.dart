@@ -227,6 +227,7 @@ class _LengthSummaryWrap extends StatelessWidget {
         : 'Awaiting reading length...';
     return Tooltip(
         message: message,
+        triggerMode: TooltipTriggerMode.tap,
         child: Container(
             height: 30 - 4,
             width: 30 - 4,

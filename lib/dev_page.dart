@@ -6,6 +6,7 @@ import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/special_widgets/ad_list.dart';
 import 'package:soyourhomeworld/frontend/elements/special_widgets/greenland_game.dart';
+import 'package:soyourhomeworld/frontend/pages/image_upload_page.dart';
 import 'package:soyourhomeworld/frontend/pages/review_page.dart';
 import 'package:soyourhomeworld/frontend/parts/noir_part.dart';
 
@@ -33,8 +34,9 @@ class DevPage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (routerState.pathParameters.isNotEmpty) {}
 
-    // return const PageWrap(child: PeterThielsAncientGame());
-
+    return const ImageUploadPage(
+      sourceImage: 'urmom.jpg',
+    );
     // return const StdBookWaiter(
     //     child: SliverScroller(
     //   key: Key('SliverScroller'),

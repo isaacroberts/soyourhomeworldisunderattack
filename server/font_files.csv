@@ -2,7 +2,7 @@ id,family,file,count
 96,Liberation Mono,LiberationMono-Regular.ttf,10
 1,Rubik,Rubik-VariableFont_wght.ttf,6
 245,Times New Roman,times.ttf,1
-0,Palatino,palatinolinotype_roman.ttf,101
+0,Palatino,palatinolinotype_roman.ttf,88
 9,Ani,Ani.ttf,2
 4,Aierbazzi,aierbazzi.ttf,1
 42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,27
@@ -19,16 +19,16 @@ id,family,file,count
 49,Futura,Futura Medium.otf,3
 67,IBM Plex Sans ExtraLight,IBMPlexSans-ExtraLight.ttf,2
 23,Casual Sketchy,Casual Sketchy.ttf,8
-24,Celtic Garamond the 2nd,CELTG___.TTF,13
+24,Celtic Garamond the 2nd,CELTG___.TTF,8
 96,Liberation Mono,LiberationMono-BoldItalic.ttf,2
 96,Liberation Mono,LiberationMono-Bold.ttf,4
 14,Authentic,Authentic Signature.otf,3
 18,Blood Crow,bloodcrow.ttf,1
-0,Palatino,palatinolinotype_bold.ttf,45
+0,Palatino,palatinolinotype_bold.ttf,38
 0,Palatino,palatinolinotype_bolditalic.ttf,14
 0,Palatino Linotype,palatinolinotype_italic.ttf,38
 96,Liberation Mono,LiberationMono-Italic.ttf,1
-42,EB Garamond Medium,EBGaramond-Italic-VariableFont_wght.ttf,10
+42,EB Garamond Medium,EBGaramond-Italic-VariableFont_wght.ttf,11
 273,Z003,Z003-MediumItalic.t1,5
 7,Anathema,Anathema.ttf,1
 137,Montserrat SemiBold,Montserrat-VariableFont_wght.ttf,42
@@ -43,7 +43,7 @@ id,family,file,count
 3,Affordable Afterlife DEMO,AffordableAfterlifeDEMO-Regular.otf,10
 201,Raleway Thin,Raleway-VariableFont_wght.ttf,1
 33,Dancing Script,DancingScript-VariableFont_wght.ttf,1
-6,Amika Blackletter Free Font,Amika Blackletter Free Font.ttf,2
+6,Amika Blackletter Free Font,Amika Blackletter Free Font.ttf,1
 45,Frank Ruhl Libre,FrankRuhlLibre-VariableFont_wght.ttf,8
 49,Futura Book,Futura Condensed ExtraBold.ttf,1
 153,Noto Sans,"NotoSans-VariableFont_wdth,wght.ttf",3

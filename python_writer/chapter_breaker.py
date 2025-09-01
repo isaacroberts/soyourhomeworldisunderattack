@@ -388,7 +388,7 @@ def collect_parts(chapters):
     # Collect parts
     for chapter in chapters:
         if chapter.part:
-            id = pst.saveable_response("Enter part id "+ chapter.partName+' '+chapter.varName)
+            id = pst.saveable_response("Enter part id "+ chapter.partName+' '+chapter.varName())
             id = int(id)
             chapter.partId = id
             lastPart = id

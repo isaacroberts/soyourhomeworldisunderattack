@@ -12,6 +12,7 @@ def code_tag_replacements():
         'WHLSVG': 'WHLAd',
      'WHL':'WHLAd',
      'HJAd': 'HumanJacksAd',
+     'ElvenChoir': 'ElvenChorus',
         # 'UnskippableAudio': 'Audio',
         'menu': 'SoupMenu',
         'Menu': 'SoupMenu',

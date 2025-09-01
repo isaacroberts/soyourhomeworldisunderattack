@@ -1,7 +1,7 @@
 import jsonpickle
 
 from objects import *
-import common 
+import common
 import common.files as cf
 from common.logger import *
 
@@ -62,22 +62,38 @@ for chapter in chapters:
 for i in range(len(chapters)):
     chapters[i].writeChapter()
 
-change_log_file('.index')
-print("""
-        .index
-""")
 
-bin = BinList("Index")
+# Json
+def json_index_file(chapters):
+    import json
+    change_log_file('index')
+    print("""
+        index
+        """)
+    data = []
 
-bin += '+'
+    for chapter in chapters:
+        data.append(chapter.json_chapter_info())
 
-for chapter in chapters:
-    bin += chapter.chapter_info()
+    s = json.dumps(data)
+    f= open(f'generated_book/{book_id}/index.json', 'w')
+    f.write(s)
 
-bin += ';'
 
-f= open(f'generated_book/{book_id}/index', 'wb')
-f.write(bin.bstr)
+def binary_index_file(chapters):
+    bin = BinList("Index")
+
+    bin += '+'
+
+    for chapter in chapters:
+        bin += chapter.chapter_info()
+
+    bin += ';'
+
+    f= open(f'generated_book/{book_id}/index', 'wb')
+    f.write(bin.bstr)
+
+json_index_file(chapters)
 
 logger_end()
 

@@ -103,9 +103,13 @@ class Chapter:
         # other
         self.data = {}
 
+    # === Getters ===
     def matches_bookmark(self, tag):
         if tag in self.bookmarks:
             return True
+
+    def varName(self):
+        return self.id
 
     def leadingTitleChapter():
         c= ChapterStart('Title')
@@ -251,6 +255,35 @@ class Chapter:
         bin += ')';
         bin += ';'
         return bin
+
+    def json_chapter_info(self):
+        import common.fmt_writer_functions as fmt
+        data = {}
+
+        data['ix'] = self.index
+        # bin += '='
+        data['var'] = self.id
+        # bin += ':'
+        data['display'] = self.display_name
+        # bin += '^'
+        data['partId'] = self.partId
+        # bin += '@'
+        filename = self.filename()
+        filename = self.book_id+'/'+filename
+        data ['filename'] = filename
+        if self.next is None:
+            data['next'] = None
+        else:
+            data['next'] = self.next.index
+
+        if self.part:
+            if self.hidepart:
+                data['isPart'] = 'v'
+            else:
+                data['isPart'] = '^'
+        else:
+            data['isPart'] = '0'
+        return data
 
     # ===== Processing ===========
     def prepare_for_save(self):

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/image/image_constants.dart';
+import 'package:soyourhomeworld/frontend/pages/image_upload_page.dart'
+    deferred as image_upload_page;
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 import '../../../../backend/chapter.dart';
@@ -50,6 +52,18 @@ enum NoImageReason {
         return "Try submitting one!";
       case NoImageReason.none:
         return 'I don\'t know why.';
+    }
+  }
+
+  bool canSubmit() {
+    switch (this) {
+      case NoImageReason.networkError:
+        return false;
+      case NoImageReason.leftBlank:
+      case NoImageReason.suggestion:
+      case NoImageReason.imageIOU:
+      case NoImageReason.none:
+        return true;
     }
   }
 
@@ -180,24 +194,63 @@ class _UnwrappedNoImageWidget extends StatelessWidget {
   }
 
   Column buildColumn(BuildContext context, Color onBg) {
+    EdgeInsets padding = EdgeInsets.only(left: 6);
+
+    Widget reasonText = Text(reason.getReasonText(),
+        textAlign: TextAlign.start,
+        maxLines: 1,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: onBg));
+
+    if (reason.canSubmit()) {
+      reasonText = TextButton(
+          style: ButtonStyle(
+              alignment: Alignment.centerLeft,
+              padding: WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 3, horizontal: 6))),
+          onPressed: () => onSubmit(context),
+          child: reasonText);
+    } else {
+      reasonText = Padding(padding: padding, child: reasonText);
+    }
     return Column(
       key: const Key("NoImageCol"),
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          reason.getTitleText(),
-          style:
-              Theme.of(context).textTheme.headlineSmall?.copyWith(color: onBg),
-        ),
+        Padding(
+            padding: padding,
+            child: Text(
+              reason.getTitleText(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(color: onBg),
+            )),
         if (displayUrl != null)
-          Text(displayUrl!,
-              style:
-                  Theme.of(context).textTheme.bodySmall?.copyWith(color: onBg)),
-        Text(reason.getReasonText(),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: onBg))
+          Padding(
+              padding: padding,
+              child: Text(displayUrl!,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: onBg))),
+        reasonText,
       ],
     );
+  }
+
+  void onSubmit(BuildContext context) async {
+    //Mount check
+    if (context.mounted) {
+      // Deferred load
+      await image_upload_page.loadLibrary();
+      //Mount check
+      if (context.mounted) {
+        //show Dialog
+        image_upload_page.showImageUploadDialog(context,
+            sourceImage: displayUrl);
+      }
+    }
   }
 }

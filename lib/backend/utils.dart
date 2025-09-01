@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 
 Random rNG = Random(13846268498318);
 
+const String RQ = "“";
+const String LQ = "”";
+
 int clampInt(int min, int i, int max) {
   if (i < min) {
     return min;

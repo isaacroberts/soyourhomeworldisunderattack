@@ -273,18 +273,17 @@ class InteractiveMatchingStep():
                 self._close_custom_block(has_end_tag=True)
                 # Classtype is none because a close brace is nothing.
                 return None, None
-
+        print('\n')
         print('Uncaught tag:', obj)
         self.print_pos(i)
         print('Uncaught tag:', f"'{obj}'")
         if self.hasOpenObject('b'):
             print('Hanging CustomBlock:', self.openBO)
         print('Match?')
-        prompt = "Continue?\n"
+        prompt = "Continue?"
         if self.openBO is not None:
-            prompt += "o = matches CustomBlock,\n"
-        prompt += "\n" \
-"""
+            prompt += "\no = matches CustomBlock,"
+        prompt += """
 c = Change (type)
 w = add ParsedBlock, a=add CustomBlock, z=add tag,
 k = convert to keyword,

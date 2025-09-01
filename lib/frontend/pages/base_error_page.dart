@@ -74,7 +74,7 @@ class ErrorPage extends StatelessWidget {
     return ScaffoldWithScroll(
         bg: null,
         source: null,
-        child: Column(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,

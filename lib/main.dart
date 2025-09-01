@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
@@ -14,6 +15,11 @@ import 'frontend/scrollers/sliver_scroller.dart';
 import 'router.dart' as router_lib;
 
 Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Color(0xff14102b),
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.dark,
+  ));
   FlutterError.onError = (FlutterErrorDetails details) {
     //details.silent = whether error should be silent in release mode
     if (!(details.silent && kReleaseMode)) {

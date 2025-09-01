@@ -6,7 +6,7 @@ import '../backend/error_handler.dart';
 import 'components/build_frog.dart';
 import 'elements/widgets/loader.dart';
 
-//TYPING!
+//Typing
 typedef AsyncBook = AsyncSnapshot<Book?>;
 
 ///

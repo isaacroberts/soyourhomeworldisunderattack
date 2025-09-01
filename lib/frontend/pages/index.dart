@@ -404,18 +404,6 @@ class PartListTile extends StatefulWidget {
 class _PartListTileState extends State<PartListTile> {
   Chapter get chapter => widget.chapter;
 
-  Widget subTile(Chapter sub) {
-    return ListTile(
-        key: Key('subChapterTile_${sub.id}'),
-        leading: const SizedBox(
-          width: 25,
-        ),
-        onTap: () => context.go('/scroll/${sub.id}'),
-        title: Text(
-          sub.displayName,
-        ));
-  }
-
   void gotoPart() {
     scrollToChapter(chapter, context: context);
   }
@@ -434,18 +422,69 @@ class _PartListTileState extends State<PartListTile> {
     return ExpansionTile(
       key: const Key('partExpansionTile'),
       title: Text(widget.chapter.displayName),
-      // leading: SizedBox.shrink(),
       internalAddSemanticForOnTap: true,
-
-// controller: ExpansibleController(),
       controlAffinity: ListTileControlAffinity.leading,
-      // trailing: const Icon(
-      //     key: Key('partLeadingIcon'), RpgAwesome.bottom_right, size: 25),
       trailing: goButton(context),
-      children: widget.subChapters.map(subTile).toList(growable: false),
-      // onTap: () => goto(context)
-      // context.goNamed('/scroll',
-      //     pathParameters: {'chid': ix.toString()});
+      children: widget.subChapters
+          .map((c) => _SubTile(key: Key('chp${c.index}'), chapter: c))
+          .toList(growable: false),
+    );
+  }
+}
+
+class _SubTile extends StatelessWidget {
+  final Chapter chapter;
+  const _SubTile({required super.key, required this.chapter});
+
+  @override
+  Widget build(BuildContext context) {
+    String? subt = chapter.data?.subtitle;
+
+    String? where = chapter.data?.where;
+    String? when = chapter.data?.when;
+
+    TextStyle? whenStyle = Theme.of(context).textTheme.labelMedium;
+
+    Widget? subtitle;
+
+    if (chapter.data == null) {
+      subtitle = Text('...', style: whenStyle);
+    } else if (subt != null) {
+      //TODO: Subtitle := Row
+      subtitle = Text(
+        subt,
+        style: whenStyle,
+      );
+    }
+
+    Widget? trailing;
+    if (where != null) {
+      trailing = Text(
+        where,
+        style: whenStyle,
+      );
+    } else if (when != null) {
+      trailing = Text(
+        when,
+        style: whenStyle,
+      );
+    }
+    return ListTile(
+      key: const Key('subChapterTile'),
+      //Match the dropdown button on the main tile
+      leading: SizedBox(
+        width: 25,
+        child: Text(chapter.index.toString()),
+      ),
+
+      title: Text(
+        chapter.displayName,
+      ),
+      subtitle: subtitle,
+      trailing: trailing,
+      // Quick Comparison
+      // trailing: when != null ? Text(when, style: whenStyle) : null,
+      onTap: () => context.go('/scroll/${chapter.id}'),
     );
   }
 }

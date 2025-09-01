@@ -29,31 +29,37 @@ with open(f'temp/book.json', 'w') as f:
     str1 = jsonpickle.encode(book_info)
     f.write(str1)
 
-
 book_id = book_info['id']
 
 import os
 from objects.binary import *
 
-
 import shutil
+
 if os.path.isdir('generated_book/'+book_id):
     shutil.rmtree('generated_book/'+book_id)
 os.makedirs('generated_book/'+book_id, exist_ok=False )
 
-bin = BinList("Book")
+def json_book_info(book_id, book_info):
+    shutil.copy('temp/book.json', 'generated_book/'+book_id+'.json')
 
-bin += '..\\/..'
-bin += pack_text(book_id)
-bin += 'T:'
-bin += pack_text(book_info['title'])
-bin += 'C:'
-bin += pack_hex(book_info['color'])
-bin += 'B:'
-bin += pack_text(book_info['byline'])
+def binary_book_info(book_id, book_info):
+    bin = BinList("Book")
+
+    bin += '..\\/..'
+    bin += pack_text(book_id)
+    bin += 'T:'
+    bin += pack_text(book_info['title'])
+    bin += 'C:'
+    bin += pack_hex(book_info['color'])
+    bin += 'B:'
+    bin += pack_text(book_info['byline'])
 
 
-bin += '>-*/\\*-<'
+    bin += '>-*/\\*-<'
 
-f= open(f'generated_book/{book_id}.book', 'wb')
-f.write(bin.bstr)
+    f= open(f'generated_book/{book_id}.book', 'wb')
+    f.write(bin.bstr)
+
+
+json_book_info(book_id, book_info)

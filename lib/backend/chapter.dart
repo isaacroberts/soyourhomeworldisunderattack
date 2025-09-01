@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer' as dev;
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
@@ -114,7 +113,7 @@ class Chapter {
 
       _loading = true;
       String path = 'book_binary/${info.filename}';
-      dev.log("(ChapterHolder) Load: $path");
+      // dev.log("(ChapterHolder) Load: $path");
       ByteBuffer buffer = await getFileFromServer(path);
       ByteData data = buffer.asByteData();
       await buffer_lib.loadLibrary();
