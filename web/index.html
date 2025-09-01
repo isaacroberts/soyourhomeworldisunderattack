@@ -52,7 +52,7 @@
     body {
       height: 500vh !important;  /* Bigger than 100% to allow scroll */
       position: static !important;  /* Override absolute from flutter */
-      overflow-y: scroll !important; /* Allows verticall scrolling */
+      overflow-y: scroll !important; /* Allows vertical scrolling */
       overflow-x: hidden !important;
       touch-action: pan-y !important;  /* Allows vertical scrolling */
       overscroll-behavior: none; /* Avoid bouncing scrolling on top/bottom edget */
@@ -86,7 +86,7 @@
 <body>
   <script src="flutter_bootstrap.js" async></script>
 
-  <!--Get scroll to work-->
+  <!--Get scroll to work--
   <script>
     var element = document.getElementsByTagName('body')[0];
 
@@ -103,6 +103,53 @@
     element.addEventListener('scroll', handleEvent,{passive: false});
     element.addEventListener('mousewheel', handleEvent,{passive: false});
     element.addEventListener('touchmove', handleEvent, {passive: false});
+  </script>-->
+
+  <script>
+    function allowDragScrollingMobileFlutterEmbed(e) {
+        e.preventDefault();
+    };
+
+    window.addEventListener('load', function(ev) {
+        // Control pointer events to flutter, since it eats scroll
+        var body = document.querySelector('body');
+        var flutterDiv = document.querySelector('#flutter');
+        var parent = flutterDiv.parentElement;
+        var flutterExit = document.querySelector('#flutter-exit');
+        parent.addEventListener('click', function() {
+            flutterDiv.classList.add('clicked');
+            flutterExit.classList.add('visible');
+            body.classList.add('unscrollable');
+            document.addEventListener('touchmove',
+                allowDragScrollingMobileFlutterEmbed, { passive: false });
+        });
+        flutterExit.addEventListener('click', function(e) {
+            flutterDiv.classList.remove('clicked');
+            flutterExit.classList.remove('visible');
+            body.classList.remove('unscrollable');
+            document.removeEventListener('touchmove',
+                allowDragScrollingMobileFlutterEmbed, { passive: false });
+            e.stopPropagation();
+            e.preventDefault();
+        });
+
+        // Downloads main.dart.js
+        console.log('[FlutterInit] serviceWorkerVersion:', serviceWorkerVersion);
+        _flutter.loader.loadEntrypoint({
+            serviceWorker: {
+                serviceWorkerVersion: serviceWorkerVersion,
+            },
+            onEntrypointLoaded: function(engineInitializer) {
+                engineInitializer.initializeEngine({
+                    hostElement: document.querySelector("#flutter")
+                }).then(function(appRunner) {
+                    appRunner.runApp().then(function(){
+                        flutterDiv.classList.add('visible');
+                    });
+                });
+            }
+        });
+    });
   </script>
 </body>
 
