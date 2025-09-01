@@ -135,7 +135,7 @@
 
         // Downloads main.dart.js
         console.log('[FlutterInit] serviceWorkerVersion:', serviceWorkerVersion);
-        _flutter.loader.loadEntrypoint({
+        _flutter.loader.load({
             serviceWorker: {
                 serviceWorkerVersion: serviceWorkerVersion,
             },
