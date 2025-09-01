@@ -4,6 +4,7 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f0d24">
 <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#040210">
 <head>
+
 <!--
   <style>
     body {
@@ -79,12 +80,19 @@
   <meta name="twitter:site" content="@silverstein77">
   <title>soyourhomeworld</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+        height: 100vh !important;
+        position: static !important;
+    }
+  </style>
 </head>
 
 <body>
   <script src="flutter_bootstrap.js" async></script>
 
-  <!--Get scroll to work-->
+  <!--Get scroll to work--
   <script>
     var element = document.getElementsByTagName('body')[0];
 
@@ -102,6 +110,7 @@
     element.addEventListener('mousewheel', handleEvent,{passive: false});
     element.addEventListener('touchmove', handleEvent, {passive: false});
   </script>
+  -->
 </body>
 
 </html>
