@@ -5,40 +5,6 @@
 <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#040210">
 <head>
 
-<!--
-  <style>
-    body {
-      height: 500vh !important;  /* Bigger than 100% to allow scroll */
-      position: static !important;  /* Override absolute from flutter */
-      overflow-y: scroll !important; /* Allows verticall scrolling */
-      overflow-x: hidden !important;
-      touch-action: pan-y !important;  /* Allows vertical scrolling */
-      overscroll-behavior: none; /* Avoid bouncing scrolling on top/bottom edget */
-    }
-
-     /* Centers flutter canvas with a size of the viewport*/
-    flt-glass-pane {
-      position: fixed !important; /* Overrides absolute from flutter  */
-      top: 50vh  !important;
-      left: 50vw  !important;
-      max-width: 100vw  !important;
-      max-height: 100vh  !important;
-      transform: translate(-50vw, -50vh)  !important;
-    }
-
-    /*
-    Scrollbar hide doesn't work on iOS, they add a default one when overflow:true and  -webkit-overflow-scrolling: touch;
-    Sadly since iOS 13, this value is forced on iOS -> https://developer.apple.com/documentation/safari-release-notes/safari-13-release-notes
-    */
-    ::-webkit-scrollbar {
-      display: false;
-      width: 0px;
-      height: 0px;  /* Remove scrollbar space */
-      background: transparent;  /* Optional: just make scrollbar invisible */
-    }
-
-  </style>
--->
 
   <base href="/web/">
 
@@ -81,18 +47,46 @@
   <title>soyourhomeworld</title>
   <link rel="manifest" href="manifest.json">
 
+
   <style>
     body {
-        height: 100vh !important;
-        position: static !important;
+      height: 500vh !important;  /* Bigger than 100% to allow scroll */
+      position: static !important;  /* Override absolute from flutter */
+      overflow-y: scroll !important; /* Allows verticall scrolling */
+      overflow-x: hidden !important;
+      touch-action: pan-y !important;  /* Allows vertical scrolling */
+      overscroll-behavior: none; /* Avoid bouncing scrolling on top/bottom edget */
     }
+
+     /* Centers flutter canvas with a size of the viewport*/
+    flt-glass-pane {
+      position: fixed !important; /* Overrides absolute from flutter  */
+      top: 50vh  !important;
+      left: 50vw  !important;
+      max-width: 100vw  !important;
+      max-height: 100vh  !important;
+      transform: translate(-50vw, -50vh)  !important;
+    }
+
+    /*
+    Scrollbar hide doesn't work on iOS, they add a default one when overflow:true and  -webkit-overflow-scrolling: touch;
+    Sadly since iOS 13, this value is forced on iOS -> https://developer.apple.com/documentation/safari-release-notes/safari-13-release-notes
+    */
+    ::-webkit-scrollbar {
+      display: false;
+      width: 0px;
+      height: 0px;  /* Remove scrollbar space */
+      background: transparent;  /* Optional: just make scrollbar invisible */
+    }
+
   </style>
+
 </head>
 
 <body>
   <script src="flutter_bootstrap.js" async></script>
 
-  <!--Get scroll to work--
+  <!--Get scroll to work-->
   <script>
     var element = document.getElementsByTagName('body')[0];
 
@@ -110,7 +104,6 @@
     element.addEventListener('mousewheel', handleEvent,{passive: false});
     element.addEventListener('touchmove', handleEvent, {passive: false});
   </script>
-  -->
 </body>
 
 </html>
