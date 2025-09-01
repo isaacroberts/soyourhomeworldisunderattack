@@ -354,6 +354,10 @@ class _SliverScrollerState extends State<SliverScroller> {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(key: const Key("size_response"), builder: builder);
+  }
+
+  Widget builder(BuildContext context, BoxConstraints constraints) {
     List<Widget> slivers = [];
 
     if (chapters.isEmpty) {
@@ -388,6 +392,9 @@ class _SliverScrollerState extends State<SliverScroller> {
                     key: const Key("selection"),
                     child: CustomScrollView(
                       dragStartBehavior: DragStartBehavior.down,
+                      restorationId: 'sliverScroll',
+                      primary: true,
+
                       key: const Key("SliverCustomScrollView"),
                       //Loads & lays out sooner
                       cacheExtent: 2000,
