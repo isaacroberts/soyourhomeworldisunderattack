@@ -116,7 +116,7 @@ class CustomFontText extends FontWanterTextHolder {
   final TextAlign align;
   final int tabs;
   const CustomFontText(super.font,
-      {required super.text, this.align = TextAlign.justify, this.tabs = 0});
+      {required super.text, this.align = TextAlign.start, this.tabs = 0});
 
   @override
   Future load() async {

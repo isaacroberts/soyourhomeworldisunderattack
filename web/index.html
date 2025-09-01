@@ -1,7 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f0d24">
+<meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#040210">
 <head>
+
+  <style>
+    body {
+      height: 500vh !important;  /* Bigger than 100% to allow scroll */
+      position: static !important;  /* Override absolute from flutter */
+      overflow-y: scroll !important; /* Allows verticall scrolling */
+      overflow-x: hidden !important;
+      touch-action: pan-y !important;  /* Allows vertical scrolling */
+      overscroll-behavior: none; /* Avoid bouncing scrolling on top/bottom edget */
+    }
+
+     /* Centers flutter canvas with a size of the viewport*/
+    flt-glass-pane {
+      position: fixed !important; /* Overrides absolute from flutter  */
+      top: 50vh  !important;
+      left: 50vw  !important;
+      max-width: 100vw  !important;
+      max-height: 100vh  !important;
+      transform: translate(-50vw, -50vh)  !important;
+    }
+
+    /*
+    Scrollbar hide doesn't work on iOS, they add a default one when overflow:true and  -webkit-overflow-scrolling: touch;
+    Sadly since iOS 13, this value is forced on iOS -> https://developer.apple.com/documentation/safari-release-notes/safari-13-release-notes
+    */
+    ::-webkit-scrollbar {
+      display: false;
+      width: 0px;
+      height: 0px;  /* Remove scrollbar space */
+      background: transparent;  /* Optional: just make scrollbar invisible */
+    }
+
+  </style>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -16,32 +51,6 @@
     the `--base-href` argument provided to `flutter build`.
   -->
 
-  <style>
-    body {
-      height: 500vh !important;
-      position: static !important;
-      overflow-y: scroll !important;
-      overflow-x: hidden !important;
-      touch-action: pan-y !important;
-      overscroll-behavior: none;
-    }
-
-    flt-glass-pane {
-      position: fixed !important;
-      top: 50vh  !important;
-      left: 50vw  !important;
-      max-width: 100vw  !important;
-      max-height: 100vh  !important;
-    transform: translate(-50vw, -50vh)  !important;
-    }
-
-  ::-webkit-scrollbar {
-    display: false;
-    width: 0px;
-    height: 0px;
-    background: transparent;
-  }
-  </style>
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
