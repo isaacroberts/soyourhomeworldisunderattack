@@ -174,7 +174,7 @@ def tag_to_font(elem, font_tag, fonts,  prev_font):
     return prev_font
 
 
-# Alternate spelling 
+# Alternate spelling
 def write_spans(spans, filename):
     save_spans(spans, filename)
 
@@ -230,8 +230,8 @@ def _clean_spans(spans, fonts):
             prev_font = tag_to_font(e, e.font, fonts, prev_font)
 
 
-def common_health_inspection(spans, debug_id=''):
-    print("Common health inspection!")
+def common_health_inspection(spans, debug_id='Common'):
+    print(f"{debug_id} health inspection!")
 
     for span in spans:
         if hasattr(span, 'font'):

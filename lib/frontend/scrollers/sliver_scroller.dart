@@ -1,7 +1,6 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/theme_changing_scaffold.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
@@ -52,13 +51,25 @@ class _SliverScrollerState extends State<SliverScroller> {
   late Part part;
   // Map<Chapter, double> chapterPositions = {};
 
-  final ScrollController controller = ScrollController(
-      debugLabel: 'SliverScrollController', keepScrollOffset: true);
+  late final ScrollController controller;
 
   @override
   void initState() {
+    ScrollController? c = Scrollable.maybeOf(context)?.widget.controller;
+    dev.log("Had scroll controller: ${c != null}");
+    controller = c ??
+        ScrollController(
+            debugLabel: 'SliverScrollController',
+            onAttach: scrollControllerAttach,
+            keepScrollOffset: true);
     controller.addListener(scrollNotification);
     super.initState();
+  }
+
+  void scrollControllerAttach(ScrollPosition pos) {
+    //TODO: Check this in various functions to reduce UI load
+    // Scrollable.of(context).position.recommendDeferredLoading(context);
+    //TODO:
   }
 
   @override
@@ -368,12 +379,12 @@ class _SliverScrollerState extends State<SliverScroller> {
     }
 
     slivers.add(const _FillRemaining(key: Key("fillRemaining")));
-
     return ThemeChangingScaffold(
         key: const Key("SliverScaffold"),
         source: 'scroll',
-        background: NoirPrimary.shade4,
-        //TODO: Future loader
+        background: NoirPrimary.shade0,
+
+        //TODO: Future loader for part
         part: part,
         showFAB: currentChapter == null,
         // bottomNavigationBar: ChapterProvider(
@@ -392,7 +403,7 @@ class _SliverScrollerState extends State<SliverScroller> {
                 child: SelectionArea(
                     key: const Key("selection"),
                     child: CustomScrollView(
-                      dragStartBehavior: DragStartBehavior.down,
+                      // dragStartBehavior: DragStartBehavior.down,
                       restorationId: 'sliverScroll',
                       // primary: true,
 
@@ -442,7 +453,7 @@ class _SliverScrollerState extends State<SliverScroller> {
 
   Widget itemMapper(Chapter chapter) {
     if (chapter.id == 0) {
-      // It'll display through the sliver but it won't animate
+      return const TitleSliver(key: Key('titleSliver'));
       return const SliverToBoxAdapter(
           child: TitleWidget(
         key: Key("Title"),

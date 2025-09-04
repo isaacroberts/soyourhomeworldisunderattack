@@ -147,11 +147,16 @@ class NoImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Color bg = reason.getBgColor(context);
 
+    ColorHint colorHint = ColorHint.constructed(
+        bg: bg, outline: null, onBg: reason.getOnBgColor(context));
+
     return ImageContainer.factory(
         url: url,
         displayUrl: displayUrl,
-        color: bg,
-        allowExpand: false,
+        //TODO: We do know the aspectRatio of the NoImageWidget
+        aspectRatio: null,
+        color: colorHint,
+        allowExpand: true,
         child: _UnwrappedNoImageWidget(
             key: super.key, reason: reason, displayUrl: displayUrl));
   }
@@ -194,7 +199,7 @@ class _UnwrappedNoImageWidget extends StatelessWidget {
   }
 
   Column buildColumn(BuildContext context, Color onBg) {
-    EdgeInsets padding = EdgeInsets.only(left: 6);
+    const EdgeInsets padding = EdgeInsets.only(left: 6);
 
     Widget reasonText = Text(reason.getReasonText(),
         textAlign: TextAlign.start,
@@ -203,7 +208,7 @@ class _UnwrappedNoImageWidget extends StatelessWidget {
 
     if (reason.canSubmit()) {
       reasonText = TextButton(
-          style: ButtonStyle(
+          style: const ButtonStyle(
               alignment: Alignment.centerLeft,
               padding: WidgetStatePropertyAll(
                   EdgeInsets.symmetric(vertical: 3, horizontal: 6))),

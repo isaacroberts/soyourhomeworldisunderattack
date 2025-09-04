@@ -17,10 +17,12 @@ class McScaffold extends StatefulWidget {
   final String? source;
   final Widget child;
   final bool showFAB;
+  final PreferredSizeWidget? appBar;
   const McScaffold(
       {super.key,
       required this.source,
       this.showFAB = true,
+      this.appBar,
       required this.child})
       : assert(child is! McScaffold);
 
@@ -65,7 +67,7 @@ class _McScaffoldState extends State<McScaffold>
         data: noirTheme,
         child: Scaffold(
             endDrawer: MenuDrawer(source: widget.source),
-
+            appBar: widget.appBar,
             // backgroundColor: const Color(0xfff2ce9f),
             // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
             floatingActionButton: widget.showFAB ? const McFAB() : null,

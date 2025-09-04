@@ -4,11 +4,23 @@ import 'package:soyourhomeworld/frontend/elements/widgets/image/image_widget.dar
 import 'package:soyourhomeworld/frontend/elements/widgets/image/no_image_widget.dart';
 
 import '../holders/holder_base.dart';
+import '../widgets/image/image_constants.dart';
 
 class ImageHolder extends CodeHolder {
   final String? url;
-  final Color? colorHint;
-  const ImageHolder({required this.url, this.colorHint});
+  final double? aspectRatio;
+  final String? credit;
+  final ColorHint? colorHint;
+
+  const ImageHolder(
+      {required this.url, this.aspectRatio, this.colorHint, this.credit});
+
+  ImageHolder.fromList(
+      {required this.url,
+      this.aspectRatio,
+      List<Color>? colorHints,
+      this.credit})
+      : colorHint = colorHints == null ? null : ColorHint.fromList(colorHints);
 
   @override
   String toText() {
@@ -34,10 +46,12 @@ class ImageHolder extends CodeHolder {
       String cleanedUrl = imageUrl(url!);
 
       return MyNetworkImageWidget(
-          key: Key("Img($cleanedUrl)"),
-          url: cleanedUrl,
-          displayUrl: url,
-          colorHint: colorHint);
+        key: Key("Img($cleanedUrl)"),
+        url: cleanedUrl,
+        displayUrl: url,
+        aspectRatio: aspectRatio,
+        colorHint: colorHint,
+      );
     }
   }
 }

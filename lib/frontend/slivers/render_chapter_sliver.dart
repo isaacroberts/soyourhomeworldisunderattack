@@ -24,6 +24,9 @@ class RenderChapterSliver extends RenderProxySliver {
   ChapterMainCallback? onBecomesMain;
   Part part;
 
+  ///Used to check whether it's moving so fast that we should skip loading
+  // ScrollPosition position;
+
   RenderChapterSliver(
       {required this.chapter,
       required this.part,

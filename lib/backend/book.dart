@@ -113,9 +113,25 @@ class Book {
 
   int? findChapterBySearchTerm(String name) {
     name = name.toLowerCase();
+    assert(name != 'null');
     for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].matchesSearchTerm(name)) {
+      if (chapters[ix].matchesSearchTermDirect(name)) {
         return ix;
+      }
+    }
+    for (int ix = 0; ix < chapters.length; ++ix) {
+      if (chapters[ix].matchesSearchTermPermissive(name)) {
+        return ix;
+      }
+    }
+    for (int ix = 0; ix < chapters.length; ++ix) {
+      if (chapters[ix].matchesSearchTermDesperate(name)) {
+        return ix;
+      }
+    }
+    if (kDebugMode) {
+      for (int ix = 0; ix < chapters.length; ++ix) {
+        chapters[ix].printSearchTerms(name);
       }
     }
     dev.log("Couldn't find chapter: $name");

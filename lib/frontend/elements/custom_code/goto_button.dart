@@ -12,8 +12,6 @@ import '../../parts/part.dart';
 import '../../theme/base_colors.dart';
 import '../holders/holder_utils.dart';
 
-typedef _ChapterTooltip = (String?, String?);
-
 class GotoButtonHolder extends SpanHoldingCode {
   final String? link;
   final bool isChapter;
@@ -22,7 +20,6 @@ class GotoButtonHolder extends SpanHoldingCode {
   String get linkText => link ?? 'null';
   const GotoButtonHolder(
       {required this.link,
-      String? dest,
       required super.spans,
       this.color = Colors.white,
       this.isChapter = true});
@@ -82,7 +79,9 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   void chapterLoaded() {
     where = destination?.data?.where;
     when = destination?.data?.when;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Chapter? getDestination() {

@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
@@ -37,7 +38,10 @@ class ErrorList {
     ExceptionHolder holder =
         ExceptionHolder(exception: e, stackTrace: trace ?? StackTrace.current);
     instance.list.add(holder);
-    instance._queueSnackBar(holder);
+    bool typeToShow = (e is! FontException);
+    if (kDebugMode || typeToShow) {
+      instance._queueSnackBar(holder);
+    }
   }
 
   static void logError(Object e, [StackTrace? trace]) {
@@ -304,9 +308,11 @@ class BookCodeException implements Exception {
 class FontException implements Exception {
   final String msg;
   final String? family;
+  final String? debugSource;
   // final int fileId;
-  const FontException(this.msg, {required this.family});
+  const FontException(this.msg,
+      {required this.family, required this.debugSource});
   // const FontException.fromId(this.msg, {required int id}) : this.family = fontFamilyFrom
   @override
-  String toString() => 'FontException: $msg ($family)';
+  String toString() => 'FontException: $msg ($family) (chp $debugSource)';
 }

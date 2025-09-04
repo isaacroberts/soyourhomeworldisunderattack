@@ -52,9 +52,10 @@ python cleaner.py &&
 python code_parser.py &&
 
 python book_inspector.py &&
-
 # spans_coded.json && fonts_clean.json
 python chapter_breaker.py &&
+# chapters.json && fonts_clean.json
+python image_prepper.py &&
 # chapters.json && fonts_clean.json
 python chaptered_writer.py &&
 # generated/**.dart

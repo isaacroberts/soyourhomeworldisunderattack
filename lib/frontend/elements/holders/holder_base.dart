@@ -25,10 +25,14 @@ abstract class Holder {
   Widget element(BuildContext context);
   Widget fallback(BuildContext context);
 
-  //12 px of padding will be added if true
+  //12 px of horiz padding will be added if true
+//TODO: Replace this with a sliverElement() function
+  ///And have the default include padding
   bool get wantsPadding => true;
 
-  Future load() async {
+  Future load({required String? debugId}) async {
+    ///DebugId is passed to FontLoader
+    ///This way, I the author, can find where I used the offending font
     return null;
   }
 

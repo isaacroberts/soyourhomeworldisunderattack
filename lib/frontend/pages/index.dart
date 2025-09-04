@@ -218,7 +218,8 @@ class _PartedSearchIndexWidgetState extends State<PartedSearchIndexWidget> {
       return;
     }
     for (PartListTile part in listTiles) {
-      if (part.chapter.matchesSearchTerm(controller.text)) {
+      if (part.chapter.matchesSearchTerm(controller.text,
+          permissive: true, desperate: true)) {
         yield part.chapter;
       } else {
         // for (ChapterHolder chapter in book.chapters) {

@@ -1,27 +1,29 @@
 ((a,b,c)=>{a[b]=a[b]||{}
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_78",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var B,D,A={
-aSL(d,e){return new A.tF(d,e,null)},
-tF:function tF(d,e,f){this.c=d
-this.d=e
-this.a=f},
-ar4:function ar4(d,e){this.a=d
-this.b=e}},C,E
-B=c[0]
-D=c[115]
-A=a.updateHolder(c[6],A)
-C=c[52]
-E=c[114]
-A.tF.prototype={
-B(d){return C.aL7(new C.vR(new A.ar4(this,d),E.qS,null,null),this.c,"Server offline",D.qV,"(Connection error)",this.d)}}
-var z=a.updateTypes([])
-A.ar4.prototype={
-$0(){B.f0(this.b).qY("/home/")
-return null},
-$S:0};(function inheritance(){var y=a.inherit
-y(A.tF,B.Q)
-y(A.ar4,B.e7)})()
-B.bL(b.typeUniverse,JSON.parse('{"tF":{"Q":[],"c":[]}}'))};
+$__dart_deferred_initializers__.current=function(a,b,c,$){var A,D,C={
+aSu(d,e,f,g){return new C.Vf(d,e,g,f)},
+Vf:function Vf(d,e,f,g){var _=this
+_.c=d
+_.d=e
+_.e=f
+_.a=g}},B
+A=c[0]
+D=c[2]
+C=a.updateHolder(c[56],C)
+B=c[121]
+C.Vf.prototype={
+B(d){var x=null,w=A.n4(new A.aI(new A.ab(12,24,12,24),this.d,B.adR),x,B.ae1,B.F0,D.P)
+w=A.c8(new A.as(800,x,w,B.adN),x,D.nS,x)
+return new A.iq(this.e,w,x,B.adO)}}
+var z=a.updateTypes([]);(function inheritance(){var x=a.inherit
+x(C.Vf,A.P)})()
+A.bJ(b.typeUniverse,JSON.parse('{"Vf":{"P":[],"c":[]}}'))
+var y={a:A.R("r<l>")};(function constants(){B.FC=new A.v0(D.BO,null)
+B.F0=new A.B2(B.FC)
+B.adN=new A.r("maxwidth",y.a)
+B.adO=new A.r("mcscaf",y.a)
+B.adR=new A.r("pad",y.a)
+B.ae1=new A.r("scrollView",y.a)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_78",e:"endPart",h:b})})($__dart_deferred_initializers__,"cjWHTpc+6R/aNALd1kSgOL6XlHE=");
+a.eventLog.push({p:"main.dart.js_78",e:"endPart",h:b})})($__dart_deferred_initializers__,"EBD2ZpAyr9IewtyiUuRwQBGlIIE=");

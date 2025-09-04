@@ -3,6 +3,84 @@ from objects.text_obj import MultiSpan
 import copy as copy_lib
 
 
+class CodeParams:
+    def __init__(self, text=None):
+        self.lparams = []
+        self.dparams = {}
+
+        if text is None:
+            # Empty
+            self.obj = '_'
+        else:
+            self.obj = None
+            self.parse(text)
+        # assert len)
+    def check_params(self):
+        assert len(self.lparams) <= 1, f"More than 1 param: {self.lparams}"
+    def __str__(self):
+        return f'{self.lparams} {self.dparams}'
+    def __repr__(self):
+        return f'{self.lparams} {self.dparams}'
+    def main(self, defaultValue=None):
+        if len(self.lparams)>0:
+            return self.lparams[0]
+        else:
+            return defaultValue
+    def parse(self, text):
+        self.hasColon = ':' in text
+        if text.startswith('//'):
+            self.obj = '//'
+            self.lparams = [text[2:].strip()]
+        else:
+            if self.hasColon:
+                self.obj, params = split_str(text, ':')
+                self.obj = self.obj.strip()
+                params = params.strip()
+
+                # common typo
+                if '{' not in params:
+                    # buttons right next to each other
+                    params = params.replace('}', '|')
+
+                params = params.split('|')
+                for param in params:
+                    param = param.strip()
+                    if '=' in param:
+                        key, val = split_str(param, '=')
+                        # Remove space & case
+                        key = key.strip().lower()
+                        # Remove non-alnum characters
+                        key = ''.join(ch for ch in key if ch.isalnum())
+                        self.dparams[key] = val.strip()
+                    else:
+                        if len(param)>0:
+                            self.lparams.append(param)
+            else:
+                self.obj = text.strip()
+
+    def read_dict(self, name, default_value=None):
+        name = name.lower().strip()
+        if name in self.dparams:
+            return self.dparams[name]
+        else:
+            return default_value
+
+    def addTildes(self):
+        for i in range(len(self.lparams)):
+            self.lparams[i] += '~'
+
+    def removeTildes(self):
+        for i in range(len(self.lparams)):
+            if self.lparams[i].endswith('~'):
+                self.lparams[i] = self.lparams[i][:-1]
+
+    def has_params(self):
+        return len(self.lparams) > 0 or bool(self.dparams)
+
+    def isEmpty(self):
+        return not self.has_params()
+
+
 class CodeTag: # virtual Inherits: TextObject
     def __init__(self, text, codeMarker):
         # Partial strip
@@ -12,39 +90,21 @@ class CodeTag: # virtual Inherits: TextObject
         assert codeMarker.isCodeMarker()
         self.codeMarker = codeMarker
         self.isEndTag = False
+        self.params = CodeParams(self.text)
+        self.obj = self.params.obj
 
-        self.parse()
     def combine(self, other):
         if other.text.startswith('//'):
             return False
         if '\n' in self.text:
             return False
         self.text = self.text + other.text
-        self.parse()
+        self.params = CodeParams(self.text)
+        self.obj = self.params.obj
         return True
 
-    def parse(self):
-        self.params = []
-        self.hasColon = ':' in self.text
-        if self.text.startswith('//'):
-            self.obj = '//'
-            self.params = [self.text[2:].strip()]
-        else:
-            if self.hasColon:
-                ix = self.text.find(':')
-                self.obj = self.text[:ix].strip()
-                self.params = self.text[ix+1:].strip()
-
-                # common typo
-                if '{' not in self.params:
-                    # buttons right next to each other
-                    self.params = self.params.replace('}', '|')
-
-                self.params = self.params.split('|')
-                for i in range(len(self.params)):
-                    self.params[i] = self.params[i].strip()
-            else:
-                self.obj = self.text.strip()
+    def has_params(self):
+        return self.params.has_params()
 
     def get_text(self):
         if not hasattr(self, 'obj'):
@@ -53,7 +113,7 @@ class CodeTag: # virtual Inherits: TextObject
         if self.obj=='//':
             return f'[//{self.params}]'
         else:
-            if len(self.params) == 0:
+            if not self.has_params():
                 return f'[#{self.obj}]'
             else:
                 return f'[#{self.obj}: {self.params}]'
@@ -74,16 +134,13 @@ class CodeTag: # virtual Inherits: TextObject
         return False
     def addTildes(self):
         self.text += '~'
-        for i in range(len(self.params)):
-            self.params[i] += '~'
+        self.params.addTildes()
         self.obj += '~'
 
     def removeTildes(self):
         if self.text.endswith('~'):
             self.text = self.text[:-1]
-        for i in range(len(self.params)):
-            if self.params[i].endswith('~'):
-                self.params[i] = self.params[i][:-1]
+        self.params.removeTildes()
         if self.obj.endswith('~'):
             self.obj = self.obj[:-1]
 
@@ -130,17 +187,13 @@ class CodeSection: # virtual Inherits: TextObject
     def addTildes(self):
         for span in self.spans:
             span.addTildes()
-
-        for i in range(len(self.params)):
-            self.params[i] += '~'
+        self.params.addTildes()
         self.obj += '~'
 
     def removeTildes(self):
         for span in self.spans:
             span.removeTildes()
-        for i in range(len(self.params)):
-            if self.params[i].endswith('~'):
-                self.params[i] = self.params[i][:-1]
+        self.params.removeTildes()
         if self.obj.endswith('~'):
             self.obj = self.obj[:-1]
 
@@ -162,7 +215,7 @@ class ToBeParsedCodeBlock: # Inherits: TextObject
         self.spans = spans
         self.codetag = codetag
         self.obj = self.codetag.obj
-        self.params = []
+        self.params = CodeParams()
 
     def align(self):
         assert False, 'TextObject does not have align'
@@ -187,12 +240,13 @@ class ToBeParsedCodeBlock: # Inherits: TextObject
     def addTildes(self):
         for span in self.spans:
             span.addTildes()
-
+        self.params.addTildes()
         self.obj += '~'
 
     def removeTildes(self):
         for span in self.spans:
             span.removeTildes()
+        self.params.removeTildes()
         if self.obj.endswith('~'):
             self.obj = self.obj[:-1]
 
@@ -206,9 +260,7 @@ class ToBeParsedCodeBlock: # Inherits: TextObject
 class ParsedCodeBlockBase: # Inherits: TextObject
     def __init__(self, obj):
         self.obj = obj
-        # TODO: Input this through the constructor, from the previous object
-        # TODO: Run these through the tilde washer
-        self.params = []
+        self.params = CodeParams()
 
     # === Must override ===
     def elemWalker(self):
@@ -240,11 +292,13 @@ class ParsedCodeBlockBase: # Inherits: TextObject
     def addTildes(self):
         for span in self.elemWalker():
             span.addTildes()
+        self.params.addTildes()
         self.obj += '~'
 
     def removeTildes(self):
         for span in self.elemWalker():
             span.removeTildes()
+        self.params.removeTildes()
         if self.obj.endswith('~'):
             self.obj = self.obj[:-1]
 
@@ -379,7 +433,7 @@ class CodeKeywordTag: # virtual Inherits: TextObject
         assert False
 
     def get_text(self):
-        if len(self.params) == 0:
+        if self.params.isEmpty():
             return f'[[{self.obj}]]'
         else:
             return f'[[{self.obj}: {self.params}]]'
@@ -400,18 +454,27 @@ class CodeKeywordTag: # virtual Inherits: TextObject
         return False
     def addTildes(self):
         self.obj += '~'
-        for i in range(len(self.params)):
-            self.params[i] += '~'
+        self.params.addTildes()
 
     def removeTildes(self):
         if self.obj.endswith('~'):
             self.obj = self.obj[:-1]
-        for i in range(len(self.params)):
-            if self.params[i].endswith('~'):
-                self.params[i] = self.params[i][:-1]
+        self.params.removeTildes()
 
     def isCode(self):
         return True
 
     def elemWalker(self):
         yield self
+
+
+
+def split_str(str, symbol):
+    ix = str.find(symbol)
+    print('Split ix', str, symbol, ':', ix)
+    if ix == -1:
+        return str, None
+    else:
+        s1 = str[:ix].strip()
+        s2 = str[ix+1:].strip()
+        return s1, s2

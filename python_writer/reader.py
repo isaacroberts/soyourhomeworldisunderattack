@@ -365,6 +365,10 @@ def clean_raw_code_tags(spans):
                     print('Combined:', spans[i])
         # Increment span index
         i+=1
+    for span in spans:
+        if isinstance(span, CodeTag):
+            span.params.check_params()
+
     pst.button()
     return spans
 

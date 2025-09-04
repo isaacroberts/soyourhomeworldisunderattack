@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/case_insensitive_equality.dart';
 import 'package:soyourhomeworld/backend/part_id.dart';
 import 'package:soyourhomeworld/backend/server.dart';
 
@@ -142,9 +144,56 @@ class Chapter {
     return data != null;
   }
 
-  bool matchesSearchTerm(String searchTerm) {
+  bool matchesSearchTerm(String searchTerm,
+      {bool permissive = true, bool desperate = false}) {
+    if (matchesSearchTermDirect(searchTerm)) {
+      return true;
+    }
+    assert(!desperate || permissive, "Desperation implies permissivity");
+    if (permissive) {
+      if (matchesSearchTermPermissive(searchTerm)) {
+        return true;
+      }
+    }
+    if (desperate) {
+      if (matchesSearchTermDesperate(searchTerm)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool matchesSearchTermDirect(String searchTerm) {
+    if (equalsIgnoreAsciiCase(varName, searchTerm)) {
+      //return 100%
+      return true;
+    }
+    return false;
+  }
+
+  bool matchesSearchTermPermissive(String searchTerm) {
+    ///Assume matchesSearchTermDirect was already called
     //TODO: A ranking might be smarter
+
+    if (equalsIgnoreAsciiCase(displayName, searchTerm)) {
+      //return 90%
+      return true;
+    }
+    String? headerText = data?.header?.text;
+    if (headerText != null && headerText.isNotEmpty) {
+      if (equalsIgnoreAsciiCase(headerText, searchTerm)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool matchesSearchTermDesperate(String searchTerm) {
+    String displayName = this.displayName.toLowerCase();
+    String varName = this.varName.toLowerCase();
+
     if (displayName.contains(searchTerm)) {
+      //Return match %
       return true;
     }
     if (searchTerm.contains(displayName)) {
@@ -157,6 +206,7 @@ class Chapter {
       return true;
     }
     String? headerText = data?.header?.text;
+    headerText = headerText?.toLowerCase();
     if (headerText != null && headerText.isNotEmpty) {
       if (headerText.contains(searchTerm)) {
         return true;
@@ -167,6 +217,14 @@ class Chapter {
     }
 
     return false;
+  }
+
+  void printSearchTerms(String missedTerm) {
+    dev.log('=/= "$missedTerm"');
+    dev.log('"$varName"');
+    dev.log('"$displayName"');
+    String? headerText = data?.header?.text;
+    dev.log(headerText ?? 'null');
   }
 
   Future<String?> awaitSubtitle() async {

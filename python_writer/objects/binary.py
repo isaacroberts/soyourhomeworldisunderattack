@@ -1,7 +1,7 @@
 import numpy as np
 import struct
 
-
+import json
 
 class BinList:
     def __init__(self, src):
@@ -21,6 +21,22 @@ class BinList:
 
     def get_binary(self):
         return self.bstr
+
+    def pack_json(self, data):
+        jsonstr = json.dumps(data)
+        # Announces JSON
+        self.bstr += pack_literal('<')
+        #TODO: not sure about this
+        jsonstr = jsonstr.encode('utf-8')
+        #TODO: This is probably wrong
+        dataSize = len(jsonstr)
+        # Length of data, to avoid having to parse it
+        self.bstr+= pack_untyped_uint(dataSize)
+        # Data
+        self.bstr += jsonstr
+        # Close > for symmetry 
+        self.bstr += pack_literal('>')
+
 
     def add(self, *items):
         print('Recursively adding *', items)

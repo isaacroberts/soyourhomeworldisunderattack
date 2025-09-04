@@ -50,12 +50,20 @@ class FontFile {
         _status = _LoadStatus.unloaded;
 
   //API
-  Future<bool> load() async {
+  Future<bool> load({required String? debugId}) async {
+    ///Returns if successful?
     if (_status == _LoadStatus.unloaded) {
       _status = _LoadStatus.loading;
       // dev.log("Loading font $id: $family");
 
-      await cache?.load().then(_markLoaded, onError: _downloadError);
+      try {
+        await cache
+            ?.load()
+            .then(_markLoaded, onError: (e, t) => _downloadError(e, debugId));
+      } catch (exception) {
+        _downloadError(exception, debugId);
+        return false;
+      }
       return true;
     }
     return false;
@@ -77,8 +85,11 @@ class FontFile {
     _status = _LoadStatus.loaded;
   }
 
-  void _downloadError(excep, trace) {
-    ErrorList.showError(excep, trace);
+  void _downloadError(excep, String? chapterId) {
+    //We don't keep stackTraces for network errors
+    ErrorList.showError(
+        FontException(excep.toString(), family: family, debugSource: chapterId),
+        null);
     _status = _LoadStatus.failed;
   }
 
@@ -123,11 +134,12 @@ class FontCache {
     return;
   }
 
-  FontFile? getFontFile(int id) {
+  FontFile? getFontFile(int id, {required String? debugId}) {
     if (files.containsKey(id)) {
       if (files[id] == null) {
         // dev.log("(Font) FontFile name is null! $id");
-        throw FontException("Null FontFile in FontCache", family: 'F$id');
+        throw FontException("Null FontFile in FontCache",
+            family: 'F$id', debugSource: debugId);
       }
       return files[id];
     }
@@ -144,12 +156,12 @@ class FontCache {
     return null;
   }
 
-  FontFile? getAndLoadFontFile(int id) {
-    FontFile? file = getFontFile(id);
+  FontFile? getAndLoadFontFile(int id, {required String? debugId}) {
+    FontFile? file = getFontFile(id, debugId: debugId);
     if (file == null) {
       return null;
     }
-    file.load();
+    file.load(debugId: debugId);
     return file;
   }
 

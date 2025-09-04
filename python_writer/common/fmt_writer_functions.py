@@ -325,6 +325,15 @@ def typedLine(span):
 """
 PACK_PARAMS = True
 
+def pack_params(bin, params):
+    if PACK_PARAMS:
+        assert len(params.lparams) <= 1, f"More than 1 lparam: {params}"
+        data = params.dparams
+        if len(params.lparams) > 0:
+            data['main'] = params.lparams[0]
+        bin.pack_json(data)
+    return bin
+
 def pack_code_font_section(marker):
     tab_amt = span.tabs if hasattr(span, 'tabs') else 0
 
@@ -353,13 +362,7 @@ def code_tag_element(span):
     b += obj.upper()
     b+=':'
 
-    if PACK_PARAMS:
-        if len(span.params)>0:
-            b += '<'
-            for p in span.params:
-                b += pack_value(p)
-            b += '>'
-
+    pack_params(b, span.params)
     b += ';'
     print('CodeTag written')
     print("Binary: ")
@@ -378,14 +381,9 @@ def parsed_binary_element(span):
     # fname = f'handle_{obj.upper()}'
     b += 'D'
     b += pack_literal(obj.upper())
-    b+=':'
+    b +=':'
 
-    if PACK_PARAMS:
-        if len(span.params)>0:
-            b += '<'
-            for p in span.params:
-                b += pack_value(p)
-            b += '>'
+    pack_params(b, span.params)
 
     bin = span.get_binary()
     b.pack_sub_binary(bin)
@@ -403,13 +401,8 @@ def code_span_element(span):
     b += ':'
     assert ':' not in obj
 
-    if PACK_PARAMS:
-        if len(span.params)>0:
-            b += '<'
-            for p in span.params:
-                b += pack_value(p)
-                b += ','
-            b += '>'
+    pack_params(b, span.params)
+
 
     b2 = BinList('CodeSpan.spans')
     for ss in span.spans:

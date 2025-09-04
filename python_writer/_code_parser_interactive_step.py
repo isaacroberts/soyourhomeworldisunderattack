@@ -223,7 +223,7 @@ class InteractiveMatchingStep():
             # BlockObject{
             if self.hasOpenObject('b'):
                 if self._matches_classname_for_close(obj, self.openBO.obj):
-                    if self.spans[i].hasColon:
+                    if self.spans[i].params.hasColon:
                         print(f'{obj} ({i}) has a colon. Closing & Starting new object.')
                         self._close_custom_block(has_end_tag=False)
                         self._open_custom_block(i)
@@ -274,7 +274,7 @@ class InteractiveMatchingStep():
                 # Classtype is none because a close brace is nothing.
                 return None, None
         print('\n')
-        print('Uncaught tag:', obj)
+        # print('Uncaught tag:', obj)
         self.print_pos(i)
         print('Uncaught tag:', f"'{obj}'")
         if self.hasOpenObject('b'):

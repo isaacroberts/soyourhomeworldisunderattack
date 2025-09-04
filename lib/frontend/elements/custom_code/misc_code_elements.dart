@@ -27,7 +27,7 @@ Color? namedColors(String? str) {
 
 class IconHolder extends Holder {
   late final IconData icon;
-  IconHolder(int iconIndex, List<String> params) {
+  IconHolder(int iconIndex) {
     icon = RpgAwesome.values[iconIndex];
   }
 

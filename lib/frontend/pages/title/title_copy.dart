@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../parts/noir_colors.dart';
 import '../../theme/base_text_theme.dart';
 
-const String titleText = "Help! My Home World is under Attack!";
-const String authorText = "by Joseph Silverstein";
+const String titleText = "Help! My Homeworld!";
+const String authorText = "a social media site";
 
 class TitleTextWide extends StatelessWidget {
   ///
@@ -76,14 +77,17 @@ class TitleTextPhone extends StatelessWidget {
               children: [
                 Text(titleText, textAlign: TextAlign.left, style: titleFont),
                 Text(authorText, textAlign: TextAlign.left, style: authorFont),
+                const SizedBox(height: 24),
                 if (child != null) child!
               ],
             )));
   }
 }
 
+const Color _textColor = NoirPrimary.shadef;
+
 TextStyle get titleFont => bodyFont.copyWith(
-    color: textColor, fontSize: 48, fontWeight: FontWeight.w700);
+    color: _textColor, fontSize: 48, fontWeight: FontWeight.w700);
 
 TextStyle get authorFont => bodyFont.copyWith(
-    color: textColor, fontWeight: FontWeight.w400, fontSize: 24);
+    color: _textColor, fontWeight: FontWeight.w400, fontSize: 24);

@@ -68,8 +68,8 @@ abstract class FontWanterTextHolder extends TextHolder {
   const FontWanterTextHolder(this.font, {required super.text});
 
   @override
-  Future load() {
-    return font.load();
+  Future load({required String? debugId}) {
+    return font.load(debugId: debugId);
   }
 
   @override
@@ -95,7 +95,7 @@ class AlignedBodyText extends TextHolder {
     Part part = Part.of(context);
 
     return WrapInTabs(
-        key: const Key("tabs"),
+        key: Key("tabs$hashCode"),
         tabs: tabs,
         align: align,
         child: Text(
@@ -119,9 +119,9 @@ class CustomFontText extends FontWanterTextHolder {
       {required super.text, this.align = TextAlign.start, this.tabs = 0});
 
   @override
-  Future load() async {
+  Future load({required String? debugId}) async {
     // await initHyphenation();
-    return font.load();
+    return font.load(debugId: debugId);
   }
 
   @override
@@ -154,7 +154,7 @@ class CustomFontText extends FontWanterTextHolder {
   @override
   Widget element(BuildContext context) {
     return WrapInTabs(
-        key: Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child: textElement(context));
@@ -163,7 +163,7 @@ class CustomFontText extends FontWanterTextHolder {
   @override
   Widget fallback(BuildContext context) {
     return WrapInTabs(
-        key: const Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child: Text(
@@ -187,7 +187,7 @@ class HiliteFontText extends FontWanterTextHolder {
   @override
   Widget element(BuildContext context) {
     return WrapInTabs(
-        key: Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child:
@@ -197,7 +197,7 @@ class HiliteFontText extends FontWanterTextHolder {
   @override
   Widget fallback(BuildContext context) {
     return WrapInTabs(
-        key: Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child:
@@ -242,7 +242,7 @@ class SubSuperFontText extends FontWanterTextHolder {
   @override
   Widget element(BuildContext context) {
     return WrapInTabs(
-        key: const Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child: scriptAlign(context));
@@ -251,7 +251,7 @@ class SubSuperFontText extends FontWanterTextHolder {
   @override
   Widget fallback(BuildContext context) {
     return WrapInTabs(
-        key: const Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child:

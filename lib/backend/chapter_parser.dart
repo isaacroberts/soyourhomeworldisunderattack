@@ -9,6 +9,7 @@ import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/binary.dart';
 import 'binary_utils/buffer_ptr.dart';
+import 'binary_utils/code_params.dart';
 import 'chapter.dart';
 import 'chapter_data.dart';
 import 'chapter_info.dart';
@@ -500,22 +501,15 @@ Elements:
 
     // dev.log("Get code Element cls = '$cls'");
     // dev.log("Ptr: ${ptr.asString(10)}");
-    List<String> params = [];
+    late final CodeParams params;
     if (ptr.consumeIf(Codes.LGATOR)) {
-      String parmS = ptr.readUntil(Codes.RGATOR);
-      params = parmS.split(',');
+      int length = ptr.consumeUint32();
+      String jsonString = ptr.consumeRangedString(length);
+      params = CodeParams.fromJson(jsonString);
+      ptr.assertConsume(Codes.RGATOR, debugId: debugId);
+    } else {
+      params = const CodeParams.empty();
     }
-    for (int n = 0; n < params.length; ++n) {
-      // Remove {}
-      if (params[n].length > 2) {
-        params[n] = params[n].substring(1, params[n].length - 1);
-      } else {
-        params[n] = '';
-      }
-    }
-
-    // dev.log("Params = $params");
-    //Body
 
     if (type == CodeElementType.codeTag) {
       //Nothing, right?

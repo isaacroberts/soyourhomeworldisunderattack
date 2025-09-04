@@ -22,10 +22,10 @@ class SpanOfText extends Holder {
       {required this.spans, this.align = TextAlign.left, this.tabs = 0});
 
   @override
-  Future load() async {
+  Future load({required String? debugId}) async {
     for (FragOfText span in spans) {
       if (!span.isLoaded()) {
-        await span.load();
+        await span.load(debugId: debugId);
       }
     }
     return null;
@@ -56,7 +56,7 @@ class SpanOfText extends Holder {
   @override
   Widget element(BuildContext context) {
     return WrapInTabs(
-        key: const Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child: selectableElement(context));
@@ -65,7 +65,7 @@ class SpanOfText extends Holder {
   @override
   Widget fallback(BuildContext context) {
     return WrapInTabs(
-        key: const Key('tabs'),
+        key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         //Do not use selectable JIC
@@ -84,7 +84,7 @@ abstract class FragOfText {
 
   String toText();
 
-  Future load() async {
+  Future load({required String? debugId}) async {
     return null;
   }
 
@@ -121,8 +121,8 @@ class FragCustom extends FragOfText {
   }
 
   @override
-  Future load() async {
-    return font.load();
+  Future load({required String? debugId}) async {
+    return font.load(debugId: debugId);
   }
 
   @override
@@ -153,8 +153,8 @@ class FragSubSuper extends FragOfText {
   }
 
   @override
-  Future load() async {
-    return font.load();
+  Future load({required String? debugId}) async {
+    return font.load(debugId: debugId);
   }
 
   @override

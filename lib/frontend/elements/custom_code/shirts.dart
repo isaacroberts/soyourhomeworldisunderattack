@@ -29,8 +29,8 @@ class Shirt extends SpanHoldingCode {
   Widget renderSpans(BuildContext context,
       {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
     bool showFonts = IsFallbackProvider.shouldShowFonts(context);
-
     return Column(
+        key: const Key('shirtcol'),
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,19 +42,25 @@ class Shirt extends SpanHoldingCode {
 
   Widget neck(BuildContext context) {
     return ColoredBox(
-        color: color, child: SizedBox(height: 10, width: width / 5));
+        key: const Key('neck'),
+        color: color,
+        child: SizedBox(height: 10, width: width / 5));
   }
 
   Widget textAndSleeve(BuildContext context) {
     return SizedBox(
+        key: const Key('tasSize'),
         width: width + 200,
         child: Stack(
+          key: const Key('tasStack'),
           alignment: Alignment.topCenter,
           children: [
             torso(context),
             sleeves(context),
             Positioned.fill(
+                key: const Key('tasFill'),
                 child: Align(
+                    key: const Key('tasAlign'),
                     alignment: const Alignment(0, -.5),
                     child: shirtText(context)))
             // shirtText(context),
@@ -64,18 +70,25 @@ class Shirt extends SpanHoldingCode {
 
   Widget shirtText(BuildContext context) {
     return FittedBox(
+        key: const Key('txtFit'),
+        fit: BoxFit.fitWidth,
         child: SizedBox(width: width, child: renderSpans(context)));
   }
 
   Widget sleeves(BuildContext context) {
     return ColoredBox(
-        color: color, child: SizedBox(height: 200, width: width + 200));
+        key: const Key("sleeveColor"),
+        color: color,
+        child: SizedBox(
+            key: const Key('sleeveSize'), height: 200, width: width + 200));
   }
 
   Widget torso(BuildContext context) {
     return ColoredBox(
+        key: const Key('torso_color'),
         color: color,
         child: SizedBox(
+          key: const Key('torso_size'),
           height: 650,
           width: width,
         ));
@@ -85,9 +98,13 @@ class Shirt extends SpanHoldingCode {
   Widget element(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
+        key: const Key('shirt_size'),
         width: screenWidth,
         height: 800,
-        child: Center(child: FittedBox(child: textAndSleeve(context))));
+        child: Center(
+            key: const Key('shirt_C'),
+            child: FittedBox(
+                key: const Key('shirt_fit'), child: textAndSleeve(context))));
     // columns(context));
   }
 }

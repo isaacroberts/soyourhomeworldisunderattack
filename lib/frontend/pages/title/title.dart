@@ -1,13 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/server.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
+import 'package:soyourhomeworld/frontend/pages/title/bg_container.dart';
 import 'package:soyourhomeworld/frontend/pages/title/title_copy.dart';
 import 'package:soyourhomeworld/frontend/pages/title/title_game.dart';
+import 'package:soyourhomeworld/frontend/parts/noir_part.dart';
 import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
+import '../../../backend/book.dart';
+import '../../../backend/chapter.dart';
+import '../../components/fadein.dart';
+import '../../elements/chapter_heading/sliver_header.dart';
 import '../../elements/holders/holder_base.dart';
+import '../../parts/part.dart';
 
-const bool showOnDebug = true;
+const bool showOnDebug = false;
 
 class TitlePage extends StatelessWidget {
   const TitlePage({required super.key});
@@ -40,11 +48,23 @@ class TitleHolder extends Holder {
 }
 
 class TitleWidget extends StatelessWidget {
-  const TitleWidget({super.key});
+  final double shrinkHeight;
+  const TitleWidget({super.key, this.shrinkHeight = 0});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    size = Size(size.width, size.height - shrinkHeight);
+//Noir image instead of custom art
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(imageUrl('noir_gun_shadows.jpg')),
+              fit: BoxFit.cover,
+              alignment: Alignment(-.4, 0))),
+      child: FlameWidget(
+          key: Key('title'), width: size.width, height: size.height),
+    );
 
     //My CPU is STRUGGLING
     if (kDebugMode && !showOnDebug) {
@@ -56,10 +76,25 @@ class TitleWidget extends StatelessWidget {
           ));
     } else {
       //Standard Title & AUthor name
-      return SplashBgWidget(
+
+      Widget flames = FlameWidget(
         width: size.width,
         height: size.height,
-        key: const Key("SplashBGWidget"),
+        key: const Key("FireWidget"),
+      );
+      Widget bg = SplashBgWidget(
+          key: const Key("BgWidget"), width: size.width, height: size.height);
+      flames = FadeIn(
+          key: const Key('fadeIn'),
+          delay: const Duration(seconds: 1),
+          duration: const Duration(milliseconds: 500),
+          child: flames);
+
+      return Stack(
+        key: const Key("titleStack"),
+        fit: StackFit.loose,
+        alignment: Alignment.center,
+        children: [bg, flames],
       );
     }
   }
@@ -86,5 +121,28 @@ class TitleFallbackWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: builder);
+  }
+}
+
+class TitleSliver extends StatelessWidget {
+  const TitleSliver({required super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Chapter chapter = Book.of(context).chapters[0];
+    Part partData = const PartNoir();
+    return ChapterProvider(
+        key: Key("Chp${chapter.key}"),
+        chapter: chapter,
+        part: partData,
+        child: const SliverMainAxisGroup(slivers: [
+          SliverHeader(key: Key("Header")),
+          SliverToBoxAdapter(
+            child: TitleWidget(
+              key: Key('title'),
+              shrinkHeight: 120,
+            ),
+          )
+        ]));
   }
 }

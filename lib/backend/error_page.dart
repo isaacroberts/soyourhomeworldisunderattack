@@ -54,6 +54,12 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return McScaffold(source: 'Error', child: widget(context));
+    return McScaffold(
+        source: 'dev_error',
+        //Get back button
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+        ),
+        child: widget(context));
   }
 }

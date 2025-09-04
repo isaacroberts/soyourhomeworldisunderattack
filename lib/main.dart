@@ -10,13 +10,14 @@ import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import 'backend/error_handler.dart';
 import 'frontend/elements/debug_scaffold.dart';
+import 'frontend/parts/noir_colors.dart';
 import 'frontend/parts/noir_theme.dart';
 import 'frontend/scrollers/sliver_scroller.dart';
 import 'router.dart' as router_lib;
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Color(0xff14102b),
+    statusBarColor: noirBarColor,
     statusBarBrightness: Brightness.dark,
     statusBarIconBrightness: Brightness.dark,
   ));

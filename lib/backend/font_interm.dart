@@ -50,7 +50,8 @@ class FontInterm {
   //FontFile ====================
 
   FontFile? get file {
-    _file ??= FontCache.getInstance().getFontFile(fileId);
+    _file ??= FontCache.getInstance()
+        .getFontFile(fileId, debugId: '(Sry, lost data)');
     return _file;
   }
 
@@ -61,8 +62,8 @@ class FontInterm {
   String loadStatus() =>
       file?.loadStatus() ?? (file == null ? "Null file" : 'Unfetched/Default');
 
-  Future load() async {
-    await file?.load();
+  Future load({required String? debugId}) async {
+    await file?.load(debugId: debugId);
     return file;
   }
 
@@ -139,8 +140,8 @@ class FontPremadeInterm {
   String loadStatus() =>
       file?.loadStatus() ?? (file == null ? "Null file" : 'Unfetched/Default');
 
-  Future load() async {
-    await file!.load();
+  Future load({required String debugId}) async {
+    await file!.load(debugId: debugId);
     return file!;
   }
 

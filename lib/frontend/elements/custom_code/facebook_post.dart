@@ -12,8 +12,12 @@ class _Comment {
   final String user;
   final String? comment;
   final bool replying;
+  final int ix;
   const _Comment(
-      {required this.user, required this.comment, this.replying = false});
+      {required this.user,
+      required this.comment,
+      this.replying = false,
+      required this.ix});
 
   //  _Comment factory ({required String user, required String? comment}) {
   //   comment = comment?.trim();
@@ -25,7 +29,7 @@ class _Comment {
   //   return _Comment.fromValues(user: user, comment: comment);
   // }
 
-  const _Comment.blank()
+  const _Comment.blank({required this.ix})
       : user = '',
         comment = '',
         replying = false;
@@ -40,11 +44,11 @@ class FacebookHolder extends CodeHolder {
   final List<_Comment> comments;
 
   FacebookHolder.blank()
-      : post = const _Comment.blank(),
+      : post = const _Comment.blank(ix: 0),
         comments = const [
-          _Comment.blank(),
-          _Comment.blank(),
-          _Comment.blank(),
+          _Comment.blank(ix: 1),
+          _Comment.blank(ix: 2),
+          _Comment.blank(ix: 3),
         ];
 
   FacebookHolder._fromThings({required this.post, required this.comments});
@@ -73,7 +77,10 @@ class FacebookHolder extends CodeHolder {
           currentString = currentString?.trim();
           //Save current open comment
           comments.add(_Comment(
-              user: user, comment: currentString, replying: wasReplying));
+              ix: comments.length,
+              user: user,
+              comment: currentString,
+              replying: wasReplying));
         }
         user = spanText.replaceAll('@', '');
         user = user.replaceAll(':', '');
@@ -92,8 +99,11 @@ class FacebookHolder extends CodeHolder {
     if (user != null) {
       //Last comment can't have a reply under it
       currentString = currentString?.trim();
-      comments.add(
-          _Comment(user: user, comment: currentString, replying: replying));
+      comments.add(_Comment(
+          ix: comments.length,
+          user: user,
+          comment: currentString,
+          replying: replying));
     }
 
     if (comments.isEmpty) {
@@ -162,7 +172,7 @@ class FacebookElement extends StatelessWidget {
             _MainFBPost(key: const Key("Post"), post: holder.post),
             for (_Comment comment in holder.comments)
               _CommentWidget(
-                  key: Key("fb_comment ${comment.hashCode}"), post: comment),
+                  key: Key("fb_comment ${comment.ix}"), post: comment),
             //Spacer
             const SizedBox(height: 48),
           ],

@@ -44,7 +44,6 @@ class DevPage extends StatelessWidget {
     // ));
     const Holder holder = GotoButtonHolder(
         link: 'ValinorTickets',
-        dest: 'Greenland',
         isChapter: false,
         spans: [
           BodyTextElement('Register for tickets'),

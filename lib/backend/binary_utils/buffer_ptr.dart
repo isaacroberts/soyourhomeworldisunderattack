@@ -22,7 +22,8 @@ class BufferPtr {
     region = buffer.asByteData(start, length);
   }
 
-  String toStr() {
+  @override
+  String toString() {
     return "[$start-${start + length} / ${buffer.lengthInBytes}]";
   }
 
@@ -122,6 +123,15 @@ class BufferPtr {
   String getChar([int offset = 0]) {
     int d = region.getUint8(offset);
     return String.fromCharCode(d);
+  }
+
+  String consumeRangedString([int length = 1]) {
+    String s = '';
+    for (int i = 0; i < length && i < this.length; i++) {
+      s += getChar(i);
+    }
+    consume(length);
+    return s;
   }
 
   int consumeUint8() {
@@ -350,13 +360,5 @@ H = hex = BBBB
 
   void setToEnd() {
     start = length;
-  }
-
-  String asString([int length = 1]) {
-    String s = '';
-    for (int i = 0; i < length && i < this.length; i++) {
-      s += getChar(i);
-    }
-    return s;
   }
 }

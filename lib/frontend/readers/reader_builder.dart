@@ -75,10 +75,21 @@ class ReaderBuilderState extends State<ReaderBuilder> {
 
   String get _debugId => chapter.varName;
 
+  Future<void> lockUntilScrollableAllows() async {
+    // while (mounted &&
+    //     Scrollable.of(context).position.recommendDeferredLoading(context)) {
+    //   await Future.delayed(const Duration(milliseconds: 500));
+    // }
+  }
+
   void loadAndDisplayThread() async {
     if (chapter.data == null) {
       return;
     }
+
+    // if (!Scrollable.of(context).position.recommendDeferredLoading(context)) {
+    //   return;
+    // }
     if (itemsToDisplay < maxLength) {
       int itemsToDisplay = this.itemsToDisplay;
       // dev.log("(Font) loadthread (chp=$_debugId) items=$itemsToDisplay");
@@ -94,6 +105,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
             this.itemsToDisplay = maxLength;
           });
         }
+        return;
         //Fallbacks//
       } else {
         //Iterate through fonts
@@ -105,6 +117,9 @@ class ReaderBuilderState extends State<ReaderBuilder> {
             return;
           }
           if (n >= this.itemsToDisplay) {
+            //Waits when scroll is too fast
+            await lockUntilScrollableAllows();
+
             //If waiting to load font
             Holder h = data.lines[n];
             if (!h.isLoaded()) {
@@ -122,7 +137,8 @@ class ReaderBuilderState extends State<ReaderBuilder> {
               try {
                 //Now load the font
                 // dev.log("(Font) Loading $n (chp=$_debugId)");
-                await h.load();
+                String debugId = '${chapter.varName}@$n';
+                await h.load(debugId: debugId);
               } catch (exception, stackTrace) {
                 //On loading error, use Fallbacks
                 if (!mounted) {

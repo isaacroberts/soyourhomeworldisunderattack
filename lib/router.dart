@@ -26,11 +26,13 @@ import 'frontend/scrollers/scroller_door.dart';
 
 // const String devMain = '/dev_page/';
 //noir
-// const String devMain = '/scroll/4';
+// const String devMain = '/scroll/6';
 //greenland
 // const String devMain = '/scroll/34';
 //noir image
-const String devMain = '/scroll/20';
+// const String devMain = '/scroll/20';
+//title
+const String devMain = '/';
 
 Widget devPageBuilder(BuildContext context, GoRouterState routerState) {
   /// Dev Page

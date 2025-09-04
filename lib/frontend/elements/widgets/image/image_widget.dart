@@ -16,13 +16,15 @@ class MyNetworkImageWidget extends StatelessWidget {
 
   ///In case you know the short name of the url
   final String? displayUrl;
-  final Color? colorHint;
+  final double? aspectRatio;
+  final ColorHint? colorHint;
 
   const MyNetworkImageWidget(
       {super.key,
       required this.url,
       String? displayUrl,
-      required this.colorHint})
+      required this.colorHint,
+      this.aspectRatio})
       : displayUrl = displayUrl ?? url ?? '-';
 
   Widget loadingBuilder(
@@ -35,28 +37,34 @@ class MyNetworkImageWidget extends StatelessWidget {
       return child;
     }
     if (colorHint == null) {
-      return ImageContainer.factory(
-          url: url,
-          displayUrl: displayUrl,
-          color: colorHint,
-          child: TriWizardLoader(
-              key: const Key('imgLoader'), message: displayUrl));
+      return TriWizardLoader(key: const Key('imgLoader'), message: displayUrl);
+      //I think the frameBuilder adds this
+      // return ImageContainer.factory(
+      //     url: url,
+      //     displayUrl: displayUrl,
+      //     color: colorHint,
+      //     aspectRatio: aspectRatio,
+      //     child: TriWizardLoader(
+      //         key: const Key('imgLoader'), message: displayUrl));
     } else {
-      Color colorHint = this.colorHint!;
+      ColorHint colorHint = this.colorHint!;
       //Set loader to color - fade in BG
       Part part = Part.of(context);
       double pct = loadingProgress.cumulativeBytesLoaded /
           (loadingProgress.expectedTotalBytes ?? standardImageByteSize);
       pct = util.clampDouble(0, pct, 1);
-      Color bg =
-          Color.lerp(part.canvasColor, colorHint, pct) ?? part.canvasColor;
+      Color bg = Color.lerp(part.canvasColor, colorHint.bgColor, pct) ??
+          part.canvasColor;
 
       return ColoredBox(
+          key: const Key('colorHintBg'),
           color: bg,
           child: TriWizardLoader(
               key: const Key('imgLoader'),
               message: displayUrl,
-              loaderColor: colorHint));
+              //TODO: Send the second color hint,
+              // used for the loader
+              loaderColor: colorHint.loaderColor));
     }
   }
 
@@ -64,25 +72,11 @@ class MyNetworkImageWidget extends StatelessWidget {
       bool wasSynchronouslyLoaded) {
     ///wasSynchronouslyLoaded = 'popping' in
     return ImageContainer.factory(
-        url: url, displayUrl: displayUrl, color: colorHint, child: child);
-  }
-
-  Widget imageItself(BuildContext context) {
-    if (url == null) {
-      return const NoImageWidget(
-          key: Key("NoImg"),
-          url: null,
-          displayUrl: 'null',
-          reason: NoImageReason.leftBlank);
-    } else {
-      return Image.network(url!,
-          key: const Key("ImageObj"),
-          loadingBuilder: loadingBuilder,
-          frameBuilder: frameBuilder,
-          errorBuilder: errorBuilder,
-          width: standardImageWidth,
-          height: standardImageHeight);
-    }
+        url: url,
+        displayUrl: displayUrl,
+        aspectRatio: aspectRatio,
+        color: colorHint,
+        child: child);
   }
 
   @override
@@ -94,14 +88,14 @@ class MyNetworkImageWidget extends StatelessWidget {
           displayUrl: 'null',
           reason: NoImageReason.leftBlank);
     } else {
-      return Image.network(url!,
-          cacheHeight: standardImageHeight.toInt(),
-          key: const Key("ImageObj"),
-          loadingBuilder: loadingBuilder,
-          frameBuilder: frameBuilder,
-          errorBuilder: errorBuilder,
-          width: standardImageWidth,
-          height: standardImageHeight);
+      return Image.network(
+        url!,
+        cacheHeight: standardImageHeight.toInt(),
+        key: const Key("ImageObj"),
+        loadingBuilder: loadingBuilder,
+        frameBuilder: frameBuilder,
+        errorBuilder: errorBuilder,
+      );
     }
   }
 

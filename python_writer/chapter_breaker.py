@@ -36,6 +36,8 @@ def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='font
     chapters = break_chapters(spans)
     chapters = clean_chapters(chapters)
 
+    pst.print_and_save_responses('data/chapterbreaker_responses')
+
     write(chapters, chapters_out)
 
 def write(chapters, filename='chapters.json'):
@@ -48,8 +50,6 @@ def write(chapters, filename='chapters.json'):
     for chapter in chapters:
         if chapter.next is not None:
             chapter.next = chapter.next.id
-
-    pst.print_and_save_responses('data/chapterbreaker_responses')
 
     print('Saving files:')
 
@@ -184,8 +184,9 @@ def resolve_id_keywords(chapter):
             span = chapter.spans[i]
             obj = span.obj
             if obj in ['Chapter', 'Section', 'Label']:
-                if len(span.params)>0:
-                    chapter.set_id(span.params[0])
+                id = span.params.main()
+                if id is not None:
+                    chapter.set_id(id)
                 else:
                     print('Chapter:', chapter.headline_text)
                     print('Text:', span.get_text())
@@ -217,26 +218,26 @@ def resolve_misc_keywords(chapter):
                 i-=1
                 remove_invisible_headline(chapter)
             elif obj == 'Subtitle':
-                value = chapter.spans[i].params[0]
+                value = chapter.spans[i].params.main()
                 chapter.subtitle = value
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
             elif obj == 'When':
-                value = chapter.spans[i].params[0]
+                value = chapter.spans[i].params.main()
                 chapter.when = value
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
             elif obj == 'Where':
-                value = chapter.spans[i].params[0]
+                value = chapter.spans[i].params.main()
                 chapter.where = value
                 # Delete keyword
                 chapter.spans.pop(i)
                 i-=1
             elif obj in ['Audio', 'UnskippableAudio', 'CopSting']:
                 # TODO: Match audio to URL
-                audio = chapter.spans[i].params[0]
+                audio = chapter.spans[i].params.main()
 
                 # TODO: Check other params
                 chapter.audio = audio
@@ -251,17 +252,13 @@ def resolve_misc_keywords(chapter):
                 i-=1
             elif obj == 'Part':
                 chapter.part = True
-                partName = chapter.display_name
-                if len(span.params[0])>0:
-                    p0 = span.params[0]
-                    if '|' not in p0:
-                        partName = p0
+                partName = span.params.main()
+                if partName is None:
+                    partName = chapter.display_name
                 chapter.partName = partName
 
-                hide = read_param(span.params, 'Hide')
-                if hide is None:
-                    hide = False
-                elif hide=='1':
+                hide = span.params.read_dict('Hide', False)
+                if hide=='1':
                     hide = True
                 else:
                     hide = False
@@ -279,7 +276,8 @@ def read_bookmark_keywords(chapter, chapters):
         if isinstance(chapter.spans[i], CodeKeywordTag):
             obj = chapter.spans[i].obj
             if obj == 'Next':
-                nextBookmark = chapter.spans[i].params[0]
+                nextBookmark = chapter.spans[i].params.main()
+                assert nextBookmark is not None, f'{chapter.varName}'
                 print("Matching next:", nextBookmark)
                 chapter.next = chapter_from_bookmark(nextBookmark, chapters)
                 # Delete keyword
@@ -298,7 +296,7 @@ def check_for_keywords(chapter):
         if isinstance(chapter.spans[i], CodeKeywordTag):
             obj = chapter.spans[i].obj
             print(chapter.spans[i])
-            r = pst.response("Unhandled keyword. Skip? (y/n)")
+            r = pst.saveable_response("Unhandled keyword. Skip? (y/n)")
             if r=='y':
                 chapter.spans.remove(i)
             else:
@@ -492,20 +490,6 @@ def manually_select_bookmark_match(bookmark, chapters):
     # Give up
     raise ValueError(f"Bookmark: {bookmark} not found in chapter bookmarks")
 
-
-def read_param(params, key):
-    """
-    Look for equals sign
-    """
-    for param in params:
-        if param.startswith(key):
-            value = param.replace(key, '')
-            value = value.strip()
-            if value.startswith('='):
-                value = value[1:]
-                value = value.strip()
-            return value
-    return None
 
 def nextChapterStart(startFrom, spans):
     """

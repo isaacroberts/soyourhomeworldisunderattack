@@ -26,7 +26,7 @@ String fontUrl(String filename) {
 }
 
 String imageUrl(String filename) {
-  filename = filename.replaceAll('.', '_phone.');
+  // filename = filename.replaceAll('.', '_phone.');
   return "${getServerURL()}/images/$filename";
 }
 

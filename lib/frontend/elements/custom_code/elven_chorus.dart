@@ -78,7 +78,7 @@ class _ElvenChorusState extends State<ElvenChorus>
   @override
   void initState() {
     timer = Timer.periodic(const Duration(seconds: 1), checkScroll);
-    elvesFont.load();
+    elvesFont.load(debugId: 'ElvenChorus');
     super.initState();
   }
 
@@ -268,19 +268,19 @@ class _ElvenChorusState extends State<ElvenChorus>
       elements = text();
     }
 
-    return 
-    Tooltip(message: "\"Passing of the Elves\"\nfrom Lord of the Rings", child: 
-    SizedBox(
-        height: 48 + 12 * 2,
-        width: screenWidth,
-        // alignment: Alignment.centerRight,
-        child: stackIfDebug(context,
-            child: ListView(
-                primary: false,
-                controller: controller,
-                scrollDirection: Axis.horizontal,
-                // physics: const NeverScrollableScrollPhysics(),
-                children: elements))));
+    return Tooltip(
+        message: "\"Passing of the Elves\"\nfrom Lord of the Rings",
+        child: SizedBox(
+            height: 48 + 12 * 2,
+            width: screenWidth,
+            // alignment: Alignment.centerRight,
+            child: stackIfDebug(context,
+                child: ListView(
+                    primary: false,
+                    controller: controller,
+                    scrollDirection: Axis.horizontal,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    children: elements))));
   }
 
   Widget stackIfDebug(BuildContext context, {required Widget child}) {

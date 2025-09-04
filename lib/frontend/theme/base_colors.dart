@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../parts/grand_swatch.dart';
 import '../parts/noir_colors.dart';
 
+const double appBarSize = 60;
+const double expandedAppBarSize = 120;
+
 //TODO: Remove these
 const Color canvasSlightElevation = NoirPrimary.shade3;
 const Color canvasFade = NoirSecondary.shadec;
@@ -71,7 +74,7 @@ class Tertiary extends GrandSwatch {
 }
 
 //Ring of Power  color
-const Color planColor = Color(0xffff6811);
+const Color planColor = Color(0xffec9466);
 
 // //Change these to PeterThiel
 // const errorColor = Color(0xff7b6bff);

@@ -74,17 +74,17 @@ def get_book_info(spans):
     while i < len(spans):
         if isinstance(spans[i], CodeTag):
             if spans[i].obj == 'BookId':
-                book_info['id'] = spans[i].params[0]
+                book_info['id'] = spans[i].params.main()
                 spans.pop(i)
             elif spans[i].obj == 'BookTitle':
-                book_info['title'] = spans[i].params[0]
+                book_info['title'] = spans[i].params.main()
                 spans.pop(i)
             elif spans[i].obj == 'BookByline':
-                book_info['byline'] = spans[i].params[0]
+                book_info['byline'] = spans[i].params.main()
                 spans.pop(i)
             elif spans[i].obj == 'BookColor':
                 # Hex parsing
-                book_info['color'] = spans[i].params[0]
+                book_info['color'] = spans[i].params.main()
                 spans.pop(i)
             else:
                 i += 1
@@ -126,7 +126,6 @@ def align_chapters(spans):
                 i+=1
         elif isinstance(spans[i], CodeTag):
             obj = spans[i].obj
-            params = spans[i].params
 
             if obj == 'EndChapter':
                 print('Ending chapter.')
@@ -241,7 +240,6 @@ def has_any_code_tags(spans):
             print('>', s.get_text().strip())
         elif isinstance(s, CodeTag):
             print('\t#', s)
-            print(len(s.params))
             return True
 
 

@@ -17,10 +17,10 @@ class SpanHoldingCode extends CodeHolder {
   }
 
   @override
-  Future load() async {
+  Future load({required String? debugId}) async {
     for (Holder span in spans) {
       if (!span.isLoaded()) {
-        await span.load();
+        await span.load(debugId: debugId);
       }
     }
     return null;
@@ -42,6 +42,7 @@ class SpanHoldingCode extends CodeHolder {
     bool showFonts = IsFallbackProvider.shouldShowFonts(context);
     // dev.log("SpanHoldingCode showFonts=$showFonts");
     return Column(
+        key: const Key('SHC_col'),
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: crossAxisAlignment,
