@@ -14,14 +14,14 @@ B=c[0]
 C=c[2]
 F=c[62]
 G=c[59]
-H=c[77]
-E=c[84]
+H=c[76]
+E=c[83]
 I=c[58]
-K=c[92]
+K=c[91]
 L=c[64]
 M=c[52]
 D=a.updateHolder(c[31],D)
-A=c[91]
+A=c[90]
 D.XI.prototype={
 B(d){var x=null,w=B.oe(B.aPs(B.h3(8),G.W5(A.F1),C.c4,A.aet),x),v=B.ah("I went to Greenland to see the Ice Wall!",x,x,x,x,x,A.nD.hV(12,C.bz),x,x),u=B.ah("FlatEarthAndy",x,x,x,x,x,A.nD.pS(C.fm,12,C.b8),x,x),t=y.e
 return new B.aI(A.LC,new B.as(500,300,B.bR(B.b([w,E.D4,new B.as(x,55,B.dL(B.b([A.aeU,E.D0,B.bR(B.b([v,u,B.ah("1.4k views * 1 day ago",x,x,x,x,x,A.nD.pS(C.fm,12,C.b8),x,x)],t),C.ad,x,C.K,C.X)],t),C.ad,x,C.K,C.X,x),x)],t),C.aN,x,C.K,C.X),x),x)}}
@@ -91,4 +91,4 @@ A.aeU=new D.XT(A.abH)
 A.abI=new B.r("AndyYTVideo",y.a)
 A.aeT=new D.XI(A.abI)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_68",e:"endPart",h:b})})($__dart_deferred_initializers__,"baK0Jcf6BhEr3qQxnwohf/6DGPM=");
+a.eventLog.push({p:"main.dart.js_68",e:"endPart",h:b})})($__dart_deferred_initializers__,"0z/wwwwc2PapyDlCkgOxw88Kiyg=");

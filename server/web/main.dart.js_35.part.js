@@ -31,7 +31,7 @@ C=c[2]
 E=c[60]
 F=c[62]
 D=a.updateHolder(c[26],D)
-B=c[81]
+B=c[80]
 D.VW.prototype={
 Mw(){var x,w,v,u=this.a,t=u.length
 if(t!==0)for(x=y.m,w=0;w<t;++w){v=u[w]
@@ -68,4 +68,4 @@ B.aen=new A.r("torso_color",y.a)
 B.aeo=new A.r("torso_size",y.a)
 B.aep=new A.r("txtFit",y.a)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_35",e:"endPart",h:b})})($__dart_deferred_initializers__,"GTS0ag4zsDRLDK3CXxTSNa5jaXI=");
+a.eventLog.push({p:"main.dart.js_35",e:"endPart",h:b})})($__dart_deferred_initializers__,"7uCCd9WBnwxfAEgR3goLzqni9FQ=");

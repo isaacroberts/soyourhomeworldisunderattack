@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../frontend/elements/scaffold.dart';
-import '../frontend/theme/base_text_theme.dart';
-import 'error_handler.dart';
+import '../../backend/error_handler.dart';
+import '../elements/scaffold.dart';
+import '../theme/base_text_theme.dart';
 
-const String buildNo = '1.0.0.0';
+const String buildNo = '1.2.0.1';
 
 class ExceptionPage extends StatefulWidget {
   final ExceptionHolder holder;

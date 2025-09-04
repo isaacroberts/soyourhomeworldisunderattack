@@ -8,9 +8,9 @@ import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.da
 import 'package:soyourhomeworld/frontend/elements/widgets/error_type_icon.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
+import '../frontend/pages/error_page.dart' deferred as error_lib_page;
 import '../frontend/theme/base_colors.dart';
 import '../frontend/theme/base_text_theme.dart';
-import 'error_page.dart' deferred as error_lib_page;
 
 class ErrorList {
   static ErrorList instance = ErrorList();
