@@ -1,9 +1,9 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 
+import '../../../backend/exception_types.dart';
 import '../holders/holder_base.dart';
 import '../holders/holder_utils.dart';
 
@@ -39,8 +39,7 @@ class TweetHolder extends Holder {
 
   @override
   Widget fallback(BuildContext context) {
-    return IsFallbackProvider(
-        showFonts: false, child: TweetWidget(user: user, tweet: tweet));
+    return TweetWidget(user: user, tweet: tweet);
   }
 
   @override

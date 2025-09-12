@@ -1,6 +1,8 @@
 import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/backend/part_id.dart';
 
+import 'exception_types.dart';
+
 typedef ChapterKey = int;
 
 //TODO: Move into ChapterHolder

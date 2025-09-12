@@ -44,15 +44,6 @@ class RenderChapterSliver extends RenderProxySliver {
   //I don't think slivers are allowed to change their maxPaintExtent
   static const double _maxPaintExtent = 20000;
 
-  double get scrollOffset => constraints.scrollOffset;
-  double get precedingScrollExtent => constraints.precedingScrollExtent;
-  double get overlap => constraints.overlap;
-  double get remainingPaintExtent => constraints.remainingPaintExtent;
-  double get crossAxisExtent => constraints.crossAxisExtent;
-  double get viewportMainAxisExtent => constraints.viewportMainAxisExtent;
-  double get remainingCacheExtent => constraints.remainingCacheExtent;
-  double get cacheOrigin => constraints.cacheOrigin;
-
   void loadIfStillInCacheRange() async {
     //Give it a quarter second to see if we're scrolling past
     await Future.delayed(const Duration(milliseconds: 250));
@@ -139,8 +130,6 @@ class RenderChapterSliver extends RenderProxySliver {
     overscroll = math.max(0, desiredHeight - height);
     scrollExtent = overscroll + height;
 
-    // final double paintedChildSize =
-    //     calculatePaintOffset(constraints, from: 0, to: height);
     //Overscrolling
     final double paintedChildSize = calculateOverscrollPaintExtent(
         from: 0, to: height, overscroll: overscroll);
@@ -307,7 +296,7 @@ class RenderChapterSliver extends RenderProxySliver {
   }
 
   @override
-  void paint(PaintingContext context, Offset offset) {
+  void paint(PaintingContext context, Offset imageOffset) {
     if (child == null) {
       return;
     } else {
@@ -317,15 +306,15 @@ class RenderChapterSliver extends RenderProxySliver {
       if (onScreen()) {
         Paint bg = Paint()..color = part.canvasColor;
         context.canvas
-            .drawRect(offset & Size(crossAxisExtent, drawnHeight), bg);
+            .drawRect(imageOffset & Size(crossAxisExtent, drawnHeight), bg);
       }
       if (isRepaintBoundary) {
         //This won't clip
-        context.paintChild(child!, offset);
+        context.paintChild(child!, imageOffset);
       } else {
         layer = context.pushClipRect(
           true,
-          offset,
+          imageOffset,
           rect,
           (context, offset) {
             //This allows animations
@@ -350,12 +339,12 @@ class RenderChapterSliver extends RenderProxySliver {
           //White = text clipped
 
           drawHalo(context,
-              offset: offset, start: part.underflowHalo.withAlpha(50));
+              offset: imageOffset, start: part.underflowHalo.withAlpha(50));
         }
 
         //Dark halo to show it wants to shorten
         if ((desiredHeight < height)) {
-          drawHalo(context, offset: offset, start: part.primary.s1);
+          drawHalo(context, offset: imageOffset, start: part.primary.s1);
         }
       }
     }
@@ -516,4 +505,13 @@ class RenderChapterSliver extends RenderProxySliver {
     drawnHeight = 0;
     super.dropChild(child);
   }
+
+  double get scrollOffset => constraints.scrollOffset;
+  double get precedingScrollExtent => constraints.precedingScrollExtent;
+  double get overlap => constraints.overlap;
+  double get remainingPaintExtent => constraints.remainingPaintExtent;
+  double get crossAxisExtent => constraints.crossAxisExtent;
+  double get viewportMainAxisExtent => constraints.viewportMainAxisExtent;
+  double get remainingCacheExtent => constraints.remainingCacheExtent;
+  double get cacheOrigin => constraints.cacheOrigin;
 }

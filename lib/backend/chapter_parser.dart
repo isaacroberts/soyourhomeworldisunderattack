@@ -14,6 +14,7 @@ import 'chapter.dart';
 import 'chapter_data.dart';
 import 'chapter_info.dart';
 import 'error_handler.dart';
+import 'exception_types.dart';
 import 'live_text_holder.dart';
 
 const bool printVerbose = false;

@@ -36,6 +36,7 @@ def code_parse(spans, use_saved_responses=None):
     if any_code_tags:
         # pst.click(2)
         if use_saved_responses is None:
+            pst.needs_input()
             print('Has code parse changed?')
             r= pst.response('y/n')
             if r=='n':

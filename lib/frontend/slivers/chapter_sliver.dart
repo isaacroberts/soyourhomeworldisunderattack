@@ -2,10 +2,10 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/chapter_social_footer.dart';
+import 'package:soyourhomeworld/frontend/parts/noir_part.dart';
 import 'package:soyourhomeworld/frontend/readers/sliver_reader.dart';
 import 'package:soyourhomeworld/frontend/slivers/clamping_sliver.dart';
-import 'package:soyourhomeworld/frontend/slivers/load_sliver.dart';
 import 'package:soyourhomeworld/frontend/slivers/sliver_reader_width.dart';
 
 import '../../../../backend/chapter.dart';
@@ -67,72 +67,58 @@ class _ChapterSliverState extends State<ChapterSliver> {
     }
   }
 
+  Part getPartData(PartId part) {
+    if (!partReady(part)) {
+      if (partNeedsLoad(part)) {
+        loadPart(part).then(chapterUpdated);
+      }
+      //Is this heavy, making new elements?
+      return const PartNoir();
+    } else {
+      return getPartImmediate(part);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (chapter == null) {
-      //Not using ChapterSliver because chapter will presumably never not be null
-      return const BlankChapterSliver();
-    } else if (chapter!.data == null) {
-      PartId part = chapter!.info.partId;
-      if (!partReady(part)) {
-        if (partNeedsLoad(part)) {
-          loadPart(part).then(chapterUpdated);
-        }
-        return ChapterLoadSliver(
-            key: const Key("LoadSliver"), chapterTitle: chapter!.displayName);
-      } else {
-        Part partData = getPartImmediate(part);
-        return ChapterProvider(
-            key: Key("Chp${chapter!.key}"),
-            chapter: chapter!,
-            part: partData,
-            child: SliverMainAxisGroup(slivers: [
-              const SliverHeader(key: Key("Header")),
-              ChapterClampingSliver(
-                  key: const Key("ClampingSliver"),
-                  sliver: SliverReaderWidth(
-                      key: const Key("width"),
-                      sliver: SliverToBoxAdapter(
-                          child: SizedBox(
-                              key: const Key('height'),
-                              height: 600,
-                              child: Center(
-                                  key: const Key('center'),
-                                  child: TriWizardLoader(
-                                      key: const Key("Loader"),
-                                      message: chapter!.displayName)))))),
-            ]));
-      }
-    } else {
-      PartId part = chapter!.info.partId;
-      if (!partReady(part)) {
-        if (partNeedsLoad(part)) {
-          loadPart(part).then(chapterUpdated);
-        }
-        return ChapterLoadSliver(
-            key: const Key('LoadSliver'), chapterTitle: chapter!.displayName);
-      } else {
-        Part partData = getPartImmediate(part);
-
-        return ChapterProvider(
-            key: Key("Chp${chapter!.key}"),
-            chapter: chapter!,
-            part: partData,
-            child: const SliverMainAxisGroup(slivers: [
-              SliverHeader(key: Key("Header")),
-              ChapterClampingSliver(
-                  key: Key("ClampingSliver"),
-                  sliver: SliverReaderWidth(
-                      key: Key("width"),
-                      sliver: SliverReader(
-                        key: Key("SliverReader"),
-                      ))),
-              // SliverToBoxAdapter(
-              //     child: NoirSocialMediaFooter(
-              //   key: Key("Footer"),
-              // )),
-            ]));
-      }
+      //Chapter will presumably always be null
+      return const BlankChapterSliver(
+        key: Key('BlankChapter'),
+      );
     }
+
+    late Widget sliver;
+    if (chapter!.data == null) {
+      sliver = LoadSliver(
+        key: const Key("UnpackingLoad"),
+        chapterTitle: chapter!.displayName,
+      );
+    } else {
+      sliver = const SliverReader(key: Key('Reader'));
+    }
+
+    sliver = SliverMainAxisGroup(slivers: [
+      //AppBar
+      const SliverHeader(key: Key("Header")),
+      //Body
+      ChapterClampingSliver(
+          key: const Key("ClampingSliver"),
+          sliver: SliverReaderWidth(key: const Key("width"), sliver: sliver)),
+      //SocialMediaFooter
+      const ChapterSocialFooter(
+        key: Key('SocialFooter'),
+      )
+    ]);
+    if (chapter != null) {
+      final Part partData = getPartData(chapter!.info.partId);
+
+      sliver = ChapterProvider(
+          key: Key("Chp${chapter!.key}"),
+          chapter: chapter!,
+          part: partData,
+          child: sliver);
+    }
+    return sliver;
   }
 }

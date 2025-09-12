@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/theme_changing_scaffold.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import 'package:soyourhomeworld/frontend/parts/grand_swatch.dart';
-import 'package:soyourhomeworld/frontend/slivers/load_sliver.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
@@ -16,6 +15,7 @@ import '../parts/noir_colors.dart';
 import '../parts/noir_part.dart';
 import '../parts/part.dart';
 import '../slivers/chapter_sliver.dart';
+import '../slivers/null_slivers.dart';
 import '../theme/base_colors.dart';
 import '../theme/timings.dart';
 
@@ -87,7 +87,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     }
 
     if (chapters.isEmpty) {
-      populate();
+      populateAtStart();
     } else {
       updateChapters();
     }
@@ -161,7 +161,8 @@ class _SliverScrollerState extends State<SliverScroller> {
     }
   }
 
-  void populate() async {
+  void populateAtStart() async {
+    ///Load initial chapters
     assert(chapters.isEmpty);
     if (widget.startChapter == null) {
 //Load first
@@ -218,11 +219,6 @@ class _SliverScrollerState extends State<SliverScroller> {
   }
 
   void scrollNotification() {
-    //If it has been less than 1 second since the last notification
-
-    ///TODO: Does main do anything?
-    // chapterBecomesMain(getMainChapter(controller.offset));
-
     if (controller.offset > controller.position.maxScrollExtent - 3000) {
       addChapter();
     }
@@ -288,7 +284,7 @@ class _SliverScrollerState extends State<SliverScroller> {
   }
 
   void addChapter() {
-    //TODO: This allows custom paths through the scroll.
+    //TODO: This allowed custom paths through the scroll.
     //However, I don't think we want that
     // Chapter? next = chapters.last.next;
 
@@ -373,7 +369,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     List<Widget> slivers = [];
 
     if (chapters.isEmpty) {
-      slivers.add(const ChapterLoadSliver(chapterTitle: 'Chapters'));
+      slivers.add(const LoadSliver(chapterTitle: 'Chapters'));
     } else {
       slivers.addAll(chapters.map<Widget>(itemMapper).toList(growable: false));
     }
@@ -387,15 +383,6 @@ class _SliverScrollerState extends State<SliverScroller> {
         //TODO: Future loader for part
         part: part,
         showFAB: currentChapter == null,
-        // bottomNavigationBar: ChapterProvider(
-        //     key: const Key("bottomNavChapterProvider"),
-        //     chapter: currentChapter,
-        //     part: part,
-        //     child: NoirSocialMediaFooter(
-        //       key: const Key("Footer"),
-        //       scrollController: controller,
-        //     )),\
-
         child: ChapterHeadingData(
             key: const Key("headingData"),
             onChapterBecomesMain: chapterPositionSet,
@@ -454,10 +441,6 @@ class _SliverScrollerState extends State<SliverScroller> {
   Widget itemMapper(Chapter chapter) {
     if (chapter.id == 0) {
       return const TitleSliver(key: Key('titleSliver'));
-      return const SliverToBoxAdapter(
-          child: TitleWidget(
-        key: Key("Title"),
-      ));
     }
     return ChapterSliver(key: chapter.globalKey, chapter: chapter);
   }

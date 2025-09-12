@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/components/deferrals/drawer.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/mc_fab.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../backend/error_handler.dart';
-import '../pages/drawer.dart';
 import '../parts/noir_theme.dart';
 
 // final talker = Talker();
@@ -66,10 +66,8 @@ class _McScaffoldState extends State<McScaffold>
     return Theme(
         data: noirTheme,
         child: Scaffold(
-            endDrawer: MenuDrawer(source: widget.source),
+            endDrawer: DeferredDrawer(source: widget.source),
             appBar: widget.appBar,
-            // backgroundColor: const Color(0xfff2ce9f),
-            // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
             floatingActionButton: widget.showFAB ? const McFAB() : null,
             body: widget.child));
   }

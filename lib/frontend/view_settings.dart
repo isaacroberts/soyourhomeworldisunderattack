@@ -105,7 +105,15 @@ class ViewSettings {
             useInfiniteScroll ?? ScrollMode.defaultScroll),
         testRigNotifier = ValueNotifier<bool>(useTestRig ?? false),
         showFontsNotifier = ValueNotifier<bool>(showFonts ?? true),
-        showBottomNavNotifier = ValueNotifier<bool>(showBottomNav ?? true);
+        showBottomNavNotifier = ValueNotifier<bool>(showBottomNav ?? true) {
+    scrollModeNotifier.addListener(anySet);
+    testRigNotifier.addListener(anySet);
+    showFontsNotifier.addListener(anySet);
+    showBottomNavNotifier.addListener(anySet);
+  }
+  void anySet() {
+    setAllSharedPrefs();
+  }
 
   @override
   String toString() {
@@ -116,8 +124,9 @@ class ViewSettings {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     int? inf = prefs.getInt('scroll');
     if (inf != null && inf != scrollMode.index) {
-      scrollModeNotifier.value = ScrollMode.values[inf];
+      _scrollMode = ScrollMode.values[inf];
     }
+
     _useTestRig = prefs.getBool('debug');
     _showFonts = prefs.getBool('showFonts');
     _showBottomNav = prefs.getBool('showBottomNav');
@@ -129,12 +138,5 @@ class ViewSettings {
     prefs.setBool('debug', useTestRig);
     prefs.setBool('showFonts', showFonts);
     prefs.setBool('showBottomNav', showBottomNav);
-  }
-
-  static bool staticUpdateShouldNotify(ViewSettings a, ViewSettings b) {
-    return a.useTestRig != b.useTestRig ||
-        a.scrollMode != b.scrollMode ||
-        a.showFonts != b.showFonts ||
-        a.showBottomNav != b.showBottomNav;
   }
 }

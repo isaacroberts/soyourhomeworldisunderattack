@@ -1,21 +1,4 @@
-import 'dart:developer' as dev;
-
-import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:soyourhomeworld/backend/book.dart';
-import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/chapter_end.dart';
-import 'package:soyourhomeworld/frontend/pages/title/title.dart';
-import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
-import 'package:soyourhomeworld/frontend/readers/debug_reader.dart';
-import 'package:soyourhomeworld/frontend/readers/reader.dart';
-
-import '../../../../backend/error_handler.dart';
-import '../../../backend/chapter.dart';
-import '../pages/loading_page.dart';
-import '../theme/base_text_theme.dart';
-import '../view_settings.dart';
-
+/*
 class MasterScroller extends StatefulWidget {
   final Book book;
   final int startChapter;
@@ -199,3 +182,4 @@ class _MasterScrollerState extends State<MasterScroller> {
 
   void nullCallback() {}
 }
+*/

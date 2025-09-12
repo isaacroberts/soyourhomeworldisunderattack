@@ -19,7 +19,7 @@ class DeferredPage extends StatelessWidget {
   Widget futureBuilder(BuildContext context, AsyncSnapshot libSnapshot) {
     if (libSnapshot.hasError) {
       ErrorList.logError(libSnapshot.error!, libSnapshot.stackTrace);
-      return ErrorList.instance.page(context);
+      return ErrorList.page(context);
     } else if (libSnapshot.connectionState == ConnectionState.done) {
       return builder(context);
     } else {
@@ -43,7 +43,7 @@ class DeferredWidget extends StatelessWidget {
   Widget futureBuilder(BuildContext context, AsyncSnapshot libSnapshot) {
     if (libSnapshot.hasError) {
       ErrorList.logError(libSnapshot.error!, libSnapshot.stackTrace);
-      return ErrorList.instance.page(context);
+      return ErrorList.page(context);
     } else if (libSnapshot.connectionState == ConnectionState.done) {
       return builder(context);
     } else {
@@ -51,6 +51,40 @@ class DeferredWidget extends StatelessWidget {
           child: TriWizardLoader(
         message: 'Loading lib',
       ));
+    }
+  }
+}
+
+class DeferredSliver extends StatelessWidget {
+  final double height;
+  final Future Function() loader;
+  final Widget Function(BuildContext) builder;
+
+  const DeferredSliver(
+      {super.key,
+      required this.loader,
+      required this.builder,
+      this.height = 400});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(future: loader(), builder: futureBuilder);
+  }
+
+  Widget futureBuilder(BuildContext context, AsyncSnapshot libSnapshot) {
+    if (libSnapshot.hasError) {
+      ErrorList.logError(libSnapshot.error!, libSnapshot.stackTrace);
+      return ErrorList.page(context);
+    } else if (libSnapshot.connectionState == ConnectionState.done) {
+      return builder(context);
+    } else {
+      return SliverToBoxAdapter(
+          child: SizedBox(
+              height: height,
+              child: const Center(
+                  child: TriWizardLoader(
+                message: 'Loading lib',
+              ))));
     }
   }
 }

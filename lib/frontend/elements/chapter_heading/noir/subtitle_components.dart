@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';
 import '../../../../backend/server.dart';
-import '../../../parts/part.dart';
 
 class BookmarkButton extends StatelessWidget {
   ///For any Part
@@ -14,7 +13,7 @@ class BookmarkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = Part.of(context).primary.se.withAlpha(128);
+    Color color = ChapterProvider.partOf(context).primary.se.withAlpha(128);
     return Tooltip(
         message: url,
         child: IconButton(

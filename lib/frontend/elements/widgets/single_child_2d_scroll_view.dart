@@ -330,7 +330,7 @@ class _RenderSingleChild2DViewPort extends RenderTwoDimensionalViewport {
   }
 
   @override
-  void paint(PaintingContext context, Offset offset) {
+  void paint(PaintingContext context, Offset imageOffset) {
     final child = firstChild;
     if (child == null) return;
     final paintOffset = parentDataOf(child).paintOffset!;
@@ -342,7 +342,7 @@ class _RenderSingleChild2DViewPort extends RenderTwoDimensionalViewport {
     if (_shouldClipAtPaintOffset(paintOffset)) {
       _clipRectLayer.layer = context.pushClipRect(
         needsCompositing,
-        offset,
+        imageOffset,
         Offset.zero & viewportDimension,
         paintChild,
         clipBehavior: clipBehavior,
@@ -350,7 +350,7 @@ class _RenderSingleChild2DViewPort extends RenderTwoDimensionalViewport {
       );
     } else {
       _clipRectLayer.layer = null;
-      paintChild(context, offset);
+      paintChild(context, imageOffset);
     }
   }
 

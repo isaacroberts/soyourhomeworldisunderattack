@@ -28,7 +28,7 @@ class Shirt extends SpanHoldingCode {
   @override
   Widget renderSpans(BuildContext context,
       {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
-    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
+    bool showFonts = shouldShowFonts(context);
     return Column(
         key: const Key('shirtcol'),
         mainAxisAlignment: MainAxisAlignment.start,

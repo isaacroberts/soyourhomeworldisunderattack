@@ -48,14 +48,14 @@ class BookWaiter extends StatelessWidget {
     if (snapshot.hasData) {
       Book? bk = snapshot.data;
       if (bk == null) {
-        return const ErrorBox(text: "They turned my book into a null!");
+        return ErrorList.stringBox(context,
+            text: "They turned my book into a null!");
       } else {
         return BookProvider(book: bk, child: child);
       }
     } else if (snapshot.hasError) {
-      ErrorList.logError(snapshot.error!, snapshot.stackTrace);
-      return ExceptionBox.fromException(
-          snapshot.error ?? '?', snapshot.stackTrace);
+      return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
+          .element(context);
     } else {
       return const Center(
           child: TriWizardLoader(
@@ -115,14 +115,14 @@ class CowboyBookBuilder extends StatelessWidget {
     if (snapshot.connectionState == ConnectionState.done) {
       Book? bk = snapshot.data;
       if (bk == null) {
-        child = const ErrorBox(text: "They turned my book into a null!");
+        child = ErrorList.stringBox(context,
+            text: "They turned my book into a null!");
       } else {
         child = BookProvider(book: bk, child: BuildFrog(builder: doneBuilder));
       }
     } else if (snapshot.hasError) {
-      ErrorList.logError(snapshot.error!, snapshot.stackTrace);
-      return ExceptionBox.fromException(
-          snapshot.error ?? '?', snapshot.stackTrace);
+      return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
+          .element(context);
     } else {
       child = const Center(
           child: TriWizardLoader(

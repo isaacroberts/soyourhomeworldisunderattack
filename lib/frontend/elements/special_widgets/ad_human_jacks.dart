@@ -100,7 +100,7 @@ class HumanJackAdHolder extends Holder {
   @override
   Widget fallback(BuildContext context) {
     //Choose not to dick them around on the fallback
-    return IsFallbackProvider(showFonts: false, child: type.getWidget());
+    return type.getWidget();
   }
 
   @override

@@ -2,26 +2,20 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
-import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
 import 'package:soyourhomeworld/frontend/pages/index.dart';
 import 'package:soyourhomeworld/frontend/pages/loading_page.dart';
 import 'package:soyourhomeworld/frontend/pages/server_offline_error.dart'
     deferred as server_offline_lib;
-import 'package:soyourhomeworld/frontend/scrollers/finite_scroller.dart'
-    deferred as finite_lib;
-import 'package:soyourhomeworld/frontend/scrollers/infinite_scroller.dart'
-    deferred as infinite_lib;
 import 'package:soyourhomeworld/frontend/scrollers/sliver_scroller.dart';
-import 'package:soyourhomeworld/frontend/scrollers/test_rig_scroller.dart'
-    deferred as rig_lib;
-import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../backend/book.dart';
 
 // const ScrollerDoor scrollerDoor = ScrollerDoor();
 
+//TODO: Refactor out?
 class ScrollDoor extends StatelessWidget {
+  //This only does the bookProvider
   static const defaultStart = 0;
 
   final int startChapter;
@@ -52,15 +46,15 @@ class ScrollDoor extends StatelessWidget {
     if (bookSnapshot.data == null) {}
 
     // Assume loading has failed
-    return ErrorList.instance.page(context);
+    return ErrorList.page(context);
   }
 
   Widget builder(BuildContext context, AsyncSnapshot<Book?> bookSnapshot) {
     if (bookSnapshot.hasData) {
       return BookProvider(
           book: bookSnapshot.data!,
-          child: _ScrollerPicker(
-            book: bookSnapshot.data!,
+          child: SliverScroller(
+            key: const Key("SliverScroller"),
             startChapter: startChapter,
           ));
     } else if (bookSnapshot.hasError) {
@@ -111,69 +105,10 @@ class NamedChapterScrollerDoor extends StatelessWidget {
     } else {
       return BookProvider(
           book: book,
-          child: _ScrollerPicker(
-            book: book,
+          child: SliverScroller(
+            key: const Key("SliverScroller"),
             startChapter: startChapter,
           ));
-    }
-  }
-}
-
-class _ScrollerPicker extends StatelessWidget {
-  const _ScrollerPicker({
-    required this.book,
-    required this.startChapter,
-  });
-
-  final Book book;
-  final int? startChapter;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-        listenable: ViewSettings.instance.scrollModeNotifier, builder: builder);
-  }
-
-  Widget builder(BuildContext context, Widget? child) {
-    ViewSettings settings = ViewSettings.instance;
-
-    //TODO: Get
-
-    switch (settings.scrollMode) {
-      case ScrollMode.sliver:
-//No deferred load because sliver is already default
-        return SliverScroller(
-          key: const Key("SliverScroller"),
-          startChapter: startChapter,
-        );
-      case (ScrollMode.infinitePackage):
-        if (settings.useTestRig) {
-          return DeferredPage(
-              key: const Key("DeferredRigLib"),
-              loader: () => rig_lib.loadLibrary(),
-              builder: (context) => rig_lib.TestRigScroller(
-                    book: book,
-                    startChapter: startChapter ?? 0,
-                  ));
-        } else {
-          return DeferredPage(
-              key: const Key("DeferredInfinite"),
-              loader: () => infinite_lib.loadLibrary(),
-              builder: (context) => infinite_lib.MasterScroller(
-                    key: const Key('Master'),
-                    book: book,
-                    startChapter: startChapter ?? 0,
-                  ));
-        }
-      case (ScrollMode.paged):
-        //TODO: Put DebugReader on PagingScroller
-        return McScaffold(
-            source: 'scroll',
-            key: const Key("PagingScroller"),
-            child: DeferredWidget(
-                loader: () => finite_lib.loadLibrary(),
-                builder: (context) => finite_lib.PagingScroller(
-                    key: const Key("Pager!"), book: book)));
     }
   }
 }

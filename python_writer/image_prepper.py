@@ -20,6 +20,10 @@ from sklearn.cluster import KMeans
 # dev
 import matplotlib.pyplot as plt
 
+"""
+TODO: Cache these in a JSON file
+"""
+
 def prep_images_from_file(use_saved_responses=None, chapters_in='chapters.json',fonts_in='fonts_clean.json', chapters_out='chapters.json'):
     """
     Files in -> File out
@@ -91,7 +95,7 @@ def np_color_to_hex_str(color):
     hexi = color[0]*65536 + color[1] * 256 + color[2]
     hexs = str(hex(hexi))
     hexs = hexs[2:]
-    # Pad R channel 
+    # Pad R channel
     while len(hexs)<6:
         hexs = '0'+hexs
     return hexs
@@ -100,7 +104,8 @@ def get_color_hint(image):
     print('image shape:', data.shape)
     if data.shape[2]==4:
         data = data[:,:,:3]
-
+    # Downsample x4
+    data = data[::4, ::4, :]
     # Get 5 colors
     clt = KMeans(n_clusters=5)
     clt.fit(data.reshape(-1, 3))

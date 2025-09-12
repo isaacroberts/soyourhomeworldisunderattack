@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../backend/chapter.dart';
 import '../../parts/noir_colors.dart';
-import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 import '../holders/holder_base.dart';
 
@@ -127,9 +126,6 @@ class FacebookHolder extends CodeHolder {
   Widget fallback(BuildContext context) {
     return FacebookElement(key: Key('FB_Post_$hashCode'), holder: this);
   }
-
-  @override
-  bool get wantsPadding => false;
 }
 
 class _FBHilite extends WidgetStateProperty<Color> {
@@ -190,7 +186,7 @@ class _MainFBPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle bodyFont = Part.of(context).bodyFont;
+    TextStyle bodyFont = ChapterProvider.partOf(context).bodyFont;
 
     return Padding(
         key: const Key("PostPad"),
@@ -223,7 +219,7 @@ class MainUsernameRow extends StatelessWidget {
   Widget build(BuildContext context) {
     String? when = Chapter.maybeOf(context)?.data?.when;
     when ??= DateTime.now().toString();
-    TextStyle bodyFont = Part.of(context).bodyFont;
+    TextStyle bodyFont = ChapterProvider.partOf(context).bodyFont;
 
     return SizedBox(
         key: const Key("UserNameSpace"),
@@ -272,7 +268,7 @@ class _CommentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle bodyFont = Part.of(context).bodyFont;
+    TextStyle bodyFont = ChapterProvider.partOf(context).bodyFont;
 
     bool realUser = post.user.isNotEmpty;
     Widget child = Row(
@@ -353,7 +349,7 @@ class _FBUsername extends StatelessWidget {
   void nullClick() {}
   @override
   Widget build(BuildContext context) {
-    TextStyle bodyFont = Part.of(context).bodyFont;
+    TextStyle bodyFont = ChapterProvider.partOf(context).bodyFont;
     //Only main comment should have colon
     String colon = isMain ? ':' : '';
     return TextButton(

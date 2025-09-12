@@ -1,12 +1,4 @@
-import 'dart:developer' as dev;
-
-import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/backend/chapter.dart';
-import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
-
-import '../../../backend/book.dart';
-import '../readers/reader.dart';
-
+/*
 class PagingScroller extends StatefulWidget {
   final Book book;
   const PagingScroller({super.key, required this.book});
@@ -96,3 +88,4 @@ class _PagingScrollerState extends State<PagingScroller> {
     );
   }
 }
+*/

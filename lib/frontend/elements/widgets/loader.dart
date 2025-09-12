@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:soyourhomeworld/frontend/elements/widgets/deferred_icon.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 
 //ThreeRotatingDots from https://pub.dev/packages/loading_animation_widget
@@ -166,7 +167,6 @@ class _BuildDot extends StatelessWidget {
   final double dotOffset;
   final Color color;
   final double size;
-  final bool first;
   final int index;
 
   const _BuildDot.first({
@@ -179,14 +179,12 @@ class _BuildDot extends StatelessWidget {
     required this.color,
     required this.size,
     required this.index,
-  }) : first = true;
+  });
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: first
-            ? controller.value <= interval.end
-            : controller.value >= interval.begin,
+        visible: controller.value <= interval.end,
         child: Transform.rotate(
           origin: Offset(0, -size * 1),
           angle: Tween<double>(
@@ -208,39 +206,30 @@ class _BuildDot extends StatelessWidget {
         ));
   }
 
-  Widget buildIcon() {
+  int getIconIndex() {
     switch (index) {
       case 0:
-        //TODO: Deferred Icon
-        return Icon(
-          Icons.public,
-          size: size,
-//0xff121318 121318
-          color: const Color(0xff7866ff),
-          // blendMode: BlendMode.plus,
-        );
-
+        //RpgAwesome.burning_book
+        return 78;
       case 1:
-        return Icon(
-          RpgAwesome.fire_symbol,
-          size: size,
-          color: const Color(0xff7867ff),
-          // blendMode: BlendMode.plus,
-        );
-
+        // RpgAwesome.fire_symbol,
+        return 194;
       case 2:
-        return Icon(
-          RpgAwesome.bleeding_eye,
-          size: size,
-          color: const Color(0xff7869ff),
-          // blendMode: BlendMode.plus,
-        );
-
+        // RpgAwesome.bleeding_eye,
+        return 51;
       default:
-        return Icon(
-          RpgAwesome.burning_book,
-          size: size,
-        );
+//RpgAwesome.fireball_sword
+        return 196;
     }
+  }
+
+  Widget buildIcon() {
+    // const Color color = Color(0xff7866ff);
+    return Icon(
+      RpgAwesome.values[getIconIndex()],
+      size: size,
+      color: color,
+      // blendMode: BlendMode.plus,
+    );
   }
 }

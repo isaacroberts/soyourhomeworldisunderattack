@@ -61,9 +61,9 @@ class TitleWidget extends StatelessWidget {
           image: DecorationImage(
               image: NetworkImage(imageUrl('noir_gun_shadows.jpg')),
               fit: BoxFit.cover,
-              alignment: Alignment(-.4, 0))),
+              alignment: const Alignment(-.4, 0))),
       child: FlameWidget(
-          key: Key('title'), width: size.width, height: size.height),
+          key: const Key('title'), width: size.width, height: size.height),
     );
 
     //My CPU is STRUGGLING
@@ -138,6 +138,7 @@ class TitleSliver extends StatelessWidget {
         child: const SliverMainAxisGroup(slivers: [
           SliverHeader(key: Key("Header")),
           SliverToBoxAdapter(
+            key: Key('titleWidgStba'),
             child: TitleWidget(
               key: Key('title'),
               shrinkHeight: 120,

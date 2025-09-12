@@ -61,12 +61,13 @@ class RenderSliverCenter extends RenderSliver
   }
 
   @override
-  void paint(PaintingContext context, Offset offset) {
+  void paint(PaintingContext context, Offset imageOffset) {
     if (child != null) {
       final parentData = child!.parentData;
       if (parentData is SliverPhysicalParentData) {
         // Use the precomputed paintOffset from performLayout
-        context.paintChild(child!, offset + Offset(horizontalPadding ?? 0, 0));
+        context.paintChild(
+            child!, imageOffset + Offset(horizontalPadding ?? 0, 0));
       }
     }
   }

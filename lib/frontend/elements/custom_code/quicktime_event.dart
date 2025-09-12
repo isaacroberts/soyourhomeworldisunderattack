@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
+import '../../../backend/chapter.dart';
 import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 import '../holders/span_holding_code.dart';
@@ -79,7 +80,7 @@ class _QuicktimeEventWidgetState extends State<QuicktimeEventWidget> {
   }
 
   Widget timerCountdown(BuildContext context) {
-    Part? part = Part.maybeOf(context);
+    Part? part = ChapterProvider.partMaybeOf(context);
     return Center(
         child: Text(
       secondsRemaining.toString(),

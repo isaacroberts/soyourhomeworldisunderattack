@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:web/web.dart' as web;
 
 String serverURLSource() {
   return 'web';
@@ -12,8 +11,4 @@ String getServerURLPlatformSpecific() {
   } else {
     return 'https://homeworld.help';
   }
-
-  ///Use current URL
-  ///
-  return web.window.location.href;
 }

@@ -1,9 +1,9 @@
 // import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 
+import '../../../backend/chapter.dart';
 import '../../../backend/font_interm.dart';
 import '../../../backend/text_utils.dart';
-import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 // import '../custom_code/code_holders.dart';
 
@@ -43,20 +43,20 @@ class BodyTextElement extends TextHolder {
   @override
   Widget element(BuildContext context) {
     //Get the part!
-    Part part = Part.of(context);
+    TextStyle bodyFont = ChapterProvider.bodyFontOf(context);
     return Text(
       text,
-      style: part.bodyFont,
+      style: bodyFont,
     );
   }
 
   @override
   Widget fallback(BuildContext context) {
     //Get the part!
-    Part part = Part.of(context);
+    TextStyle bodyFont = ChapterProvider.bodyFontOf(context);
     return Text(
       text,
-      style: part.bodyFont,
+      style: bodyFont,
     );
     // return element(context);
   }
@@ -92,7 +92,7 @@ class AlignedBodyText extends TextHolder {
 
   @override
   Widget element(BuildContext context) {
-    Part part = Part.of(context);
+    TextStyle bodyFont = ChapterProvider.bodyFontOf(context);
 
     return WrapInTabs(
         key: Key("tabs$hashCode"),
@@ -100,7 +100,7 @@ class AlignedBodyText extends TextHolder {
         align: align,
         child: Text(
           text,
-          style: part.bodyFont,
+          style: bodyFont,
           textAlign: align,
         ));
   }

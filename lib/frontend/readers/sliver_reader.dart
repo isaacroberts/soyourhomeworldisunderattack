@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../backend/chapter.dart';
 import '../../../backend/chapter_data.dart';
 import '../elements/holders/holder_base.dart';
+import '../view_settings.dart';
 import 'reader_builder.dart';
 
 class SliverReader extends StatefulWidget {
@@ -19,24 +20,28 @@ class _SliverReaderState extends State<SliverReader> {
   @override
   void didChangeDependencies() {
     chapter = Chapter.of(context);
+    ViewSettings.instance.testRigNotifier.addListener(debugChanged);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
+    ViewSettings.instance.testRigNotifier.removeListener(debugChanged);
     super.dispose();
   }
 
-  Widget itemBuilder(BuildContext context, Holder holder, bool showFonts) {
-    if (holder.wantsPadding) {
-      return SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          sliver: SliverToBoxAdapter(
-              child: holder.elementCheckingFallback(context)));
-    } else {
-      return SliverToBoxAdapter(
-          child: holder.elementOrFallback(context, showFonts));
+  void debugChanged() {
+    if (mounted) {
+      setState(() {});
     }
+  }
+
+  Widget itemBuilder(BuildContext context, Holder holder, bool showFonts) {
+    return holder.sliver(context);
+  }
+
+  Widget debugBuilder(BuildContext context, Holder holder, bool showFonts) {
+    return holder.debugSliver(context);
   }
 
   @override
@@ -44,26 +49,31 @@ class _SliverReaderState extends State<SliverReader> {
     if (data == null) {
       //Returns zero box, so rest of reader can use ! null checks
       return const SliverToBoxAdapter(
+          key: Key('SliverReaderNull'),
           child: SizedBox(
-        height: 400,
-      ));
+            height: 400,
+          ));
     }
+
+    var builder = ViewSettings.instance.useTestRig ? debugBuilder : itemBuilder;
 
     return ReaderBuilder(
       useSliverProtocol: true,
       key: const Key('RdrBldr'),
-      itemBuilder: itemBuilder,
+      itemBuilder: builder,
       leadItems: const [
         SliverToBoxAdapter(
+            key: Key('stbaLead'),
             child: SizedBox(
-          height: 24,
-        ))
+              height: 24,
+            ))
       ],
       endItems: const [
         SliverToBoxAdapter(
+            key: Key('endPad'),
             child: SizedBox(
-          height: 12,
-        ))
+              height: 12,
+            ))
       ],
     );
   }

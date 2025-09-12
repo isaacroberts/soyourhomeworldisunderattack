@@ -3,7 +3,7 @@ import 'dart:developer' as dev;
 import 'dart:typed_data';
 import 'dart:ui';
 
-import '../error_handler.dart';
+import '../exception_types.dart';
 import 'binary.dart';
 
 class BufferPtr {

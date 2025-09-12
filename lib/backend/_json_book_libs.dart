@@ -6,6 +6,7 @@ import 'package:soyourhomeworld/backend/server.dart';
 import 'book.dart';
 import 'chapter_info.dart';
 import 'error_handler.dart';
+import 'exception_types.dart';
 
 Color? hexToColor(String? code) {
   if (code == null) {

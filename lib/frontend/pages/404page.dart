@@ -39,7 +39,7 @@ class ErrorCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ErrorPage(
+    return BaseErrorPage(
         header: 'Error: $code',
         parenthetical: '(Server error)',
         illustration: RpgAwesome.bomb_explosion,

@@ -26,9 +26,8 @@ class FutureHolder extends Holder {
     if (snapshot.hasData) {
       return snapshot.data!.element(context);
     } else if (snapshot.hasError) {
-      return ExceptionElement(
-          exception: snapshot.error!,
-          stackTrace: snapshot.stackTrace ?? '[no trace');
+      return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
+          .element(context);
     } else {
       return const SizedBox(
           height: 150,
@@ -50,9 +49,8 @@ class FutureHolder extends Holder {
     if (snapshot.hasData) {
       return snapshot.data!.fallback(context);
     } else if (snapshot.hasError) {
-      return ExceptionElement(
-          exception: snapshot.error!,
-          stackTrace: snapshot.stackTrace ?? '[no trace');
+      return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
+          .element(context);
     } else {
       return const SizedBox(
           height: 150,

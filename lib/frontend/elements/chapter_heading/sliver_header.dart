@@ -9,6 +9,6 @@ class SliverHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     ChapterProvider provider = ChapterProvider.of(context);
 
-    return provider.part.buildHeader(context, provider.chapter);
+    return provider.part.buildHeader(context);
   }
 }

@@ -157,6 +157,7 @@ class _ShopPageState extends State<ShopPage> {
               // controller: _controller,
               slivers: [
                 SliverToBoxAdapter(
+                    key: const Key('shopStBA'),
                     child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 12),

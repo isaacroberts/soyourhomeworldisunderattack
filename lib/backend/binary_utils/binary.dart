@@ -2,7 +2,7 @@
 
 import 'dart:ui';
 
-import '../error_handler.dart';
+import '../exception_types.dart';
 import 'buffer_ptr.dart';
 
 enum QuoteLevels { text, params, list }

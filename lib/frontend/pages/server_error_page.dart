@@ -12,7 +12,7 @@ import 'base_error_page.dart';
 Widget errorPageBuilder(
     BuildContext context, Object? exception, Object? stackTrace) {
   if (exception == null) {
-    return ErrorPage(
+    return BaseErrorPage(
       header: 'Null error!',
       parenthetical: '(worst case!)',
       illustration: RpgAwesome.cancel,
@@ -31,7 +31,7 @@ Widget errorPageBuilder(
             exception: exception, stackTrace: stackTrace));
   }
 
-  return ErrorPage(
+  return BaseErrorPage(
     header: exception.toString(),
     parenthetical: '($errorType)',
     illustration: null,

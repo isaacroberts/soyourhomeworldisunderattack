@@ -111,6 +111,8 @@ class Book {
     return null;
   }
 
+  static bool hasEverPrintedAllBefore = false;
+
   int? findChapterBySearchTerm(String name) {
     name = name.toLowerCase();
     assert(name != 'null');
@@ -129,9 +131,16 @@ class Book {
         return ix;
       }
     }
+    //It's actually really helpful to see that my links aren't working
     if (kDebugMode) {
-      for (int ix = 0; ix < chapters.length; ++ix) {
-        chapters[ix].printSearchTerms(name);
+      if (!hasEverPrintedAllBefore) {
+        //Only print this behemoth once!
+        hasEverPrintedAllBefore = true;
+        //Look for where link should have been.
+        //This is helpful because the author can navigate the chapter order
+        for (int ix = 0; ix < chapters.length; ++ix) {
+          chapters[ix].printSearchTerms(name);
+        }
       }
     }
     dev.log("Couldn't find chapter: $name");

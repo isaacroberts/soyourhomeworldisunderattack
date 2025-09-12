@@ -84,7 +84,7 @@ class Columns extends Holder {
 
   @override
   Widget fallback(BuildContext context) {
-    return IsFallbackProvider(showFonts: false, child: element(context));
+    return element(context);
   }
 }
 

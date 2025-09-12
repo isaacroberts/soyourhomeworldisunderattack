@@ -13,9 +13,6 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/facebook_post.dart
     deferred as facebook_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
     deferred as goto_button_lib;
-//TODO: Defer
-import 'package:soyourhomeworld/frontend/elements/custom_code/image_holder.dart'
-    deferred as image_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
@@ -28,6 +25,9 @@ import 'package:soyourhomeworld/frontend/elements/special_widgets/andy_thumbnail
     deferred as andy_thumbnail_lib;
 //TODO: Remove
 import 'package:soyourhomeworld/frontend/icons.dart';
+//TODO: Defer
+import 'package:soyourhomeworld/frontend/image/image_holder.dart'
+    deferred as image_lib;
 import 'package:soyourhomeworld/frontend/pages/title/title.dart'
     deferred as title_lib;
 
@@ -61,10 +61,14 @@ Future<Holder> _instantiateCodeTag(String cls, CodeParams params) async {
     String? url = params.main;
     double? aspectRatio = params.readDouble('aspectRatio');
     List<Color>? colorHints = params.colorList('colorHint');
-
+    String? credit = params['credit'];
+    credit ??= '(Credit lost)';
     await image_lib.loadLibrary();
     return image_lib.ImageHolder.fromList(
-        url: url, aspectRatio: aspectRatio, colorHints: colorHints);
+        url: url,
+        aspectRatio: aspectRatio,
+        colorHints: colorHints,
+        credit: credit);
   } else if (cls == 'ELVENCHORUS' || cls == 'ELVENCHOIR') {
     // dev.log("Elven Chorus");
     int? speed = params.readInt('Speed');

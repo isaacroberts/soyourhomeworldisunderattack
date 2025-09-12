@@ -5,6 +5,7 @@ import 'package:dynamic_cached_fonts/dynamic_cached_fonts.dart';
 import 'package:soyourhomeworld/backend/server.dart';
 
 import 'error_handler.dart';
+import 'exception_types.dart';
 
 enum _LoadStatus {
   unloaded,

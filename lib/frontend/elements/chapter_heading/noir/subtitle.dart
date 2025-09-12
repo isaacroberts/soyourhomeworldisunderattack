@@ -267,7 +267,7 @@ class _CopyTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = Part.of(context).primary.se.withAlpha(128);
+    Color color = ChapterProvider.partOf(context).primary.se.withAlpha(128);
 
     return Tooltip(
         message: 'Copy chapter',

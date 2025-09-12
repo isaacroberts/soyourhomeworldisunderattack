@@ -18,7 +18,7 @@ class ServerOfflinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ErrorPage(
+    return BaseErrorPage(
         header: 'Server offline',
         parenthetical: '(Connection error)',
         illustration: RpgAwesome.battery_0,

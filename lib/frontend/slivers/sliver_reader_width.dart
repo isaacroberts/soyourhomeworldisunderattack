@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/components/sliver_center.dart';
 
+import '../../backend/chapter.dart';
 import '../parts/part.dart';
 
 class SliverReaderWidth extends StatelessWidget {
+  ///Also provides the BG color
   final Widget sliver;
   const SliverReaderWidth({required super.key, required this.sliver});
 
@@ -28,7 +30,7 @@ class SliverReaderWidth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
-    Part part = Part.of(context);
+    Part part = ChapterProvider.partOf(context);
     if (screenWidth <= readerWidth) {
       return sliver;
     } else {

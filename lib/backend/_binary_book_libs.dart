@@ -11,6 +11,7 @@ import 'binary_utils/buffer_ptr.dart';
 import 'book.dart';
 import 'chapter_info.dart';
 import 'error_handler.dart';
+import 'exception_types.dart';
 
 Future<Book?> loadBookLoader(BookLoader that) async {
   if (that.book != null) {

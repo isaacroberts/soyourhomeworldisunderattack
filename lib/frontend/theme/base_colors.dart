@@ -82,7 +82,6 @@ const Color planColor = Color(0xffec9466);
 // const errorHilite = Color(0xff7627ff);
 // const errorBg = Color(0xff443d80);
 
-//Change these to PeterThiel
 const errorColor = Color(0xffff6811);
 const errorMinor = Color(0xffffb789);
 

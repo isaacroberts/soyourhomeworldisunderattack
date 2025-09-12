@@ -4,6 +4,9 @@ import 'dart:typed_data';
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+//TODO: Move that function, so we can defer this load
+//It's just the bookmark searching function, which could
+//go in its own static class
 import 'package:soyourhomeworld/backend/case_insensitive_equality.dart';
 import 'package:soyourhomeworld/backend/part_id.dart';
 import 'package:soyourhomeworld/backend/server.dart';
@@ -285,6 +288,19 @@ class ChapterProvider extends InheritedWidget {
 
   static ChapterProvider? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ChapterProvider>();
+  }
+
+  static Part partOf(BuildContext context) {
+    return ChapterProvider.of(context).part;
+  }
+
+  ///Part always has a value, even if Chapter doesn't, for fallback-ability
+  static Part? partMaybeOf(BuildContext context) {
+    return ChapterProvider.maybeOf(context)?.part;
+  }
+
+  static TextStyle bodyFontOf(BuildContext context) {
+    return ChapterProvider.of(context).part.bodyFont;
   }
 
   @override

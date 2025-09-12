@@ -24,7 +24,7 @@ def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='font
     spans, _ = cf.read_spans_and_fonts(spans_in, fonts_in)
 
     if use_saved_responses is None:
-        pst.click(5)
+        pst.needs_input()
         print('Have chapters changed?')
         r= pst.response('y/n')
         if r=='n':

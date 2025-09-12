@@ -2,13 +2,13 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
-import 'package:soyourhomeworld/frontend/slivers/load_sliver.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../../backend/chapter.dart';
 import '../../../backend/chapter_data.dart';
 import '../../../backend/error_handler.dart';
 import '../elements/holders/holder_base.dart';
+import '../slivers/null_slivers.dart';
 
 class ReaderBuilder extends StatefulWidget {
   /// Builds & shows elements, as loading fonts
@@ -239,7 +239,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   Widget unloadedBuilder(BuildContext context) {
     //Shows basic loading screen
     if (useSliverProtocol) {
-      return ChapterLoadSliver(chapterTitle: chapter.displayTitle);
+      return LoadSliver(chapterTitle: chapter.displayTitle);
     }
     return const SizedBox(
       height: 400,
@@ -257,32 +257,22 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     }
     if (useSliverProtocol) {
       if (!doneLoading) {
-        return ChapterLoadSliver(chapterTitle: chapter.displayName);
+        return LoadSliver(chapterTitle: chapter.displayName);
       }
 
-      return IsFallbackProvider(
-          showFonts: showFonts,
-          // child: ConstrainedBox(
-          //     constraints:
-          //         BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-          child: SliverMainAxisGroup(
-              key: Key('RdrSlvrChp${chapter.id}'),
-              slivers: itemIterator(context).toList(growable: false)));
+      return SliverMainAxisGroup(
+          key: Key('RdrSlvrChp${chapter.id}'),
+          slivers: itemIterator(context).toList(growable: false));
     } else {
-      return IsFallbackProvider(
-          showFonts: showFonts,
-          // child: ConstrainedBox(
-          //     constraints:
-          //         BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-          child: SelectableRegion(
-              selectionControls: MaterialTextSelectionControls(),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //TODO: Why a PageStorage Key?
-                  key: Key('RdrBldrChp${chapter.id}'),
-                  children: itemIterator(context).toList(growable: false))));
+      return SelectableRegion(
+          selectionControls: MaterialTextSelectionControls(),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              //TODO: Why a PageStorage Key?
+              key: Key('RdrBldrChp${chapter.id}'),
+              children: itemIterator(context).toList(growable: false)));
     }
   }
 }

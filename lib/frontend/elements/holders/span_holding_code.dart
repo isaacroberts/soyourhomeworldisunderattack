@@ -39,7 +39,7 @@ class SpanHoldingCode extends CodeHolder {
   // Helper function
   Widget renderSpans(BuildContext context,
       {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
-    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
+    bool showFonts = shouldShowFonts(context);
     // dev.log("SpanHoldingCode showFonts=$showFonts");
     return Column(
         key: const Key('SHC_col'),
@@ -56,6 +56,7 @@ class SpanHoldingCode extends CodeHolder {
   Widget element(BuildContext context) {
     return renderSpans(context);
   }
+  //TODO: Override sliver
 
   @override
   Widget fallback(BuildContext context) {

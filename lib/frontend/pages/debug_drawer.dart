@@ -23,10 +23,8 @@ class DebugDrawer extends StatelessWidget {
 
   void onUrlTap(BuildContext context, String url) {
     if (url == 'Errors') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ErrorList.instance.page(context)));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ErrorList.page(context)));
     } else if (url == 'Home') {
       Navigator.pop(context);
     } else if (url == 'DevIcons') {

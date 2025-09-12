@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/deferred_icon.dart';
 
-import '../elements/widgets/deferred_icon.dart';
+import '../elements/widgets/loader.dart';
 
-class NullChapterSliver extends StatelessWidget {
-  const NullChapterSliver({super.key});
+class EmptyChapterSliver extends StatelessWidget {
+  const EmptyChapterSliver({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +13,41 @@ class NullChapterSliver extends StatelessWidget {
   }
 }
 
-class BlankChapterSliver extends StatelessWidget {
-  const BlankChapterSliver({super.key});
+class LoadSliver extends StatelessWidget {
+  ///Before any info on the Chapter
+  final String chapterTitle;
+  const LoadSliver({super.key, required this.chapterTitle});
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-        key: const Key('nullChapter(blank)'),
-        child: Container(
-            height: 600,
-            color: const Color(0xff444444),
-            child: const DeferredRpgIcon(
-                iconIx: 0, size: 48, color: Color(0xff888888))));
+        child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Center(
+                child: TriWizardLoader(
+              key: const Key("chp"),
+              message: '"$chapterTitle"...',
+            ))));
+  }
+}
+
+class BlankChapterSliver extends StatelessWidget {
+  /// Shows to user that a chapter is missing
+  ///   Appears as a Trap Chapter, aka, a Trapter
+  const BlankChapterSliver({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverToBoxAdapter(
+        key: Key('trapter'),
+        child: SizedBox(
+            height: 400,
+            child: DeferredRpgIcon(
+                //Trap Icon
+                iconIx: 41,
+                //Large
+                size: 48,
+                //Half opacity white
+                color: Color(0x80ffffff))));
   }
 }

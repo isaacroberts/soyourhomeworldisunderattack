@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../backend/error_handler.dart';
 import '../elements/scaffold_with_scroll.dart';
 import '../elements/widgets/error_page_button.dart';
+import '../elements/widgets/error_widgets.dart';
 
-class ErrorPage extends StatelessWidget {
+class BaseErrorPage extends StatelessWidget {
   final IconData? illustration;
   final ErrorPageButton button;
   final String header;
@@ -15,7 +15,7 @@ class ErrorPage extends StatelessWidget {
   // final ExceptionElement exception;
   final Object? exception;
   final Object? stackTrace;
-  const ErrorPage({
+  const BaseErrorPage({
     super.key,
     required this.header,
     required this.parenthetical,

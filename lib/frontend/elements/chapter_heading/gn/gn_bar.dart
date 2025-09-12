@@ -15,7 +15,7 @@ class GnBar extends StatelessWidget {
   Widget build(BuildContext context) {
     const double collapsedHeight = 60;
     const double expandedHeight = 120;
-    Part part = Part.of(context);
+    Part part = ChapterProvider.partOf(context);
     return Theme(
         data: part.theme,
         child: const SliverAppBar(

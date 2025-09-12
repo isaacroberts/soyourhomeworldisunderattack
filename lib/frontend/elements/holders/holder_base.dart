@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+//DebugWrap / CodeDebugWrap
+import 'package:soyourhomeworld/frontend/components/deferrals/debug_wrap.dart';
+import 'package:soyourhomeworld/frontend/view_settings.dart';
+
+import 'holder_utils.dart';
+
 // ============ Base ============================
 
 abstract class Holder {
@@ -13,7 +19,7 @@ abstract class Holder {
   }
 
   Widget elementCheckingFallback(BuildContext context) {
-    bool showFonts = IsFallbackProvider.shouldShowFonts(context);
+    bool showFonts = shouldShowFonts(context);
     if (showFonts) {
       return element(context);
     } else {
@@ -21,14 +27,26 @@ abstract class Holder {
     }
   }
 
+  //Must be unique
+  String get key => hashCode.toString();
   String toText();
   Widget element(BuildContext context);
   Widget fallback(BuildContext context);
 
-  //12 px of horiz padding will be added if true
-//TODO: Replace this with a sliverElement() function
-  ///And have the default include padding
-  bool get wantsPadding => true;
+  Widget sliver(BuildContext context) {
+    bool showFonts = shouldShowFonts(context);
+    Widget child = showFonts ? element(context) : fallback(context);
+    Widget sliver =
+        SliverToBoxAdapter(key: Key('holderStba_$key'), child: child);
+    sliver = SliverTextPad(key: Key('holderPad_$key'), sliver: sliver);
+    return sliver;
+  }
+
+  Widget debugSliver(BuildContext context) {
+    ///Allowed on release mode
+    ///Because CAN YOU IMAGINE if something only works in Debug
+    return DeferredDebugWrap(holder: this, showFonts: true);
+  }
 
   Future load({required String? debugId}) async {
     ///DebugId is passed to FontLoader
@@ -50,39 +68,20 @@ abstract class Holder {
 //Will add json data later
 abstract class CodeHolder extends Holder {
   const CodeHolder();
-//Default
-  @override
-  bool get wantsPadding => false;
 
   @override
   Widget fallback(BuildContext context) {
     return element(context);
   }
-}
-
-class IsFallbackProvider extends InheritedWidget {
-  final bool showFonts;
-  const IsFallbackProvider(
-      {super.key, required this.showFonts, required super.child});
-
-  static bool shouldShowFonts(BuildContext context) {
-    return maybeOf(context)?.showFonts ?? true;
-  }
-
-  static IsFallbackProvider? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<IsFallbackProvider>();
-  }
-
-  static IsFallbackProvider of(BuildContext context) {
-    return maybeOf(context)!;
-  }
 
   @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    if (oldWidget is IsFallbackProvider) {
-      return showFonts == oldWidget.showFonts;
-    } else {
-      return true;
-    }
+  Widget debugSliver(BuildContext context) {
+    ///Allowed on release mode
+    ///Because CAN YOU IMAGINE if something only works in Debug
+    return DeferredCodeWrap(holder: this, showFonts: true);
   }
+}
+
+bool shouldShowFonts(BuildContext context) {
+  return ViewSettings.instance.showFonts;
 }

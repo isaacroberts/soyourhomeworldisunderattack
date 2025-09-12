@@ -141,7 +141,7 @@ class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
 
   @override
   Widget build(BuildContext context) {
-    Part part = Part.of(context);
+    Part part = ChapterProvider.partOf(context);
 
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),

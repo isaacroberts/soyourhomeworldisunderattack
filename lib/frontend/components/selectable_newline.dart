@@ -227,12 +227,12 @@ class _SelectableNewlineState extends RenderBox
   }
 
   @override
-  void paint(PaintingContext context, Offset offset) {
+  void paint(PaintingContext context, Offset imageOffset) {
     if (_startHandleLayerLink != null && value.startSelectionPoint != null) {
       context.pushLayer(
         LeaderLayer(
           link: _startHandleLayerLink!,
-          offset: offset + value.startSelectionPoint!.localPosition,
+          offset: imageOffset + value.startSelectionPoint!.localPosition,
         ),
         (PaintingContext context, Offset offset) {},
         Offset.zero,
@@ -242,7 +242,7 @@ class _SelectableNewlineState extends RenderBox
       context.pushLayer(
         LeaderLayer(
           link: _endHandleLayerLink!,
-          offset: offset + value.endSelectionPoint!.localPosition,
+          offset: imageOffset + value.endSelectionPoint!.localPosition,
         ),
         (PaintingContext context, Offset offset) {},
         Offset.zero,
@@ -253,12 +253,12 @@ class _SelectableNewlineState extends RenderBox
       final Paint selectionPaint = Paint()
         ..style = PaintingStyle.fill
         ..color = selectionColor ?? Colors.black;
-      context.canvas.drawRect(paintBounds.shift(offset), selectionPaint);
+      context.canvas.drawRect(paintBounds.shift(imageOffset), selectionPaint);
     } else {
       final Paint selectionPaint = Paint()
         ..style = PaintingStyle.stroke
         ..color = const Color(0x2affffff);
-      context.canvas.drawRect(paintBounds.shift(offset), selectionPaint);
+      context.canvas.drawRect(paintBounds.shift(imageOffset), selectionPaint);
     }
   }
 
