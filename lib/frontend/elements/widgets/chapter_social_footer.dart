@@ -16,6 +16,7 @@ class ChapterSocialFooter extends StatefulWidget {
 class _ChapterSocialFooterState extends State<ChapterSocialFooter> {
   @override
   Widget build(BuildContext context) {
+  return SizedBox.shrink();
     Part part = ChapterProvider.partOf(context);
     return DecoratedSliver(
       key: const Key('SocialFooterDeco'),
