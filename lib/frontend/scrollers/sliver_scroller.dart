@@ -8,6 +8,7 @@ import 'package:soyourhomeworld/frontend/parts/grand_swatch.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
+import '../../backend/start_chapter.dart';
 import '../elements/chapter_heading/heading_data.dart';
 import '../icons.dart';
 import '../pages/title/title.dart';
@@ -19,13 +20,16 @@ import '../slivers/null_slivers.dart';
 import '../theme/base_colors.dart';
 import '../theme/timings.dart';
 
+//TODO: Move
 const Part defaultPart = PartNoir();
 
 class SliverScroller extends StatefulWidget {
   // final Book book;
-  final int? startChapter;
+  // final int? startChapter;
 
-  const SliverScroller({super.key, this.startChapter});
+  final StartChapter startChapter;
+
+  const SliverScroller({super.key, required this.startChapter});
 
   @override
   State<SliverScroller> createState() => _SliverScrollerState();
@@ -41,7 +45,7 @@ Future<int?> getStartChapter() async {
 class _SliverScrollerState extends State<SliverScroller> {
   late Book book;
 
-  int get startChapter => widget.startChapter ?? 0;
+  // int get startChapter => widget.startChapter ?? 0;
   int? get firstLoadedChapter => chapters.isEmpty ? null : chapters.first.index;
   int get endChapter => chapters.isEmpty ? 0 : chapters.last.index;
   final List<Chapter> chapters = [];
@@ -80,11 +84,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     //This is where InheritedWidgets update
     book = Book.of(context);
 
-    if (widget.startChapter == 0) {
-      part = const PartNoir();
-    } else {
-      part = getPartImmediate(book.chapters[widget.startChapter!].part);
-    }
+    part = defaultPart;
 
     if (chapters.isEmpty) {
       populateAtStart();
@@ -109,6 +109,10 @@ class _SliverScrollerState extends State<SliverScroller> {
     if (chapter == null) {
       return;
     }
+    if (kDebugMode) {
+      //It slows down the computer too much
+      return;
+    }
     await Future.delayed(const Duration(milliseconds: 2000));
     //Scroll to new chapter
     //The null context doesn't allow it to retry by loading the SliverScroller
@@ -117,6 +121,10 @@ class _SliverScrollerState extends State<SliverScroller> {
 
   Future<bool> scrollUpDelayed(Chapter? chapter) async {
     if (chapter == null) {
+      return false;
+    }
+    if (kDebugMode) {
+      //It slows down the computer too much
       return false;
     }
     updateView();
@@ -138,78 +146,60 @@ class _SliverScrollerState extends State<SliverScroller> {
     return true;
   }
 
-  void updateChapters() async {
-    if (widget.startChapter != null) {
-      if (chapters.isEmpty) {
-        assert(false);
-      }
-      //If new scroll is oob
-      if (widget.startChapter! >= endChapter) {
-        addChaptersUntil(widget.startChapter!);
-      }
-      int firstLoadedChapter = this.firstLoadedChapter!;
-
-      if (widget.startChapter! < firstLoadedChapter) {
-        _insertStartChaptersUntil(widget.startChapter!);
-      }
-
-      //Scroll to new chapter
-      scrollDelayed(book.chapters[widget.startChapter!]);
-    } else {
-      //Ensure currentChapter is still visible
-      scrollDelayed(currentChapter);
-    }
-  }
-
   void populateAtStart() async {
     ///Load initial chapters
     assert(chapters.isEmpty);
-    if (widget.startChapter == null) {
 //Load first
-      _addChapter(book.chapters[0]);
+    _addChapter(book.chapters[0]);
 
-      //Await startChapter from file
-      int? startChapter = await getStartChapter();
+    //Await startChapter from file
+    int? startChapter = await getStartChapter();
 
-      if (startChapter != null) {
-        //Load previously saved chapter
+    if (startChapter != null) {
+      //Load previously saved chapter
 
 //Load current
-        currentChapter = book.chapters[startChapter];
-        //Add all to view
-        addChaptersUntil(startChapter);
-
-        //Update view
-        updateView();
-        currentChapter?.load();
-
-        //TODO: Show snackbar saying 'loaded from bookmark'
-
-        scrollDelayed(book.chapters[startChapter]);
-      } else {
-        //Add preloaded next
-        _addChapter(book.chapters[1]);
-        //Update screen
-        updateView();
-      }
-    } else {
-      //Start loading first
       currentChapter = book.chapters[startChapter];
+      //Add all to view
+      addChaptersUntil(startChapter);
 
-      //Save to prevent async
-      Chapter chp = currentChapter!;
-      _addChapter(chp);
+      //Update view
+      updateView();
+      currentChapter?.load();
 
+      //TODO: Show snackbar saying 'loaded from bookmark'
+
+      scrollDelayed(book.chapters[startChapter]);
+    } else {
+      //Add preloaded next
+      _addChapter(book.chapters[1]);
       //Update screen
       updateView();
-      //If we need to scroll to start chapter
-      if (startChapter > 0) {
-        //Delay to make sure screen's loaded
-        scrollDelayed(chp);
-      }
-      //Load last to make sure it doesn't clog up async
-      chp.load();
     }
+  }
+
+  void updateChapters() async {
+    if (chapters.isEmpty) {
+      assert(false);
+    }
+    int? startChapter = await getStartChapter();
+
+    if (startChapter == null) {
+      //No further change is needed
+      return;
+    }
+    //If new scroll is oob
+    if (startChapter >= endChapter) {
+      addChaptersUntil(startChapter);
+    }
+    int firstLoadedChapter = this.firstLoadedChapter!;
+
+    if (startChapter < firstLoadedChapter) {
+      _insertStartChaptersUntil(startChapter);
+    }
+
+    //Scroll to new chapter
+    scrollDelayed(book.chapters[startChapter]);
   }
 
   void updateView() {
@@ -244,7 +234,11 @@ class _SliverScrollerState extends State<SliverScroller> {
         }
         //Refresh view
         setState(() {});
+        //Dispose old chapters
+        //The minimum height for chapters puts them on 3 on screen at a time
+        disposeChaptersBefore(currentChapter!.index - 4);
       } else {
+        //Chapter is null
         //Main
         setState(() {
           currentChapter = null;
@@ -253,6 +247,26 @@ class _SliverScrollerState extends State<SliverScroller> {
       }
     } else if (chapter?.needsLoad ?? false) {
       chapter?.load();
+    }
+  }
+
+  void disposeChaptersBefore(int disposeBefore) async {
+    bool printedYet = false;
+    for (int n = 0; n < chapters.length; ++n) {
+      int chapterIx = chapters[n].index;
+      if (chapterIx >= disposeBefore) {
+        return;
+      } else {
+        // if (chapters[n].c)
+        //Delete all images and holders
+        if (chapters[n].needsDispose()) {
+          chapters[n].unloadCompletely();
+          if (!printedYet) {
+            dev.log("Disposing $chapterIx-$disposeBefore");
+            printedYet = true;
+          }
+        }
+      }
     }
   }
 
@@ -382,7 +396,7 @@ class _SliverScrollerState extends State<SliverScroller> {
 
         //TODO: Future loader for part
         part: part,
-        showFAB: currentChapter == null,
+        showFAB: false,
         child: ChapterHeadingData(
             key: const Key("headingData"),
             onChapterBecomesMain: chapterPositionSet,

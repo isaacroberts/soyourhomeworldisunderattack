@@ -20,7 +20,7 @@ class ChapterHeadingSubtitle extends StatelessWidget
 
     Chapter? chapter = provider.chapter;
     late Widget scrollRow;
-    if (chapter?.data?.hasAnyChips ?? false) {
+    if (chapter?.extra?.hasAnyChips ?? false) {
       scrollRow = const Align(
           alignment: Alignment.centerLeft,
           child: SingleChildScrollView(
@@ -105,7 +105,7 @@ class _SubtitleRow extends StatelessWidget {
       return nullChapterRow(context);
       //These futures are causing every chapter to load at once
       return futuresRow(context, chapter);
-    } else if (chapter.data!.hasAnyChips) {
+    } else if (chapter.extra!.hasAnyChips) {
       return completedRow(context, chapter);
     } else {
       return const SizedBox.shrink();
@@ -165,6 +165,7 @@ class _SubtitleRow extends StatelessWidget {
 
   Widget completedRow(BuildContext context, Chapter chapter) {
     ///No waiting on futures
+    ChapterExtra extra = chapter.extra!;
     return Row(
       key: const Key("heading_row"),
       mainAxisSize: MainAxisSize.max,
@@ -174,17 +175,17 @@ class _SubtitleRow extends StatelessWidget {
         // BookmarkButton(key: const Key("bookmark"), chapter: chapter),
         CurrentChip(
             key: const Key("Subtitle"),
-            value: chapter.data!.subtitle,
+            value: extra.subtitle,
             label: 'Subtitle',
             icon: null),
         CurrentChip(
             key: const Key("Where"),
-            value: chapter.data!.where,
+            value: extra.where,
             label: 'Where',
             icon: Icons.public),
         CurrentChip(
             key: const Key("When"),
-            value: chapter.data!.when,
+            value: extra.when,
             label: 'When',
             icon: Icons.access_time),
         // _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),

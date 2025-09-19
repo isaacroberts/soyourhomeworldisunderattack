@@ -4,7 +4,7 @@ import '../../parts/noir_colors.dart';
 import '../../theme/base_text_theme.dart';
 
 const String titleText = "Help! My Homeworld!";
-const String authorText = "a social media site";
+const String authorText = "Stop doom. Start scrolling.";
 
 class TitleTextWide extends StatelessWidget {
   ///

@@ -1,36 +1,103 @@
 ((a,b,c)=>{a[b]=a[b]||{}
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_95",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var A,C,E,F,B={
-b2v(d){return new B.rv(d)},
-un:function un(d,e){this.c=d
+$__dart_deferred_initializers__.current=function(a,b,c,$){var B,D,E,F,A={
+b63(d,e,f){return new A.VO(d,e)},
+bdU(d){var x,w,v,u,t,s,r=B.b([],y.n)
+for(x=d.d,w=y.a,v=null,u=0,t=0;t<x.length;++t)if(x[t].a.f){if(v!=null){s=v.a
+r.push(new A.lx(v,D.b.cA(x,u+1,t),new B.q("Part_"+s.a,w)))}v=x[t]
+u=t}if(v!=null){s=v.a
+r.push(new A.lx(v,D.b.fH(x,u+1),new B.q("Part_"+s.a,w)))}x=y.i
+x=B.a7(new B.aR(r,new A.aKA(),x),x.h("F.E"))
+x.$flags=1
+return x},
+VO:function VO(d,e){this.c=d
 this.a=e},
-rv:function rv(d){this.a=d},
-afE:function afE(){}},D
-A=c[0]
-C=c[2]
-E=c[63]
-F=c[80]
-B=a.updateHolder(c[15],B)
-D=c[92]
-B.un.prototype={
-Ct(){A.qN(new A.md("RpgAwesome."+D.rF[this.c]))},
-B(d){var x=null,w=this.c,v=495>w,u=v?D.rF[w]:"null",t=A.dO(D.JS,-1,1),s=C.Dz.pO(12)
-return A.ck(A.br(x,A.jE(E.wL(A.es(v?F.rE[w]:x,x,x,x,50),x,x,this.gaxb(),x),D.FW,!1,C.x,x,u+" ("+w+")",x,s,x,C.bH),C.l,x,x,new A.bt(x,x,t,x,x,x,C.N),x,x,x,x,C.dG,x,x,x),x,x,x)}}
-B.rv.prototype={
-B(d){return new A.ir("dev_icon",A.aQK(D.a4e,new B.afE(),496),null)}}
-var z=a.updateTypes(["~()","un(F,p)"])
-B.afE.prototype={
-$2(d,e){return new B.un(e,new A.w("iconDisplay"+e,y.a))},
-$S:z+1};(function installTearOffs(){var x=a._instance_0u
-x(B.un.prototype,"gaxb","Ct",0)})();(function inheritance(){var x=a.inheritMany,w=a.inherit
-x(A.Q,[B.un,B.rv])
-w(B.afE,A.k0)})()
-A.bL(b.typeUniverse,JSON.parse('{"un":{"Q":[],"c":[]},"rv":{"Q":[],"c":[]}}'))
-var y={a:A.T("w<l>")};(function constants(){var x=a.makeConstList
-D.FW=new A.bt(C.m,null,null,null,null,null,C.N)
-D.JS=new A.n(0.5333333333333333,0.4,0.4,0.4,C.e)
-D.rF=A.b(x(["acid","acorn","alien_fire","all_for_one","alligator_clip","ammo_bag","anchor","angel_wings","ankh","anvil","apple","aquarius","arcane_mask","archer","archery_target","arena","aries","arrow_cluster","arrow_flights","arson","aura","aware","axe_swing","axe","ball","barbed_arrow","barrier","bat_sword","battered_axe","batteries","battery_0","battery_25","battery_50","battery_75","battery_100","battery_black","battery_negative","battery_positive","battery_white","batwings","beam_wake","bear_trap","beer","beetle","bell","biohazard","bird_claw","bird_mask","blade_bite","blast","blaster","bleeding_eye","bleeding_hearts","bolt_shield","bomb_explosion","bombs","bone_bite","bone_knife","book","boomerang","boot_stomp","bottle_vapors","bottled_bolt","bottom_right","bowie_knife","bowling_pin","brain_freeze","brandy_bottle","bridge","broadhead_arrow","broadsword","broken_bone","broken_bottle","broken_heart","broken_shield","broken_skull","bubbling_potion","bullets","burning_book","burning_embers","burning_eye","burning_meteor","burst_blob","butterfly","campfire","cancel","cancer","candle_fire","candle","cannon_shot","capitol","capricorn","carrot","castle_emblem","castle_flag","cat","chain","cheese","chemical_arrow","chessboard","chicken_leg","circle_of_circles","circular_saw","circular_shield","cloak_and_dagger","clockwork","clover","clovers_card","clovers","cluster_bomb","coffee_mug","cog_wheel","cog","cold_heart","compass","corked_tube","crab_claw","cracked_helm","cracked_shield","croc_sword","crossbow","crossed_axes","crossed_bones","crossed_pistols","crossed_sabres","crossed_swords","crown_of_thorns","crown","crowned_heart","crush","crystal_ball","crystal_cluster","crystal_wand","crystals","cubes","cut_palm","cycle","daggers","daisy","dead_tree","death_skull","decapitation","defibrillate","demolish","dervish_swords","desert_skull","diamond","diamonds_card","diamonds","dice_five","dice_four","dice_one","dice_six","dice_three","dice_two","dinosaur","divert","diving_dagger","double_team","doubled","dragon_breath","dragon_wing","dragon","dragonfly","drill","dripping_blade","dripping_knife","dripping_sword","droplet_splash","droplet","droplets","duel","egg_pod","egg","eggplant","emerald","energise","explosion","explosive_materials","eye_monster","eye_shield","eyeball","fairy_wand","fairy","fall_down","falling","fast_ship","feather_wing","feathered_wing","fedora","fire_bomb","fire_breath","fire_ring","fire_shield","fire_symbol","fire","fireball_sword","fish","fizzing_flask","flame_symbol","flaming_arrow","flaming_claw","flaming_trident","flask","flat_hammer","flower","flowers","fluffy_swirl","focused_lightning","food_chain","footprint","forging","forward","fox","frost_emblem","frostfire","frozen_arrow","gamepad_cross","gavel","gear_hammer","gear_heart","gears","gecko","gem_pendant","gem","gemini","glass_heart","gloop","gold_bar","grappling_hook","grass_patch","grass","grenade","groundbreaker","guarded_tower","guillotine","halberd","hammer_drop","hammer","hand_emblem","hand_saw","hand","harpoon_trident","health_decrease","health_increase","health","heart_bottle","heart_tower","heartburn","hearts_card","hearts","heat_haze","heavy_fall","heavy_shield","helmet","help","hive_emblem","hole_ladder","honeycomb","hood","horn_call","horns","horseshoe","hospital_cross","hot_surface","hourglass","hydra_shot","hydra","ice_cube","implosion","incense","insect_jaws","interdiction","jetpack","jigsaw_piece","kaleidoscope","kettlebell","key_basic","key","kitchen_knives","knife_fork","knife","knight_helmet","kunai","lantern_flame","large_hammer","laser_blast","laser_site","lava","leaf","leo","level_four_advanced","level_four","level_three_advanced","level_three","level_two_advanced","level_two","lever","libra","light_bulb","lighthouse","lightning_bolt","lightning_storm","lightning_sword","lightning_trio","lightning","lion","lit_candelabra","load","locked_fortress","love_howl","maggot","magnet","mass_driver","match","meat_hook","meat","medical_pack","metal_gate","microphone","mine_wagon","mining_diamonds","mirror","monster_skull","montains","moon_sun","mp5","muscle_fat","muscle_up","musket","nails","nodular","noose","nuclear","ocarina","ocean_emblem","octopus","omega","on_target","ophiuchus","overhead","overmind","palm_tree","pawn","pawprint","perspective_dice_five","perspective_dice_four","perspective_dice_one","perspective_dice_random","perspective_dice_six_two","perspective_dice_six","perspective_dice_three","pill","pills","pine_tree","ping_pong","pisces","plain_dagger","player_despair","player_dodge","player_king","player_lift","player_pain","player_pyromaniac","player_shot","player_teleport","player_thunder_struck","player","podium","poison_cloud","potion","pyramids","queen_crown","quill_ink","rabbit","radar_dish","radial_balance","radioactive","raven","reactor","recycle","regeneration","relic_blade","repair","reverse","revolver","rifle","ringing_bell","roast_chicken","robot_arm","round_bottom_flask","round_shield","rss","rune_stone","sagittarius","sapphire","satellite","save","scorpio","scroll_unfurled","scythe","sea_serpent","seagull","shark","sheep","sheriff","shield","ship_emblem","shoe_prints","shot_through_the_heart","shotgun_shell","shovel","shuriken","sickle","sideswipe","site","skull_trophy","skull","slash_ring","small_fire","snail","snake","snorkel","snowflake","soccer_ball","spades_card","spades","spawn_node","spear_head","speech_bubble","speech_bubbles","spider_face","spikeball","spiked_mace","spiked_tentacle","spinning_sword","spiral_shell","splash","spray_can","sprout_emblem","sprout","stopwatch","suckered_tentacle","suits","sun_symbol","sun","sunbeams","super_mushroom","supersonic_arrow","surveillance_camera","syringe","target_arrows","target_laser","targeted","taurus","telescope","tentacle","tesla","thorn_arrow","thorny_vine","three_keys","tic_tac_toe","toast","tombstone","tooth","torch","tower","trail","trefoil_lily","trident","triforce","trophy","turd","two_dragons","two_hearts","uncertainty","underhand","unplugged","vase","venomous_snake","vest","vial","vine_whip","virgo","water_drop","wifi","wireless_signal","wolf_head","wolf_howl","wooden_sign","wrench","wyvern","x_mark","zebra_shield","zigzag_leaf"]),A.T("r<l>"))
-D.a4e=new A.Wi(0,0,null)})()};
+aq3:function aq3(d,e){this.a=d
+this.b=e},
+aKA:function aKA(){},
+lx:function lx(d,e,f){this.c=d
+this.d=e
+this.a=f},
+Ln:function Ln(){this.c=this.a=null},
+aCz:function aCz(){},
+qb:function qb(d,e){this.c=d
+this.a=e},
+MS:function MS(){this.c=this.a=this.d=null},
+aFN:function aFN(d,e){this.a=d
+this.b=e},
+aFM:function aFM(d,e){this.a=d
+this.b=e}},C
+B=c[0]
+D=c[2]
+E=c[69]
+F=c[67]
+A=a.updateHolder(c[37],A)
+C=c[109]
+A.VO.prototype={
+B(d){var x=null
+return B.wM(!1,x,x,x,!0,x,x,x,!0,x,x,D.a_,x,x,new A.aq3(this,d),!1,x,x,x,x,x,x,x,B.ah(this.c.b,x,x,x,x,x,x,x,x),C.Vu,x)}}
+A.lx.prototype={
+Z(){return new A.Ln()}}
+A.Ln.prototype={
+Gj(){var x=0,w=B.K(y.f),v=this,u,t
+var $async$Gj=B.E(function(d,e){if(d===1)return B.H(e,w)
+while(true)switch(x){case 0:u=v.a.c
+t=v.c
+t.toString
+B.AW(u,t)
+return B.I(null,w)}})
+return B.J($async$Gj,w)},
+B(d){var x,w=null,v=this.a,u=B.ah(v.c.a.b,w,w,w,w,w,w,w,w),t=E.rd(C.abq,w,this.ga6t())
+v=v.d
+x=B.a2(v).h("a5<1,qb>")
+v=B.a7(new B.a5(v,new A.aCz(),x),x.h("aB.E"))
+v.$flags=1
+return F.aRi(v,w,w,w,D.iV,w,w,!0,C.aeZ,w,w,w,u,t)}}
+A.qb.prototype={
+Z(){return new A.MS()}}
+A.MS.prototype={
+ak(){var x=this
+x.d=x.a.c.c
+x.aB()
+if(x.d==null)x.a.c.qJ().b5(x.gazu(),y.f)},
+azv(d){this.a3(new A.aFN(this,d))},
+B(d){var x,w,v=this,u=null,t=v.d,s=t==null,r=s?u:t.a,q=s?u:t.b,p=s?u:t.c,o=B.L(d).ok.at
+if(v.d==null)x=B.ah("...",u,u,u,u,u,o,u,u)
+else x=r!=null?B.ah(r,u,u,u,u,u,o,u,u):u
+if(q!=null)w=B.ah(q,u,u,u,u,u,o,u,u)
+else w=p!=null?B.ah(p,u,u,u,u,u,o,u,u):u
+return B.wM(!1,u,u,u,!0,u,u,u,!0,u,C.afn,new B.at(25,u,B.ah(D.h.k(v.a.c.a.a),u,u,u,u,u,u,u,u),u),u,u,new A.aFM(v,d),!1,u,u,u,u,x,u,u,B.ah(v.a.c.a.b,u,u,u,u,u,u,u,u),w,u)}}
+var z=a.updateTypes(["C(lx)","~()","qb(il)","~(qR)"])
+A.aq3.prototype={
+$0(){B.f4(this.b).fa("/scroll/"+this.a.c.a,null)
+return null},
+$S:0}
+A.aKA.prototype={
+$1(d){return!d.c.a.r},
+$S:z+0}
+A.aCz.prototype={
+$1(d){return new A.qb(d,new B.q("chp"+d.a.a,y.a))},
+$S:z+2}
+A.aFN.prototype={
+$0(){this.a.d=this.b},
+$S:0}
+A.aFM.prototype={
+$0(){var x=this.a.a.c
+return B.f4(this.b).fa("/scroll/"+x.a.a,null)},
+$S:0};(function installTearOffs(){var x=a._instance_0u,w=a._instance_1u
+x(A.Ln.prototype,"ga6t","Gj",1)
+w(A.MS.prototype,"gazu","azv",3)})();(function inheritance(){var x=a.inherit,w=a.inheritMany
+x(A.VO,B.S)
+w(B.dB,[A.aq3,A.aFN,A.aFM])
+w(B.cY,[A.aKA,A.aCz])
+w(B.P,[A.lx,A.qb])
+w(B.R,[A.Ln,A.MS])})()
+B.bE(b.typeUniverse,JSON.parse('{"lx":{"P":[],"c":[]},"qb":{"P":[],"c":[]},"VO":{"S":[],"c":[]},"Ln":{"R":["lx"]},"MS":{"R":["qb"]}}'))
+var y={n:B.G("t<lx>"),a:B.G("q<m>"),i:B.G("aR<lx>"),f:B.G("~")};(function constants(){C.Nm=new B.f(57584,"MaterialIcons",null,!1)
+C.Vu=new B.dw(C.Nm,25,null,null,null,null)
+C.abq=new B.dz("Read",null,null,null,null,null,null,null,null,null)
+C.aeZ=new B.q("partExpansionTile",y.a)
+C.afn=new B.q("subChapterTile",y.a)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_95",e:"endPart",h:b})})($__dart_deferred_initializers__,"S0qnfWABst9opbGQOYfygnGRP28=");
+a.eventLog.push({p:"main.dart.js_95",e:"endPart",h:b})})($__dart_deferred_initializers__,"KRZJouyUp3K1S0eUvHMk18YWc7c=");

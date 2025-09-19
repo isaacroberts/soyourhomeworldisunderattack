@@ -102,14 +102,13 @@ class _ChapterSliverState extends State<ChapterSliver> {
       //AppBar
       const SliverHeader(key: Key("Header")),
       //Body
-      ChapterClampingSliver(
-          key: const Key("ClampingSliver"),
-          sliver: SliverReaderWidth(key: const Key("width"), sliver: sliver)),
+      SliverReaderWidth(key: const Key("width"), sliver: sliver),
       //SocialMediaFooter
       const ChapterSocialFooter(
         key: Key('SocialFooter'),
       )
     ]);
+    sliver = ChapterClampingSliver(key: const Key("Clamp"), sliver: sliver);
     if (chapter != null) {
       final Part partData = getPartData(chapter!.info.partId);
 

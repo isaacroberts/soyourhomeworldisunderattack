@@ -1,14 +1,7 @@
-import 'dart:async';
-import 'dart:developer' as dev;
-
-import 'package:async/async.dart';
-import 'package:soyourhomeworld/backend/error_handler.dart';
-
-import 'chapter.dart';
-import 'chapter_data.dart';
-import 'chapter_info.dart';
+/*
 
 class ChapterLoadQueue {
+  //TODO: Delete this file
   static ChapterLoadQueue? _instance;
 
   static ChapterLoadQueue get instance {
@@ -32,7 +25,7 @@ class ChapterLoadQueue {
   final List<_QueueWrap> _requestedLoads = [];
   _QueueWrap? _currentlyLoading;
 
-  CancelableOperation<ChapterAndStream> requestLoad(Chapter chapter) {
+  CancelableOperation<ChapterData> requestLoad(Chapter chapter) {
     int ixMatch = _requestedLoads.indexWhere((q) => q.matches(chapter));
 
     if (ixMatch == -1) {
@@ -46,7 +39,7 @@ class ChapterLoadQueue {
     }
   }
 
-  CancelableOperation<ChapterAndStream> requestUrgentLoad(Chapter chapter) {
+  CancelableOperation<ChapterData> requestUrgentLoad(Chapter chapter) {
     int ixMatch = _requestedLoads.indexWhere((q) => q.matches(chapter));
 
     if (ixMatch == -1) {
@@ -86,9 +79,9 @@ class ChapterLoadQueue {
     }
   }
 
-  void _loadCompleted(ChapterAndStream s) {
-    dev.log("Queue: Done ${s.$1.varName}");
-    bool matches = s.$1.id == _currentlyLoading?.id;
+  void _loadCompleted(ChapterData s) {
+    dev.log("Queue: Done ${s.varName}");
+    bool matches = s.id == _currentlyLoading?.id;
     if (matches) {
       // _currentlyLoading?.completer.complete(s);
       _currentlyLoading = null;
@@ -109,15 +102,15 @@ class ChapterLoadQueue {
 
 class _QueueWrap {
   final Chapter chapter;
-  final CancelableCompleter<ChapterAndStream> completer;
+  final CancelableCompleter<ChapterData> completer;
 
   _QueueWrap({required this.chapter})
-      : completer = CancelableCompleter<ChapterAndStream>();
+      : completer = CancelableCompleter<ChapterData>();
 
   @override
   int get hashCode => chapter.id;
 
-  CancelableOperation<ChapterAndStream> load() {
+  CancelableOperation<ChapterData> load() {
     completer.complete(chapter.load());
     return completer.operation;
   }
@@ -148,3 +141,4 @@ class _QueueWrap {
     }
   }
 }
+*/

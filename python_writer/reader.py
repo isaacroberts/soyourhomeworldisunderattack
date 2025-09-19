@@ -245,6 +245,7 @@ def get_misc_element(state, c):
         return TextSpan(font, spc, align)
     # Line break
     elif c.name=='line-break':
+        # TODO: This may be not working perfectly 
         if state.is_first_such_span:
             # Add fixed NewLine
             print(f'>\t\t\tNL(starting line break)')

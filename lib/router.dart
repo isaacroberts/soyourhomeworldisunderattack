@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soyourhomeworld/backend/start_chapter.dart';
 //Deferred Loads
 import 'package:soyourhomeworld/dev_page.dart' deferred as dev_page_lib;
 import 'package:soyourhomeworld/frontend/elements/special_widgets/greenland_game.dart'
@@ -19,14 +20,14 @@ import 'backend/error_handler.dart';
 // import 'frontend/pages/games/valinor_website/valinor_website.dart'
 //     deferred as valinor_lib;
 import 'frontend/pages/email_review.dart' deferred as comment_lib;
-import 'frontend/pages/index.dart' deferred as index_lib;
+import 'frontend/pages/index/index.dart' deferred as index_lib;
 import 'frontend/pages/server_error_page.dart' deferred as error_page_lib;
 import 'frontend/pages/title/title.dart' deferred as title_lib;
 import 'frontend/scrollers/scroller_door.dart';
 
 // const String devMain = '/dev_page/';
 //noir
-const String devMain = '/scroll/4';
+const String devMain = '/scroll/2';
 //greenland
 // const String devMain = '/scroll/34';
 //noir image
@@ -89,9 +90,11 @@ List<GoRoute> routes() {
           try {
             String? chapterName = state.pathParameters['term'];
 
-            return NamedChapterScrollerDoor(
+            return ScrollDoor(
               key: const Key("NamedScrollDoor!"),
-              chapterName: chapterName,
+              startChapter: chapterName != null
+                  ? SearchedStartChapter(chapterName)
+                  : const NoStartChapter(),
             );
           } catch (exception) {
             dev.log("Exception!");
@@ -127,7 +130,7 @@ List<GoRoute> routes() {
         builder: (context, state) => DeferredPage(
             key: const Key("DeferredIndex"),
             loader: () => index_lib.loadLibrary(),
-            builder: (context) => index_lib.SearchIndexPage(
+            builder: (context) => index_lib.IndexPage(
                 key: const Key("SearchIndexPage"), searchTerm: null))),
 
     GoRoute(
@@ -159,9 +162,10 @@ Widget scrollDoorBuilder(BuildContext context, GoRouterState state) {
 
     int? number = int.tryParse(numStr);
     dev.log('Go parsed $number');
-    return ScrollDoor.nullSafe(
+    return ScrollDoor(
       key: const Key("ScrollDoor!"),
-      startChapter: number,
+      startChapter:
+          number != null ? IntStartChapter(number) : const NoStartChapter(),
     );
   } catch (exception) {
     dev.log("Exception!");

@@ -72,7 +72,6 @@ class LiveFont {
     }
   }
 
-//TODO: Move parser to separate file from Wousi (which is needed for all text display)
   BufferPtr parseFont(BufferPtr ptr) {
     // dev.log('Font = ${ptr.start} ${ptr.getChar()}');
     if (ptr.getChar() == ';') {

@@ -4,9 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../frontend/components/deferrals/error_widget.dart' as defer;
-//TODO:
 import '../frontend/elements/holders/holder_base.dart';
-//3 line
 import '../frontend/elements/widgets/error_base.dart';
 
 class ErrorList {

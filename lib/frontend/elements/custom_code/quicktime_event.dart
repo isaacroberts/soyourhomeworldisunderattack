@@ -87,7 +87,7 @@ class _QuicktimeEventWidgetState extends State<QuicktimeEventWidget> {
       style: bodyFont.copyWith(
           fontSize: 36,
           fontWeight: FontWeight.w800,
-          color: part?.canvasColor ?? Colors.black),
+          color: part?.pageColor ?? Colors.black),
     ));
   }
 

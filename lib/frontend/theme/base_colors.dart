@@ -74,7 +74,7 @@ class Tertiary extends GrandSwatch {
 }
 
 //Ring of Power  color
-const Color planColor = Color(0xffec9466);
+const Color planColor = Color(0xfff09412);
 
 // //Change these to PeterThiel
 // const errorColor = Color(0xff7b6bff);

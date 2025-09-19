@@ -201,7 +201,7 @@ def save_spans(spans, filename):
                 span.font = span.font.tag
 
     with open(f'temp/'+filename, 'w') as f:
-        str1 = jsonpickle.encode(spans)
+        str1 = jsonpickle.encode(spans, indent=1)
         f.write(str1)
 
 

@@ -5,7 +5,7 @@ id,family,file,count
 0,Palatino,palatinolinotype_roman.ttf,87
 9,Ani,Ani.ttf,2
 4,Aierbazzi,aierbazzi.ttf,1
-42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,28
+42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,25
 264,Vampire Wars,Vampire Wars.otf,6
 38,Dhurjati,dhurjati.ttf,5
 20,Brains Courage Demo,Brains Courage Demo.otf,2
@@ -53,6 +53,7 @@ id,family,file,count
 201,Raleway Thin,Raleway-VariableFont_wght.ttf,1
 67,IBM Plex Sans ExtraLight,IBMPlexSans-Medium.ttf,1
 67,IBM Plex Sans ExtraLight,IBMPlexSans-Bold.ttf,1
+15,Azeret Mono,AzeretMono-Italic-VariableFont_wght.ttf,1
 48,FreeSerif,FreeSerif.ttf,1
 197,Purisa,Purisa.ttf,1
 271,Yellowtail,Yellowtail-Regular.ttf,2

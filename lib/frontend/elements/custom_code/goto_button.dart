@@ -65,11 +65,11 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   }
 
   void updateDestination() async {
-    Chapter? destination = getDestination();
+    Chapter? destination = await getDestination();
     if (destination != null) {
-      if (destination.data != null) {
-        where = destination.data?.where;
-        when = destination.data?.when;
+      if (destination.extra != null) {
+        where = destination.where;
+        when = destination.when;
       } else {
         destination.loadNotifier.addListener(chapterLoaded);
       }
@@ -77,23 +77,19 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   }
 
   void chapterLoaded() {
-    where = destination?.data?.where;
-    when = destination?.data?.when;
+    where = destination?.where;
+    when = destination?.when;
     if (mounted) {
       setState(() {});
     }
   }
 
-  Chapter? getDestination() {
+  Future<Chapter?> getDestination() async {
     if (link == null) {
       return null;
     }
     Book book = Book.of(context);
-    int? ix = book.findChapterBySearchTerm(link!);
-    if (ix != null) {
-      return book.chapters[ix];
-    }
-    return null;
+    return book.findChapterBySearchTerm(link!);
   }
 
   String? get link => widget.holder.link;

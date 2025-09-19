@@ -1,18 +1,12 @@
 import 'dart:async';
-import 'dart:developer' as dev;
 import 'dart:typed_data';
 
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-//TODO: Move that function, so we can defer this load
-//It's just the bookmark searching function, which could
-//go in its own static class
-import 'package:soyourhomeworld/backend/case_insensitive_equality.dart';
 import 'package:soyourhomeworld/backend/part_id.dart';
 import 'package:soyourhomeworld/backend/server.dart';
 
-import '../frontend/elements/holders/holder_base.dart';
 //Deferred loads
+import '../frontend/image/image_constants.dart';
 import '../frontend/parts/part.dart';
 import 'binary_utils/buffer_ptr.dart' deferred as buffer_lib;
 import 'chapter_data.dart';
@@ -20,15 +14,18 @@ import 'chapter_info.dart';
 import 'chapter_parser.dart' deferred as parser_lib;
 import 'error_handler.dart';
 
-typedef ChapterAndStream = (ChapterData, Stream<Holder>);
-
 class Chapter {
   /// This one stores the chapter, as a cache.
   /// ChapterInfo is more transient, and can be moved around
+  ///
+
   final ChapterInfo info;
+
+  ByteBuffer? binary;
+  ChapterExtra? extra;
+
   ChapterData? data;
-  Stream<Holder>? stream;
-  Future<ChapterAndStream>? startedStream;
+  Future<ChapterData>? startedStream;
   late final GlobalKey globalKey;
 
   ChapterLoadNotifier loadNotifier = ChapterLoadNotifier();
@@ -72,198 +69,195 @@ class Chapter {
 
   static const String bookId = 'SoYourHomeworld';
 
-  Future<ChapterAndStream> load() {
+  Future<ChapterData?> load() {
     return getOrLoadChapter();
-  }
-
-  CancelableOperation<ChapterAndStream> loadCancellable() {
-    return CancelableOperation.fromFuture(getOrLoadChapter());
   }
 
   bool get needsLoad => data == null && !loading;
   bool get loading => startedStream != null || _loading;
-  //TODO: Don't show loader once stream is running
-  bool get showLoader => (data == null); // || (startedStream != null);
+  bool get showLoader => (data == null || (startedStream != null));
   bool _loading = false;
+  bool _shouldCancelLoad = false;
 
-  Future<ChapterAndStream> getOrLoadChapter() async {
+  Future<ChapterData?> getOrLoadChapter() async {
     if (startedStream != null) {
-      return startedStream!;
+      if (_shouldCancelLoad) {
+        return null;
+      } else {
+        return startedStream;
+      }
     } else if (data == null) {
       //If loading already marked
       if (_loading) {
-        //Wait for other stream to be ready
-        await Future.delayed(const Duration(seconds: 1));
-        //startedStream object should be ready
-        if (startedStream != null) {
-          return startedStream!;
+        //If thread  cancelled
+
+        if (_shouldCancelLoad) {
+          return null;
         }
-        //If not check, if chapter has already finished
-        else if (this.data != null) {
-          if (stream != null) {
-            return (this.data!, stream!);
-          } else {
-            //Frankly, if stream object is null, we should wait another few seconds
-            await Future.delayed(const Duration(milliseconds: 10));
-            //Try again
-            if (stream != null) {
-              return (this.data!, stream!);
-            }
-          }
-        } else {
-          //Otherwise, continue loading, which will re-load the chapter object
-          ErrorList.logWarning('Reloading chapter $varName');
-        }
+        //Continue loading, which will re-load the chapter object
+        ErrorList.logWarning('Reloading chapter $varName');
+      } else {
+        _shouldCancelLoad = false;
       }
 
       _loading = true;
       String path = 'book_binary/${info.filename}';
       // dev.log("(ChapterHolder) Load: $path");
-      ByteBuffer buffer = await getFileFromServer(path);
-      ByteData data = buffer.asByteData();
+      binary ??= await getFileFromServer(path);
+      //Check thread wasn't cancelled
+      if (_shouldCancelLoad) {
+        return null;
+      }
+      ByteData data = binary!.asByteData();
+
+      //TODO: Move to defer wrapper
       await buffer_lib.loadLibrary();
-      var ptr = buffer_lib.BufferPtr(data.buffer);
+      //Check thread wasn't cancelled
+      if (_shouldCancelLoad) {
+        return null;
+      }
       await parser_lib.loadLibrary();
+      //Check thread wasn't cancelled
+      if (_shouldCancelLoad) {
+        return null;
+      }
+      //Create objects
+      var ptr = buffer_lib.BufferPtr(data.buffer);
       var parser = parser_lib.ChapterParser(debugId: info.varName, ptr: ptr);
+//Save future
 
-      startedStream = parser.getChapterAndStream(info, handleErrors: true);
-      _loading = false;
+      //Check thread wasn't cancelled
+      if (_shouldCancelLoad) {
+        return null;
+      }
 
-      startedStream?.then((ChapterAndStream c) {
-        this.data = c.$1;
-        stream = c.$2;
+      //TODO: This could crash since the header could get loaded twice
+      extra ??= await parser.parseHeader();
+      parser.skipToHeaderSeparator();
+
+      //Check thread wasn't cancelled
+      if (_shouldCancelLoad) {
+        return null;
+      }
+      startedStream =
+          parser.parseWithExistingChapterInfo(info, handleErrors: true);
+//Set callback
+      startedStream?.then((ChapterData c) {
         startedStream = null;
-        loadNotifier.notify();
+        binary = null;
+        _loading = false;
+        //Check thread wasn't cancelled
+        if (!_shouldCancelLoad) {
+          this.data = c;
+          loadNotifier.notify();
+        }
       });
-      loadNotifier.notify();
-      return startedStream!;
+
+      //Check thread wasn't cancelled
+      if (!_shouldCancelLoad) {
+        //Ring bell
+        loadNotifier.notify();
+        //Return stream
+        return startedStream!;
+      } else {
+        return null;
+      }
     } else {
-      return (data!, stream!);
+      //Return already-created data
+      return data!;
     }
-    // return chapter!;
+  }
+
+  Future<ChapterExtra> peekExtra() async {
+    //Check thread wasn't cancelled
+    if (extra != null) {
+      return extra!;
+    }
+    String path = 'book_binary/${info.filename}';
+    // dev.log("(ChapterHolder) Load: $path");
+    binary ??= await getFileFromServer(path);
+    ByteData data = binary!.asByteData();
+    //TODO: Move to defer wrapper
+    await buffer_lib.loadLibrary();
+    await parser_lib.loadLibrary();
+    //Create objects
+    var ptr = buffer_lib.BufferPtr(data.buffer);
+    var parser = parser_lib.ChapterParser(debugId: info.varName, ptr: ptr);
+    extra = await parser.parseHeader();
+    return extra!;
+  }
+
+  void cancelLoad() {
+    _shouldCancelLoad = true;
+  }
+
+  bool needsDispose() {
+    return data != null || _loading;
+  }
+
+  ///Experimental
+  void unloadCompletely() async {
+    //Cancel load thread
+    _shouldCancelLoad = true;
+    //Images won't unload until this is finished
+    await startedStream;
+    data?.disposeImages();
+    data = null;
+    //Cancel running stream for the worst case
+    _loading = false;
+    startedStream = null;
   }
 
   bool loaded() {
     return data != null;
   }
 
-  bool matchesSearchTerm(String searchTerm,
-      {bool permissive = true, bool desperate = false}) {
-    if (matchesSearchTermDirect(searchTerm)) {
-      return true;
-    }
-    assert(!desperate || permissive, "Desperation implies permissivity");
-    if (permissive) {
-      if (matchesSearchTermPermissive(searchTerm)) {
-        return true;
-      }
-    }
-    if (desperate) {
-      if (matchesSearchTermDesperate(searchTerm)) {
-        return true;
-      }
-    }
-    return false;
+  String? get subtitle => extra?.subtitle;
+  String? get where => extra?.where;
+  String? get when => extra?.when;
+
+  Color? getUniqueColor() {
+    return data?.getFirstImage()?.colorHint?.foreColor;
   }
 
-  bool matchesSearchTermDirect(String searchTerm) {
-    if (equalsIgnoreAsciiCase(varName, searchTerm)) {
-      //return 100%
-      return true;
-    }
-    return false;
-  }
-
-  bool matchesSearchTermPermissive(String searchTerm) {
-    ///Assume matchesSearchTermDirect was already called
-    //TODO: A ranking might be smarter
-
-    if (equalsIgnoreAsciiCase(displayName, searchTerm)) {
-      //return 90%
-      return true;
-    }
-    String? headerText = data?.header?.text;
-    if (headerText != null && headerText.isNotEmpty) {
-      if (equalsIgnoreAsciiCase(headerText, searchTerm)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  bool matchesSearchTermDesperate(String searchTerm) {
-    String displayName = this.displayName.toLowerCase();
-    String varName = this.varName.toLowerCase();
-
-    if (displayName.contains(searchTerm)) {
-      //Return match %
-      return true;
-    }
-    if (searchTerm.contains(displayName)) {
-      return true;
-    }
-    if (varName.contains(searchTerm)) {
-      return true;
-    }
-    if (searchTerm.contains(varName)) {
-      return true;
-    }
-    String? headerText = data?.header?.text;
-    headerText = headerText?.toLowerCase();
-    if (headerText != null && headerText.isNotEmpty) {
-      if (headerText.contains(searchTerm)) {
-        return true;
-      }
-      if (searchTerm.contains(headerText)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  void printSearchTerms(String missedTerm) {
-    dev.log('=/= "$missedTerm"');
-    dev.log('"$varName"');
-    dev.log('"$displayName"');
-    String? headerText = data?.header?.text;
-    dev.log(headerText ?? 'null');
+  ColorHint? getFirstColorHint() {
+    return data?.getFirstImage()?.colorHint;
   }
 
   Future<String?> awaitSubtitle() async {
     ///Future for Subtitle. Technically might not return
     if (needsLoad) {
       await load();
-      return data?.subtitle;
-    } else if (data != null) {
-      return data!.subtitle;
+      return extra?.subtitle;
+    } else if (extra != null) {
+      return extra!.subtitle;
     } else {
       await startedStream;
-      return data?.subtitle;
+      return extra?.subtitle;
     }
   }
 
   Future<String?> awaitWhere() async {
     if (needsLoad) {
       await load();
-      return data?.where;
-    } else if (data != null) {
-      return data!.where;
+      return extra?.where;
+    } else if (extra != null) {
+      return extra!.where;
     } else {
       await startedStream;
-      return data?.where;
+      return extra?.where;
     }
   }
 
   Future<String?> awaitWhen() async {
     if (needsLoad) {
       await load();
-      return data?.when;
-    } else if (data != null) {
-      return data!.when;
+      return extra?.when;
+    } else if (extra != null) {
+      return extra!.when;
     } else {
       await startedStream;
-      return data?.when;
+      return extra?.when;
     }
   }
 }
@@ -279,7 +273,6 @@ class ChapterProvider extends InheritedWidget {
       required super.child});
 
   @override
-  // TODO: implement child
   Widget get child => Theme(data: part.theme, child: super.child);
 
   static ChapterProvider of(BuildContext context) {

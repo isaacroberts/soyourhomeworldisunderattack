@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/pages/title/splash_bg.dart';
+import 'package:soyourhomeworld/frontend/pages/title/land_painter.dart';
 
 class SplashBgWidget extends StatefulWidget {
   final double width;
@@ -62,8 +62,64 @@ class _SplashBgWidgetState extends State<SplashBgWidget>
         isComplex: false,
         size: Size(widget.width, widget.height),
         willChange: animationController.isAnimating,
-        painter: SplashPainter(
+        painter: LandPainter(
           anim: animationController.value * 2,
         ));
+  }
+}
+
+class PainterWrapper extends StatelessWidget {
+  final double animStart;
+  final double animationLength;
+  final CustomPainter Function(double) painter;
+  final Size size;
+  final AnimationController animation;
+  final bool isComplex;
+  final bool needsClip;
+  const PainterWrapper(
+      {super.key,
+      required this.animStart,
+      required this.animationLength,
+      required this.painter,
+      required this.size,
+      required this.animation,
+      required this.isComplex,
+      required this.needsClip});
+
+  @override
+  Widget build(BuildContext context) {
+    TweenSequence<double> tweenSequence = TweenSequence<double>([
+      if (animStart > 0)
+        TweenSequenceItem(
+            tween: Tween<double>(begin: 0.0, end: 0.0), weight: (animStart)),
+      if (animationLength > 0)
+        TweenSequenceItem(
+            tween: Tween(begin: 0.0, end: 1), weight: (animationLength)),
+      if (animationLength + animStart < 1)
+        TweenSequenceItem(
+            tween: Tween(begin: 1.0, end: 1.0),
+            weight: (1 - animationLength - animStart)),
+    ]);
+
+    return SizedBox(
+        key: const Key('size'),
+        width: size.width,
+        height: size.height,
+        child: ClipRect(
+            key: const Key('clip'),
+            clipBehavior: needsClip ? Clip.hardEdge : Clip.none,
+            child: AnimatedBuilder(
+                key: const Key("TitleAnimBuilder"),
+                animation: tweenSequence.animate(animation),
+                builder: builder)));
+  }
+
+  Widget builder(BuildContext builder, Widget? previous) {
+    return CustomPaint(
+        key: const Key("TitlePainter"),
+        isComplex: isComplex,
+        size: Size(size.width, size.height),
+        willChange: animation.isAnimating,
+        painter: painter(animation.value));
   }
 }

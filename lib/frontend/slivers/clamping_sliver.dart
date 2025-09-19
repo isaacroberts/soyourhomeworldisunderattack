@@ -34,7 +34,7 @@ class ChapterClampingSliver extends SingleChildRenderObjectWidget {
     if (renderObject.chapter != provider.chapter) {
       renderObject.chapter = provider.chapter!;
       renderObject.markNeedsLayout();
-      renderObject.markNeedsPaint();
+      // renderObject.markNeedsPaint();
     }
     if (renderObject.part != provider.part) {
       renderObject.part = provider.part;

@@ -27,6 +27,13 @@ abstract class Holder {
     }
   }
 
+  //Must override
+  @override
+  toString() {
+    //Only show some characters because this is for debugging
+    return '$runtimeType: {${toText().substring(0, 50)}}';
+  }
+
   //Must be unique
   String get key => hashCode.toString();
   String toText();

@@ -5,11 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/font_cache.dart';
 
-import '_json_book_libs.dart' as book_lib;
-// import '_binary_book_libs.dart' as book_lib;
+import '_json_book_libs.dart' deferred as loader_lib;
 import 'chapter.dart';
 import 'chapter_data.dart';
 import 'chapter_info.dart';
+// import '_binary_book_libs.dart' deferred as book_lib;
+
+import 'chapter_search.dart' deferred as search_lib;
 import 'error_handler.dart';
 
 const String defaultBook = 'SoYourHomeworld';
@@ -113,22 +115,23 @@ class Book {
 
   static bool hasEverPrintedAllBefore = false;
 
-  int? findChapterBySearchTerm(String name) {
+  Future<Chapter?> findChapterBySearchTerm(String name) async {
+    await search_lib.loadLibrary();
     name = name.toLowerCase();
     assert(name != 'null');
     for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].matchesSearchTermDirect(name)) {
-        return ix;
+      if (search_lib.chapterMatchesSearchTermDirect(chapters[ix], name)) {
+        return chapters[ix];
       }
     }
     for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].matchesSearchTermPermissive(name)) {
-        return ix;
+      if (search_lib.chapterMatchesSearchTermPermissive(chapters[ix], name)) {
+        return chapters[ix];
       }
     }
     for (int ix = 0; ix < chapters.length; ++ix) {
-      if (chapters[ix].matchesSearchTermDesperate(name)) {
-        return ix;
+      if (search_lib.chapterMatchesSearchTermDesperate(chapters[ix], name)) {
+        return chapters[ix];
       }
     }
     //It's actually really helpful to see that my links aren't working
@@ -139,7 +142,7 @@ class Book {
         //Look for where link should have been.
         //This is helpful because the author can navigate the chapter order
         for (int ix = 0; ix < chapters.length; ++ix) {
-          chapters[ix].printSearchTerms(name);
+          search_lib.printChapterSearchTerms(chapters[ix], name);
         }
       }
     }
@@ -147,13 +150,32 @@ class Book {
     return null;
   }
 
+  Stream<Chapter> streamChapterBySearchTerm(String name) async* {
+    name = name.toLowerCase();
+    assert(name != 'null');
+    for (int ix = 0; ix < chapters.length; ++ix) {
+      if (search_lib.chapterMatchesSearchTermDirect(chapters[ix], name)) {
+        yield chapters[ix];
+      }
+    }
+    for (int ix = 0; ix < chapters.length; ++ix) {
+      if (search_lib.chapterMatchesSearchTermPermissive(chapters[ix], name)) {
+        yield chapters[ix];
+      }
+    }
+    for (int ix = 0; ix < chapters.length; ++ix) {
+      if (search_lib.chapterMatchesSearchTermDesperate(chapters[ix], name)) {
+        yield chapters[ix];
+      }
+    }
+  }
+
   bool hasKey(ChapterKey key) {
     return (key >= 0 && key < chapters.length);
   }
 
-  Future<ChapterData> getAndLoadChapter(ChapterKey key) async {
-    var tup = await chapters[key].getOrLoadChapter();
-    return tup.$1;
+  Future<ChapterData?> getAndLoadChapter(ChapterKey key) async {
+    return chapters[key].getOrLoadChapter();
   }
 
   ChapterData? getChapterIfLoaded(ChapterKey key) {
@@ -279,8 +301,8 @@ class BookLoader {
     if (book != null) {
       return book;
     }
-    // await book_lib.loadLibrary();
-    book = await book_lib.loadBookLoader(this);
+    await loader_lib.loadLibrary();
+    book = await loader_lib.loadBookLoader(this);
     return book;
   }
 }

@@ -9,9 +9,9 @@ class LandscapeSliver extends StatelessWidget {
   /// [===========================================]
   /// [                                           ]
   /// [                                           ]
+  /// [                                           ]
   /// [              Wide!                        ]
   /// [              Landscape!                   ]
-  /// [                                           ]
   /// [                                           ]
   /// [                                           ]
   /// [                                           ]
@@ -25,11 +25,17 @@ class LandscapeSliver extends StatelessWidget {
 
   Image buildImage(BuildContext context) {
     ///Image!
+    double width = MediaQuery.sizeOf(context).width;
+    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return Image(
+      image: holder.getImageProvider(),
       key: const Key('Image!'),
-      image: NetworkImage(
-        holder.url,
-      ),
+      // image: NetworkImage(
+      //   holder.url,
+      // ),
+      width: width,
+      // cacheWidth: (width / 1 * devicePixelRatio).round(),
       loadingBuilder: holder.loadingBuilder,
       errorBuilder: holder.errorBuilder,
     );

@@ -217,7 +217,7 @@ class MainUsernameRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? when = Chapter.maybeOf(context)?.data?.when;
+    String? when = Chapter.maybeOf(context)?.when;
     when ??= DateTime.now().toString();
     TextStyle bodyFont = ChapterProvider.partOf(context).bodyFont;
 

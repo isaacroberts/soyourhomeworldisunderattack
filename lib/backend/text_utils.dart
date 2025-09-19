@@ -1,4 +1,3 @@
-import 'dart:developer' as dev;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -12,50 +11,6 @@ enum SubSuper {
 
   bool get isNormal => this == normal;
   bool get special => this != normal;
-}
-
-class Wousi {
-  late final int weight;
-  late final bool italic;
-  late final bool underline;
-  late final bool overline;
-  //TODO: Needs sub/superscript
-  late final bool strikethrough;
-
-  Wousi.basic()
-      : weight = 500,
-        italic = false,
-        underline = false,
-        overline = false,
-        strikethrough = false;
-
-  bool isBasic() {
-    return weight == 500 &&
-        !italic &&
-        !underline &&
-        !overline &&
-        !strikethrough;
-  }
-
-  Wousi.fromByte(int byte) {
-    if (byte < 15) {
-      // throw FontException("Invalid Wousi byte: Weight=0. (byte=$byte)",
-      //     family: '?');
-      dev.log("Invalid Wousi byte: Weight=0. (byte=$byte)");
-      //Invalid Weight
-      weight = 500;
-      italic = false;
-      overline = false;
-      underline = false;
-      strikethrough = false;
-    } else {
-      italic = (byte & 0x1) > 0;
-      strikethrough = (byte & 0x2) > 0;
-      underline = (byte & 0x4) > 0;
-      overline = (byte & 0x8) > 0;
-      weight = math.max(math.min(byte ~/ 16, 9), 1) * 100;
-    }
-  }
 }
 
 class WousiByte {

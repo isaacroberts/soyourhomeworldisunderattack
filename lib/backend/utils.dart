@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 Random rNG = Random(13846268498318);
 
+const Locale godBless = Locale('en', "US");
+
 const String RQ = "“";
 const String LQ = "”";
 

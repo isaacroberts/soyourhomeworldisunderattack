@@ -1,19 +1,27 @@
+import 'dart:developer' as dev;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/heading_data.dart';
 
 import '../../../../backend/chapter.dart';
 import '../parts/part.dart';
+import '../theme/base_colors.dart';
 
-const bool squashForever = true;
+const bool squashForever = false;
+
+///This can be used for debugging, to show the next chapter & when it loads
+const bool showNext = false;
 
 // const double maxGrowPerUpdate = 0;
 // const double maxShrinkPerUpdate = 0;
 
 const double maxGrowPerUpdate = 3;
 const double maxShrinkPerUpdate = 2;
+
+const double minimumSquashSize = 360;
 
 class RenderChapterSliver extends RenderProxySliver {
   /// The idea is that this sliver is moved through the tree
@@ -23,6 +31,7 @@ class RenderChapterSliver extends RenderProxySliver {
   Chapter chapter;
   ChapterMainCallback? onBecomesMain;
   Part part;
+  Color? debugColor;
 
   ///Used to check whether it's moving so fast that we should skip loading
   // ScrollPosition position;
@@ -31,7 +40,9 @@ class RenderChapterSliver extends RenderProxySliver {
       {required this.chapter,
       required this.part,
       required this.onBecomesMain,
-      this.height = 0});
+      this.height = 0})
+      : debugColor = chapter.getUniqueColor();
+
   double scrollExtent = 0;
 
   double height = 0;
@@ -61,17 +72,27 @@ class RenderChapterSliver extends RenderProxySliver {
 
   bool get wantsDifferentHeight => (desiredHeight - height).abs() > 1;
 
+  //Adds an epsilon for floatingPoint
+  bool get wantsGrow => (desiredHeight > height + 1);
+
+  //Adds an epsilon for floatingPoint
+  bool get wantsShrink => (desiredHeight < height - 1);
+
   @override
   void performLayout() {
     // if (belowScreen()) {
     if (height == 0) {
-      height = viewportMainAxisExtent;
+      height = minimumSquashSize;
     }
     //   // dev.log("Below ${chapter.id}");
     //   offscreenLayout();
     // } else {
     performReaderLayout();
     // }
+  }
+
+  void _onBecomesMainCallback(d) {
+    onBecomesMain!(chapter);
   }
 
   void performReaderLayout() {
@@ -84,10 +105,10 @@ class RenderChapterSliver extends RenderProxySliver {
         scrollOffset: constraints.scrollOffset,
         precedingScrollExtent: constraints.precedingScrollExtent,
         overlap: constraints.overlap,
-        remainingPaintExtent: height,
+        remainingPaintExtent: math.min(viewportMainAxisExtent, height),
         crossAxisExtent: constraints.crossAxisExtent,
         crossAxisDirection: constraints.crossAxisDirection,
-        viewportMainAxisExtent: constraints.viewportMainAxisExtent,
+        viewportMainAxisExtent: viewHeight,
         remainingCacheExtent: constraints.remainingCacheExtent,
         cacheOrigin: constraints.cacheOrigin);
 
@@ -97,10 +118,10 @@ class RenderChapterSliver extends RenderProxySliver {
     desiredHeight = child!.geometry!.maxPaintExtent;
 
     //Minimum size
-    desiredHeight = math.max(desiredHeight, 360);
+    desiredHeight = math.max(desiredHeight, minimumSquashSize);
 
     if (!squashForever) {
-      if (desiredHeight > height + 1) {
+      if (wantsGrow) {
         //Grow with more abandon than shrinking
         if (touchingBottom() || belowScreen()) {
           height = desiredHeight;
@@ -108,14 +129,13 @@ class RenderChapterSliver extends RenderProxySliver {
           //This, at the very least, will only expand while scrolling. TODO: Test whether it's wicked fast on profile mode
           height = math.min(desiredHeight, height + maxGrowPerUpdate);
         }
-      } else if (desiredHeight < height - 1) {
+      } else if (wantsShrink) {
         //Only shrink to
         if (belowScreen()) {
           height = desiredHeight;
         } else if (touchingBottom()) {
           // Clip to paintExtent
-          double pixelsBelow =
-              math.max(0, height - scrollOffset - viewportMainAxisExtent);
+          double pixelsBelow = math.max(0, height - scrollOffset - viewHeight);
           //This prevents it from jumping up suddenly
           double maxExtent = height - pixelsBelow;
           height = math.max(maxExtent, desiredHeight);
@@ -128,12 +148,13 @@ class RenderChapterSliver extends RenderProxySliver {
     }
 
     overscroll = math.max(0, desiredHeight - height);
+    //scrollExtent := desiredHeight (with caveats)
     scrollExtent = overscroll + height;
 
     //Overscrolling
-    final double paintedChildSize = calculateOverscrollPaintExtent(
+    double paintedChildSize = calculateOverscrollPaintExtent(
         from: 0, to: height, overscroll: overscroll);
-
+    paintedChildSize = math.min(viewHeight, paintedChildSize);
     //Save for draw layer
     drawnHeight = paintedChildSize;
 
@@ -148,10 +169,11 @@ class RenderChapterSliver extends RenderProxySliver {
         loadIfStillInCacheRange();
       }
     }
-    //Tell scaffold that its on screen
 
     if (onBecomesMain != null && halfOfScreen()) {
-      onBecomesMain!(chapter);
+      //Tell scroller that its on screen
+      WidgetsBinding.instance.addPostFrameCallback(_onBecomesMainCallback,
+          debugLabel: 'chapterBecomesMain');
     }
 
     assert(paintedChildSize.isFinite);
@@ -162,10 +184,10 @@ class RenderChapterSliver extends RenderProxySliver {
     geometry = SliverGeometry(
       scrollExtent: scrollExtent,
       paintExtent: paintedChildSize,
-      // paintOrigin: overlap,
+      paintOrigin: overlap,
       layoutExtent: paintedChildSize,
       cacheExtent: cacheExtent,
-      maxPaintExtent: _maxPaintExtent,
+      maxPaintExtent: viewHeight,
       hitTestExtent: paintedChildSize,
       visible: onScreen(),
       //TODO: !fillingScreen
@@ -177,15 +199,15 @@ class RenderChapterSliver extends RenderProxySliver {
     if (origHeight != height) {
       // dev.log("Chp${chapter.id} ${chapter.varName} $origHeight -> $height");
     }
-
     child!.parentData = SliverPhysicalParentData();
+
     // (child!.parentData as SliverPhysicalParentData).paintOffset =
     //     Offset(0, -y);
   }
 
   void offscreenLayout() {
     geometry = SliverGeometry(
-      scrollExtent: viewportMainAxisExtent,
+      scrollExtent: viewHeight,
       paintExtent: 0,
       layoutExtent: 0,
       cacheExtent: 0,
@@ -198,9 +220,14 @@ class RenderChapterSliver extends RenderProxySliver {
     );
   }
 
+  void printAboveScreen() {
+    dev.log(
+        '${aboveScreen() ? '' : 'Not '}Above screen= $scrollOffset > $height + $overscroll;');
+  }
+
   bool aboveScreen() {
     //Confirmed right
-    return constraints.scrollOffset > height + overscroll;
+    return scrollOffset - overscroll > height;
   }
 
   bool onScreen() {
@@ -210,32 +237,37 @@ class RenderChapterSliver extends RenderProxySliver {
   bool fillingScreen() {
     //TODO: WRONG!
     //When the sliver is above the screen, this will be > viewportExtent
-    return scrollOffset < height &&
-        constraints.remainingPaintExtent >=
-            constraints.viewportMainAxisExtent &&
-        !aboveScreen();
+    return !aboveScreen() &&
+        constraints.remainingPaintExtent >= constraints.viewportMainAxisExtent;
   }
 
   bool belowScreen() {
     //Confirmed right
-    return constraints.scrollOffset == 0 &&
-        constraints.remainingPaintExtent == 0;
+    return scrollOffset == 0 && constraints.remainingPaintExtent == 0;
+  }
+
+  void printTouchingBottom() {
+    dev.log(
+        "${touchingBottom() ? '' : 'Not '}touching bottom $debugId = \n$scrollOffset - $overscroll <= $height - $viewportMainAxisExtent \n&& $remainingPaintExtent > 0}; ");
   }
 
   bool touchingBottom() {
-    //Right
-    return scrollOffset <= height - viewportMainAxisExtent &&
-        remainingPaintExtent > 0 &&
-        !aboveScreen();
+    //Previously, this included !touchingBottom, but the first line is equivalent
+    return scrollOffset - overscroll <= height - viewportMainAxisExtent &&
+        remainingPaintExtent > 0;
   }
 
+  ///Slightly over half to ensure only one triggers
   bool halfOfScreen() {
     return drawnHeight > viewportMainAxisExtent * .66 &&
         drawnHeight > viewportMainAxisExtent - 100;
   }
 
   bool nearBottom(double range) {
-    return scrollOffset <= height - viewportMainAxisExtent + range &&
+    //This function will fail if it's greater
+    assert(range < viewportMainAxisExtent);
+    return scrollOffset - scrollOffset <=
+            height - viewportMainAxisExtent + range &&
         remainingPaintExtent > range &&
         !aboveScreen();
   }
@@ -262,7 +294,7 @@ class RenderChapterSliver extends RenderProxySliver {
     return ui.clampDouble(
       ui.clampDouble(to + overscroll, a, b) - ui.clampDouble(from, a, b),
       0.0,
-      constraints.remainingPaintExtent,
+      to,
     );
   }
 
@@ -296,7 +328,7 @@ class RenderChapterSliver extends RenderProxySliver {
   }
 
   @override
-  void paint(PaintingContext context, Offset imageOffset) {
+  void paint(PaintingContext context, Offset offset) {
     if (child == null) {
       return;
     } else {
@@ -304,17 +336,17 @@ class RenderChapterSliver extends RenderProxySliver {
 
       //Fill BG to remove transparency
       if (onScreen()) {
-        Paint bg = Paint()..color = part.canvasColor;
+        Paint bg = Paint()..color = part.pageColor;
         context.canvas
-            .drawRect(imageOffset & Size(crossAxisExtent, drawnHeight), bg);
+            .drawRect(offset & Size(crossAxisExtent, drawnHeight), bg);
       }
       if (isRepaintBoundary) {
         //This won't clip
-        context.paintChild(child!, imageOffset);
+        context.paintChild(child!, offset);
       } else {
         layer = context.pushClipRect(
           true,
-          imageOffset,
+          offset,
           rect,
           (context, offset) {
             //This allows animations
@@ -335,29 +367,44 @@ class RenderChapterSliver extends RenderProxySliver {
 */
       if (!squashForever) {
         //Halo to show extra content
-        if ((desiredHeight > height)) {
+        if (wantsGrow || true) {
           //White = text clipped
 
           drawHalo(context,
-              offset: imageOffset, start: part.underflowHalo.withAlpha(50));
+              offset: offset, start: part.underflowHalo.withAlpha(50));
         }
 
         //Dark halo to show it wants to shorten
-        if ((desiredHeight < height)) {
-          drawHalo(context, offset: imageOffset, start: part.primary.s1);
+        if (wantsShrink) {
+          drawHalo(context, offset: offset, start: part.primary.s0);
         }
       }
     }
   }
 
+  void drawIndicator(PaintingContext context,
+      {required Offset offset, required Color? start, double? drawLine}) {
+    drawLine ??= offset.dy + drawnHeight;
+    start ??= const Color(0xffff0000);
+    final double haloHeight = math.min(72, (desiredHeight - height).abs());
+
+    Paint grad = Paint()
+      ..color = start
+      ..strokeWidth = 3;
+    context.canvas
+        .drawLine(Offset(0, drawLine), Offset(crossAxisExtent, drawLine), grad);
+  }
+
   void drawHalo(PaintingContext context,
       {required Offset offset, required Color start}) {
-    double drawLine = offset.dy + drawnHeight;
     //Halo shrinks as it gets closer
     final double haloHeight = math.min(72, (desiredHeight - height).abs());
     if (haloHeight <= 0) {
       return;
     }
+    //Where to draw (bottom of screen)
+    double drawLine = offset.dy + drawnHeight;
+
     //Don't draw along bottom
     if (!touchingBottom()) {
       Paint grad = Paint()
@@ -369,8 +416,11 @@ class RenderChapterSliver extends RenderProxySliver {
       context.canvas.drawRect(
           Rect.fromLTRB(0, drawLine - haloHeight, crossAxisExtent, drawLine),
           grad);
+      // printTouchingBottom();
     } else {
+      //If touching bottom
       double offset = height - scrollOffset - viewportMainAxisExtent;
+      // dev.log("Overlap offset: $offset");
       //Draw overlap below screen
       // double offset = -remainingPaintExtent + height;
       //If overlap < 100px
@@ -501,10 +551,15 @@ class RenderChapterSliver extends RenderProxySliver {
 
   @override
   void dropChild(RenderObject child) {
-    desiredHeight = 0;
-    drawnHeight = 0;
+    desiredHeight = minimumSquashSize;
+    drawnHeight = minimumSquashSize;
     super.dropChild(child);
   }
+
+  String get debugId => chapter.varName;
+
+  double get viewHeight =>
+      constraints.viewportMainAxisExtent - (showNext ? appBarSize : 0);
 
   double get scrollOffset => constraints.scrollOffset;
   double get precedingScrollExtent => constraints.precedingScrollExtent;

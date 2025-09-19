@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:soyourhomeworld/backend/start_chapter.dart';
 import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
@@ -66,7 +67,8 @@ class DebugApp extends StatelessWidget {
         home: const McDebugScaffold(
             child: BookWaiter(
           child: SliverScroller(
-            startChapter: 0,
+            key: Key('DebugSliverScroller'),
+            startChapter: IntStartChapter(0),
           ),
         )));
   }

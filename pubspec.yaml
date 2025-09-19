@@ -114,5 +114,7 @@ flutter:
   shaders:
      - shaders/earth_shader.frag
      - shaders/simple.frag
+     - shaders/water_clouds.frag
      - shaders/clouds.frag
      - shaders/continents.frag
+     - shaders/continents_land_only.frag

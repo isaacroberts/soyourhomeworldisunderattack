@@ -30,6 +30,35 @@ class ColorTweenSequence extends Animatable<Color?> {
     }
   }
 
+  ColorTweenSequence.fromColors(List<Color> colors, {List<double>? weights}) {
+    late double totalWeight;
+    if (weights != null) {
+      assert(weights.length == colors.length - 1);
+      totalWeight = 0;
+      for (final double w in weights) {
+        totalWeight += w;
+      }
+    } else {
+      totalWeight = 1;
+    }
+
+    int N = colors.length - 1;
+    for (int i = 0; i < N; ++i) {
+      double weight = weights?[i] ?? 1.0 / N;
+      _items.add(ColorTweenSequenceItem(
+          tween: ColorTween(begin: colors[i], end: colors[i + 1]),
+          weight: weight));
+    }
+    double start = 0.0;
+
+    for (int i = 0; i < _items.length; i += 1) {
+      final double end =
+          i == _items.length - 1 ? 1.0 : start + _items[i].weight / totalWeight;
+      _intervals.add(_Interval(start, end));
+      start = end;
+    }
+  }
+
   final List<ColorTweenSequenceItem> _items = <ColorTweenSequenceItem>[];
   final List<_Interval> _intervals = <_Interval>[];
 
@@ -41,8 +70,7 @@ class ColorTweenSequence extends Animatable<Color?> {
 
   @override
   Color? transform(double t) {
-    assert(t >= 0.0 && t <= 1.0);
-    if (t == 1.0) {
+    if (t >= 1.0) {
       return _evaluateAt(t, _items.length - 1);
     }
     for (int index = 0; index < _items.length; index++) {

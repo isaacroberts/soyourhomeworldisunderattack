@@ -88,17 +88,17 @@ class _SubtitleRow extends StatelessWidget {
         BookmarkButton(key: const Key("bookmark"), chapter: chapter),
         CurrentChip(
             key: const Key("Subtitle"),
-            value: chapter.data!.subtitle ?? 'Subtitle',
+            value: chapter.extra!.subtitle ?? 'Subtitle',
             label: 'Subtitle',
             icon: null),
         CurrentChip(
             key: const Key("Where"),
-            value: chapter.data!.where ?? 'Where',
+            value: chapter.extra!.where ?? 'Where',
             label: 'Where',
             icon: Icons.public),
         CurrentChip(
             key: const Key("When"),
-            value: chapter.data!.when,
+            value: chapter.extra!.when,
             label: 'When',
             icon: Icons.access_time),
         _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),

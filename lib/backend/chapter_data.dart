@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:developer' as dev;
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/future_holder.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
+import '../frontend/image/image_holder.dart';
 import 'chapter_info.dart';
 
-//TODO: I think remove the ChangeNotifier, since that's on the Holder now
 class ChapterExtra {
   final String? subtitle;
   final String? where;
@@ -27,17 +27,12 @@ class ChapterExtra {
   }
 }
 
-class ChapterData extends ChangeNotifier {
+class ChapterData {
   /// Stores the spans themselves, and can notify listeners while unpacking
   ///
   final ChapterInfo info;
-  final ChapterExtra extra;
 
-  String? get subtitle => extra.subtitle;
-  String? get where => extra.where;
-  String? get when => extra.when;
-
-  bool get hasAnyChips => extra.hasAnyChips;
+  Stream<Holder>? stream;
 
   final List<Holder> lines = [];
   HeaderOfText? header; // = const HeaderOfText('Loading...');
@@ -52,11 +47,8 @@ class ChapterData extends ChangeNotifier {
 
   // Constructors
 
-  ChapterData.fromChapterInfo(this.info, {required this.extra});
-
-  ChapterData.fromChapterInfoAndStream(this.info, Stream<Holder> stream,
-      {required this.extra}) {
-    stream.listen(_addHolderFromStream,
+  ChapterData.fromChapterInfoAndStream(this.info, this.stream) {
+    stream!.listen(_addHolderFromStream,
         onDone: postLoadCleanup,
         onError: addAndRegisterError,
         cancelOnError: false);
@@ -92,6 +84,41 @@ class ChapterData extends ChangeNotifier {
   HeaderOfText get headerOrPlaceholder =>
       header ?? const HeaderOfText(text: 'Loading...');
 
+  ///Used for rounding up images for display & dipose
+  Iterable<ImageHolder> getImages() sync* {
+    sweepForFutures();
+    for (Holder holder in lines) {
+      if (holder is ImageHolder) {
+        yield holder;
+      }
+    }
+  }
+
+  ///First image, for summaries
+  ImageHolder? getFirstImage() {
+    sweepForFutures();
+    dev.log("First image: (${lines.length} lines)");
+    for (Holder holder in lines) {
+      if (holder is ImageHolder) {
+        dev.log("\t$holder");
+        return holder;
+      }
+    }
+    return null;
+  }
+
+  void sweepForFutures() {
+    for (int ix = 0; ix < lines.length; ++ix) {
+      Holder holder = lines[ix];
+      if (holder is FutureHolder) {
+        if (holder.resolvedHolder != null) {
+          //Remove Future wrapper
+          lines[ix] = holder.resolvedHolder!;
+        }
+      }
+    }
+  }
+
   /* =========================================================================
                                  Loading
    ======================================================================== */
@@ -108,26 +135,24 @@ class ChapterData extends ChangeNotifier {
   static ValueNotifier<bool> canLoad = ValueNotifier(true);
 
   void _addHolderFromStream(Holder h) {
-    // int ix = lines.length;
     lines.add(h);
-
-    // notifyListeners();
   }
 
   //======== Errors =======================
 
-  void addAndRegisterError(Object excep, [StackTrace? trace]) {
-    dev.log('Exception: $excep');
+  void addAndRegisterError(Object exception, [StackTrace? trace]) {
+    dev.log('Exception: $exception');
     trace ??= StackTrace.current;
 
     dev.log(trace.toString());
     ExceptionHolder errorElem =
-        ExceptionHolder(exception: excep, stackTrace: trace);
+        ExceptionHolder(exception: exception, stackTrace: trace);
     lines.add(errorElem);
     ErrorList.logErrorHolder(errorElem);
   }
 
   void postLoadCleanup() async {
+    sweepForFutures();
     if (lines.isNotEmpty) {
       Holder? topElement = lines[0];
       if (topElement is HeaderOfText) {
@@ -135,8 +160,23 @@ class ChapterData extends ChangeNotifier {
         lines.removeAt(0);
       }
     }
-    awaitFutures();
-    notifyListeners();
+    stream = null;
+  }
+
+  ///Preload
+  void cacheImages(BuildContext context) {
+    sweepForFutures();
+    for (ImageHolder image in getImages()) {
+      image.cacheImage(context);
+    }
+  }
+
+  ///Save memory
+  void disposeImages() {
+    sweepForFutures();
+    for (ImageHolder image in getImages()) {
+      image.dispose();
+    }
   }
 
   void awaitFutures() async {
@@ -151,7 +191,8 @@ class ChapterData extends ChangeNotifier {
         }
       }
     }
-    notifyListeners();
+
+    // notifyListeners();
   }
 
   // ============ Handles =============

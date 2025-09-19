@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:soyourhomeworld/frontend/image/image_buttons.dart';
+import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
 
 import 'image_constants.dart';
 import 'image_holder.dart';
@@ -35,11 +36,11 @@ class PortraitSliver extends StatelessWidget {
 
   Image buildImage(BuildContext context) {
     ///Image!
+    double width = MediaQuery.sizeOf(context).width;
     return Image(
+      image: holder.getImageProvider(),
       key: const Key('Image!'),
-      image: NetworkImage(
-        holder.url,
-      ),
+      width: width,
       loadingBuilder: holder.loadingBuilder,
       errorBuilder: holder.errorBuilder,
     );
@@ -122,9 +123,11 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
   ///width/height
   String debugName;
   double aspectRatio;
+  double screenAspectRatio = 0;
   ColorHint? colorHint;
   double desiredHeight = 0;
   double height = 0;
+  double width = 0;
   double overscroll = 0;
   double scrollPct = 0;
 
@@ -139,6 +142,9 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     return height;
   }
 
+  double get drawnWidth => math.min(width, crossAxisExtent);
+  double get lPad => math.min(0, (crossAxisExtent - width) / 2);
+
   @override
   void performLayout() {
     if (child == null) {
@@ -149,18 +155,21 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     final SliverConstraints constraints = this.constraints;
     child!.layout(constraints.asBoxConstraints(), parentUsesSize: true);
 
-    desiredHeight = switch (constraints.axis) {
-      Axis.horizontal => child!.size.width,
-      Axis.vertical => child!.size.height,
-    };
+    screenAspectRatio = crossAxisExtent / (viewHeight);
+
+    desiredHeight = child!.size.height;
+    //TODO: Should images be scaled down?
+    width = child!.size.width;
+
     height = math.min(portraitImgHeight, desiredHeight);
     //Requested overscroll amount
-    overscroll = math.max(desiredHeight - height, 0);
+    overscroll =
+        math.max(desiredHeight - viewportMainAxisExtent - appBarSize, 0);
     //size from Overscroll
-    // final double paintedChildSize = _calculateOverscrollPaintExtent(
-    //     from: 0, to: height, overscroll: overscroll);
-    final double paintedChildSize =
-        calculatePaintOffset(constraints, from: 0, to: height);
+    final double paintedChildSize = _calculateOverscrollPaintExtent(
+        from: 0, to: height, overscroll: overscroll);
+    // final double paintedChildSize =
+    //     calculatePaintOffset(constraints, from: 0, to: height);
     final double cacheExtent = calculateCacheOffset(
       constraints,
       from: 0.0,
@@ -171,74 +180,177 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
+    //Deduced from vibes. Fucky San Francisco magic.
+    // double origin = overlap / 2;
     geometry = SliverGeometry(
-      scrollExtent: height,
+      scrollExtent: height + overscroll,
       paintExtent: paintedChildSize,
+      //0 or
+      // paintOrigin: origin,
+      layoutExtent: paintedChildSize,
       cacheExtent: cacheExtent,
-      maxScrollObstructionExtent: paintedChildSize,
+      maxScrollObstructionExtent: paintedChildSize + overscroll,
       maxPaintExtent: height,
-      crossAxisExtent: crossAxisExtent,
+      crossAxisExtent: drawnWidth,
       hitTestExtent: paintedChildSize,
+      // visible: remainingPaintExtent > 0,
       visible: isVisible,
-      hasVisualOverflow: height > remainingPaintExtent || scrollOffset > 0.0,
+      hasVisualOverflow: false,
+      // hasVisualOverflow: height > remainingPaintExtent || scrollOffset > 0.0,
     );
     //Who knows
     //If not, you need to copy & fix the rest from setChildParentData
     assert(constraints.axisDirection == AxisDirection.down);
     assert(constraints.growthDirection == GrowthDirection.forward);
+    //set ScrollPt
 
     scrollPct = computeScrollPct();
     //Set paint offset
     final SliverPhysicalParentData childParentData =
         child!.parentData! as SliverPhysicalParentData;
     childParentData.paintOffset = getChildPaintOffset();
-
-    //set ScrollPt
+    child!.parentData = childParentData;
   }
 
   double computeScrollPct() {
-    double appBar = 60;
+    if (remainingPaintExtent <= 0) {
+      return 0;
+    }
+    if (scrollOffset > height) {
+      //Above screen
+      return 1;
+    }
+    double availHeight = viewHeight;
 
-    double availHeight = viewportMainAxisExtent - appBar;
+    if (availHeight <= height) {
+      return 0;
+    }
 
-    double t1 = constraints.remainingPaintExtent - height;
-    double t2 = availHeight - height;
+    //Consumed space on screen
+    double t1 =
+        // remaining size on screen
+        math.max(0, remainingPaintExtent - height)
+        //Height of image
+        ;
+    //Total extra space on screen
+    double t2 = availHeight - height + overscroll;
 
-    // double pct = math.max(0, constraints.remainingPaintExtent - height) /
-    //     math.max(1, viewportMainAxisExtent - appBar - height);
-    double pct = (t2 - t1) / t2;
+    scrollPct = t1 / t2;
 
-    // if (debugName.contains('smoke_hard')) {
-    //smoke_hard.jpg is wrong, even though it's standard aspect. It may be slightly taller.
-    //   dev.log(
-    //       "$debugName: Scroll% $pct (remPntEx = $remainingPaintExtent)  = ($t1 / $t2)");
-    // }
-    pct = ui.clampDouble(pct, 0, 1);
-    return pct;
+    // scrollPct = math.min(1, scrollPct);
+    // scrollPct = math.max(0, scrollPct);
+    // scrollPct = ui.clampDouble(scrollPct, 0, 1);
+    if (scrollPct >= -1 && scrollPct < 2) {
+      dev.log('%[$debugName]=$scrollPct');
+    }
+    scrollPct = ui.clampDouble(scrollPct, 0, 1);
+    return scrollPct;
   }
 
   Offset getChildPaintOffset() {
-    double extra = desiredHeight - height;
-    if (extra <= 0) {
-      dev.log('$extra extra: $debugName');
-      return const Offset(0, 0);
+    double yOffset = getChildYOffset();
+
+    // yOffset -= geometry!.paintOrigin;
+
+    dev.log("y[$debugName]=$yOffset overlap=$overlap");
+
+    // yOffset = math.max(appBarSize, yOffset);
+    // yOffset = math.min(yOffset, viewportMainAxisExtent - height);
+    // yOffset = ui.clampDouble(
+    //     yOffset,
+    //     //Minimum below screen
+    //     -height,
+    //     //minimum above screen
+    //     appBarSize);
+
+    return Offset(lPad, yOffset);
+  }
+
+  double getChildYOffset() {
+    if (desiredHeight <= height) {
+      //Image is already sized and will not move
+      // dev.log("\tImg sized");
+      return 0;
     }
+    if (remainingPaintExtent <= 0) {
+      return 0;
+    }
+// @ %=1, yOffset=0
+    //@ %=0, yOffset = desiredHeight-height
 
-    // if (debugName.contains('smoke_hard')) {
-    //   dev.log(
-    //       "$debugName: Scroll% $scrollPct rpe = $remainingPaintExtent height = $height");
+    //Simplify the coding
+    //When first seen, the image bottom should be aligned with the bottom of the viewport
+    double initialExtent = viewportMainAxisExtent - desiredHeight;
+    //Once scroll all the way up, the image top should be just under the appBar
+    double endExtent = appBarSize;
+    return initialExtent + scrollPct * (endExtent - initialExtent);
+    if (scrollPct == 0) {
+      //When first seen, the image bottom should be aligned with the bottom of the viewport
+      // v - h - (d - h)
+      // v - h + (-d + h)
+      //v - h - d + h
+      //v - d
+      //
+      return viewportMainAxisExtent - desiredHeight;
+    }
+    if (scrollPct == 1) {
+      //Once scroll all the way up, the image top should be just under the appBar
+      //so that the entire image is see-able
+      return appBarSize;
+    }
+    double invScroll = 1 - scrollPct;
+    return
+        //AppBar compensation
+        appBarSize * scrollPct
+            //Transit across screen
+            +
+            invScroll * (viewportMainAxisExtent - desiredHeight)
+        // Parallax
+        // + invScroll * diff
+        //Height compensation
+        ;
+
+    // if (height <= portraitImgHeight) {
+    //   //Image is already sized and will not move
+    //   //Should be covered by above case
+    //   return 0;
     // }
-//Because scrollOffset kicks in, it moves differently once it touches the top of the screen
-    //TODO: Refactor to remove floating errors
-    double yOffset = -extra * (1 - scrollPct);
+    double availHeight = viewportMainAxisExtent;
 
-    // yOffset = -ui.clampDouble(-yOffset, 0, extra);
-    yOffset = math.min(yOffset, viewportMainAxisExtent - height);
-    // yOffset = -scrollOffset;
-    return Offset(0, yOffset);
-    // return Offset(0, overscroll * (scrollPct) - scrollOffset);
-    return Offset(0, -scrollOffset);
-    return Offset(0, overscroll - scrollOffset);
+    if (desiredHeight < availHeight) {
+      //Image should parallax to fill screen
+      double diff = availHeight - desiredHeight;
+      //If parallax < epsilon
+      if (diff < 100) {
+        //Don't move it, it's maddening
+        //This should place the image at the bottom of the screen
+        //TODO: Clip image height when it goes above this diff
+        // dev.log("\tParallax too small [$debugName]");
+        return 0;
+      } else {
+        //Otherwise, parallax image to fill screen
+        //scrollPct+ = down
+        dev.log("\tParallax [$debugName]");
+        return -(scrollPct) * diff;
+      }
+    } else {
+      //Image must parallax to be visible
+
+      //Should image parallax backwards?
+      double extra = desiredHeight - height;
+      assert(extra > 0);
+      if (extra > 100) {
+        //scrollPct + = up
+        dev.log("\tReverse parallax [$debugName]");
+        return -extra * (1 - scrollPct);
+      } else {
+        // dev.log("\tReverse Parallax too small [$debugName]");
+
+        //Imperceptible amount getting cut off
+        //TODO: I think this should put it at the bottom
+        return 0;
+      }
+    }
   }
 
   @override
@@ -248,20 +360,23 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     Rect rect = Rect.fromLTWH(
         0, geometry!.paintOrigin, constraints.crossAxisExtent, height);
 
+    //Ensure if image is drawn oddly that bg is covered
+    Paint bgCover = Paint()
+      ..color = colorHint?.bgColor ?? const Color(0x22000000)
+      ..style = PaintingStyle.fill;
+    context.canvas.drawRect(rect.shift(imageOffset), bgCover);
+
     final SliverPhysicalParentData childParentData =
         child!.parentData! as SliverPhysicalParentData;
-    double extra = math.max(desiredHeight - height, 0).toDouble();
 
-    double yOffset = -extra * (1 - scrollPct);
-
-    // super.paint(context, offset);
     layer = context.pushClipRect(
-      //This allows animations
-      true,
+      //Images don't need compositing
+      false,
       imageOffset,
       rect,
       (context, offset) {
-        context.paintChild(child!, Offset(0, yOffset) + imageOffset);
+        // offset += childParentData.paintOffset;
+        context.paintChild(child!, childParentData.paintOffset);
       },
     );
   }
@@ -278,11 +393,12 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     // the clamp on the next line is to avoid floating point rounding errors
     return ui.clampDouble(
       ui.clampDouble(to + overscroll, a, b) - ui.clampDouble(from, a, b),
-      0.0,
+      from,
       to,
     );
   }
 
+  double get viewHeight => constraints.viewportMainAxisExtent - appBarSize;
   double get scrollOffset => constraints.scrollOffset;
   double get precedingScrollExtent => constraints.precedingScrollExtent;
   double get overlap => constraints.overlap;

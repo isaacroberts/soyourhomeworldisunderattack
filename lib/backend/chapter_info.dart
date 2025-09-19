@@ -5,7 +5,6 @@ import 'exception_types.dart';
 
 typedef ChapterKey = int;
 
-//TODO: Move into ChapterHolder
 class ChapterInfo {
   /// Stores the information read from headers
   final ChapterKey id;
@@ -23,12 +22,10 @@ class ChapterInfo {
       required this.displayName,
       required this.filename,
       required this.next,
-      //TODO: This is intentionally Blocking value
-      required PartId partId,
+      required this.partId,
       // required this.partId,
       required this.isPart,
-      required this.hidePart})
-      : partId = PartId.noir;
+      required this.hidePart});
 
   static ChapterInfo fromJson(int index, var data) {
     ///Read from JSON instead of binary

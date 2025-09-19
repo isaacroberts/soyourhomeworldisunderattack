@@ -3,6 +3,7 @@ import 'dart:ui' as util;
 
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/server.dart';
+import 'package:soyourhomeworld/backend/utils.dart';
 import 'package:soyourhomeworld/frontend/image/_landscape_sliver.dart';
 import 'package:soyourhomeworld/frontend/image/_portrait_sliver.dart';
 import 'package:soyourhomeworld/frontend/image/no_image_widget.dart';
@@ -20,6 +21,7 @@ class ImageHolder extends CodeHolder {
   final double? aspectRatio;
   final String credit;
   final ColorHint? colorHint;
+  ImageProvider? imageProvider;
 
   // In most use cases, this will already be checked
   String get url => _url!;
@@ -58,23 +60,10 @@ class ImageHolder extends CodeHolder {
 
   bool get tryable => _url != null && url.contains('.');
 
-  NoImageReason getNoImageReason() {
-    if (_url == null) {
-      return NoImageReason.leftBlank;
-    }
-    if (!url.contains('.') || url.contains(' ')) {
-      //For meme-aligning purposes, "x.jpg" means user-provided
-      return NoImageReason.imageIOU;
-    }
-    if (url.startsWith('!')) {
-      return NoImageReason.suggestion;
-    }
-
-    return NoImageReason.unknown;
-  }
-
   @override
   Widget element(BuildContext context) {
+    //Shouldn't be callable anymore
+    //TODO: PageReader is still doing this
     assert(false);
     return const SizedBox.shrink();
   }
@@ -107,6 +96,27 @@ class ImageHolder extends CodeHolder {
     }
   }
 
+  ImageProvider getImageProvider() {
+    imageProvider ??= NetworkImage(url);
+    return imageProvider!;
+  }
+
+  void cacheImage(BuildContext context) {
+    imageProvider ??= NetworkImage(url);
+    //TODO: Create a custom imageProvider that fetches smaller images based on devicePixelRatio
+    imageProvider!.resolve(ImageConfiguration(
+        devicePixelRatio: MediaQuery.devicePixelRatioOf(context),
+        locale: godBless,
+        textDirection: TextDirection.ltr,
+        size: MediaQuery.sizeOf(context),
+        platform: Theme.of(context).platform));
+  }
+
+  void dispose() {
+    imageProvider?.evict();
+    imageProvider = null;
+  }
+
   ///Common loading widget for all Holder-ed Images
 
   ///Returns a TriWizard loader to show an image is coming in.
@@ -118,25 +128,30 @@ class ImageHolder extends CodeHolder {
       return child;
     }
     if (colorHint == null) {
-      return TriWizardLoader(key: const Key('imgLoader'), message: displayUrl);
+      return Center(
+          key: const Key('c'),
+          child: TriWizardLoader(
+              key: const Key('imgLoader'), message: displayUrl));
     } else {
       //Set loader to color - fade in BG
       Part part = ChapterProvider.partOf(context);
       double pct = loadingProgress.cumulativeBytesLoaded /
           (loadingProgress.expectedTotalBytes ?? standardImageByteSize);
       pct = util.clampDouble(0, pct, 1);
-      Color bg = Color.lerp(part.canvasColor, colorHint?.bgColor, pct) ??
-          part.canvasColor;
+      Color bg =
+          Color.lerp(part.pageColor, colorHint?.bgColor, pct) ?? part.pageColor;
 
-      return ColoredBox(
-          key: const Key('colorHintBg'),
-          color: bg,
-          child: TriWizardLoader(
-              key: const Key('imgLoader'),
-              message: displayUrl,
-              //TODO: Send the second color hint,
-              // used for the loader
-              loaderColor: colorHint?.foreColor));
+      return Center(
+          key: const Key('c'),
+          child: ColoredBox(
+              key: const Key('colorHintBg'),
+              color: bg,
+              child: TriWizardLoader(
+                  key: const Key('imgLoader'),
+                  message: displayUrl,
+                  //TODO: Send the second color hint,
+                  // used for the loader
+                  loaderColor: colorHint?.foreColor)));
     }
   }
 
@@ -159,5 +174,21 @@ class ImageHolder extends CodeHolder {
       reason: reason, displayUrl: displayUrl,
       // holder: this,
     );
+  }
+
+  ///Guess why image is missing, to display to user
+  NoImageReason getNoImageReason() {
+    if (_url == null) {
+      return NoImageReason.leftBlank;
+    }
+    if (!url.contains('.') || url.contains(' ')) {
+      //For meme-aligning purposes, "x.jpg" means user-provided
+      return NoImageReason.imageIOU;
+    }
+    if (url.startsWith('!')) {
+      return NoImageReason.suggestion;
+    }
+
+    return NoImageReason.unknown;
   }
 }

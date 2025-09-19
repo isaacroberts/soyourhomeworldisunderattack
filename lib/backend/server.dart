@@ -123,6 +123,6 @@ Future<dynamic> getJsonFileFromServer(String path) async {
     return json.decode(response.body);
   } else {
     throw Exception(
-        'Error getting file from server: code ${response.statusCode} ${response.reasonPhrase}');
+        'Error getting file "$path" from server: code ${response.statusCode} ${response.reasonPhrase}');
   }
 }

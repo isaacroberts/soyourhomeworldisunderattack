@@ -16,6 +16,16 @@ class ColorHint {
         hint1 = outline,
         hint2 = onBg;
 
+  ColorHint.blueGreys()
+      : hint0 = const Color(0xff222232),
+        hint1 = const Color(0xff665588),
+        hint2 = const Color(0xffaa88bb);
+
+  ColorHint.red()
+      : hint0 = const Color(0xff550525),
+        hint1 = const Color(0xff882227),
+        hint2 = const Color(0xffff3355);
+
   ColorHint.fromList(List<Color?> colors)
       : hint0 = colors.elementAtOrNull(0),
         hint1 = colors.elementAtOrNull(1),

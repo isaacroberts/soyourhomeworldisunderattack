@@ -4,21 +4,22 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 import '../../../backend/utils.dart';
+import '../../theme/base_colors.dart';
 
-ui.FragmentShader? shader;
+ui.FragmentShader? fireShader;
 bool fragLoadCalled = false;
 
 Future<ui.FragmentShader?> loadFragShader() async {
-  if (shader != null) {
-    return shader;
+  if (fireShader != null) {
+    return fireShader;
   }
   if (fragLoadCalled) {
     return null;
   }
   fragLoadCalled = true;
   // var program = await ui.FragmentProgram.fromAsset('shaders/earth_shader.frag');
-  // shader = program.fragmentShader();
-  return shader;
+  // fireShader = program.fragmentShader();
+  return fireShader;
 }
 
 class FirePainter extends CustomPainter {
@@ -40,27 +41,27 @@ class FirePainter extends CustomPainter {
 
     //resolution
     double scale = 1;
-    shader?.setFloat(0, scale * size.width);
-    shader?.setFloat(1, scale * size.height);
+    fireShader?.setFloat(0, scale * size.width);
+    fireShader?.setFloat(1, scale * size.height);
     //mouse?
     double mouse = 0;
-    shader?.setFloat(2, mouse);
-    shader?.setFloat(3, mouse);
+    fireShader?.setFloat(2, mouse);
+    fireShader?.setFloat(3, mouse);
 
     //time
-    shader?.setFloat(4, anim * 500);
+    fireShader?.setFloat(4, anim * 500);
 
     //colorA
 // NoirPrimary.shade3
     //0xff0f0d24
-    shader?.setFloat(5, 0x0f / 255.0);
-    shader?.setFloat(6, 0x0d / 255.0);
-    shader?.setFloat(7, 0x24 / 255.0);
+    fireShader?.setFloat(5, 0x0f / 255.0);
+    fireShader?.setFloat(6, 0x0d / 255.0);
+    fireShader?.setFloat(7, 0x24 / 255.0);
 
     double fireCreep = math.min(1, math.max(0, math.sqrt(anim) * 1));
-    // Paint firePaint = Paint()
-    //   ..color = planColor
-    //   ..shader = shader;
+    Paint firePaint = Paint()
+      ..color = planColor
+      ..shader = fireShader;
     for (int n = 0; n < flameCt; ++n) {
       double angle = (rNG.nextDouble() - .5);
       // angle = (n * .2 - .5);
@@ -83,7 +84,7 @@ class FirePainter extends CustomPainter {
 
       // flameWidth = .2 + anim * .4;
 
-      // canvas.drawArc(rect, fAngle, flameWidth, true, firePaint);
+      canvas.drawArc(rect, fAngle, flameWidth, true, firePaint);
     }
   }
 

@@ -10,7 +10,6 @@ import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/binary.dart';
 import 'binary_utils/buffer_ptr.dart';
 import 'binary_utils/code_params.dart';
-import 'chapter.dart';
 import 'chapter_data.dart';
 import 'chapter_info.dart';
 import 'error_handler.dart';
@@ -48,36 +47,13 @@ class ChapterParser {
       throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
           debugId: debugId);
     }
-    ChapterExtra extra = await parseHeader(filename: info.filename);
-    // skipToHeaderSeparator();
     Stream<Holder> spans;
     if (handleErrors) {
       spans = parseBodyAndCatchErrors();
     } else {
       spans = parseBody();
     }
-    return ChapterData.fromChapterInfoAndStream(info, spans, extra: extra);
-  }
-
-  Future<ChapterAndStream> getChapterAndStream(ChapterInfo info,
-      {required bool handleErrors}) async {
-    // dev.log("Parsing ${info.varName} (fromExisting)");
-    if (!ptr.hasMore()) {
-      throw ChapterFormatException("Empty BufferPtr sent to parsePtr",
-          debugId: debugId);
-    }
-    ChapterExtra extra = await parseHeader(filename: info.filename);
-    // skipToHeaderSeparator();
-    Stream<Holder> spans;
-    if (handleErrors) {
-      spans = parseBodyAndCatchErrors();
-    } else {
-      spans = parseBody();
-    }
-    return (
-      ChapterData.fromChapterInfoAndStream(info, spans, extra: extra),
-      spans
-    );
+    return ChapterData.fromChapterInfoAndStream(info, spans);
   }
 
   Future<ChapterInfo?> parseBookHeader(int index) async {
@@ -150,7 +126,7 @@ class ChapterParser {
         hidePart: hidePart);
   }
 
-  Future<ChapterExtra> parseHeader({required String filename}) async {
+  Future<ChapterExtra> parseHeader() async {
     ptr.assertConsume('\$', debugId: debugId);
     // int index = ptr.consumeInt32();
     // ptr.warnConsume('=', consumeOnMiss: true);
@@ -177,14 +153,14 @@ class ChapterParser {
       audioUrl = ptr.consumeUrl();
     }
     ptr.assertConsume('/', debugId: debugId);
-    skipToHeaderSeparator();
+    // skipToHeaderSeparator();
     if (printVerbose) {
       dev.log('/Read header $debugId');
     }
 
     String? cleanForNull(String? s) {
       //TODO: Catch dashes in writer
-      if (s == null || s.isEmpty || s == '-') {
+      if (s == null || s.isEmpty || s == '-' || s == 'null') {
         return null;
       }
       return s;
@@ -289,9 +265,6 @@ Elements:
         }
       } else if (val == Codes.LPAREN.code) {
         // ( Beginning of font or parameters
-        // TODO: Give parameter list to LiveTextHolder
-        // BufferPtr fontData =
-        //     ptr.consumeUntil(Codes.RPAREN.code, includeChar: true);
         ptr = liveHolder.font.parseDecorations(ptr);
       } else if (char == 'H') {
         String? text = ptr.consumeText();

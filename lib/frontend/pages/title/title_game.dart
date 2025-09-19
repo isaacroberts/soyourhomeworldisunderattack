@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:soyourhomeworld/frontend/pages/title/title_copy.dart';
 import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
 
 import 'fire_painter.dart';
@@ -124,11 +123,6 @@ class _FlameWidgetState extends State<FlameWidget>
     // } else {
     //   button = const SizedBox(height: 48);
     // }
-    Widget child = widget.width < 600
-        ? TitleTextPhone(
-            key: const Key('TitlePhone}'), size: size, child: button)
-        : TitleTextWide(key: const Key('TitleWide'), size: size, child: button);
-
     return CustomPaint(
         key: const Key("TitlePainter"),
         isComplex: false,
@@ -137,7 +131,7 @@ class _FlameWidgetState extends State<FlameWidget>
         painter: fireShowing
             ? FirePainter(anim: fireAnimationController.value, flameCt: flameCt)
             : null,
-        child: child);
+        child: null);
   }
 }
 

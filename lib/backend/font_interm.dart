@@ -30,9 +30,6 @@ class FontInterm {
 
   FontFile? _file;
 
-  //TODO: Save fontCache object
-  // FontFile? fontCache;
-
   FontInterm(
       {required this.fileId,
       required this.size,
