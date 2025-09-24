@@ -12,15 +12,17 @@ https://homeworld.help/
 
 The code is provided to e-magazine publishers under the GPL license. 
 
-This magazine format supports fonts, images, colors, highlights, links, and custom code elements. 
+This magazine format supports fonts, images, colors, highlights, buttons, and custom code elements. 
 
-This code is provided free of comments. This code is provided free of compatibility. This code is provided free of documentation. 
+This code is provided free of comments. This code is provided free of compatibility. This code is provided free of stability. 
 
 ### python_writer/ (Python)
 
 python_writer takes a LibreOffice document and converts it into ebook format.
 
 Ebooks are stored in a custom binary format called PossibleFly. If you were going to code on top of this, you should remove PossibleFly and replace it with minified json. 
+
+> run.sh ../../path_to_book.odt
 
 run.sh: Runs entire pipeline and moves files 
 
@@ -39,6 +41,10 @@ run.sh: Runs entire pipeline and moves files
 The frontend. The flutter code is responsible for all slick UI design, custom code elements, etcetera. 
 
 Flutter code unpacks PossibleFly into text elements, and displays them on an infinite scroll. 
+
+To build the flutter code, run: 
+
+> ./build.sh
 
 ### server/ (Python, Flask / Django)
 
