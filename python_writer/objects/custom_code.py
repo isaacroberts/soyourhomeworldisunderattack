@@ -4,6 +4,23 @@ from common.fmt_writer_functions import *
 
 from objects.binary import *
 
+"""
+Keyword:
+Add batch:
+
+BlockObject:
+'Notification',
+'Splatbook',
+'Youtube',
+'Email',
+'MtgCard',
+
+Tag:
+'ProfileImage',
+'Source',
+
+
+"""
 def code_tag_replacements():
     """
         x -> y

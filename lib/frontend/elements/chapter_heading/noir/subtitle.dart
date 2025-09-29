@@ -99,68 +99,17 @@ class _SubtitleRow extends StatelessWidget {
 
   Widget builder(BuildContext context, Widget? previousChild) {
     Chapter? chapter = Chapter.maybeOf(context);
-    if (chapter == null) {
+    if (chapter == null || chapter.data == null) {
       return nullChapterRow(context);
-    } else if (chapter.data == null) {
-      return nullChapterRow(context);
-      //These futures are causing every chapter to load at once
-      return futuresRow(context, chapter);
     } else if (chapter.extra!.hasAnyChips) {
       return completedRow(context, chapter);
     } else {
       return const SizedBox.shrink();
-      return noChipsRow(context, chapter);
     }
-  }
-
-  Widget futuresRow(BuildContext context, Chapter chapter) {
-    ///For waiting on chapter
-    return Row(
-        key: const Key("heading_row"),
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // BookmarkButton(key: const Key("bookmark"), chapter: chapter),
-          FutureChip(
-              key: const Key("Subtitle"),
-              value: chapter.awaitSubtitle(),
-              label: 'Subtitle',
-              icon: null),
-          FutureChip(
-              key: const Key("Where"),
-              value: chapter.awaitWhere(),
-              label: 'Where',
-              icon: Icons.public),
-          FutureChip(
-              key: const Key("When"),
-              value: chapter.awaitWhen(),
-              label: 'When',
-              icon: Icons.access_time),
-          // _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
-          //Don't add copyButton while waiting on futures
-        ]);
   }
 
   Widget noChipsRow(BuildContext context, Chapter chapter) {
     return const _CopyTextButton(key: Key('copyButton'));
-    return const SizedBox.shrink();
-
-    ///No waiting on futures
-    return Row(
-      key: const Key("heading_row"),
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        BookmarkButton(key: const Key("bookmark"), chapter: chapter),
-        const Expanded(child: SizedBox.shrink()),
-        _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
-        const _CopyTextButton(
-          key: Key("copy"),
-        ),
-      ],
-    );
   }
 
   Widget completedRow(BuildContext context, Chapter chapter) {
@@ -199,16 +148,6 @@ class _SubtitleRow extends StatelessWidget {
   Widget nullChapterRow(BuildContext context) {
     ///Empty
     return const SizedBox.shrink();
-    return const Row(
-        key: Key("heading_row"),
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          BookmarkButton(key: Key("bookmark"), chapter: null),
-          _LengthSummaryWrap(key: Key("lsw"), chapter: null),
-          //No copyButton, since no chapter to copy
-        ]);
   }
 }
 
@@ -299,9 +238,10 @@ class _SubtitleContainer extends StatelessWidget {
     double elevation = 15;
     // Color dividerColor =
     //     ElevationOverlay.applyOverlay(context, part.primary.s6, elevation);
-    Color dividerColor = part.primary.s6;
-    Color color =
-        ElevationOverlay.applyOverlay(context, part.primary.s4, elevation);
+    // Color dividerColor = part.primary.s6;
+    Color color = part.primary.s3;
+    // Color color =
+    //     ElevationOverlay.applyOverlay(context, part.primary.s4, elevation);
     return Material(
         key: const Key("SubtitleMat"),
         type: MaterialType.transparency,
@@ -312,10 +252,16 @@ class _SubtitleContainer extends StatelessWidget {
         elevation: elevation,
         child: Ink(
             decoration: BoxDecoration(
-              color: color,
-              border: Border(top: BorderSide(color: dividerColor, width: 1.5)),
+              // color: part.primary.s3,
+              gradient: LinearGradient(
+                  colors: [part.primary.s3, part.primary.s2],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight),
+              // border: Border(top: BorderSide(color: dividerColor, width: 1.5)),
             ),
             child: SizedBox(
-                key: const Key("SubtitleBG"), height: 60, child: child)));
+                key: const Key("SubtitleBG"),
+                height: 60,
+                child: HeaderSizer(child: child))));
   }
 }

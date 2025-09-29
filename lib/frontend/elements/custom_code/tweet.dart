@@ -7,7 +7,7 @@ import '../../../backend/exception_types.dart';
 import '../holders/holder_base.dart';
 import '../holders/holder_utils.dart';
 
-class TweetHolder extends Holder {
+class TweetHolder extends CodeHolder {
   late String user;
   late String tweet;
   TweetHolder(List<Holder> spans) : super() {
@@ -34,11 +34,6 @@ class TweetHolder extends Holder {
 
   @override
   Widget element(BuildContext context) {
-    return TweetWidget(user: user, tweet: tweet);
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
     return TweetWidget(user: user, tweet: tweet);
   }
 

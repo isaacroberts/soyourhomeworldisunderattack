@@ -31,6 +31,25 @@ class LoadSliver extends StatelessWidget {
   }
 }
 
+///Simple arranged loader with height 400
+class SmallLoadSliver extends StatelessWidget {
+  const SmallLoadSliver({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverToBoxAdapter(
+        key: Key('LdrSmal'),
+        child: SizedBox(
+            key: Key('s'),
+            height: 300,
+            child: Center(
+                key: Key('c'),
+                child: NoMessageTriWizardLoader(
+                  key: Key("ldr"),
+                ))));
+  }
+}
+
 class BlankChapterSliver extends StatelessWidget {
   /// Shows to user that a chapter is missing
   ///   Appears as a Trap Chapter, aka, a Trapter

@@ -9,7 +9,7 @@ import 'image_holder.dart';
 
 class ImageContainer extends StatefulWidget {
   final Widget child;
-  final ImageHolder holder;
+  final StdImageHolder holder;
 
   const ImageContainer.fromValues({
     required super.key,
@@ -19,7 +19,9 @@ class ImageContainer extends StatefulWidget {
   });
 
   static ImageContainer factory(
-      {required ImageHolder holder, bool? allowExpand, required Widget child}) {
+      {required StdImageHolder holder,
+      bool? allowExpand,
+      required Widget child}) {
     assert(child is! ImageContainer, 'No stacking ImageContainers!');
 
     if (kDebugMode) {
@@ -31,7 +33,7 @@ class ImageContainer extends StatefulWidget {
     }
     allowExpand ??= true;
     return ImageContainer.fromValues(
-      key: Key("ImgCtr[${holder.key}]"),
+      key: Key("ImgCtr[${holder.id}]"),
       holder: holder,
       child: child,
     );
@@ -111,11 +113,11 @@ class _ImageContainerState extends State<ImageContainer> {
     return TallFitImageWidget(
         holder: holder,
         expanded: expanded,
-        key: Key('landscape${holder.key}'),
+        key: Key('landscape${holder.id}'),
         child: child);
   }
 
-  ImageHolder get holder => widget.holder;
+  StdImageHolder get holder => widget.holder;
 
   Color? get bgColor => holder.colorHint?.bgColor;
   Color? get outlineColor => holder.colorHint?.outlineColor;
@@ -130,7 +132,7 @@ class _ImageContainerState extends State<ImageContainer> {
     var builder = builderLadder();
 
     Widget child = CommonImageContainer(
-        key: Key('cmnImgCtr${holder.key}'),
+        key: Key('cmnImgCtr${holder.id}'),
         holder: holder,
         childBuilder: builder);
 

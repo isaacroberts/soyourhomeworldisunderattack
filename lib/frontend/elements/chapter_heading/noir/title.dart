@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/subtitle_components.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/chapter_grid.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
@@ -49,7 +50,6 @@ class HeadingTitleRow extends StatelessWidget {
       headerColor = textColor;
       headerStyle = headerFont;
     }
-    double screenWidth = MediaQuery.sizeOf(context).width;
 
     String headerText = header?.text ?? '...';
 
@@ -57,7 +57,7 @@ class HeadingTitleRow extends StatelessWidget {
       key: const Key("titleText"),
       headerText,
       style: headerStyle,
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
@@ -70,29 +70,30 @@ class HeadingTitleRow extends StatelessWidget {
     //   alignment: Alignment.center,
     // );
 
-    if (screenWidth < 400) {
-      return SizedBox(
-          height: 60,
-          child: Center(
-            child: title,
-          ));
-    }
-
+    // if (screenWidth < 400) {
+    //   //TODO: Align to textAlignDirection
+    //   return SizedBox(
+    //     height: 60,
+    //     child: title,
+    //   );
+    // }
+    return HeaderSizer(child: title);
     return SizedBox(
         height: 60,
         child: Row(
           key: const Key("headerRow"),
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //Bookmark button
-            _ChapterNumberWrap(
-                key: Key("bookmarkButton${chapter?.key}"),
-                chapterNumber: chapter?.id,
-                headerColor: headerColor),
+            //Chapter number
+            // _ChapterNumberWrap(
+            //     key: Key("bookmarkButton${chapter?.key}"),
+            //     chapterNumber: chapter?.id,
+            //     headerColor: headerColor),
             //Title
-            Expanded(key: const Key("titleTitle"), child: Center(child: title)),
+            title,
+
             //Space for drawerbutton
             const SizedBox(width: 60),
           ],

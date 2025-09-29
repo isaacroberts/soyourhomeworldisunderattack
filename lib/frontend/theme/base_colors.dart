@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import '../parts/grand_swatch.dart';
 import '../parts/noir_colors.dart';
 
-const double appBarSize = 60;
-const double expandedAppBarSize = 120;
-
 //TODO: Remove these
 const Color canvasSlightElevation = NoirPrimary.shade3;
 const Color canvasFade = NoirSecondary.shadec;

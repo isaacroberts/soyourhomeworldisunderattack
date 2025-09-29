@@ -10,7 +10,8 @@ import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import 'backend/error_handler.dart';
-import 'frontend/elements/debug_scaffold.dart';
+//TODO: Conditional import (debugMode)
+import 'frontend/debug/debug_scaffold.dart';
 import 'frontend/parts/noir_colors.dart';
 import 'frontend/parts/noir_theme.dart';
 import 'frontend/scrollers/sliver_scroller.dart';
@@ -26,26 +27,19 @@ Future<void> main() async {
     //details.silent = whether error should be silent in release mode
     if (!(details.silent && kReleaseMode)) {
       dev.log('\n\n');
-      dev.log(" -!- FlutterError (${details.library}) -!- ");
-      // dev.log(details.exceptionAsString());
-      // dev.log('-');
-      // dev.log(details.exception.toString());
-      // if (details.stack != null) {
-      //   dev.log(' --- Stack Trace ---');
-      //   dev.log(details.stack.toString());
-      // }
-      dev.log('\n\n');
-      ErrorList.showError(details.exception, details.stack);
+      dev.log(" -!- FlutterErrorDetails (${details.library}) -!- ");
+
+      dev.log(details.exceptionAsString());
+      dev.log(details.toString());
+      if (details.exception == null || details.exception == 'null') {
+        dev.log("(Null exception");
+      }
+      ErrorList.silentLogError(details.exception, details.stack);
     }
   };
   PlatformDispatcher.instance.onError = (error, stack) {
-    // dev.log('\n\n');
     dev.log(' -!- Platform Error -!- ');
-    // dev.log(error.toString());
-    // dev.log(' --- Stack Trace ---');
-    // dev.log(stack.toString());
-    // dev.log('\n\n');
-    ErrorList.showError(error, stack);
+    ErrorList.logError(error, stack);
     return true;
   };
 
@@ -69,6 +63,7 @@ class DebugApp extends StatelessWidget {
           child: SliverScroller(
             key: Key('DebugSliverScroller'),
             startChapter: IntStartChapter(0),
+            hasIndex: false,
           ),
         )));
   }

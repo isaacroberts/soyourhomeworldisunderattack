@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/base_colors.dart';
+import '../theme/layout_constants.dart';
 import 'image_constants.dart';
 import 'image_holder.dart';
 
@@ -12,7 +12,7 @@ class TallFitImageWidget extends StatelessWidget {
     required this.child,
   });
 
-  final ImageHolder holder;
+  final StdImageHolder holder;
   final bool expanded;
   final Widget child;
 

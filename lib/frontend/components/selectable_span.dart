@@ -20,9 +20,11 @@ class SelectableSpan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectionContainer(
-        delegate: SelectAllOrNoneContainerDelegate(),
-        child: spanItself(context));
+    return spanItself(context);
+    //I'm not using this correctly
+    // return SelectionContainer(
+    //     delegate: SelectAllOrNoneContainerDelegate(),
+    //     child: spanItself(context));
   }
 }
 

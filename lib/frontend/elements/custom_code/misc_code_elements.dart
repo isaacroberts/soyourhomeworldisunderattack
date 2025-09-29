@@ -38,20 +38,19 @@ class IconHolder extends Holder {
 
   @override
   Widget element(BuildContext context) {
-    return Icon(icon, size: 30, color: const Color(0x80000000));
+    //TODO: Size & space
+    return Icon(icon, size: 36, color: const Color(0x80000000));
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    //Add a box so user knows there's supposed to be something there
-    return Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-            border: Border.all(color: const Color(0x44000000), width: 2)),
+  Widget sliver(BuildContext context) {
+    return SliverToBoxAdapter(child: element(context));
+  }
 
-        //And then try to display it anyway
-        child: element(context));
+  @override
+  Widget debugSliver(BuildContext context) {
+    //No other information available
+    return sliver(context);
   }
 }
 
@@ -82,75 +81,5 @@ class Terminal extends SpanHoldingCode {
         color: const Color(0xff000044),
         // decoration: BoxDecoration(border: Border.all(width: 2)),
         child: super.element(context));
-  }
-}
-
-class EndAudio extends Holder {
-  const EndAudio();
-  @override
-  Widget element(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-
-  @override
-  String toText() {
-    return '';
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-}
-
-/*
-class WHLAd extends Holder {
-  const WHLAd();
-
-
-
-  @override
-  Widget element(BuildContext context) {
-    return Container(
-        color: const Color(0xffff5429),
-        child: const SizedBox.shrink(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('July 4th', style: wHLDateFont, textAlign: TextAlign.center),
-            Text('White House Lawn',
-                style: wHLBonfireFont, textAlign: TextAlign.center),
-            Text('Guns, cosplay, coolers, fireworks, fun!',
-                style: wHLCTAFont, textAlign: TextAlign.center),
-          ],
-        )));
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return element(context);
-  }
-}
-
-*/
-
-class Audio extends Holder {
-  final String file;
-
-  const Audio({required this.file});
-
-  @override
-  String toText() {
-    return '(Audio: $file)\n';
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    return const Placeholder();
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return const Placeholder();
   }
 }

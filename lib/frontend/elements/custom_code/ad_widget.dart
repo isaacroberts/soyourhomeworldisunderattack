@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../backend/utils.dart';
 import '../holders/span_holding_code.dart';
@@ -109,15 +108,15 @@ class _AdWrapperState extends State<AdWrapper> {
     super.initState();
   }
 
-  void _becomesVisible(VisibilityInfo info) {
-    if (mounted) {
-      if (!loaded) {
-        if (info.visibleFraction > .4) {
-          Future.delayed(const Duration(milliseconds: 30), _loadLevel);
-        }
-      }
-    }
-  }
+  // void _becomesVisible(VisibilityInfo info) {
+  //   if (mounted) {
+  //     if (!loaded) {
+  //       if (info.visibleFraction > .4) {
+  //         Future.delayed(const Duration(milliseconds: 30), _loadLevel);
+  //       }
+  //     }
+  //   }
+  // }
 
   void _load() async {
     Key? key = widget.key;
@@ -201,10 +200,11 @@ class _AdWrapperState extends State<AdWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return VisibilityDetector(
-        key: Key("VisibDetector${widget.key}"),
-        onVisibilityChanged: _becomesVisible,
-        child: adsenseWrapper(context));
+    return adsenseWrapper(context);
+    // return VisibilityDetector(
+    //     key: Key("VisibDetector${widget.key}"),
+    //     onVisibilityChanged: _becomesVisible,
+    //     child: adsenseWrapper(context));
   }
 }
 

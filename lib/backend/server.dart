@@ -17,6 +17,8 @@ String get serverDisplayURL {
   return 'homeworld.help';
 }
 
+String get shareURL => 'https://homeworld.help';
+
 String getServerURL() {
   return getServerURLPlatformSpecific();
 }

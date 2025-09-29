@@ -421,12 +421,23 @@ class Font:
         elif name == 'background-color':
             self.bgCol = value
         elif name == 'line-through':
-            self._strikethrough = True
-            print("Got strikethrough!")
+            print('Strikethrough: value=', value)
+            if value=='none':
+                self._strikethrough = False
+            else:
+                self._strikethrough = True
         elif name == 'text-underline':
-            self._underline=True
+            print('Underline: value=', value)
+            if value=='none':
+                self._underline=False
+            else:
+                self._underline=True
         elif name == 'text-overline':
-            self._overline = True
+            print('Overline: value=', value)
+            if value=='none':
+                self._overline = False
+            else:
+                self._overline = True
         elif name == 'text-position':
             # sub 58%
             if value.startswith('sub'):

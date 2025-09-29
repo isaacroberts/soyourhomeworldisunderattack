@@ -3,57 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/components/deferrals/debug_wrap.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
-import 'holder_utils.dart';
-
 // ============ Base ============================
 
 abstract class Holder {
   const Holder();
 
-  Widget elementOrFallback(BuildContext context, bool showFonts) {
-    if (showFonts) {
-      return element(context);
-    } else {
-      return fallback(context);
-    }
-  }
-
-  Widget elementCheckingFallback(BuildContext context) {
-    bool showFonts = shouldShowFonts(context);
-    if (showFonts) {
-      return element(context);
-    } else {
-      return fallback(context);
-    }
-  }
-
   //Must override
   @override
   toString() {
     //Only show some characters because this is for debugging
-    return '$runtimeType: {${toText().substring(0, 50)}}';
+    String text = toText();
+    if (text.length > 50) {
+      text = text.substring(0, 50);
+    }
+    return '$runtimeType: {$text}';
   }
 
-  //Must be unique
-  String get key => hashCode.toString();
+  ///Must be unique. Only use underscores as type_id
+  String get id => hashCode.toString();
   String toText();
   Widget element(BuildContext context);
-  Widget fallback(BuildContext context);
 
   Widget sliver(BuildContext context) {
-    bool showFonts = shouldShowFonts(context);
-    Widget child = showFonts ? element(context) : fallback(context);
-    Widget sliver =
-        SliverToBoxAdapter(key: Key('holderStba_$key'), child: child);
-    sliver = SliverTextPad(key: Key('holderPad_$key'), sliver: sliver);
-    return sliver;
+    return SliverToText(key: Key(id), child: element(context));
   }
 
-  Widget debugSliver(BuildContext context) {
-    ///Allowed on release mode
-    ///Because CAN YOU IMAGINE if something only works in Debug
-    return DeferredDebugWrap(holder: this, showFonts: true);
-  }
+  ///Allowed on release mode
+  ///Because CAN YOU IMAGINE if something only works in Debug
+
+  Widget debugSliver(BuildContext context);
 
   Future load({required String? debugId}) async {
     ///DebugId is passed to FontLoader
@@ -77,11 +55,6 @@ abstract class CodeHolder extends Holder {
   const CodeHolder();
 
   @override
-  Widget fallback(BuildContext context) {
-    return element(context);
-  }
-
-  @override
   Widget debugSliver(BuildContext context) {
     ///Allowed on release mode
     ///Because CAN YOU IMAGINE if something only works in Debug
@@ -91,4 +64,17 @@ abstract class CodeHolder extends Holder {
 
 bool shouldShowFonts(BuildContext context) {
   return ViewSettings.instance.showFonts;
+}
+
+class SliverToText extends StatelessWidget {
+  final Widget child;
+  const SliverToText({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+        key: Key('Pad_$key'),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        sliver: SliverToBoxAdapter(key: const Key('Stba'), child: child));
+  }
 }

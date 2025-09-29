@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soyourhomeworld/frontend/elements/holders/holder_base.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart'
     show SpanHoldingCode;
 
@@ -26,7 +27,14 @@ class GotoButtonHolder extends SpanHoldingCode {
 
   @override
   Widget element(BuildContext context) {
-    return _GotoButtonWidget(key: Key('goto_widget_$hashCode'), holder: this);
+    return _GotoButtonWidget(key: Key('goto_widget_$id'), holder: this);
+  }
+
+  @override
+  Widget sliver(BuildContext context) {
+    return SliverToText(
+        key: Key(id),
+        child: _GotoButtonWidget(key: Key('goto_widget_$id'), holder: this));
   }
 }
 

@@ -111,9 +111,7 @@ class _FlameWidgetState extends State<FlameWidget>
 
   Widget builder(BuildContext builder, Widget? previous) {
     // dev.log("Builder: ${animationController.value}");
-    Size size = Size(widget.width, widget.height);
-    late final Widget? button;
-    button = null;
+
     // if (buttonShowing) {
     //   button = FireButton(
     //     key: const Key("fireButton"),

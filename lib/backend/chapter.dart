@@ -43,7 +43,7 @@ class Chapter {
 
   @override
   String toString() {
-    return 'Chapter $varName ($id)';
+    return 'Chp.$id:$varName;';
   }
 
 //Can't be final because of object creation
@@ -271,6 +271,11 @@ class ChapterProvider extends InheritedWidget {
       required this.chapter,
       required this.part,
       required super.child});
+
+  ChapterProvider copyWith({required Widget child}) {
+    return ChapterProvider(
+        key: key, chapter: chapter, part: part, child: child);
+  }
 
   @override
   Widget get child => Theme(data: part.theme, child: super.child);

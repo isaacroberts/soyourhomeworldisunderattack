@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/slivers/null_slivers.dart';
 
 import '../../../backend/error_handler.dart';
 import '../widgets/loader.dart';
@@ -29,12 +30,33 @@ class FutureHolder extends Holder {
   }
 
   @override
+  Widget element(BuildContext context) {
+    if (resolvedHolder != null) {
+      return resolvedHolder!.element(context);
+    }
+    return FutureBuilder(
+        key: Key('ftr_$id'), future: holder, builder: futureBuilder);
+  }
+
+  @override
   Widget sliver(BuildContext context) {
     if (resolvedHolder != null) {
       return resolvedHolder!.sliver(context);
     }
     return FutureBuilder(
-        key: Key("FH_$hashCode"), future: holder, builder: futureBuilder);
+        key: Key("ftr_$id"), future: holder, builder: futureSliverBuilder);
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    if (resolvedHolder != null) {
+      return resolvedHolder!.debugSliver(context);
+    } else {
+      return FutureBuilder(
+          key: Key('ftr_$id'),
+          future: holder,
+          builder: futureDebugSliverBuilder);
+    }
   }
 
   Widget futureBuilder(BuildContext context, AsyncSnapshot<Holder> snapshot) {
@@ -45,58 +67,33 @@ class FutureHolder extends Holder {
       return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
           .element(context);
     } else {
-      return const SliverToBoxAdapter(
-          child: SizedBox(
-              height: 150,
-              child: TriWizardLoader(
-                message: 'Getting code element',
-              )));
+      return const SizedTriWizardLoader();
     }
   }
 
-  @override
-  Widget element(BuildContext context) {
-    if (resolvedHolder != null) {
-      return resolvedHolder!.element(context);
-    }
-    //I think even on the fallback, try to show these
-    //So far this is only used for code
-    return FutureBuilder(future: holder, builder: fallbackFutureBuilder);
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    if (resolvedHolder != null) {
-      return resolvedHolder!.fallback(context);
-    }
-    //I think even on the fallback, try to show these
-    //So far this is only used for code
-    return FutureBuilder(future: holder, builder: fallbackFutureBuilder);
-  }
-
-  Widget fallbackFutureBuilder(
+  Widget futureSliverBuilder(
       BuildContext context, AsyncSnapshot<Holder> snapshot) {
     if (snapshot.hasData) {
       resolvedHolder = snapshot.data!;
-      return snapshot.data!.fallback(context);
+      return snapshot.data!.sliver(context);
     } else if (snapshot.hasError) {
       return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
-          .element(context);
+          .sliver(context);
     } else {
-      return const SizedBox(
-          height: 150,
-          child: TriWizardLoader(
-            message: 'Getting code element (fallback)',
-          ));
+      return const SmallLoadSliver();
     }
   }
 
-  @override
-  Widget debugSliver(BuildContext context) {
-    if (resolvedHolder != null) {
-      return resolvedHolder!.debugSliver(context);
+  Widget futureDebugSliverBuilder(
+      BuildContext context, AsyncSnapshot<Holder> snapshot) {
+    if (snapshot.hasData) {
+      resolvedHolder = snapshot.data!;
+      return snapshot.data!.debugSliver(context);
+    } else if (snapshot.hasError) {
+      return ErrorList.logError(snapshot.error!, snapshot.stackTrace)
+          .sliver(context);
     } else {
-      return super.debugSliver(context);
+      return const SmallLoadSliver();
     }
   }
 }

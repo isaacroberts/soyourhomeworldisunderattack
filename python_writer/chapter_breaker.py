@@ -34,36 +34,12 @@ def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='font
         pst.recall_saved_responses('data/chapterbreaker_responses')
 
     chapters = break_chapters(spans)
+    assert (len(chapters)>0)
     chapters = clean_chapters(chapters)
 
     pst.print_and_save_responses('data/chapterbreaker_responses')
 
     write(chapters, chapters_out)
-
-def write(chapters, filename='chapters.json'):
-    """
-    Write chapters to json
-    """
-    print("Preparing for pickle")
-
-    # Prevent pickling recursion in nexts
-    for chapter in chapters:
-        if chapter.next is not None:
-            chapter.next = chapter.next.id
-
-    print('Saving files:')
-
-    for chapter in chapters:
-        chapter.prepare_for_save()
-
-    import json
-    import jsonpickle
-
-    with open('temp/'+filename, 'w') as f:
-        str1 = jsonpickle.encode(chapters)
-        f.write(str1)
-
-    print('Saved!')
 
 def break_chapters(spans):
     chapters = []
@@ -87,6 +63,9 @@ def break_chapters(spans):
             chapter = Chapter(spans[0], spans[1:])
             chapters.append(chapter)
             spans = []
+
+    if len(chapters)==0:
+        chapters.append(Chapter(spans[0], spans[1:]))
 
     # Indexes
     for i in range(len(chapters)):
@@ -312,11 +291,14 @@ def remove_whitespace(chapter):
         print('remove newline from start', chapter.spans[0])
         chapter.spans.pop(0)
 
-    if isinstance(chapter.spans[0], Header) and len(chapter.spans)>1:
+    if len(chapter.spans)>1 and isinstance(chapter.spans[0], Header):
         print('first nonheader element: ', chapter.spans[1])
         while len(chapter.spans)>1 and isinstance(chapter.spans[1], (NewLine, NewLineSized)):
             print('remove newline from after header', chapter.spans[1])
             chapter.spans.pop(1)
+
+    if len(chapter.spans)==0:
+        return
 
     print('last element: ', chapter.spans[-1])
     cont = True
@@ -334,6 +316,35 @@ def remove_whitespace(chapter):
             else:
                 # clean small heights
                 chapter.spans.pop(-1)
+
+""" ============================
+       Write
+============================="""
+
+def write(chapters, filename='chapters.json'):
+    """
+    Write chapters to json
+    """
+    print("Preparing for pickle")
+
+    # Prevent pickling recursion in nexts
+    for chapter in chapters:
+        if chapter.next is not None:
+            chapter.next = chapter.next.id
+
+    print('Saving files:')
+
+    for chapter in chapters:
+        chapter.prepare_for_save()
+
+    import json
+    import jsonpickle
+
+    with open('temp/'+filename, 'w') as f:
+        str1 = jsonpickle.encode(chapters)
+        f.write(str1)
+
+    print('Saved!')
 
 
 """ ============================

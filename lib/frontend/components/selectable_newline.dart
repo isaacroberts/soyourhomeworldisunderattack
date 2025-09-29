@@ -1,8 +1,19 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
+class SelectableNewline extends StatelessWidget {
+  final double height;
+
+  const SelectableNewline({super.key, required this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+    );
+  }
+}
+
+/*
 class SelectableNewline extends SingleChildRenderObjectWidget {
   // Newlines that select properly when box-dragged.
   /// Otherwise, selections come out as one long string of text.
@@ -11,18 +22,24 @@ class SelectableNewline extends SingleChildRenderObjectWidget {
   const SelectableNewline({super.key, required this.height});
 
   @override
+  SingleChildRenderObjectElement createElement() {
+    return _SelectableNewlineElement(this);
+  }
+
+  @override
   RenderObject createRenderObject(BuildContext context) {
     Color? color = Theme.of(context).textSelectionTheme.selectionColor;
     var renderObject =
-        _SelectableNewlineState(height: height, selectionColor: color);
-    renderObject.registrar = SelectionContainer.maybeOf(context);
+        SelectableNewlineState(height: height, selectionColor: color);
+
+    renderObject.registrar = registrar;
     return renderObject;
   }
 
   @override
   void updateRenderObject(
       BuildContext context, covariant RenderObject renderObject) {
-    if (renderObject is _SelectableNewlineState) {
+    if (renderObject is SelectableNewlineState) {
       if (height != renderObject.height) {
         renderObject.height = height;
         renderObject.markNeedsLayout();
@@ -32,13 +49,27 @@ class SelectableNewline extends SingleChildRenderObjectWidget {
         renderObject.selectionColor = color;
         renderObject.markNeedsPaint();
       }
-      renderObject.registrar = SelectionContainer.maybeOf(context);
     }
     super.updateRenderObject(context, renderObject);
   }
 }
 
-class _SelectableNewlineState extends RenderBox
+class _SelectableNewlineElement extends SingleChildRenderObjectElement {
+  _SelectableNewlineElement(super.widget);
+
+  @override
+  void insertRenderObjectChild(
+      SelectableNewlineState child, covariant Object? slot) {
+
+    SelectionRegistrar? registrar = SelectionContainer.maybeOf(this.);
+
+    renderObject.registrar = SelectionContainer.maybeOf(context);
+    // TODO: implement insertRenderObjectChild
+    super.insertRenderObjectChild(child, slot);
+  }
+}
+
+class SelectableNewlineState extends RenderBox
     with Selectable, SelectionRegistrant {
   /// Newlines that select properly when box-dragged.
   /// Otherwise, selections come out as one long string of text.
@@ -49,7 +80,7 @@ class _SelectableNewlineState extends RenderBox
   bool _selected = false;
   Color? selectionColor;
 
-  _SelectableNewlineState({required this.height, required this.selectionColor});
+  SelectableNewlineState({required this.height, required this.selectionColor});
 
   bool get selected => _selected;
   set selected(bool set) {
@@ -301,3 +332,4 @@ class _SelectableNewlineState extends RenderBox
   @override
   bool get sizedByParent => false;
 }
+*/

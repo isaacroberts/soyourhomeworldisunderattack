@@ -10,7 +10,7 @@ const double k = 12 * fontScale;
 // const Color labelTextColor = Color(0x88ffffff);
 //TODO: Remove all of these
 const Color appTextColor = NoirPrimary.shaded;
-const Color textColor = NoirPrimary.shadef;
+const Color textColor = NoirPrimary.shadee;
 const Color fallbackTextColor = NoirPrimary.shadee;
 const Color labelTextColor = NoirPrimary.shadec;
 
@@ -27,7 +27,7 @@ const TextStyle bodyFont = TextStyle(
 );
 
 const TextStyle headerFont = TextStyle(
-  fontFamily: 'Rubik',
+  fontFamily: 'Palatino',
   fontSize: 24,
   color: textColor,
   fontWeight: FontWeight.w500,

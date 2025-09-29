@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/server.dart';
@@ -36,8 +38,19 @@ class TitleHolder extends Holder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return const TitleFallbackWidget();
+  Widget sliver(BuildContext context) {
+    return const SliverToBoxAdapter(
+      child: TitleWidget(),
+    );
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    //For speed, don't show TitleWidget
+    double height = MediaQuery.sizeOf(context).height - 60;
+    return DecoratedSliver(
+        decoration: const BoxDecoration(color: Color(0xff113388)),
+        sliver: SliverPadding(padding: EdgeInsets.only(bottom: height)));
   }
 
   @override
@@ -80,6 +93,7 @@ class _TitleWidgetState extends State<TitleWidget>
   @override
   void dispose() {
     animationController.dispose();
+    shaderAnimation.dispose();
     super.dispose();
   }
 
@@ -238,6 +252,7 @@ class TitleSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Chapter chapter = Book.of(context).chapters[0];
+    dev.log("Title title: ${chapter.displayName}");
     Part partData = const PartNoir();
     return ChapterProvider(
         key: Key("Chp${chapter.key}"),

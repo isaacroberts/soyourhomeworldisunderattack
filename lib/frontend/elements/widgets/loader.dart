@@ -4,6 +4,21 @@ import 'package:soyourhomeworld/frontend/icons.dart';
 
 //ThreeRotatingDots from https://pub.dev/packages/loading_animation_widget
 
+class SizedTriWizardLoader extends StatelessWidget {
+  const SizedTriWizardLoader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+        key: Key('sizedLdr'),
+        height: 300,
+        child: TriWizardLoader(
+          key: Key('ldr'),
+          message: null,
+        ));
+  }
+}
+
 class TriWizardLoader extends StatelessWidget {
   final String? message;
   final Color? loaderColor;
@@ -46,6 +61,26 @@ class TriWizardLoader extends StatelessWidget {
             )
           ]));
     }
+  }
+}
+
+class NoMessageTriWizardLoader extends StatelessWidget {
+  final Color? loaderColor;
+  final Color? textColor;
+  const NoMessageTriWizardLoader({super.key, this.loaderColor, this.textColor});
+  static const double size = 100;
+
+  @override
+  Widget build(BuildContext context) {
+    Color loaderColor =
+        this.loaderColor ?? Theme.of(context).colorScheme.primary;
+
+    return Center(
+        child: _TriWizardLoader(
+      loaderColor: loaderColor,
+      textColor: const Color(0xff000000),
+      key: const Key("Loader"),
+    ));
   }
 }
 

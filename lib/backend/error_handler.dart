@@ -49,6 +49,15 @@ class ErrorList {
     return exceptionHolder;
   }
 
+  ///Returns the ExceptionHolder in case you want to display the widget
+  static ExceptionHolder silentLogError(Object e, [StackTrace? trace]) {
+    ExceptionHolder exceptionHolder =
+        ExceptionHolder(exception: e, stackTrace: trace ?? StackTrace.current);
+
+    instance.list.add(exceptionHolder);
+    return exceptionHolder;
+  }
+
   static ExceptionHolder logWarning(Object warning, [StackTrace? trace]) {
     dev.log("Warning: $warning");
     if (trace != null) {
@@ -69,14 +78,14 @@ class ErrorList {
   }
 
   static void printError(Object exception, Object? trace) {
-    dev.log('\n\n');
+    // dev.log('\n\n');
     dev.log(' -!- Exception -!- ');
     dev.log(exception.toString());
     if (trace != null) {
       dev.log(' --- Stack Trace ---');
       dev.log(trace.toString());
     }
-    dev.log('\n\n');
+    dev.log('--|$exception|--');
   }
 
   // == Element routers
@@ -165,13 +174,20 @@ class ExceptionHolder extends Holder implements ExceptionHolderBase {
     return defer.element(context, holder: this);
   }
 
-  Widget box(BuildContext context) {
-    return defer.holderBox(context, holder: this);
+  @override
+  Widget sliver(BuildContext context) {
+    return SliverToText(child: element(context));
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return defer.element(context, holder: this);
+  Widget debugSliver(BuildContext context) {
+    //TODO: 200-height overscroller
+    //It's already a sliver
+    return SliverToBoxAdapter(child: element(context));
+  }
+
+  Widget box(BuildContext context) {
+    return defer.holderBox(context, holder: this);
   }
 
   @override

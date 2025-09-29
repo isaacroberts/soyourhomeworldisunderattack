@@ -8,6 +8,7 @@ import 'package:soyourhomeworld/frontend/elements/holders/future_holder.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
+import '../frontend/image/base_image_holder.dart';
 import '../frontend/image/image_holder.dart';
 import 'chapter_info.dart';
 
@@ -85,10 +86,10 @@ class ChapterData {
       header ?? const HeaderOfText(text: 'Loading...');
 
   ///Used for rounding up images for display & dipose
-  Iterable<ImageHolder> getImages() sync* {
+  Iterable<StdImageHolder> getImages() sync* {
     sweepForFutures();
     for (Holder holder in lines) {
-      if (holder is ImageHolder) {
+      if (holder is StdImageHolder) {
         yield holder;
       }
     }
@@ -117,6 +118,16 @@ class ChapterData {
         }
       }
     }
+  }
+
+  bool hasCodeSpan() {
+    for (int ix = 0; ix < lines.length; ++ix) {
+      Holder holder = lines[ix];
+      if (holder is CodeHolder) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /* =========================================================================
@@ -166,7 +177,7 @@ class ChapterData {
   ///Preload
   void cacheImages(BuildContext context) {
     sweepForFutures();
-    for (ImageHolder image in getImages()) {
+    for (StdImageHolder image in getImages()) {
       image.cacheImage(context);
     }
   }
@@ -174,7 +185,7 @@ class ChapterData {
   ///Save memory
   void disposeImages() {
     sweepForFutures();
-    for (ImageHolder image in getImages()) {
+    for (StdImageHolder image in getImages()) {
       image.dispose();
     }
   }

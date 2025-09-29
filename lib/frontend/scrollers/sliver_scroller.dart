@@ -1,8 +1,10 @@
 import 'dart:developer' as dev;
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/theme_changing_scaffold.dart';
+import 'package:soyourhomeworld/backend/server.dart';
+import 'package:soyourhomeworld/backend/utils.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import 'package:soyourhomeworld/frontend/parts/grand_swatch.dart';
 
@@ -12,7 +14,6 @@ import '../../backend/start_chapter.dart';
 import '../elements/chapter_heading/heading_data.dart';
 import '../icons.dart';
 import '../pages/title/title.dart';
-import '../parts/noir_colors.dart';
 import '../parts/noir_part.dart';
 import '../parts/part.dart';
 import '../slivers/chapter_sliver.dart';
@@ -26,29 +27,33 @@ const Part defaultPart = PartNoir();
 class SliverScroller extends StatefulWidget {
   // final Book book;
   // final int? startChapter;
-
+  final bool hasIndex;
   final StartChapter startChapter;
 
-  const SliverScroller({super.key, required this.startChapter});
+  const SliverScroller(
+      {super.key, required this.startChapter, required this.hasIndex});
 
   @override
   State<SliverScroller> createState() => _SliverScrollerState();
-}
-
-//TODO: Move to central file
-//TODO: Save current chapter to users machine
-void setCurrentChapter(int ix) async {}
-Future<int?> getStartChapter() async {
-  return null;
 }
 
 class _SliverScrollerState extends State<SliverScroller> {
   late Book book;
 
   // int get startChapter => widget.startChapter ?? 0;
-  int? get firstLoadedChapter => chapters.isEmpty ? null : chapters.first.index;
-  int get endChapter => chapters.isEmpty ? 0 : chapters.last.index;
-  final List<Chapter> chapters = [];
+  // int? get firstLoadedChapter => chapters.isEmpty ? null : chapters.first.index;
+  // int get endChapter => chapters.isEmpty ? 0 : chapters.last.index;
+  int firstLoadedChapter = 0;
+  int _endChapter = 1;
+  int get endChapter => _endChapter;
+  set endChapter(int set) {
+    _endChapter = clampInt(0, set, book.chapterAmt);
+  }
+  // final List<Chapter> chapters = [];
+
+  Chapter chapters(int ix) {
+    return book.chapters[ix];
+  }
 
   Chapter? currentChapter;
   //This is needed for the background
@@ -59,21 +64,29 @@ class _SliverScrollerState extends State<SliverScroller> {
 
   @override
   void initState() {
-    ScrollController? c = Scrollable.maybeOf(context)?.widget.controller;
-    dev.log("Had scroll controller: ${c != null}");
-    controller = c ??
-        ScrollController(
-            debugLabel: 'SliverScrollController',
-            onAttach: scrollControllerAttach,
-            keepScrollOffset: true);
+    // ScrollController? c = Scrollable.maybeOf(context)?.widget.controller;
+    // dev.log("Had scroll controller: ${c != null}");
+    controller = ScrollController(
+        debugLabel: 'SliverScrollController',
+
+        // onAttach: scrollControllerAttach,
+        onDetach: scrollControllerDetatch,
+        keepScrollOffset: false);
     controller.addListener(scrollNotification);
+
     super.initState();
   }
 
   void scrollControllerAttach(ScrollPosition pos) {
     //TODO: Check this in various functions to reduce UI load
     // Scrollable.of(context).position.recommendDeferredLoading(context);
-    //TODO:
+  }
+  void scrollControllerDetatch(ScrollPosition pos) {
+    for (int n = firstLoadedChapter; n < endChapter; ++n) {
+      if (book.chapters[n].needsDispose()) {
+        book.chapters[n].unloadCompletely();
+      }
+    }
   }
 
   @override
@@ -86,22 +99,58 @@ class _SliverScrollerState extends State<SliverScroller> {
 
     part = defaultPart;
 
-    if (chapters.isEmpty) {
-      populateAtStart();
-    } else {
-      updateChapters();
-    }
     super.didChangeDependencies();
+
+    widget.startChapter.getStart(book).then(chapterReceivedAtStart);
   }
 
   @override
   void didUpdateWidget(SliverScroller oldWidget) {
-    dev.log("(SlvScroller: didUpdateWidget()start=${widget.startChapter}");
+    dev.log("(SlvScroller: didUpdateWidget()");
 
     super.didUpdateWidget(oldWidget);
     //If chapter changed
     if (widget.startChapter != oldWidget.startChapter) {
-      updateChapters();
+      widget.startChapter.getStart(book).then(chapterReceivedAtStart);
+    }
+  }
+
+  void chapterReceivedAtStart(Chapter? chapter) {
+    dev.log("StartChapter = $chapter");
+
+    if (chapter == null) {
+      //Fix possible errors
+
+      //If end after beginning
+      if (endChapter <= firstLoadedChapter + 1) {
+        endChapter = firstLoadedChapter + 1;
+      }
+      return;
+    }
+
+    //If current chapter before start
+    if (firstLoadedChapter >= chapter.index) {
+      //Move view to current
+      setState(() {
+        currentChapter = chapter;
+        firstLoadedChapter = chapter.index;
+        endChapter = firstLoadedChapter + 3;
+      });
+    }
+    //If current chapter after last
+    else if (endChapter <= chapter.index) {
+      //Move view to current
+      setState(() {
+        currentChapter = chapter;
+        firstLoadedChapter = chapter.index;
+        endChapter = firstLoadedChapter + 3;
+      });
+    }
+    //If chapter is different
+    else if (currentChapter != chapter) {
+      //Scroll to new
+      currentChapter = chapter;
+      scrollToChapter(chapter, context: context);
     }
   }
 
@@ -109,7 +158,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     if (chapter == null) {
       return;
     }
-    if (kDebugMode) {
+    if (kDebugMode && false) {
       //It slows down the computer too much
       return;
     }
@@ -146,71 +195,35 @@ class _SliverScrollerState extends State<SliverScroller> {
     return true;
   }
 
-  void populateAtStart() async {
-    ///Load initial chapters
-    assert(chapters.isEmpty);
-//Load first
-    _addChapter(book.chapters[0]);
-
-    //Await startChapter from file
-    int? startChapter = await getStartChapter();
-
-    if (startChapter != null) {
-      //Load previously saved chapter
-
-//Load current
-      currentChapter = book.chapters[startChapter];
-      //Add all to view
-      addChaptersUntil(startChapter);
-
-      //Update view
-      updateView();
-      currentChapter?.load();
-
-      //TODO: Show snackbar saying 'loaded from bookmark'
-
-      scrollDelayed(book.chapters[startChapter]);
-    } else {
-      //Add preloaded next
-      _addChapter(book.chapters[1]);
-      //Update screen
-      updateView();
-    }
-  }
-
-  void updateChapters() async {
-    if (chapters.isEmpty) {
-      assert(false);
-    }
-    int? startChapter = await getStartChapter();
-
-    if (startChapter == null) {
-      //No further change is needed
-      return;
-    }
-    //If new scroll is oob
-    if (startChapter >= endChapter) {
-      addChaptersUntil(startChapter);
-    }
-    int firstLoadedChapter = this.firstLoadedChapter!;
-
-    if (startChapter < firstLoadedChapter) {
-      _insertStartChaptersUntil(startChapter);
-    }
-
-    //Scroll to new chapter
-    scrollDelayed(book.chapters[startChapter]);
-  }
-
   void updateView() {
     if (mounted) {
       setState(() {});
     }
   }
 
-  void scrollNotification() {
-    if (controller.offset > controller.position.maxScrollExtent - 3000) {
-      addChapter();
+  bool canAdd = true;
+
+  void scrollNotification() async {
+    //There are, for some reason, multiple scrolls
+    if (!canAdd) {
+      return;
+    }
+    ScrollPosition position = controller.positions.last;
+
+    // dev.log("Pixels : ${position.pixels} / ${position.maxScrollExtent}");
+    if (position.pixels > position.maxScrollExtent - 2000) {
+      //Add 2 chapters at once
+      int newEnd = math.min(book.chapterAmt, endChapter + 2);
+      dev.log("Add chapters to $newEnd");
+      if (newEnd != endChapter) {
+        //Add new to view
+        setState(() {
+          endChapter = newEnd;
+        });
+      }
+      canAdd = false;
+      await Future.delayed(const Duration(seconds: 1));
+      canAdd = true;
     }
   }
 
@@ -223,6 +236,9 @@ class _SliverScrollerState extends State<SliverScroller> {
   }
 
   void chapterBecomesMain(Chapter? chapter) {
+    if (!mounted) {
+      return;
+    }
     if (chapter != currentChapter) {
       // dev.log("Main: ${chapter?.varName}");
       if (chapter != null) {
@@ -233,8 +249,9 @@ class _SliverScrollerState extends State<SliverScroller> {
           part = getPartImmediate(currentChapter!.part);
         }
         //Refresh view
-        setState(() {});
-        //Dispose old chapters
+        if (mounted) {
+          setState(() {});
+        } //Dispose old chapters
         //The minimum height for chapters puts them on 3 on screen at a time
         disposeChaptersBefore(currentChapter!.index - 4);
       } else {
@@ -248,128 +265,61 @@ class _SliverScrollerState extends State<SliverScroller> {
     } else if (chapter?.needsLoad ?? false) {
       chapter?.load();
     }
+    if (currentChapter != null) {
+      bookmarkCurrentChapter(currentChapter!.index);
+    }
   }
 
   void disposeChaptersBefore(int disposeBefore) async {
     bool printedYet = false;
-    for (int n = 0; n < chapters.length; ++n) {
-      int chapterIx = chapters[n].index;
-      if (chapterIx >= disposeBefore) {
-        return;
-      } else {
-        // if (chapters[n].c)
-        //Delete all images and holders
-        if (chapters[n].needsDispose()) {
-          chapters[n].unloadCompletely();
-          if (!printedYet) {
-            dev.log("Disposing $chapterIx-$disposeBefore");
-            printedYet = true;
-          }
+    for (int n = firstLoadedChapter; n < disposeBefore; ++n) {
+      //Delete all images and holders
+      if (chapters(n).needsDispose()) {
+        chapters(n).unloadCompletely();
+        if (!printedYet) {
+          dev.log("Disposing $n-$disposeBefore");
+          printedYet = true;
         }
       }
     }
   }
 
   void addChaptersUntil(int desiredCurrent) {
-    //Add all to view
+    setState(() {
 //Add 1 extra for preload
-    int endChapter = this.endChapter;
-    for (int n = endChapter + 1; n <= desiredCurrent + 1; ++n) {
-      _addChapter(book.chapters[n]);
-    }
-  }
-
-  void _insertStartChaptersUntil(int startIx) {
-    //Add all to view
-//Add 1 extra for preload
-    //Helpful clamp
-    if (startIx < 0) {
-      startIx = 0;
-    }
-    if (chapters.isEmpty) {
-      _addChapter(book.chapters[startIx]);
-      return;
-    } else {
-      int currentStart = firstLoadedChapter!;
-      for (int n = currentStart - 1; n >= startIx; --n) {
-        _insertStartChapter(book.chapters[n]);
-      }
-    }
-  }
-
-  void addChapter() {
-    //TODO: This allowed custom paths through the scroll.
-    //However, I don't think we want that
-    // Chapter? next = chapters.last.next;
-
-    int nextIx = chapters.last.index + 1;
-    Chapter? next;
-    if (nextIx < book.chapterAmt && nextIx >= 0) {
-      next = book.chapters[nextIx];
-    }
-    if (next != null) {
-      _addChapter(next);
-      if (mounted) {
-        setState(() {});
-      }
-    }
-  }
-
-  void _addChapter(Chapter? chapter) {
-    if (chapter != null) {
-      if (kDebugMode) {
-        assert(!chapters.contains(chapter),
-            'Re-adding chapter ${chapter.varName} (${chapter.index}) to end (first=$firstLoadedChapter start=${widget.startChapter} end=$endChapter)');
-      } else if (kReleaseMode) {
-        //Safety first!
-        if (chapters.contains(chapter)) {
-          return;
-        }
-      }
-      chapters.add(chapter);
-    }
-  }
-
-  void _insertStartChapter(Chapter? chapter) {
-    if (chapter != null) {
-      if (kDebugMode) {
-        assert(!chapters.contains(chapter),
-            'Re-adding chapter ${chapter.varName} (${chapter.index}) to start (first=$firstLoadedChapter start=${widget.startChapter} end=$endChapter)');
-      } else if (kReleaseMode) {
-        //Safety first!
-        if (chapters.contains(chapter)) {
-          return;
-        }
-      }
-
-      chapters.insert(0, chapter);
-    }
+      endChapter = desiredCurrent + 1;
+    });
   }
 
   Future<void> onRefresh() async {
-    if (chapters.isEmpty) {
-      return;
-    }
-    int chapterIx = chapters.first.index - 1;
-    if (chapterIx >= 0) {
-      Chapter currentChapter = book.chapters[chapters.first.index];
-
-      Chapter? chapter = book.chapters[chapterIx];
-      _insertStartChaptersUntil(chapterIx - 2);
+    int chapterIx = firstLoadedChapter;
+    if (chapterIx > 0) {
+      setState(() {
+        firstLoadedChapter = math.max(firstLoadedChapter - 1, 0);
+      });
+      scrollDelayed(currentChapter);
 
       // updateView();
 
-      await scrollUpDelayed(currentChapter);
+      // await scrollUpDelayed(currentChapter);
       // await Future.delayed(const Duration(seconds: 3));
-
-      chapter.load();
-
+      currentChapter?.load();
       //I assume this refreshes the view
       return;
     } else {
       //No chapters to add
       showNothingToInsertOverlay();
       return;
+    }
+  }
+
+  void onAddExtra() {
+    int newEnd = math.min(book.chapterAmt, endChapter + 4);
+    if (newEnd != endChapter) {
+      //Add new to view
+      setState(() {
+        endChapter = newEnd;
+      });
     }
   }
 
@@ -382,50 +332,50 @@ class _SliverScrollerState extends State<SliverScroller> {
   Widget builder(BuildContext context, BoxConstraints? constraints) {
     List<Widget> slivers = [];
 
-    if (chapters.isEmpty) {
+    if (firstLoadedChapter == endChapter) {
       slivers.add(const LoadSliver(chapterTitle: 'Chapters'));
     } else {
-      slivers.addAll(chapters.map<Widget>(itemMapper).toList(growable: false));
+      slivers.addAll(book.chapters
+          .sublist(firstLoadedChapter, endChapter)
+          .map<Widget>(itemMapper)
+          .toList(growable: false));
     }
 
-    slivers.add(const _FillRemaining(key: Key("fillRemaining")));
-    return ThemeChangingScaffold(
-        key: const Key("SliverScaffold"),
-        source: 'scroll',
-        background: NoirPrimary.shade0,
+    if (endChapter == book.chapterAmt) {
+      slivers.add(const _FillRemaining(key: Key("fillRemaining")));
+    } else {
+      slivers.add(_HasExtraFillRemaining(
+          key: const Key('refreshRemaining'), onRequestMore: onAddExtra));
+    }
+    return ChapterHeadingData(
+        key: const Key("headingData"),
+        onChapterBecomesMain: chapterPositionSet,
+        child: refreshWrap(context,
+            // child: SelectionArea(
+            //     key: const Key("selection"),
+            child: CustomScrollView(
+              // dragStartBehavior: DragStartBehavior.down,
+              restorationId: 'sliverScroll',
+              // primary: true,
 
-        //TODO: Future loader for part
-        part: part,
-        showFAB: false,
-        child: ChapterHeadingData(
-            key: const Key("headingData"),
-            onChapterBecomesMain: chapterPositionSet,
-            child: refreshWrap(context,
-                child: SelectionArea(
-                    key: const Key("selection"),
-                    child: CustomScrollView(
-                      // dragStartBehavior: DragStartBehavior.down,
-                      restorationId: 'sliverScroll',
-                      // primary: true,
+              key: const Key("SliverCustomScrollView"),
+              //Loads & lays out sooner
+              cacheExtent: 2000,
 
-                      key: const Key("SliverCustomScrollView"),
-                      //Loads & lays out sooner
-                      cacheExtent: 2000,
+              shrinkWrap: false,
 
-                      shrinkWrap: false,
-
-                      // physics: AlwaysScrollableScrollPhysics(),
-                      controller: controller,
-                      slivers: slivers,
-                    )))));
+              // physics: AlwaysScrollableScrollPhysics(),
+              controller: controller,
+              slivers: slivers,
+            )));
   }
 
   Widget refreshWrap(BuildContext context, {required Widget child}) {
-    if (chapters.isEmpty) {
+    if (firstLoadedChapter == endChapter) {
       //Almost wanna refresh immediately
       return child;
     }
-    if (chapters.first.index == 0) {
+    if (firstLoadedChapter == 0) {
       //Don't add RefreshWrap if already at beginning
       return child;
     } else {
@@ -520,9 +470,62 @@ class _FillRemaining extends StatelessWidget {
                 children: [
                   Icon(
                     key: const Key("fillRmIcon"),
-                    RpgAwesome.burning_meteor,
+                    RpgAwesome.fedora,
                     color: primary.sa,
                     size: 48,
+                  ),
+                  const Text('Heh, thanks for reading.'),
+                  // const Text('You have Helped your Homeworld'),
+                  const Text("Why not share on social media?"),
+                  TextButton(
+                      onPressed: () => copyText(context, shareURL),
+                      style: const ButtonStyle(
+                        minimumSize: WidgetStatePropertyAll(Size(1, 5)),
+                      ),
+                      child: Text(
+                        serverDisplayURL,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(decoration: TextDecoration.underline),
+                      ))
+                ])));
+  }
+}
+
+class _HasExtraFillRemaining extends StatelessWidget {
+  final VoidCallback onRequestMore;
+  const _HasExtraFillRemaining({
+    required super.key,
+    required this.onRequestMore,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    GrandSwatch primary = GrandSwatch.primaryOf(context);
+
+    return SliverToBoxAdapter(
+        key: const Key("FillRemaining"),
+        child: Container(
+            key: const Key("fillRemCt"),
+            height: 200,
+            color: primary.s3,
+            alignment: Alignment.center,
+            child: Column(
+                key: const Key("fillRemCol"),
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text("Continue"),
+                  IconButton(
+                    onPressed: onRequestMore,
+                    icon: Icon(
+                      key: const Key("fillRmIcon"),
+                      RpgAwesome.fall_down,
+                      color: primary.sa,
+                      size: 48,
+                    ),
                   ),
                 ])));
   }

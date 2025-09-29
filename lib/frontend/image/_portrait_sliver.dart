@@ -1,12 +1,12 @@
-import 'dart:developer' as dev;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 import 'package:soyourhomeworld/frontend/image/image_buttons.dart';
-import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
 
+import '../theme/layout_constants.dart';
 import 'image_constants.dart';
 import 'image_holder.dart';
 
@@ -32,7 +32,7 @@ class PortraitSliver extends StatelessWidget {
     required this.holder,
   });
 
-  final ImageHolder holder;
+  final StdImageHolder holder;
 
   Image buildImage(BuildContext context) {
     ///Image!
@@ -62,28 +62,42 @@ class PortraitSliver extends StatelessWidget {
       width = maxHeight * aspectRatio;
     }
 
-    child = Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        child,
-        Positioned(
-          top: standardImageHeight - 96 - 12,
-          right: 12 + 3,
-          child: ImageButtonRow(key: const Key('imgButtonRow'), holder: holder),
-        )
-      ],
-    );
+    // child = Stack(
+    //   alignment: Alignment.bottomRight,
+    //   children: [
+    //     child,
+    //     Positioned(
+    //       top: standardImageHeight - 96 - 12,
+    //       right: 12 + 3,
+    //       child: ImageButtonRow(key: const Key('imgButtonRow'), holder: holder),
+    //     )
+    //   ],
+    // );
 
     // child = Tooltip(message: 'Portrait; Aspect=$aspectRatio', child: child);
 
-    return _PortraitSliver(
+    child = _PortraitSliver(
         key: const Key('tallSliver'), holder: holder, child: child);
+    child = SliverStack(
+      positionedAlignment: Alignment.bottomRight,
+      children: [
+        child,
+        // SliverToBoxAdapter(
+        //   child: ImageButtonRow(key: const Key('imgButtons'), holder: holder),
+        // )
+        SliverPositioned(
+            bottom: 12,
+            right: 12,
+            child: ImageButtonRow(key: const Key('imgButtons'), holder: holder))
+      ],
+    );
+    return child;
   }
 }
 
 class _PortraitSliver extends SliverToBoxAdapter {
   ///Wrapper for the RenderObject
-  final ImageHolder holder;
+  final StdImageHolder holder;
 
   const _PortraitSliver(
       {required this.holder, required super.key, required super.child});
@@ -240,9 +254,9 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     // scrollPct = math.min(1, scrollPct);
     // scrollPct = math.max(0, scrollPct);
     // scrollPct = ui.clampDouble(scrollPct, 0, 1);
-    if (scrollPct >= -1 && scrollPct < 2) {
-      dev.log('%[$debugName]=$scrollPct');
-    }
+    // if (scrollPct >= -1 && scrollPct < 2) {
+    //   dev.log('%[$debugName]=$scrollPct');
+    // }
     scrollPct = ui.clampDouble(scrollPct, 0, 1);
     return scrollPct;
   }
@@ -252,7 +266,7 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
 
     // yOffset -= geometry!.paintOrigin;
 
-    dev.log("y[$debugName]=$yOffset overlap=$overlap");
+    // dev.log("y[$debugName]=$yOffset overlap=$overlap");
 
     // yOffset = math.max(appBarSize, yOffset);
     // yOffset = math.min(yOffset, viewportMainAxisExtent - height);
@@ -284,73 +298,6 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     //Once scroll all the way up, the image top should be just under the appBar
     double endExtent = appBarSize;
     return initialExtent + scrollPct * (endExtent - initialExtent);
-    if (scrollPct == 0) {
-      //When first seen, the image bottom should be aligned with the bottom of the viewport
-      // v - h - (d - h)
-      // v - h + (-d + h)
-      //v - h - d + h
-      //v - d
-      //
-      return viewportMainAxisExtent - desiredHeight;
-    }
-    if (scrollPct == 1) {
-      //Once scroll all the way up, the image top should be just under the appBar
-      //so that the entire image is see-able
-      return appBarSize;
-    }
-    double invScroll = 1 - scrollPct;
-    return
-        //AppBar compensation
-        appBarSize * scrollPct
-            //Transit across screen
-            +
-            invScroll * (viewportMainAxisExtent - desiredHeight)
-        // Parallax
-        // + invScroll * diff
-        //Height compensation
-        ;
-
-    // if (height <= portraitImgHeight) {
-    //   //Image is already sized and will not move
-    //   //Should be covered by above case
-    //   return 0;
-    // }
-    double availHeight = viewportMainAxisExtent;
-
-    if (desiredHeight < availHeight) {
-      //Image should parallax to fill screen
-      double diff = availHeight - desiredHeight;
-      //If parallax < epsilon
-      if (diff < 100) {
-        //Don't move it, it's maddening
-        //This should place the image at the bottom of the screen
-        //TODO: Clip image height when it goes above this diff
-        // dev.log("\tParallax too small [$debugName]");
-        return 0;
-      } else {
-        //Otherwise, parallax image to fill screen
-        //scrollPct+ = down
-        dev.log("\tParallax [$debugName]");
-        return -(scrollPct) * diff;
-      }
-    } else {
-      //Image must parallax to be visible
-
-      //Should image parallax backwards?
-      double extra = desiredHeight - height;
-      assert(extra > 0);
-      if (extra > 100) {
-        //scrollPct + = up
-        dev.log("\tReverse parallax [$debugName]");
-        return -extra * (1 - scrollPct);
-      } else {
-        // dev.log("\tReverse Parallax too small [$debugName]");
-
-        //Imperceptible amount getting cut off
-        //TODO: I think this should put it at the bottom
-        return 0;
-      }
-    }
   }
 
   @override

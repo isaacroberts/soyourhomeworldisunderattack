@@ -5,8 +5,7 @@ import 'package:flutter/rendering.dart';
 
 import '../../backend/chapter.dart';
 import '../parts/part.dart';
-
-const double readerWidth = 800;
+import '../theme/layout_constants.dart';
 
 class SliverReaderWidth extends SingleChildRenderObjectWidget {
   ///Also provides the BG color
@@ -52,7 +51,7 @@ class RenderSliverReaderWidth extends RenderProxySliver {
   @override
   void performLayout() {
     assert(child != null);
-    width = math.min(readerWidth - 24, constraints.crossAxisExtent);
+    width = math.min(maxReaderWidth - 24, constraints.crossAxisExtent);
     pad = (constraints.crossAxisExtent - width) / 2;
     SliverConstraints fitWidth = constraints.copyWith(crossAxisExtent: width);
     child!.layout(fitWidth, parentUsesSize: true);
@@ -97,21 +96,23 @@ class RenderSliverReaderWidth extends RenderProxySliver {
   @override
   void paint(PaintingContext context, Offset offset) {
     if (child != null) {
-      //Paint BG
-      double top = geometry!.paintOrigin;
-      double height = geometry!.paintExtent;
-      Paint bg = Paint()..color = part.gutterColor;
-      double gpad = pad - 12;
-      //Left side
-      context.canvas.drawRect(Rect.fromLTWH(0, top, gpad, height), bg);
-      //Right side
-      double right = constraints.crossAxisExtent;
-      context.canvas
-          .drawRect(Rect.fromLTWH(right - gpad, top, gpad, height), bg);
-      //Paint page
-      bg.color = part.pageColor;
-      context.canvas.drawRect(Rect.fromLTWH(gpad, top, width + 24, height), bg);
-
+      if (false) {
+        //Paint BG
+        double top = geometry!.paintOrigin;
+        double height = geometry!.paintExtent;
+        Paint bg = Paint()..color = part.gutterColor;
+        double gpad = pad - 12;
+        //Left side
+        context.canvas.drawRect(Rect.fromLTWH(0, top, gpad, height), bg);
+        //Right side
+        double right = constraints.crossAxisExtent;
+        context.canvas
+            .drawRect(Rect.fromLTWH(right - gpad, top, gpad, height), bg);
+        //Paint page
+        bg.color = part.pageColor;
+        context.canvas
+            .drawRect(Rect.fromLTWH(gpad, top, width + 24, height), bg);
+      }
       final parentData = child!.parentData;
       if (parentData is SliverPhysicalParentData) {
         // Use the precomputed paintOffset from performLayout

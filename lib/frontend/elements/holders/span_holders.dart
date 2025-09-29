@@ -1,6 +1,8 @@
 // import 'dart:math' as math;
 // import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/chapter.dart';
+import 'package:soyourhomeworld/frontend/components/deferrals/debug_wrap.dart';
 import 'package:soyourhomeworld/frontend/components/selectable_span.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
@@ -48,7 +50,7 @@ class SpanOfText extends Holder {
   ///Skips SelectionSpan in case it's not working
   Widget unselectableElement(BuildContext context) => RichText(
         text: TextSpan(children: [
-          for (int n = 0; n < spans.length; ++n) spans[n].fallback(context),
+          for (int n = 0; n < spans.length; ++n) spans[n].span(context),
         ]),
         textAlign: align,
       );
@@ -59,17 +61,21 @@ class SpanOfText extends Holder {
         key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
-        child: selectableElement(context));
+        child: unselectableElement(context));
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return WrapInTabs(
+  Widget sliver(BuildContext context) {
+    return SliverTabs(
         key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
-        //Do not use selectable JIC
         child: unselectableElement(context));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return DeferredHolderDebugSliver(holder: this);
   }
 
   @override
@@ -89,9 +95,6 @@ abstract class FragOfText {
   }
 
   bool isLoaded() => true;
-  InlineSpan fallback(BuildContext context) {
-    return span(context);
-  }
 }
 
 class FragBody extends FragOfText {
@@ -105,6 +108,7 @@ class FragBody extends FragOfText {
 
   @override
   InlineSpan span(BuildContext context) {
+    TextStyle bodyFont = ChapterProvider.of(context).part.bodyFont;
     return TextSpan(text: text, style: bodyFont);
   }
 }
@@ -131,11 +135,6 @@ class FragCustom extends FragOfText {
   @override
   InlineSpan span(BuildContext context) {
     return TextSpan(text: text, style: font.instanceWithColor(bgColor));
-  }
-
-  @override
-  InlineSpan fallback(BuildContext context) {
-    return TextSpan(text: text, style: font.fallbackWithColor(bgColor));
   }
 }
 
@@ -168,8 +167,8 @@ class FragSubSuper extends FragOfText {
     }
   }
 
-  InlineSpan subSuperSpan(BuildContext context, {required bool fallback}) {
-    TextStyle style = fallback ? font.fallback() : font.instance();
+  InlineSpan subSuperSpan(BuildContext context) {
+    TextStyle style = font.instance();
     if (subSuper == SubSuper.superscript) {
       style = style.copyWith(
         fontSize: style.fontSize! / 2,
@@ -206,18 +205,10 @@ class FragSubSuper extends FragOfText {
   @override
   InlineSpan span(BuildContext context) {
     if (subSuper.special) {
-      return subSuperSpan(context, fallback: false);
+      return subSuperSpan(context);
     } else {
       return TextSpan(text: text, style: font.instanceWithColor(color));
     }
-  }
-
-  @override
-  InlineSpan fallback(BuildContext context) {
-    if (subSuper.special) {
-      return subSuperSpan(context, fallback: true);
-    }
-    return TextSpan(text: text, style: font.fallbackWithColor(color));
   }
 }
 

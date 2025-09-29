@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 // import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
+import '../../../backend/binary_utils/code_params.dart';
 import '../../../backend/chapter.dart';
+import '../../image/base_image_holder.dart';
 import '../../parts/noir_colors.dart';
 import '../../theme/base_text_theme.dart';
 import '../holders/holder_base.dart';
 
-class _Comment {
+class FacebookComment {
   final String user;
   final String? comment;
   final bool replying;
   final int ix;
-  const _Comment(
+  const FacebookComment(
       {required this.user,
       required this.comment,
       this.replying = false,
       required this.ix});
 
-  //  _Comment factory ({required String user, required String? comment}) {
-  //   comment = comment?.trim();
-  //   //Save current open comment
-  // user = user.replaceAll('@', '');
-  // user = user.replaceAll(':', '');
-  // user = user.trim();
-  //
-  //   return _Comment.fromValues(user: user, comment: comment);
-  // }
-
-  const _Comment.blank({required this.ix})
+  const FacebookComment.blank({required this.ix})
       : user = '',
         comment = '',
         replying = false;
@@ -39,25 +32,28 @@ class _Comment {
 
 class FacebookHolder extends CodeHolder {
   ///Presumed to be in the Noir Part
-  final _Comment post;
-  final List<_Comment> comments;
+  final FacebookComment post;
+  final List<FacebookComment> comments;
+  final ImageHolder? image;
 
   FacebookHolder.blank()
-      : post = const _Comment.blank(ix: 0),
+      : post = const FacebookComment.blank(ix: 0),
         comments = const [
-          _Comment.blank(ix: 1),
-          _Comment.blank(ix: 2),
-          _Comment.blank(ix: 3),
-        ];
+          FacebookComment.blank(ix: 1),
+          FacebookComment.blank(ix: 2),
+          FacebookComment.blank(ix: 3),
+        ],
+        image = null;
 
-  FacebookHolder._fromThings({required this.post, required this.comments});
+  const FacebookHolder._fromThings(
+      {required this.post, required this.comments, this.image});
 
-  factory FacebookHolder(List<Holder> spans) {
+  factory FacebookHolder(List<Holder> spans, CodeParams params) {
     if (spans.isEmpty) {
       return FacebookHolder.blank();
     }
 
-    List<_Comment> comments = [];
+    List<FacebookComment> comments = [];
 
     String? user;
     String? currentString;
@@ -75,7 +71,7 @@ class FacebookHolder extends CodeHolder {
           }
           currentString = currentString?.trim();
           //Save current open comment
-          comments.add(_Comment(
+          comments.add(FacebookComment(
               ix: comments.length,
               user: user,
               comment: currentString,
@@ -98,33 +94,35 @@ class FacebookHolder extends CodeHolder {
     if (user != null) {
       //Last comment can't have a reply under it
       currentString = currentString?.trim();
-      comments.add(_Comment(
+      comments.add(FacebookComment(
           ix: comments.length,
           user: user,
           comment: currentString,
           replying: replying));
     }
 
+    ImageHolder? image;
+
     if (comments.isEmpty) {
       return FacebookHolder.blank();
     }
     return FacebookHolder._fromThings(
-        post: comments[0], comments: comments.sublist(1));
+        post: comments[0], comments: comments.sublist(1), image: image);
   }
 
   @override
   String toText() {
-    return '${post.toText()}\n${comments.map((c) => c.toText()).join('\n\n')}';
+    return '${post.toText()}\n\n${comments.map((c) => c.toText()).join('\n\n')}';
   }
 
   @override
   Widget element(BuildContext context) {
-    return FacebookElement(key: Key('FB_Post_$hashCode'), holder: this);
+    return FacebookElement(key: Key('FB_Post_$id'), holder: this);
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return FacebookElement(key: Key('FB_Post_$hashCode'), holder: this);
+  Widget sliver(BuildContext context) {
+    return FacebookSliver(key: Key('FB_Post_$id'), holder: this);
   }
 }
 
@@ -166,7 +164,7 @@ class FacebookElement extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _MainFBPost(key: const Key("Post"), post: holder.post),
-            for (_Comment comment in holder.comments)
+            for (FacebookComment comment in holder.comments)
               _CommentWidget(
                   key: Key("fb_comment ${comment.ix}"), post: comment),
             //Spacer
@@ -176,13 +174,64 @@ class FacebookElement extends StatelessWidget {
   }
 }
 
+///As above, but sliver protocol
+class FacebookSliver extends StatelessWidget {
+  final FacebookHolder holder;
+  const FacebookSliver({required super.key, required this.holder});
+
+  void nullClick() {}
+
+  @override
+  Widget build(BuildContext context) {
+    //margin
+    return SliverPadding(
+        key: const Key("FBPost"),
+        padding: const EdgeInsets.only(bottom: 12, left: 6, right: 6),
+        //maxWidth
+        sliver: SliverCrossAxisConstrained(
+            key: const Key('MaxWidth'),
+            maxCrossAxisExtent: 600,
+            alignment: 0,
+            //Container
+            child: DecoratedSliver(
+                key: const Key('Deco'),
+                decoration: BoxDecoration(
+                    color: NoirPrimary.shade3,
+                    border: Border.all(color: NoirPrimary.shade5, width: 1)),
+                //pad
+                sliver: SliverPadding(
+                    key: const Key('Pad'),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+                    sliver: SliverMainAxisGroup(
+                      key: const Key("primaryCol"),
+                      // mainAxisSize: MainAxisSize.min,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      slivers: [
+                        SliverToBoxAdapter(
+                            child: _MainFBPost(
+                                key: const Key("Post"), post: holder.post)),
+                        for (FacebookComment comment in holder.comments)
+                          SliverToBoxAdapter(
+                              child: _CommentWidget(
+                                  key: Key("fb_comment ${comment.ix}"),
+                                  post: comment)),
+                        //Spacer
+                        const SliverPadding(
+                            padding: EdgeInsets.only(bottom: 48))
+                      ],
+                    )))));
+  }
+}
+
 class _MainFBPost extends StatelessWidget {
   const _MainFBPost({
     super.key,
     required this.post,
   });
 
-  final _Comment post;
+  final FacebookComment post;
 
   @override
   Widget build(BuildContext context) {
@@ -264,7 +313,7 @@ class _CommentWidget extends StatelessWidget {
     required super.key,
     required this.post,
   });
-  final _Comment post;
+  final FacebookComment post;
 
   @override
   Widget build(BuildContext context) {

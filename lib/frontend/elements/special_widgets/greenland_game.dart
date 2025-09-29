@@ -55,12 +55,6 @@ class _GreenlandGameState extends State<GreenlandGame> {
 
   @override
   void initState() {
-    //Shit's not working/
-    Future.delayed(const Duration(milliseconds: 100), () {
-      submittable = true;
-      submit();
-    });
-
     seed = _newSeed();
     ticket = GreenlandTicket.standard(seed: seed);
     reference = GreenlandTicket.standard(seed: seed);

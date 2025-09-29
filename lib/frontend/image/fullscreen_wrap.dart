@@ -11,7 +11,7 @@ class ImageFullscreenWrapSliver extends StatelessWidget {
     required this.child,
   });
 
-  final ImageHolder holder;
+  final StdImageHolder holder;
 
   final Widget child;
 

@@ -5,7 +5,7 @@ import 'image_holder.dart';
 
 class CommonImageContainer extends StatefulWidget {
   // final Widget child;
-  final ImageHolder holder;
+  final StdImageHolder holder;
   //Build child element, with expanded state
   final Widget Function(BuildContext, bool expanded) childBuilder;
 
@@ -20,7 +20,7 @@ class CommonImageContainer extends StatefulWidget {
 }
 
 class _CommonImageContainerState extends State<CommonImageContainer> {
-  ImageHolder get holder => widget.holder;
+  StdImageHolder get holder => widget.holder;
   Color? get bgColor => holder.bgColor;
 
   bool _hovered = false;
@@ -136,7 +136,7 @@ class _CommonImageContainerState extends State<CommonImageContainer> {
 
 class CommonImageSliverContainer extends StatefulWidget {
   // final Widget child;
-  final ImageHolder holder;
+  final StdImageHolder holder;
   //Build child element, with expanded state
   final Widget Function(BuildContext, bool expanded) childBuilder;
 
@@ -149,7 +149,7 @@ class CommonImageSliverContainer extends StatefulWidget {
 
 class _CommonImageSliverContainerState
     extends State<CommonImageSliverContainer> {
-  ImageHolder get holder => widget.holder;
+  StdImageHolder get holder => widget.holder;
   Color? get bgColor => holder.bgColor;
 
   bool _hovered = false;

@@ -301,7 +301,7 @@ class _SocialFooterState extends State<_SocialFooterWidget> {
       return FadeTransition(opacity: animation, child: child);
 
       Animation<Offset> slide =
-          Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0))
+          Tween<Offset>(begin: const Offset(0, -1), end: const Offset(0, 0))
               .animate(animation);
       return SlideTransition(
           key: const Key('transRSlide'), position: slide, child: child);

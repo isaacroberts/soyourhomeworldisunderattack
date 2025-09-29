@@ -20,9 +20,9 @@ class ChapterStart:
 
     def leadingTitleChapter():
         c= ChapterStart('Title')
-        # c.index=0
-        # c.display_name='>'
-        # c.id='title'
+        c.index=0
+        c.display_name='Help! My Homeworld!'
+        c.id='title'
         return c
 
     # TODO: Delete

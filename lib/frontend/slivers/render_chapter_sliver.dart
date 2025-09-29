@@ -8,7 +8,7 @@ import 'package:soyourhomeworld/frontend/elements/chapter_heading/heading_data.d
 
 import '../../../../backend/chapter.dart';
 import '../parts/part.dart';
-import '../theme/base_colors.dart';
+import '../theme/layout_constants.dart';
 
 const bool squashForever = false;
 
@@ -72,11 +72,11 @@ class RenderChapterSliver extends RenderProxySliver {
 
   bool get wantsDifferentHeight => (desiredHeight - height).abs() > 1;
 
-  //Adds an epsilon for floatingPoint
-  bool get wantsGrow => (desiredHeight > height + 1);
+  //Adds an epsilon fWor floatingPoint
+  bool get wantsGrow => (desiredHeight > height + 10);
 
   //Adds an epsilon for floatingPoint
-  bool get wantsShrink => (desiredHeight < height - 1);
+  bool get wantsShrink => (desiredHeight < height - 10);
 
   @override
   void performLayout() {
@@ -335,11 +335,11 @@ class RenderChapterSliver extends RenderProxySliver {
       Rect rect = calculateClipRect();
 
       //Fill BG to remove transparency
-      if (onScreen()) {
-        Paint bg = Paint()..color = part.pageColor;
-        context.canvas
-            .drawRect(offset & Size(crossAxisExtent, drawnHeight), bg);
-      }
+      // if (onScreen()) {
+      //   Paint bg = Paint()..color = part.pageColor;
+      //   context.canvas
+      //       .drawRect(offset & Size(crossAxisExtent, drawnHeight), bg);
+      // }
       if (isRepaintBoundary) {
         //This won't clip
         context.paintChild(child!, offset);
@@ -365,9 +365,10 @@ class RenderChapterSliver extends RenderProxySliver {
         }
       }
 */
-      if (!squashForever) {
+      //TODO: Fix halo & put back; it's drawing at the wrong height
+      if (!squashForever && false) {
         //Halo to show extra content
-        if (wantsGrow || true) {
+        if (wantsGrow) {
           //White = text clipped
 
           drawHalo(context,
@@ -375,9 +376,9 @@ class RenderChapterSliver extends RenderProxySliver {
         }
 
         //Dark halo to show it wants to shorten
-        if (wantsShrink) {
-          drawHalo(context, offset: offset, start: part.primary.s0);
-        }
+        // if (wantsShrink) {
+        //   drawHalo(context, offset: offset, start: part.primary.s0);
+        // }
       }
     }
   }
@@ -386,7 +387,7 @@ class RenderChapterSliver extends RenderProxySliver {
       {required Offset offset, required Color? start, double? drawLine}) {
     drawLine ??= offset.dy + drawnHeight;
     start ??= const Color(0xffff0000);
-    final double haloHeight = math.min(72, (desiredHeight - height).abs());
+    // final double haloHeight = math.min(72, (desiredHeight - height).abs());
 
     Paint grad = Paint()
       ..color = start

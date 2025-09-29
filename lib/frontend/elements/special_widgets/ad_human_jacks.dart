@@ -85,7 +85,7 @@ Widget humanJackAdWidget(HumanJackAdType type) {
           child: SelectionContainer.disabled(child: type.getWidget())));
 }
 
-class HumanJackAdHolder extends Holder {
+class HumanJackAdHolder extends CodeHolder {
   final HumanJackAdType type;
   const HumanJackAdHolder(this.type);
   HumanJackAdHolder.random()
@@ -95,12 +95,6 @@ class HumanJackAdHolder extends Holder {
   @override
   Widget element(BuildContext context) {
     return slowLoadingHumanJackAdWidget(type);
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    //Choose not to dick them around on the fallback
-    return type.getWidget();
   }
 
   @override

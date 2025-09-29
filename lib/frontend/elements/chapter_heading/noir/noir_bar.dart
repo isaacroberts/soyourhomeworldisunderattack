@@ -21,7 +21,7 @@ class NoirBar extends StatelessWidget {
     return const SliverAppBarChop(
       key: Key("NoirAppBar"),
       systemOverlayStyle: SystemUiOverlayStyle(
-        systemNavigationBarColor: NoirPrimary.shade1, // Navigation bar
+        systemNavigationBarColor: NoirPrimary.shade5, // Navigation bar
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
 
@@ -41,12 +41,13 @@ class NoirBar extends StatelessWidget {
       // collapsedHeight: expandedHeight,
       expandedHeight: expandedHeight,
       backgroundColor: NoirPrimary.shade4,
+
       //Baked into theme
       // surfaceTintColor: NoirPrimary.shadec,
 
-      scrolledUnderElevation: 15,
+      scrolledUnderElevation: 0,
       // forceElevated: true,
-      elevation: 10,
+      elevation: 0,
 
 //Baked in
 //       floating: true,
@@ -116,17 +117,21 @@ class _AppBarColState extends State<_AppBarCol> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        SizedBox(
-            key: const Key("row1Size"),
-            height: 60,
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                //Row
+        DecoratedBox(
+            decoration: const BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: NoirPrimary.shade3, width: 1))),
+            child: SizedBox(
+                key: const Key("row1Size"),
+                height: 60,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    //Row
 
-                child: HeadingTitleRow(
-                    key: Key("Title${chapter?.key}"),
-                    header: chapter?.data?.header,
-                    chapter: chapter))),
+                    child: HeadingTitleRow(
+                        key: Key("Title${chapter?.key}"),
+                        header: chapter?.data?.header,
+                        chapter: chapter)))),
         // const Divider(
         //   indent: 12,
         //   endIndent: 12,

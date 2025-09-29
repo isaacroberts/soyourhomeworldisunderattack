@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';
 import '../../../../backend/server.dart';
+import '../../../theme/layout_constants.dart';
 
 class BookmarkButton extends StatelessWidget {
   ///For any Part
@@ -135,5 +136,31 @@ class FutureChip extends StatelessWidget {
         key: const Key("futureBuilder"),
         future: value!,
         builder: futureBuilder);
+  }
+}
+
+/// Size & align headers to match scroller
+class HeaderSizer extends StatelessWidget {
+  final Widget child;
+
+  const HeaderSizer({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        key: const Key('c'),
+        child: SizedBox(
+            key: const Key('s'),
+            width: maxReaderWidth,
+            child:
+                //Pad
+                Padding(
+                    key: const Key('p'),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    //Start at left, with text
+                    child: Align(
+                        key: const Key('cl'),
+                        alignment: Alignment.centerLeft,
+                        child: child))));
   }
 }

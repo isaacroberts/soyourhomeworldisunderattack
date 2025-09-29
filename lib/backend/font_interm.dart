@@ -3,6 +3,7 @@ import 'package:soyourhomeworld/backend/text_utils.dart';
 
 import '../frontend/theme/base_colors.dart';
 import '../frontend/theme/base_text_theme.dart';
+import '../frontend/view_settings.dart';
 import 'font_cache.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
@@ -71,53 +72,57 @@ class FontInterm {
   bool isFailed() => file?.failed() ?? false;
 
   TextStyle instance() {
-    return TextStyle(
-      fontFamily: family,
-      fontSize: size * fontScale,
-      fontWeight: weight,
-      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-      color: color ?? textColor,
-      decoration: wousi.textDecoration(),
-      decorationColor: color ?? textColor,
-    );
-  }
-
-  TextStyle fallback() {
-    return TextStyle(
-      fontFamily: fallbackFamily,
-      fontSize: size * fontScale,
-      fontWeight: weight,
-      color: color ?? fallbackTextColor,
-      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-      decoration: wousi.textDecoration(),
-      decorationColor: color ?? fallbackTextColor,
-    );
+    if (ViewSettings.instance.showFonts) {
+      //Regular
+      return TextStyle(
+        fontFamily: family,
+        fontSize: size * fontScale,
+        fontWeight: weight,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+        color: color ?? textColor,
+        decoration: wousi.textDecoration(),
+        decorationColor: color ?? textColor,
+      );
+    } else {
+      //Fallback
+      return TextStyle(
+        fontFamily: fallbackFamily,
+        fontSize: size * fontScale,
+        fontWeight: weight,
+        color: color ?? fallbackTextColor,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+        decoration: wousi.textDecoration(),
+        decorationColor: color ?? fallbackTextColor,
+      );
+    }
   }
 
   TextStyle instanceWithColor(Color? bgColor) {
-    return TextStyle(
-      fontFamily: family,
-      fontSize: size * fontScale,
-      fontWeight: weight,
-      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-      color: color ?? textColor,
-      backgroundColor: bgColor,
-      decoration: wousi.textDecoration(),
-      decorationColor: color ?? textColor,
-    );
-  }
-
-  TextStyle fallbackWithColor(Color? bgColor) {
-    return TextStyle(
-      fontSize: size * fontScale,
-      fontWeight: weight,
-      fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-      color: color ?? fallbackTextColor,
-      fontFamily: 'Rubik',
-      backgroundColor: bgColor,
-      decoration: wousi.textDecoration(),
-      decorationColor: color ?? fallbackTextColor,
-    );
+    if (ViewSettings.instance.showFonts) {
+      //Regular
+      return TextStyle(
+        fontFamily: family,
+        fontSize: size * fontScale,
+        fontWeight: weight,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+        color: color ?? textColor,
+        backgroundColor: bgColor,
+        decoration: wousi.textDecoration(),
+        decorationColor: color ?? textColor,
+      );
+    } else {
+      //Fallback
+      return TextStyle(
+        fontSize: size * fontScale,
+        fontWeight: weight,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+        color: color ?? fallbackTextColor,
+        fontFamily: 'Palatino',
+        backgroundColor: bgColor,
+        decoration: wousi.textDecoration(),
+        decorationColor: color ?? fallbackTextColor,
+      );
+    }
   }
 }
 

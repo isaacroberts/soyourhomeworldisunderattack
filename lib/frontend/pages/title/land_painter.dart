@@ -1,9 +1,6 @@
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-
-import '../../components/color_tween_sequence.dart';
 
 ui.FragmentShader? landShader;
 bool fragLoadCalled = false;
@@ -37,10 +34,10 @@ class LandPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const double seaStart = 0;
-    const double seaLength = .15;
+    // const double seaLength = .15;
 
-    ColorTweenSequence earthColor = ColorTweenSequence.fromColors(
-        const [Color(0xff109552), Color(0xff015522), Color(0xff565656)]);
+    // ColorTweenSequence earthColor = ColorTweenSequence.fromColors(
+    //     const [Color(0xff109552), Color(0xff015522), Color(0xff565656)]);
 
     //resolution
     const double scale = 1;
@@ -62,8 +59,8 @@ class LandPainter extends CustomPainter {
 
     // Blue Earth BG
     if (anim > seaStart) {
-      double arcPos = math.min(1, (anim - seaStart) / seaLength);
-      arcPos = 1;
+      // double arcPos = math.min(1, (anim - seaStart) / seaLength);
+      // arcPos = 1;
 
       Paint earthBg = Paint()..shader = landShader;
 

@@ -75,7 +75,7 @@ class WaterPainter extends CustomPainter {
       Color(0xffe3ba86),
     ]);
 
-    //Unused because we're doing rotations
+    //Unused because we're doing color rotation
     ColorTweenSequence earthColor = ColorTweenSequence.fromColors(
         const [Color(0xff026031), Color(0xff26653f), Color(0xff565656)]);
 

@@ -5,7 +5,7 @@ import '../../../backend/binary_utils/buffer_ptr.dart';
 import '../../../backend/chapter_parser.dart';
 import '../holders/holder_base.dart';
 
-class Columns extends Holder {
+class Columns extends CodeHolder {
   /// Hacky as shit.
   /// Currently only supporting 2 columns
   final List<List<Holder>> cols;
@@ -69,8 +69,6 @@ class Columns extends Holder {
 
   @override
   Widget element(BuildContext context) {
-    // TODO: implement element
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -83,8 +81,20 @@ class Columns extends Holder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return element(context);
+  Widget sliver(BuildContext context) {
+    // TODO: implement element
+
+    return SliverToText(
+        key: Key(id),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            for (List<Holder> col in cols)
+              Flexible(child: renderCol(context, spans: col))
+          ],
+        ));
   }
 }
 

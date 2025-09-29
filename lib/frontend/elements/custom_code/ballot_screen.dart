@@ -20,7 +20,7 @@ const List<String> _candidateLinks = [
   'PotHol',
 ];
 
-class BallotHolder extends Holder {
+class BallotHolder extends CodeHolder {
   final bool isExtended;
   final bool enabled;
   // final List<String> links;
@@ -29,11 +29,6 @@ class BallotHolder extends Holder {
   @override
   Widget element(BuildContext context) {
     return BallotScreen(key: const Key("charSelect"), holder: this);
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return element(context);
   }
 
   @override

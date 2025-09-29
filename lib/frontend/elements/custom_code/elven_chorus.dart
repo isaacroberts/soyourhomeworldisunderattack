@@ -9,24 +9,28 @@ import 'package:soyourhomeworld/backend/font_interm.dart';
 import '../holders/holder_base.dart';
 
 //TODO: This should extend a code object, once JSON is added
-class ElvenChorusHolder extends Holder {
+class ElvenChorusHolder extends CodeHolder {
   final int? speed;
   const ElvenChorusHolder({required this.speed});
 
   @override
   Widget element(BuildContext context) {
-    return ElvenChorus(speed: speed ?? 1);
+    return ElvenChorus(key: Key("elvenChorus_$id"), speed: speed ?? 1);
+  }
+
+  @override
+  Widget sliver(BuildContext context) {
+    return SliverToBoxAdapter(
+        key: Key('ElvenChorusStba_$id'),
+        child: SizedBox(
+            height: 48 + 12,
+            child:
+                ElvenChorus(key: const Key('elvenChorus'), speed: speed ?? 1)));
   }
 
   @override
   String toText() {
     return chorus;
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    // TODO: implement fallback
-    return ElvenChorus(speed: speed ?? 1);
   }
 }
 

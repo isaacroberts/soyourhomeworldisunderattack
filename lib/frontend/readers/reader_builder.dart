@@ -19,13 +19,10 @@ class ReaderBuilder extends StatefulWidget {
   final List<Widget> leadItems;
   final List<Widget> endItems;
   final Widget? waitingWidget;
-  //TODO: Separate SliverProtocol builder
-  final bool useSliverProtocol;
 
   const ReaderBuilder(
       {required super.key,
       required this.itemBuilder,
-      required this.useSliverProtocol,
       this.leadItems = const [],
       this.endItems = const [],
       this.waitingWidget});
@@ -44,7 +41,6 @@ class ReaderBuilderState extends State<ReaderBuilder> {
 //TODO: PUt back
 //   bool get showFonts => _showFonts && ViewSettings.instance.showFonts;
   bool get showFonts => ViewSettings.instance.showFonts;
-  bool get useSliverProtocol => widget.useSliverProtocol;
 
   @override
   void initState() {
@@ -179,23 +175,14 @@ class ReaderBuilderState extends State<ReaderBuilder> {
   }
 
   Widget endWaitingWidget(BuildContext context) {
-    if (useSliverProtocol) {
-      return const SliverToBoxAdapter(
-          child: SizedBox(
-        height: 300,
-        child: Center(
-            child: TriWizardLoader(
-          message: 'Loading...',
-        )),
-      ));
-    }
-    return const SizedBox(
+    return const SliverToBoxAdapter(
+        child: SizedBox(
       height: 300,
       child: Center(
           child: TriWizardLoader(
         message: 'Loading...',
       )),
-    );
+    ));
   }
 
   Iterable<Widget> itemIterator(BuildContext context) sync* {
@@ -238,16 +225,7 @@ class ReaderBuilderState extends State<ReaderBuilder> {
 
   Widget unloadedBuilder(BuildContext context) {
     //Shows basic loading screen
-    if (useSliverProtocol) {
-      return LoadSliver(chapterTitle: chapter.displayTitle);
-    }
-    return const SizedBox(
-      height: 400,
-      child: Center(
-        //Loading Icon
-        child: TriWizardLoader(message: 'Loading chapter...'),
-      ),
-    );
+    return LoadSliver(chapterTitle: chapter.displayTitle);
   }
 
   @override
@@ -255,24 +233,12 @@ class ReaderBuilderState extends State<ReaderBuilder> {
     if (chapter.data == null) {
       return unloadedBuilder(context);
     }
-    if (useSliverProtocol) {
-      if (!doneLoading) {
-        return LoadSliver(chapterTitle: chapter.displayName);
-      }
-
-      return SliverMainAxisGroup(
-          key: Key('RdrSlvrChp${chapter.id}'),
-          slivers: itemIterator(context).toList(growable: false));
-    } else {
-      return SelectableRegion(
-          selectionControls: MaterialTextSelectionControls(),
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              //TODO: Why a PageStorage Key?
-              key: Key('RdrBldrChp${chapter.id}'),
-              children: itemIterator(context).toList(growable: false)));
+    if (!doneLoading) {
+      return LoadSliver(chapterTitle: chapter.displayName);
     }
+
+    return SliverMainAxisGroup(
+        key: Key('RdrSlvrChp${chapter.id}'),
+        slivers: itemIterator(context).toList(growable: false));
   }
 }

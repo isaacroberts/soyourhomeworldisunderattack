@@ -1,152 +1,149 @@
 ((a,b,c)=>{a[b]=a[b]||{}
 a[b][c]=a[b][c]||[]
 a[b][c].push({p:"main.dart.js_48",e:"beginPart"})})(self,"$__dart_deferred_initializers__","eventLog")
-$__dart_deferred_initializers__.current=function(a,b,c,$){var A,C,B={ae9:function ae9(d){this.a=d
-this.b=null},
-b24(d){return new B.Rk(d)},
-Rk:function Rk(d){this.a=d},
-w1:function w1(d,e){this.c=d
-this.a=e},
-K3:function K3(d,e,f){var _=this
-_.d=d
-_.f=_.e=$
-_.w=_.r=0
-_.dH$=e
-_.bc$=f
-_.c=_.a=null},
-NW:function NW(){}},D
+$__dart_deferred_initializers__.current=function(a,b,c,$){var A,C,B={Gs:function Gs(d,e,f,g,h,i,j){var _=this
+_.u=null
+_.U=d
+_.ah=e
+_.bv=f
+_.bB=_.bi=null
+_.dJ=g
+_.p$=h
+_.dy=i
+_.b=_.fy=null
+_.c=0
+_.y=_.d=null
+_.z=!0
+_.Q=null
+_.as=!1
+_.at=null
+_.ay=$
+_.ch=j
+_.CW=!1
+_.cx=$
+_.cy=!0
+_.db=!1
+_.dx=$},aoB:function aoB(d){this.a=d},
+wu(d,e,f){return new B.S4(e,d,f)},
+S4:function S4(d,e,f){this.e=d
+this.c=e
+this.a=f}}
 A=c[0]
 C=c[2]
-B=a.updateHolder(c[25],B)
-D=c[86]
-B.ae9.prototype={
-gkg(){var x,w=this.b
-if(w==null){w=$.DD
-if(w==null)w=$.DD=new A.DC(A.x(y.e,y.s))
-x=this.a.d
-x.toString
-x=this.b=w.a61(x)
-w=x}return w},
-c6(d){return this.aCI(d)},
-aCI(d){var x=0,w=A.K(y.b),v,u=this,t
-var $async$c6=A.E(function(e,f){if(e===1)return A.H(f,w)
-while(true)switch(x){case 0:x=3
-return A.D(u.gkg().c6(d),$async$c6)
-case 3:t=u.gkg()
-t.toString
-v=t
-x=1
+B=a.updateHolder(c[70],B)
+B.Gs.prototype={
+Up(d){switch(d.a){case 6:return!0
+case 1:case 2:case 0:case 4:case 3:case 5:return!1}},
+sl7(d){var x=this,w=x.U
+if(w===d)return
+x.U=d
+if(x.Up(w)||x.Up(d))x.a_()
+else{x.bB=x.bi=null
+x.aD()}},
+seM(d){var x=this
+if(x.ah.k(0,d))return
+x.ah=d
+x.u=x.bB=x.bi=null
+x.aD()},
+sbr(d){var x=this
+if(x.bv==d)return
+x.bv=d
+x.u=x.bB=x.bi=null
+x.aD()},
+cc(d){var x,w=this.p$
+if(w!=null){x=w.ab(C.I,C.dd,w.gbK())
+switch(this.U.a){case 6:return d.aV(new A.a1(0,d.b,0,d.d).tH(x))
+case 1:case 2:case 0:case 4:case 3:case 5:return d.tH(x)}}else return new A.D(A.x(0,d.a,d.b),A.x(0,d.c,d.d))},
+aU(){var x,w,v=this,u=v.p$
+if(u!=null){u.bx(C.dd,!0)
+switch(v.U.a){case 6:u=y.a
+x=u.a(A.k.prototype.gC.call(v))
+w=new A.a1(0,x.b,0,x.d).tH(v.p$.gt())
+v.fy=u.a(A.k.prototype.gC.call(v)).aV(w)
 break
-case 1:return A.I(v,w)}})
-return A.J($async$c6,w)}}
-B.Rk.prototype={
-c_(d){var x=this.a
-return new B.w1(x==null?1:x,null)},
-cU(){return"A Elbereth! Gilthoniel!"},
-cL(d){var x=this.a
-return new B.w1(x==null?1:x,null)}}
-B.w1.prototype={
-Z(){var x=null
-return new B.K3(A.js(x,0,!0,x),x,x)}}
-B.K3.prototype={
-ak(){var x=this,w=A.yH(C.ca,x.gLu())
-x.e!==$&&A.b7()
-x.e=w
-$.aKV().c6("ElvenChorus")
-x.aB()},
-gm0(){var x=this.w,w=this.a.c!==1?this.r:0
-return x+24-w},
-gQQ(){var x=this.a.c
-if(x===0)return 12
-else if(x===1)return 6
-else if(x===2)return 1
-A.aLM("Incorrect speed on ElvenChorus: "+x+". Values should be 0-2.",null)
-return 12},
-pT(d){var x,w,v,u=this
-if(u.c!=null&&u.d.f.length!==0&&u.w>0){x=u.d
-w=x.f
-v=C.b.gc7(w).at
-v.toString
-if(v===0)x.hx(u.gm0()+10,C.M,A.dj(0,C.e.fw(u.gm0()*u.gQQ()),0,0))
-else{w=C.b.gc7(w).at
+case 1:case 2:case 0:case 4:case 3:case 5:v.fy=y.a.a(A.k.prototype.gC.call(v)).tH(v.p$.gt())
+break}v.bB=v.bi=null}else{u=y.a.a(A.k.prototype.gC.call(v))
+v.fy=new A.D(A.x(0,u.a,u.b),A.x(0,u.c,u.d))}},
+Kv(){var x,w,v,u,t,s,r,q,p,o,n=this
+if(n.bB!=null)return
+x=n.p$
+if(x==null){n.bi=!1
+x=new A.aX(new Float64Array(16))
+x.dP()
+n.bB=x}else{w=n.u
+if(w==null)w=n.u=n.ah
+v=x.gt()
+u=A.aP5(n.U,v,n.gt())
+x=u.b
+t=u.a
+s=v.a
+r=v.b
+q=w.Nw(t,new A.v(0,0,0+s,0+r))
+p=n.gt()
+o=w.Nw(x,new A.v(0,0,0+p.a,0+p.b))
+p=q.a
+n.bi=q.c-p<s||q.d-q.b<r
+r=A.oY(o.a,o.b,0)
+r.v8(x.a/t.a,x.b/t.b,1)
+r.by(-p,-q.b)
+n.bB=r}},
+WI(d,e){var x,w,v,u,t=this,s=t.bB
+s.toString
+x=A.TU(s)
+if(x==null){s=t.cx
+s===$&&A.a()
+w=t.bB
 w.toString
-if(w>=u.gm0()-30)if(u.a.c!==1)x.ew(0)
-else x.hx(0,C.hu,A.dj(0,C.e.fw(u.gm0()*u.gQQ()*3),0,0))}}},
-l(){var x=this.e
+v=A.eY.prototype.geG.call(t)
+u=t.ch.a
+return d.uB(s,e,w,v,u instanceof A.lZ?u:null)}else t.hS(d,e.W(0,x))
+return null},
+aE(d,e){var x,w,v,u,t=this
+if(t.p$==null||t.gt().gai(0)||t.p$.gt().gai(0))return
+t.Kv()
+x=t.bi
+x.toString
+if(x&&t.dJ!==C.l){x=t.cx
 x===$&&A.a()
-x.aM()
-this.d.l()
-this.abM()},
-a6r(d){return 2100},
-awK(d){var x=null
-return new A.bw(C.fk,x,x,A.ah(d,x,1,x,x,x,$.aKV().a.xa(48,1),x,x),x)},
-PA(d){var x=null
-return new A.bw(C.fk,x,x,A.ah(d,x,1,x,x,x,$.aKV().a,x,x),x)},
-rl(d){return new A.e1(this.a7I(d),y.p)},
-a7I(d){return function(){var x=d
-var w=0,v=1,u=[],t,s,r
-return function $async$rl(e,f,g){if(f===1){u.push(g)
-w=v}while(true)switch(w){case 0:t=x.length,s=0
-case 2:if(!(s<t)){w=4
-break}r=s+100
-w=5
-return e.b=C.c.a8(x,s,Math.min(r,t)),1
-case 5:case 3:s=r
-w=2
-break
-case 4:return 0
-case 1:return e.c=u.at(-1),3}}}},
-aGe(){var x,w,v,u,t,s=this,r=A.b([],y.u)
-r.push(C.bW)
-x=s.rl("A Elbereth! Gilthoniel!")
-w=y.l
-v=A.kk(x,s.gawJ(),x.$ti.h("F.E"),w)
-for(x=s.gPz(),u=0;u<1;++u){t=s.rl(D.Y0[u])
-C.b.a2(r,A.kk(t,x,t.$ti.h("F.E"),w))
-r.push(D.a4S)
-C.b.a2(r,v)
-r.push(C.bW)}r.push(new A.at(s.r,null,null,null))
-r.push(C.bW)
-return r},
-B(d){var x,w,v=this,u=null,t=A.aO(d,C.bh,y.x).w.a.a
-if(v.w>0&&t!==v.r){x=v.f
-x===$&&A.a()
-w=v.r
-x[0]=new A.at(w,u,u,u)
-C.b.sap(x,new A.at(w,u,u,u))}v.r=t
-if(v.w<=0){v.w=v.a6r(d)
-x=v.aGe()
-v.f!==$&&A.b7()
-v.f=x}x=v.r
-w=v.f
-w===$&&A.a()
-return A.ht(new A.at(x,72,A.EH(w,v.d,u,u,!1,C.a8,!1),u),u,!0,u,u,'"Passing of the Elves"\nfrom Lord of the Rings',u,u,u,u)}}
-B.NW.prototype={
-l(){var x=this,w=x.bc$
-if(w!=null)w.G(x.geY())
-x.bc$=null
-x.an()},
-bf(){this.bY()
-this.bU()
-this.eZ()}}
-var z=a.updateTypes(["c(m)","~(@)"]);(function aliases(){var x=B.NW.prototype
-x.abM=x.l})();(function installTearOffs(){var x=a._instance_1u
-var w
-x(w=B.K3.prototype,"gLu","pT",1)
-x(w,"gawJ","awK",0)
-x(w,"gPz","PA",0)})();(function inheritance(){var x=a.mixinHard,w=a.inherit
-w(B.ae9,A.B)
-w(B.Rk,A.b0)
-w(B.w1,A.P)
-w(B.NW,A.R)
-w(B.K3,B.NW)
-x(B.NW,A.e9)})()
-A.bE(b.typeUniverse,JSON.parse('{"w1":{"P":[],"c":[]},"Rk":{"b0":[]},"K3":{"R":["w1"]}}'))
-var y={u:A.G("t<c>"),x:A.G("dL"),l:A.G("c"),p:A.G("e1<m>"),b:A.G("@"),e:A.G("r"),s:A.G("rm?")};(function constants(){var x=a.makeConstList
-D.Y0=A.b(x(["Fanuilos heryn aglar / R\xeen athar ann\xfan-aearath / Calad ammen i reniar / Mi 'aladhremmin ennorath!"]),A.G("t<m>"))
-D.a4S=new A.at(24,null,null,null)
-D.JF=new A.n(1,0.058823529411764705,0.1450980392156863,0.054901960784313725,C.d)
-D.a9W=new A.p(!0,D.JF,null,"Celtic Garamond the 2nd",null,null,24,C.I,null,null,null,null,1,null,null,null,null,null,null,null,null,null,null,null,null,null)})();(function lazyInitializers(){var x=a.lazyFinal
-x($,"bjc","aKV",()=>new B.ae9(D.a9W))})()};
+w=t.gt()
+v=t.ch
+u=v.a
+u=u instanceof A.mq?u:null
+v.saw(d.iW(x,e,new A.v(0,0,0+w.a,0+w.b),t.gapx(),t.dJ,u))}else t.ch.saw(t.WI(d,e))},
+cU(d,e){var x,w=this
+if(!w.gt().gai(0)){x=w.p$
+x=x==null?null:x.gt().gai(0)
+x=x===!0}else x=!0
+if(x)return!1
+w.Kv()
+return d.CI(new B.aoB(w),e,w.bB)},
+ni(d){return!this.gt().gai(0)&&!d.gt().gai(0)},
+ct(d,e){var x
+if(!(!this.gt().gai(0)&&!d.gt().gai(0)))e.zP()
+else{this.Kv()
+x=this.bB
+x.toString
+e.ee(x)}}}
+B.S4.prototype={
+aB(d){var x=new B.Gs(this.e,C.x,A.cH(d),C.l,null,new A.aH(),A.a4(y.d))
+x.aC()
+x.saG(null)
+return x},
+aI(d,e){e.sl7(this.e)
+e.seM(C.x)
+e.sbr(A.cH(d))
+if(C.l!==e.dJ){e.dJ=C.l
+e.aD()
+e.bf()}}}
+var z=a.updateTypes(["lZ?(kB,h)"])
+B.aoB.prototype={
+$2(d,e){return this.a.vq(d,e)},
+$S:13};(function installTearOffs(){var x=a._instance_2u
+x(B.Gs.prototype,"gapx","WI",0)})();(function inheritance(){var x=a.inherit
+x(B.Gs,A.tJ)
+x(B.aoB,A.fO)
+x(B.S4,A.aD)})()
+A.bo(b.typeUniverse,JSON.parse('{"Gs":{"u":[],"am":["u"],"k":[],"aa":[]},"S4":{"aD":[],"ac":[],"c":[]}}'))
+var y={a:A.w("a1"),d:A.w("d1")}};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_48",e:"endPart",h:b})})($__dart_deferred_initializers__,"jf+6/SM2OoWFwp9Dct/Vm8LBgzc=");
+a.eventLog.push({p:"main.dart.js_48",e:"endPart",h:b})})($__dart_deferred_initializers__,"gQC+xYsDVB4iwpYoyKTN8m0moM4=");

@@ -88,9 +88,9 @@ abstract class RenderSliverstein extends RenderSliverToBoxAdapter {
       return constraints.scrollOffset / overscroll;
     } else {
       //Finishes animating as sliver is halfway up screen
-      double passage = 1 - geometry!.paintExtent / overscroll;
       return 1;
-      return 1 + ui.clampDouble(passage, 0, 1);
+      // double passage = 1 - geometry!.paintExtent / overscroll;
+      // return 1 + ui.clampDouble(passage, 0, 1);
     }
   }
 

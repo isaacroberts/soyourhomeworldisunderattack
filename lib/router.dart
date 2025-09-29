@@ -27,13 +27,13 @@ import 'frontend/scrollers/scroller_door.dart';
 
 // const String devMain = '/dev_page/';
 //noir
-const String devMain = '/scroll/2';
+// const String devMain = '/scroll/6';
 //greenland
 // const String devMain = '/scroll/34';
 //noir image
 // const String devMain = '/scroll/20';
 //title
-// const String devMain = '/';
+const String devMain = '/';
 
 Widget devPageBuilder(BuildContext context, GoRouterState routerState) {
   /// Dev Page
@@ -80,28 +80,28 @@ List<GoRoute> routes() {
         name: 'Reader',
         // path: '/scroll',
         path: '/scroll/:chid',
-        builder: scrollDoorBuilder),
+        builder: (BuildContext context, GoRouterState state) {
+          //Gets IntStart, or a handleable error-start-chapter
+          StartChapter start =
+              getStartFromIntString(state.pathParameters['chid']);
+          return ScrollDoor(
+            key: const Key("ScrollDoor!"),
+            startChapter: start,
+          );
+        }),
 
     GoRoute(
         name: 'Chapter Search',
         // path: '/scroll',
         path: '/search/:term',
         builder: (context, state) {
-          try {
-            String? chapterName = state.pathParameters['term'];
-
-            return ScrollDoor(
-              key: const Key("NamedScrollDoor!"),
-              startChapter: chapterName != null
-                  ? SearchedStartChapter(chapterName)
-                  : const NoStartChapter(),
-            );
-          } catch (exception) {
-            dev.log("Exception!");
-            dev.log('$exception');
-            ErrorList.logError(exception);
-            return ErrorList.page(context);
-          }
+          //Gets SearchedStartChapter or FailedStartChapter
+          StartChapter start =
+              getStartFromSearchTerm(state.pathParameters['term']);
+          return ScrollDoor(
+            key: const Key("NamedScrollDoor!"),
+            startChapter: start,
+          );
         }),
 
     // GoRoute(name: 'Valinor', path: '/valinor', builder: valinorWebsiteBuilder),
@@ -156,25 +156,6 @@ List<GoRoute> routes() {
   ];
 }
 
-Widget scrollDoorBuilder(BuildContext context, GoRouterState state) {
-  try {
-    String numStr = state.pathParameters['chid'] ?? '0';
-
-    int? number = int.tryParse(numStr);
-    dev.log('Go parsed $number');
-    return ScrollDoor(
-      key: const Key("ScrollDoor!"),
-      startChapter:
-          number != null ? IntStartChapter(number) : const NoStartChapter(),
-    );
-  } catch (exception) {
-    dev.log("Exception!");
-    dev.log('$exception');
-    ErrorList.logError(exception);
-    return ErrorList.page(context);
-  }
-}
-
 FutureOr<String?> redirector(BuildContext context, GoRouterState state) {
   String path = state.uri.path;
   dev.log("Redirector $path ${state.path}");
@@ -214,4 +195,24 @@ Widget iconPageBuilder(BuildContext context, GoRouterState routerState) {
       builder: (context) => icon_viewer_lib.IconViewerPage(
             key: const Key("IconPage"),
           ));
+}
+
+StartChapter getStartFromIntString(String? str) {
+  if (str == null) {
+//Assume that user intentionally put in no string
+    return const NoStartChapter();
+  }
+  int? number = int.tryParse(str);
+  if (number == null) {
+    return FailedStartChapter('Unparseable: $str');
+  }
+  return IntStartChapter(number);
+}
+
+StartChapter getStartFromSearchTerm(String? term) {
+  if (term == null) {
+    return const FailedStartChapter('No search term');
+  }
+//Later we'll do the search
+  return SearchedStartChapter(term);
 }

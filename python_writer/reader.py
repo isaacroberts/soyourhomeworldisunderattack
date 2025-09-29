@@ -118,11 +118,21 @@ def soup_to_styles(style_soup, content_soup):
 class StateBasedHorseshit:
     # Sometimes fonts roll over to the next span
     # So these are global variables
-    def __init__(self):
+    def __init__(self, style_handler):
         self.is_first_such_span = True
-        self.font = Font.body('base')
+        self.font = Font.body('body')
         self.align = 'l'
-        self.style_handler = None
+        self.style_handler = style_handler
+    def copyWith(self, font):
+        newState = StateBasedHorseshit(self.style_handler)
+        newState.font = font
+        newState.align = self.align 
+        newState.is_first_such_span=False
+        return newState
+    def reset(self):
+        self.is_first_such_span = True
+        self.font = Font.body('body')
+        self.align = 'l'
 
 def soup_to_raw_spans(content_soup, style_handler):
     change_log_file('text')
@@ -131,19 +141,73 @@ def soup_to_raw_spans(content_soup, style_handler):
     paras = content_soup.find_all(['text:p', 'text:h'])
 
     spans = []
-    state = StateBasedHorseshit()
-    state.style_handler = style_handler
 
     # ==== Scrape all elements & fonts out of document
     for para in paras:
-        newspans = para_to_spans(state, para)
+        newspans = para_to_spans(style_handler, para)
         spans.extend(newspans)
 
     print('Text Acquired')
     pst.button()
     return spans
 
-# Utilities
+def para_to_spans(style_handler, para):
+
+    # The state should restart every paragraph
+    state = StateBasedHorseshit(style_handler)
+
+    # spans
+    spans = []
+    # font tag
+    tag = para.attrs['text:style-name']
+
+    # Guaranteed to have the font & align, unless something's wrong
+    font, align = state.style_handler.get_font(tag)
+
+    # Newline
+    if len(para.contents)==0:
+        print(f'>\t\t\tNL(empty paragraph)')
+        add_spans(spans, NewLine(font))
+        print(spans[-1])
+
+    # Process paragraph
+    else:
+
+        # Sometimes fonts roll over to the next span
+        # So these are global variables
+        state.font = font
+        state.align = align
+
+        # Beginning of span
+        state.is_first_such_span = True
+        # For contents
+        for c in para.contents:
+            print('\tContents:', c)
+            if isinstance(c, str):
+                if c=='\n':
+                    print('>\t\t\tNL(empty text)')
+                    add_spans(spans, NewLine(font))
+                else:
+                    # String uses main font
+                    # TODO: Check whether it should use rolling font
+                    # state.reset()
+                    # state.is_first_such_span=True
+                    span = get_line_of_text(state, c)
+                    print(span)
+                    add_spans(spans, span)
+                    state.is_first_such_span=False
+            elif isinstance(c, bs4.element.Tag):
+                # Misc element
+                span = get_misc_element(state, c)
+                print(span)
+                add_spans(spans, span)
+                state.is_first_such_span = False
+
+        print(f'>\t\t\tEndOfPara()')
+        # Prevents joins later
+        add_spans(spans, EndOfPara())
+
+    return spans
 
 def get_line_of_text(state, text):
     """
@@ -158,9 +222,9 @@ def get_line_of_text(state, text):
         return NewLine(font)
     else:
         if font is None:
-            assert False, 'None font for Header'
-            print(f'(!)\t\t\tNull-font Header("{text}")', '\n' in text)
-            return Header(font, text, align)
+            assert False, 'None font'
+            print(f'(!)\t\t\tNull-font("{text}")', '\n' in text)
+            return TextSpan(font, text, align)
 
         # Header font means Header object
         elif font.isHeading():
@@ -170,33 +234,6 @@ def get_line_of_text(state, text):
             # Non-header TextSpan
             print(f'>\t\t\tText("{text}")', '\n' in text)
             return TextSpan(font, text, align)
-
-def add_spans(spans, obj):
-    if isinstance(obj,list):
-        spans.extend(obj)
-    elif obj is None:
-        pass
-    else:
-        spans.append(obj)
-
-def get_contents(state, c):
-    spans = []
-    print('\t', 'contents:', c.contents)
-    #Check contents of span
-    for cc in c.contents:
-        # If tag
-        if isinstance(cc, bs4.element.Tag):
-            # Then it's not text
-            line = get_misc_element(state, cc)
-            add_spans(spans, line)
-        else: #Else
-            # Must be string
-            assert(isinstance(cc, str))
-            # Add line of text with rolling font
-            line = get_line_of_text(state, cc)
-            add_spans(spans, line)
-        state.is_first_such_span=False
-    return spans
 
 def get_misc_element(state, c):
     """
@@ -218,12 +255,14 @@ def get_misc_element(state, c):
             temp_font_name = c.attrs['text:style-name']
             # Assumed to be in []
             # subfonts are a COMBINATION of 'P32' + arbitary parent font
-            state.font, state.align = \
+            # I think this is the problem.
+            # This should push to the stack
+            font, align = \
                 state.style_handler.fill_sub(temp_font_name, font)
-            font = state.font
-            align = state.align
-
-            add_spans(spans, get_contents(state, c))
+            subState = state.copyWith(font)
+        else:
+            subState = state
+        add_spans(spans, get_contents(subState, c))
         return spans
     # Tab element
     elif c.name == 'tab':
@@ -245,7 +284,8 @@ def get_misc_element(state, c):
         return TextSpan(font, spc, align)
     # Line break
     elif c.name=='line-break':
-        # TODO: This may be not working perfectly 
+        # TODO: This may be not working perfectly
+        return NewLine(font)
         if state.is_first_such_span:
             # Add fixed NewLine
             print(f'>\t\t\tNL(starting line break)')
@@ -276,55 +316,36 @@ def get_misc_element(state, c):
         assert False, 'Unhandled text type: "'+ c.name +'"'
         return None
 
-def para_to_spans(state, para):
-    spans = []
-    # font tag
-    tag = para.attrs['text:style-name']
+# Utilities
 
-    # Guaranteed to have the font & align, unless something's wrong
-    font, align = state.style_handler.get_font(tag)
-
-    # Newline
-    if len(para.contents)==0:
-        print(f'>\t\t\tNL(empty paragraph)')
-        spans.append(NewLine(font))
-        print(spans[-1])
-
-    # Process paragraph
+def add_spans(spans, obj):
+    if isinstance(obj,list):
+        print("spans+= [", ', '.join(str(s) for s in obj), ']')
+        spans.extend(obj)
+    elif obj is None:
+        print('spans+= none (pass)')
+        pass
     else:
+        print('spans+=',obj)
+        spans.append(obj)
 
-        # Sometimes fonts roll over to the next span
-        # So these are global variables
-        state.font = font
-        state.align = align
-
-        # Beginning of span
-        state.is_first_such_span = True
-        # For contents
-        for c in para.contents:
-            print('\tContents:', c)
-            if isinstance(c, str):
-                if c=='\n':
-                    print('>\t\t\tNL(empty text)')
-                    spans.append(NewLine(font))
-                else:
-                    # String uses main font
-                    # TODO: Check whether it should use rolling font
-                    span = get_line_of_text(state, c)
-                    print(span)
-                    add_spans(spans, span)
-                    state.is_first_such_span=False
-            elif isinstance(c, bs4.element.Tag):
-                # Misc element
-                span = get_misc_element(state, c)
-                print(span)
-                add_spans(spans, span)
-                state.is_first_such_span = False
-
-        print(f'>\t\t\tEndOfPara()')
-        # Prevents joins later
-        spans.append(EndOfPara())
-
+def get_contents(state, c):
+    spans = []
+    print('\t', 'contents:', c.contents)
+    #Check contents of span
+    for cc in c.contents:
+        # If tag
+        if isinstance(cc, bs4.element.Tag):
+            # Then it's not text
+            line = get_misc_element(state, cc)
+            add_spans(spans, line)
+        else: #Else
+            # Must be string
+            assert(isinstance(cc, str))
+            # Add line of text with rolling font
+            line = get_line_of_text(state, cc)
+            add_spans(spans, line)
+        state.is_first_such_span=False
     return spans
 
 # Top-level

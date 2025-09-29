@@ -1,12 +1,14 @@
 // import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/components/sliver_center.dart';
 
 import '../../../backend/chapter.dart';
 import '../../../backend/font_interm.dart';
 import '../../../backend/text_utils.dart';
+import '../../components/deferrals/debug_wrap.dart';
 import '../../theme/base_text_theme.dart';
-// import '../custom_code/code_holders.dart';
-
 import 'holder_base.dart';
 
 export 'misc_holders.dart';
@@ -24,9 +26,10 @@ Future initHyphenator() async {
 const double k = 12;
 
 // ========== Base ================
-
+///Standard text elements
+/// Has text which can be extracted
+///Do not override with CodeHolders
 abstract class TextHolder extends Holder {
-  /// Has text which can be extracted
   final String text;
   const TextHolder({required this.text});
 
@@ -51,14 +54,18 @@ class BodyTextElement extends TextHolder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    //Get the part!
+  Widget sliver(BuildContext context) {
     TextStyle bodyFont = ChapterProvider.bodyFontOf(context);
-    return Text(
+    return SliverToText(
+        child: Text(
       text,
       style: bodyFont,
-    );
-    // return element(context);
+    ));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return DeferredBodyDebugSliver(holder: this);
   }
 }
 
@@ -106,8 +113,23 @@ class AlignedBodyText extends TextHolder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return element(context);
+  Widget sliver(BuildContext context) {
+    TextStyle bodyFont = ChapterProvider.bodyFontOf(context);
+
+    return SliverTabs(
+        key: Key("Tabs$hashCode"),
+        tabs: tabs,
+        align: align,
+        child: Text(
+          text,
+          style: bodyFont,
+          textAlign: align,
+        ));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return DeferredTextHolderDebugSliver(holder: this);
   }
 }
 
@@ -134,14 +156,16 @@ class CustomFontText extends FontWanterTextHolder {
     double screenWidth = MediaQuery.sizeOf(context).width;
     if (font.size > 20) {
       if (screenWidth < 500) {
+        //TODO: Large fonts should use word wrap
+
         return Text(
           text,
           style: font.instance(),
           // selectable: true,
+
           textAlign: align,
         );
       }
-      //Large fonts should use word wrap
     }
     //Otherwise use regular text
     return Text(
@@ -161,16 +185,17 @@ class CustomFontText extends FontWanterTextHolder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return WrapInTabs(
-        key: Key('tabs$hashCode'),
+  Widget sliver(BuildContext context) {
+    return SliverTabs(
+        key: Key('Tabs$hashCode'),
         tabs: tabs,
         align: align,
-        child: Text(
-          text,
-          style: font.fallback(),
-          textAlign: align,
-        ));
+        child: textElement(context));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return DeferredTextHolderDebugSliver(holder: this);
   }
 }
 
@@ -195,13 +220,19 @@ class HiliteFontText extends FontWanterTextHolder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return WrapInTabs(
-        key: Key('tabs$hashCode'),
+  Widget sliver(BuildContext context) {
+    return SliverTabs(
+        key: Key('Tabs$hashCode'),
         tabs: tabs,
         align: align,
         child:
-            Text(text, style: font.fallbackWithColor(color), textAlign: align));
+            Text(text, style: font.instanceWithColor(color), textAlign: align));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    //Calls sliver
+    return DeferredTextHolderDebugSliver(holder: this);
   }
 }
 
@@ -249,13 +280,19 @@ class SubSuperFontText extends FontWanterTextHolder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return WrapInTabs(
+  Widget sliver(BuildContext context) {
+    return SliverTabs(
         key: Key('tabs$hashCode'),
         tabs: tabs,
         align: align,
         child:
-            Text(text, style: font.fallbackWithColor(color), textAlign: align));
+            Text(text, style: font.instanceWithColor(color), textAlign: align));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    //Calls sliver
+    return DeferredTextHolderDebugSliver(holder: this);
   }
 }
 
@@ -276,8 +313,22 @@ class HeaderOfText extends TextHolder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return element(context);
+  Widget sliver(BuildContext context) {
+// I don't think we're using this
+    return SliverCenter(
+        sliver: SliverToBoxAdapter(
+            child: Text(
+      text,
+      style: headerFont,
+      // style: font.instance(),
+      textAlign: TextAlign.center,
+    )));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    //Calls sliver
+    return DeferredTextHolderDebugSliver(holder: this);
   }
 
   @override
@@ -301,12 +352,6 @@ class CustomHeaderOfText extends HeaderOfText {
           style: font.instance(),
           textAlign: align,
         ));
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    //Show standard header
-    return super.fallback(context);
   }
 }
 
@@ -340,7 +385,7 @@ class WrapInTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     Alignment horizAlign = textAlignToHoriz(align);
 
-    double tabSize = MediaQuery.sizeOf(context).width / 8;
+    double tabSize = math.min(24, MediaQuery.sizeOf(context).width / 8);
 
     Widget alignWrap;
     if (horizAlign == Alignment.topLeft) {
@@ -352,9 +397,66 @@ class WrapInTabs extends StatelessWidget {
     if (tabs == 0) {
       return alignWrap;
     } else {
-      return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15 + tabSize * tabs),
-          child: alignWrap);
+      //Left align
+      if (align == TextAlign.left || align == TextAlign.start) {
+        //Left tabs
+        return Padding(
+            padding: EdgeInsets.only(left: 12 + tabSize * tabs),
+            child: alignWrap);
+      } else {
+        //Right tabs
+        return Padding(
+            padding: EdgeInsets.only(right: 12 + tabSize * tabs),
+            child: alignWrap);
+      }
+    }
+  }
+}
+
+class SliverTabs extends StatelessWidget {
+  final int tabs;
+  final TextAlign align;
+  final Widget child;
+  const SliverTabs(
+      {required super.key,
+      required this.tabs,
+      required this.align,
+      required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    Alignment horizAlign = textAlignToHoriz(align);
+
+    double tabSize = math.min(24, MediaQuery.sizeOf(context).width / 8);
+
+    Widget alignWrap;
+    if (horizAlign == Alignment.topLeft) {
+      alignWrap = child;
+    } else {
+      //TODO: Sliverify
+      alignWrap = Align(alignment: horizAlign, child: child);
+    }
+    alignWrap = SliverToBoxAdapter(child: alignWrap);
+
+    if (tabs == 0) {
+      //Base padding
+      return SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        sliver: alignWrap,
+      );
+    } else {
+      //Left align
+      if (align == TextAlign.left || align == TextAlign.start) {
+        //Left tabs
+        return SliverPadding(
+            padding: EdgeInsets.only(left: 12 + tabSize * tabs, right: 12),
+            sliver: alignWrap);
+      } else {
+        //Right tabs
+        return SliverPadding(
+            padding: EdgeInsets.only(right: 12 + tabSize * tabs, left: 12),
+            sliver: alignWrap);
+      }
     }
   }
 }

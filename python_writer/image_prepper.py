@@ -129,6 +129,7 @@ def fill_span_info(span):
 
     if image is None:
         # Default colorHint is grey
+        span.params.dparams['has']=False
         span.params.dparams['colorHint']=[]
     else:
         width = image.width
@@ -138,6 +139,7 @@ def fill_span_info(span):
         ars = str(aspectRatio);
         # Max precision: 0.333333
         ars = ars[:8]
+        span.params.dparams['has']=True
         span.params.dparams['w']=width
         span.params.dparams['h']=height
         span.params.dparams['aspectRatio']=ars

@@ -4,7 +4,7 @@ import 'package:soyourhomeworld/frontend/parts/noir_theme.dart';
 import 'base_text_theme.dart';
 
 //TODO: Consider finding sans serif version of palatino
-const appFontFamily = 'Rubik';
+const appFontFamily = 'Palatino';
 
 TextTheme textTheme = const TextTheme(
   //todo: try fontVariations: [FontVariation.width(1.5)]

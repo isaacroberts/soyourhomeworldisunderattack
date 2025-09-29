@@ -28,16 +28,12 @@ class Shirt extends SpanHoldingCode {
   @override
   Widget renderSpans(BuildContext context,
       {CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center}) {
-    bool showFonts = shouldShowFonts(context);
     return Column(
         key: const Key('shirtcol'),
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          for (Holder s in spans)
-            showFonts ? s.element(context) : s.fallback(context)
-        ]);
+        children: [for (Holder s in spans) s.element(context)]);
   }
 
   Widget neck(BuildContext context) {

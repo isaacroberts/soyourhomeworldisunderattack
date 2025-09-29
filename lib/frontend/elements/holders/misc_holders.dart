@@ -1,8 +1,11 @@
 // import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/debug/debug_pane_entry.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/textholders.dart';
 
+import '../../../backend/chapter.dart';
+import '../../parts/part.dart';
 import 'holder_base.dart';
 
 // ============ Misc ============================
@@ -23,8 +26,35 @@ class NewlineElement extends Holder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return SizedBox(height: height);
+  Widget sliver(BuildContext context) {
+    return SliverPadding(padding: EdgeInsets.only(bottom: height));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    Part part = ChapterProvider.of(context).part;
+
+    return SliverToBoxAdapter(
+        key: Key('debugNewline_$id'),
+        child: SizedBox(
+            height: height,
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: Tooltip(
+                  message: 'NL: $height',
+                  child: Container(
+                    key: const Key('debugNewline'),
+                    decoration: BoxDecoration(
+                      border: Border.symmetric(
+                          vertical:
+                              BorderSide(color: part.primary.s7, width: 1)),
+                    ),
+                    width: 24,
+                    height: height,
+                    alignment: Alignment.centerLeft,
+                    child: const SizedBox.expand(),
+                  ),
+                ))));
   }
 }
 
@@ -61,8 +91,32 @@ class ColoredBoxHolder extends Holder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return element(context);
+  Widget sliver(BuildContext context) {
+    //Max width
+    return SliverConstrainedCrossAxis(
+        maxExtent: width,
+        sliver: DecoratedSliver(
+          decoration: BoxDecoration(color: color),
+          sliver: SliverPadding(padding: EdgeInsets.only(top: height)),
+        ));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return SliverConstrainedCrossAxis(
+        maxExtent: width,
+        sliver: DecoratedSliver(
+          decoration: BoxDecoration(color: color),
+          sliver: SliverToBoxAdapter(
+              child: SizedBox(
+            height: height,
+            child: IconButton(
+                onPressed: () => showDebugPane(context, this),
+                icon: const Icon(
+                  Icons.code,
+                )),
+          )),
+        ));
   }
 }
 
@@ -79,16 +133,6 @@ class ColoredBoxFrag extends FragOfText {
   }
 
   Widget _element(BuildContext context) {
-    //Mark for debugging
-    if (color.a < 40) {
-      return Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 1), color: color),
-          width: width,
-          height: height,
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero);
-    }
     return Container(
         width: width,
         height: height,
@@ -100,11 +144,6 @@ class ColoredBoxFrag extends FragOfText {
   @override
   InlineSpan span(BuildContext context) {
     // TODO: implement span
-    return WidgetSpan(child: _element(context));
-  }
-
-  @override
-  InlineSpan fallback(BuildContext context) {
     return WidgetSpan(child: _element(context));
   }
 
@@ -128,8 +167,19 @@ class HiddenTextElement extends Holder {
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return const SizedBox.shrink();
+  Widget sliver(BuildContext context) {
+    return const SliverPadding(padding: EdgeInsets.zero);
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return const SliverToBoxAdapter(
+        child: Tooltip(
+            message: 'HiddenTextElement',
+            child: Icon(
+              Icons.hide_source,
+              size: 12,
+            )));
   }
 }
 
@@ -143,13 +193,19 @@ class PageBreakOfText extends Holder {
 
   @override
   Widget element(BuildContext context) {
-    return const SizedBox(
-      height: 240,
-    );
+    return const SizedBox.shrink();
   }
 
   @override
-  Widget fallback(BuildContext context) {
-    return element(context);
+  sliver(BuildContext context) {
+    return const SliverPadding(padding: EdgeInsets.zero);
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return const DecoratedSliver(
+        decoration: BoxDecoration(
+            border: Border(left: BorderSide(color: Color(0xffffffff)))),
+        sliver: SliverPadding(padding: EdgeInsets.only(top: 24)));
   }
 }

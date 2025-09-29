@@ -10,6 +10,17 @@ const double standardImageByteSize = 10000;
 
 class ColorHint {
   final Color? hint0, hint1, hint2;
+
+  static ColorHint? fromList(List<Color>? colors) {
+    if (colors == null) {
+      return null;
+    }
+    return ColorHint.constructed(
+        bg: colors.elementAtOrNull(0),
+        outline: colors.elementAtOrNull(1),
+        onBg: colors.elementAtOrNull(2));
+  }
+
   ColorHint.constructed(
       {required Color? bg, required Color? outline, required Color? onBg})
       : hint0 = bg,
@@ -25,11 +36,6 @@ class ColorHint {
       : hint0 = const Color(0xff550525),
         hint1 = const Color(0xff882227),
         hint2 = const Color(0xffff3355);
-
-  ColorHint.fromList(List<Color?> colors)
-      : hint0 = colors.elementAtOrNull(0),
-        hint1 = colors.elementAtOrNull(1),
-        hint2 = colors.elementAtOrNull(2);
 
   Color? get bgColor => hint0;
   Color? get outlineColor => hint1;

@@ -8,7 +8,7 @@ import '../../../../backend/chapter.dart';
 import '../../../../backend/part_id.dart';
 import '../parts/grand_swatch.dart';
 import '_landscape_sliver.dart';
-import 'image_holder.dart';
+import 'base_image_holder.dart';
 
 enum NoImageReason {
   ///Image tried, not found
@@ -53,7 +53,7 @@ enum NoImageReason {
       case NoImageReason.imageIOU:
         return "Try submitting one!";
       case NoImageReason.unknown:
-        return 'I don\'t know why.';
+        return '';
     }
   }
 
@@ -167,15 +167,41 @@ class UnwrappedNoImageWidget extends StatelessWidget {
     final Color bg = reason.getBgColor(context);
     final Color onBg = reason.getOnBgColor(context);
 
-    return Container(
+    return SizedBox(
+        key: const Key('noImgS'),
         height: standardImageHeight,
         width: standardImageWidth,
-        color: bg,
-        alignment: Alignment.center,
-        child: buildRow(context, onBg));
+        child: Align(
+            key: const Key('noImgA'),
+            alignment: Alignment.center,
+            child: Container(
+                key: const Key('noImgBg'),
+                color: bg,
+                padding: const EdgeInsets.all(6),
+                // child: AspectRatio(
+                //     aspectRatio: 1,
+                child: _NoImgRow(
+                    key: const Key('noImgRow'),
+                    reason: reason,
+                    displayUrl: displayUrl,
+                    onBg: onBg))));
   }
+}
 
-  Widget buildRow(BuildContext context, Color onBg) {
+class _NoImgRow extends StatelessWidget {
+  const _NoImgRow({
+    super.key,
+    required this.reason,
+    required this.displayUrl,
+    required this.onBg,
+  });
+
+  final NoImageReason reason;
+  final String? displayUrl;
+  final Color onBg;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       key: const Key('row4Icon'),
       mainAxisSize: MainAxisSize.min,
@@ -189,12 +215,29 @@ class UnwrappedNoImageWidget extends StatelessWidget {
               color: onBg,
               size: 3 * k,
             )),
-        buildColumn(context, onBg)
+        _NoImgContent(
+            key: const Key('noImgContent'),
+            reason: reason,
+            displayUrl: displayUrl,
+            onBg: onBg)
       ],
     );
   }
+}
 
-  Column buildColumn(BuildContext context, Color onBg) {
+class _NoImgContent extends StatelessWidget {
+  final Color onBg;
+  final NoImageReason reason;
+  final String? displayUrl;
+
+  const _NoImgContent(
+      {super.key,
+      required this.reason,
+      required this.displayUrl,
+      required this.onBg});
+
+  @override
+  Widget build(BuildContext context) {
     const EdgeInsets padding = EdgeInsets.only(left: 6);
 
     Widget reasonText = Text(reason.getReasonText(),

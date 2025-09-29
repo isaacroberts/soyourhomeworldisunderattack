@@ -58,7 +58,6 @@ class _SliverReaderState extends State<SliverReader> {
     var builder = ViewSettings.instance.useTestRig ? debugBuilder : itemBuilder;
 
     return ReaderBuilder(
-      useSliverProtocol: true,
       key: const Key('RdrBldr'),
       itemBuilder: builder,
       leadItems: const [

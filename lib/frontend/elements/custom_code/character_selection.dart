@@ -25,15 +25,10 @@ const List<String> _classDescriptions = [
   // "You like music.",
 ];
 
-class CharacterSelectionHolder extends Holder {
+class CharacterSelectionHolder extends CodeHolder {
   @override
   Widget element(BuildContext context) {
     return const CharacterSelection(key: Key("charSelect"));
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return element(context);
   }
 
   @override

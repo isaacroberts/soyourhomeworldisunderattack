@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
-import 'fullscreen_wrap.dart';
+import 'base_image_holder.dart';
+import 'image_buttons.dart';
 import 'image_constants.dart';
 import 'image_holder.dart';
 
@@ -16,7 +18,7 @@ class LandscapeSliver extends StatelessWidget {
   /// [                                           ]
   /// [                                           ]
   /// [===========================================]
-  final ImageHolder holder;
+  final StdImageHolder holder;
 
   const LandscapeSliver({
     required super.key,
@@ -26,16 +28,14 @@ class LandscapeSliver extends StatelessWidget {
   Image buildImage(BuildContext context) {
     ///Image!
     double width = MediaQuery.sizeOf(context).width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
     return Image(
       image: holder.getImageProvider(),
       key: const Key('Image!'),
-      // image: NetworkImage(
-      //   holder.url,
-      // ),
+
       width: width,
-      // cacheWidth: (width / 1 * devicePixelRatio).round(),
+
+      //TODO: Doesn't this need a frameBuilder
       loadingBuilder: holder.loadingBuilder,
       errorBuilder: holder.errorBuilder,
     );
@@ -55,12 +55,18 @@ class LandscapeSliver extends StatelessWidget {
 
     child = LandscapeFrameSliver(
         key: const Key('landscape'), holder: holder, child: child);
-
-    double width = MediaQuery.sizeOf(context).width;
-
-    if (width > 800) {
-      child = ImageFullscreenWrapSliver(key: key, holder: holder, child: child);
-    }
+    child = SliverStack(
+      key: const Key('ImgButtonStack'),
+      positionedAlignment: Alignment.bottomRight,
+      children: [
+        child,
+        SliverPositioned(
+            key: const Key('ButtonPos'),
+            bottom: 12,
+            right: 12,
+            child: ImageButtonRow(key: const Key('imgButtons'), holder: holder))
+      ],
+    );
 
     return child;
   }
@@ -106,7 +112,7 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
     // Color? bgHint =
     //     Color.lerp(b1Hint, b2Hint, ui.clampDouble(scrollPct * 1.4 - .2, 0, 1));
     Color? bgHint = colorHint?.bgColor;
-    const Radius imgRadius = Radius.elliptical(72, 12);
+    const Radius imgRadius = Radius.elliptical(72, 36);
     if (bgHint != null) {
       Paint bg = Paint()
         ..color = bgHint
@@ -116,17 +122,6 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
           .shift(imageOffset);
 
       context.canvas.drawRect(bgRect.inflate(strokeWidth), bg);
-
-      // RRect bgRR = RRect.fromRectAndRadius(bgRect, imgRadius);
-      // context.canvas.drawRRect(bgRR.inflate(strokeWidth), bg);
-
-      // Paint oo = Paint()
-      //   ..color = colorHint!.foreColor!
-      //   ..style = PaintingStyle.stroke
-      //   ..strokeWidth = 1.5;
-      // context.canvas.drawRRect(bgRR, oo);
-
-      // context.canvas.drawOval(bgRect, bg);
     }
     //Starts from 0
     // rect = rect.shift(Offset(0, imgScrollIndicator));

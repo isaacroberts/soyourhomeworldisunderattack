@@ -297,12 +297,12 @@ class BookLoader {
   //   return null;
   // }
 
-  Future<Book?> load() async {
+  Future<Book> load() async {
     if (book != null) {
-      return book;
+      return book!;
     }
     await loader_lib.loadLibrary();
     book = await loader_lib.loadBookLoader(this);
-    return book;
+    return book!;
   }
 }

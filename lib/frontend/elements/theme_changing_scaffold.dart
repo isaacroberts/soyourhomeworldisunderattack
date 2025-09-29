@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/mc_fab.dart';
-import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import '../../backend/error_handler.dart';
 import '../pages/drawer.dart';
@@ -12,7 +11,7 @@ import '../parts/part.dart';
 // final talker = Talker();
 
 // import 'package:flutter_icon'
-
+///Unused
 class ThemeChangingScaffold extends StatefulWidget {
   final String? source;
   final Part part;
@@ -44,7 +43,6 @@ class _ThemedScaffoldState extends State<ThemeChangingScaffold>
     //Avoid showing ErrorSnackbar immediately upon open
     Future.delayed(
         const Duration(seconds: kDebugMode ? 1 : 10), startErrorChecking);
-    ViewSettings.instance.scrollModeNotifier.addListener(rebuildViewSettings);
   }
 
   void startErrorChecking() {
@@ -52,14 +50,8 @@ class _ThemedScaffoldState extends State<ThemeChangingScaffold>
     timer = Timer.periodic(const Duration(seconds: 1), checkScaffold);
   }
 
-  void rebuildViewSettings() {
-    setState(() {});
-  }
-
   @override
-  dispose() {
-    ViewSettings.instance.scrollModeNotifier
-        .removeListener(rebuildViewSettings);
+  void dispose() {
     timer?.cancel();
     super.dispose();
   }

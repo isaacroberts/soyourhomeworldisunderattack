@@ -49,34 +49,6 @@ class GnChapterHeadingSubtitle extends StatelessWidget {
 class _SubtitleRow extends StatelessWidget {
   const _SubtitleRow({super.key});
 
-  Widget futuresRow(BuildContext context, Chapter chapter) {
-    ///For waiting on chapter
-    return Row(
-        key: const Key("heading_row"),
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          BookmarkButton(key: const Key("bookmark"), chapter: chapter),
-          FutureChip(
-              key: const Key("Subtitle"),
-              value: chapter.awaitSubtitle(),
-              label: 'Subtitle',
-              icon: null),
-          FutureChip(
-              key: const Key("Where"),
-              value: chapter.awaitWhere(),
-              label: 'Where',
-              icon: Icons.public),
-          FutureChip(
-              key: const Key("When"),
-              value: chapter.awaitWhen(),
-              label: 'When',
-              icon: Icons.access_time),
-          _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
-        ]);
-  }
-
   Widget completedRow(BuildContext context, Chapter chapter) {
     ///No waiting on futures
     return Row(
@@ -126,12 +98,8 @@ class _SubtitleRow extends StatelessWidget {
 
   Widget builder(BuildContext context, Widget? previousChild) {
     Chapter? chapter = Chapter.maybeOf(context);
-    if (chapter == null) {
+    if (chapter == null || chapter.data == null) {
       return nullChapterRow(context);
-    } else if (chapter.data == null) {
-      return nullChapterRow(context);
-      //These futures are causing every chapter to load at once
-      return futuresRow(context, chapter);
     } else {
       return completedRow(context, chapter);
     }

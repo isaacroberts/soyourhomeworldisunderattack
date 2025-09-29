@@ -33,12 +33,6 @@ class _ChapterSliverState extends State<ChapterSliver> {
   @override
   void initState() {
     chapter?.loadNotifier.addListener(_chapterUpdated);
-    //If not loaded; skip if null
-    // if (!(chapter?.loaded() ?? true)) {
-    //   //TODO: Remove delay
-    //   dev.log("Schedule load ${chapter?.varName}");
-    //   Future.delayed(const Duration(seconds: 3), load);
-    // }
     super.initState();
   }
 

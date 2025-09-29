@@ -13,21 +13,26 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/facebook_post.dart
     deferred as facebook_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
     deferred as goto_button_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/notif_text.dart'
+    deferred as notif_text_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
     deferred as signs_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/tweet.dart'
     deferred as tweet_lib;
+import 'package:soyourhomeworld/frontend/elements/holders/raised_spans.dart'
+    deferred as raised_span_lib;
 import 'package:soyourhomeworld/frontend/elements/special_widgets/ad_human_jacks.dart'
     deferred as human_jacks_lib;
 import 'package:soyourhomeworld/frontend/elements/special_widgets/andy_thumbnail.dart'
     deferred as andy_thumbnail_lib;
 //TODO: Remove
 import 'package:soyourhomeworld/frontend/icons.dart';
-//TODO: Defer
 import 'package:soyourhomeworld/frontend/image/image_holder.dart'
     deferred as image_lib;
+import 'package:soyourhomeworld/frontend/image/profile_image.dart'
+    deferred as profile_image_lib;
 import 'package:soyourhomeworld/frontend/pages/title/title.dart'
     deferred as title_lib;
 
@@ -58,17 +63,11 @@ Future<Holder> _instantiateCodeTag(String cls, CodeParams params) async {
     await misc_code_lib.loadLibrary();
     return misc_code_lib.IconHolder(iconIndex ?? RpgAwesome.errorIconIndex);
   } else if (cls == 'IMAGE') {
-    String? url = params.main;
-    double? aspectRatio = params.readDouble('aspectRatio');
-    List<Color>? colorHints = params.colorList('colorHint');
-    String? credit = params['credit'];
-    credit ??= '(Credit lost)';
     await image_lib.loadLibrary();
-    return image_lib.ImageHolder.fromList(
-        url: url,
-        aspectRatio: aspectRatio,
-        colorHints: colorHints,
-        credit: credit);
+    return image_lib.StdImageHolder(params);
+  } else if (cls == 'PROFILEIMAGE') {
+    await profile_image_lib.loadLibrary();
+    return profile_image_lib.ProfileImageHolder.fromParams(params);
   } else if (cls == 'ELVENCHORUS' || cls == 'ELVENCHOIR') {
     // dev.log("Elven Chorus");
     int? speed = params.readInt('Speed');
@@ -102,7 +101,7 @@ Future<Holder> _instantiateCodeBlock(
     return art_lib.ArtHolder(spans: spans);
   } else if (cls == 'FACEBOOK') {
     await facebook_lib.loadLibrary();
-    return facebook_lib.FacebookHolder(spans);
+    return facebook_lib.FacebookHolder(spans, params);
   } else if (cls == 'SHIRT' || cls == 'PRINTEXACTSHIRT') {
     await shirts_lib.loadLibrary();
     //TODO: Convert params to an object
@@ -124,6 +123,19 @@ Future<Holder> _instantiateCodeBlock(
   } else if (cls == 'TWEET') {
     await tweet_lib.loadLibrary();
     return tweet_lib.TweetHolder(spans);
+  } else if (cls == 'NOTIFICATION') {
+    await notif_text_lib.loadLibrary();
+    return notif_text_lib.NotificationTextHolder.fromSpans(
+        data: params, spans: spans);
+  } else if (cls == 'YOUTUBE') {
+    await raised_span_lib.loadLibrary();
+    return raised_span_lib.YoutubeTranscriptHolder(spans: spans);
+  } else if (cls == 'SPLATBOOK') {
+    await raised_span_lib.loadLibrary();
+    return raised_span_lib.DnDSplatHolder(spans: spans);
+  } else if (cls == 'MTGCARD') {
+    await raised_span_lib.loadLibrary();
+    return raised_span_lib.MtgCardHolder(spans: spans);
   } else if (cls == 'SIGN') {
     await signs_lib.loadLibrary();
     return signs_lib.Sign(spans: spans);
@@ -205,7 +217,7 @@ enum CodeElementType {
   codeTag,
 }
 
-class UnhandledCodeElement extends Holder {
+class UnhandledCodeElement extends CodeHolder {
   final String classname;
   final String category;
 
@@ -223,14 +235,5 @@ class UnhandledCodeElement extends Holder {
   @override
   String toText() {
     return '[CodeElementNotFound: $classname]';
-  }
-
-  @override
-  Widget fallback(BuildContext context) {
-    return ColoredIconCard(
-      icon: Icons.local_fire_department,
-      text: classname.toLowerCase(),
-      extra: "[Needs code element: $classname ($category)*]",
-    );
   }
 }

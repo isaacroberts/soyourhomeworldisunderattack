@@ -9,7 +9,7 @@ class CodeParams {
   ///Main is also stored in the dict as 'main'
   final String? main;
   final Map<String, dynamic> dict;
-  const CodeParams({required this.main, required this.dict});
+  const CodeParams({this.main, this.dict = const {}});
 
   const CodeParams.empty()
       : main = null,
@@ -59,6 +59,10 @@ class CodeParams {
     }
     //This probably crashes?
     return val;
+  }
+
+  String? readString(String key) {
+    return this[key]?.toString();
   }
 
   bool? readBool(String key) {
