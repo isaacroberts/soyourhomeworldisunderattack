@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/parts/noir_theme.dart';
 
 import 'base_text_theme.dart';
+import 'font_family.dart';
 
 //TODO: Consider finding sans serif version of palatino
-const appFontFamily = 'Palatino';
+const appFontFamily = globalFontFamily;
 
 TextTheme textTheme = const TextTheme(
   //todo: try fontVariations: [FontVariation.width(1.5)]
@@ -106,80 +107,80 @@ TextTheme textTheme = const TextTheme(
 TextTheme bookTextTheme = const TextTheme(
   //todo: try fontVariations: [FontVariation.width(1.5)]
   displayLarge: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 57 * fontScale,
       fontWeight: FontWeight.w700,
       color: textColor,
       height: 64 / 57),
   displayMedium: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 45 * fontScale,
       fontWeight: FontWeight.w600,
       color: textColor,
       height: 52 / 45),
   displaySmall: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 36 * fontScale,
       fontWeight: FontWeight.w500,
       color: textColor,
       height: 44 / 36),
   headlineLarge: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 32 * fontScale,
       fontWeight: FontWeight.w600,
-      color: textColor,
+      color: headerColor,
       height: 40 / 32),
   headlineMedium: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 28 * fontScale,
       fontWeight: FontWeight.w500,
-      color: textColor,
+      color: headerColor,
       height: 36 / 28),
   headlineSmall: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 24 * fontScale,
       fontWeight: FontWeight.w400,
-      color: textColor,
+      color: headerColor,
       height: 32 / 24),
   titleLarge: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 22 * fontScale,
       fontWeight: FontWeight.w400,
       color: textColor,
       height: 28 / 22),
   titleMedium: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 16 * fontScale,
       fontWeight: FontWeight.w300,
       color: textColor,
       height: 24 / 16),
   titleSmall: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 14 * fontScale,
       fontWeight: FontWeight.w600,
       color: textColor,
       height: 20 / 14),
   bodyLarge: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 16 * fontScale,
       fontWeight: FontWeight.w400,
       color: textColor,
       height: 24 / 16),
   bodyMedium: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontSize: 14 * fontScale,
       fontWeight: FontWeight.w300,
       color: textColor,
       height: 20 / 14),
   bodySmall: TextStyle(
-      fontFamily: 'Palatino',
+      fontFamily: globalBookFamily,
       fontStyle: FontStyle.italic,
       fontSize: 12 * fontScale,
       fontWeight: FontWeight.w200,
       color: textColor,
       height: 16 / 12),
   labelLarge: TextStyle(
-    fontFamily: 'Palatino',
+    fontFamily: globalBookFamily,
     // fontStyle: FontStyle.italic,
     fontSize: 14 * fontScale,
     fontWeight: FontWeight.w500,
@@ -187,7 +188,7 @@ TextTheme bookTextTheme = const TextTheme(
     color: labelTextColor,
   ),
   labelMedium: TextStyle(
-    fontFamily: 'Palatino',
+    fontFamily: globalBookFamily,
     fontStyle: FontStyle.italic,
     fontSize: 12 * fontScale,
     fontWeight: FontWeight.w500,
@@ -195,7 +196,7 @@ TextTheme bookTextTheme = const TextTheme(
     color: labelTextColor,
   ),
   labelSmall: TextStyle(
-    fontFamily: 'Palatino',
+    fontFamily: globalBookFamily,
     fontStyle: FontStyle.italic,
     fontSize: 11 * fontScale,
     fontWeight: FontWeight.w500,
@@ -204,23 +205,8 @@ TextTheme bookTextTheme = const TextTheme(
   ),
 );
 
-//TODO: Move
+//TODO: This is only used in two places
 final ThemeData bookTheme = noirTheme.copyWith(textTheme: bookTextTheme);
-
-const TextStyle boldBodyFont = TextStyle(
-  fontFamily: 'Palatino',
-  fontSize: 12 * fontScale,
-  color: textColor,
-  fontWeight: FontWeight.w700,
-);
-
-const TextStyle italicBodyFont = TextStyle(
-  fontFamily: 'Palatino',
-  fontSize: 12 * fontScale,
-  color: textColor,
-  fontStyle: FontStyle.italic,
-  fontWeight: FontWeight.w300,
-);
 
 const TextStyle monoFont = TextStyle(
   fontFamily: 'Andale Mono',

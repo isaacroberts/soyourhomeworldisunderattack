@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as dev;
 import 'dart:ui';
 
 import '../case_insensitive_equality.dart';
@@ -15,7 +16,12 @@ class CodeParams {
       : main = null,
         dict = const {};
 
+  void print() {
+    dev.log("CodeParams: main=$main;\n\tdict = $dict");
+  }
+
   dynamic operator [](String key) {
+    //TODO: Key = key.lower()
     return dict[key];
   }
 

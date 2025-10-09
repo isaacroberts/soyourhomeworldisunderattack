@@ -33,42 +33,17 @@
   <meta name="theme-color" content="#2d296a">
 
   <!-- Facebook share -->
-  <meta property="og:title" content="Help, my Homeworld!">
-  <meta property="og:type" content="website">
+  <meta property="og:title" content="Help, my Homeworld is under Attack!">
+  <!-- This is a lie. It's actually a book, but I'm worried social media is delisting books. -->
+  <meta property="og:type" content="article">
   <meta property="og:url" content="https://homeworld.help">
-  <meta property="og:image" content="images/saruman_drawing_lofty_phone.jpg">
-  <meta property="og:description" content="So, your Homeworld is under attack.">
-  <!-- Twitter share -->
-  <meta name="twitter:card" content="images/saruman_drawing_lofty_phone.jpg">
-  <meta name="twitter:title" content="Help, my Homeworld!">
-  <meta name="twitter:description" content="So, your Homeworld is under attack.">
-  <meta name="twitter:image" content="images/saruman_drawing_lofty_phone.jpg">
-  <meta name="twitter:site" content="@silverstein77">
+  <meta property="og:image" content="https://homeworld.help/images/smoke_hard.jpg">
+  <meta property="og:description" content="Something's going on at the EPA. Harvey Silverstein must track down the Climate Czar, while staying out of the Palantir.">
+
   <title>soyourhomeworld</title>
   <link rel="manifest" href="manifest.json">
 
-
   <style>
-    <!--
-    body {
-      height: 500vh !important;  /* Bigger than 100% to allow scroll */
-      position: static !important;  /* Override absolute from flutter */
-      overflow-y: scroll !important; /* Allows vertical scrolling */
-      overflow-x: hidden !important;
-      touch-action: pan-y !important;  /* Allows vertical scrolling */
-      overscroll-behavior: none; /* Avoid bouncing scrolling on top/bottom edget */
-    }
-
-     /* Centers flutter canvas with a size of the viewport*/
-    flt-glass-pane {
-      position: fixed !important; /* Overrides absolute from flutter  */
-      top: 50vh  !important;
-      left: 50vw  !important;
-      max-width: 100vw  !important;
-      max-height: 100vh  !important;
-      transform: translate(-50vw, -50vh)  !important;
-    }
-
     /*
     Scrollbar hide doesn't work on iOS, they add a default one when overflow:true and  -webkit-overflow-scrolling: touch;
     Sadly since iOS 13, this value is forced on iOS -> https://developer.apple.com/documentation/safari-release-notes/safari-13-release-notes
@@ -79,79 +54,12 @@
       height: 0px;  /* Remove scrollbar space */
       background: transparent;  /* Optional: just make scrollbar invisible */
     }
--->
   </style>
 
 </head>
 
 <body>
   <script src="flutter_bootstrap.js" async></script>
-
-  <!--Get scroll to work (script1)--
-  <script>
-    var element = document.getElementsByTagName('body')[0];
-
-    var handleScroll = function() {
-      	element.scrollTo(0, 0);  // required when scroll bar is drgged
-    };
-
-    element.addEventListener('scroll', handleScroll, false);
-
-    var handleEvent = function(e) {
-    	e.preventDefault();      // disables scrolling by mouse wheel and touch move
-    };
-
-    element.addEventListener('scroll', handleEvent,{passive: false});
-    element.addEventListener('mousewheel', handleEvent,{passive: false});
-    element.addEventListener('touchmove', handleEvent, {passive: false});
-  </script>-->
-<!-- From related issue (script2):
-  <script>
-    function allowDragScrollingMobileFlutterEmbed(e) {
-        e.preventDefault();
-    };
-
-    window.addEventListener('load', function(ev) {
-        // Control pointer events to flutter, since it eats scroll
-        var body = document.querySelector('body');
-        var flutterDiv = document.querySelector('#flutter');
-        var parent = flutterDiv.parentElement;
-        var flutterExit = document.querySelector('#flutter-exit');
-        parent.addEventListener('click', function() {
-            flutterDiv.classList.add('clicked');
-            flutterExit.classList.add('visible');
-            body.classList.add('unscrollable');
-            document.addEventListener('touchmove',
-                allowDragScrollingMobileFlutterEmbed, { passive: false });
-        });
-        flutterExit.addEventListener('click', function(e) {
-            flutterDiv.classList.remove('clicked');
-            flutterExit.classList.remove('visible');
-            body.classList.remove('unscrollable');
-            document.removeEventListener('touchmove',
-                allowDragScrollingMobileFlutterEmbed, { passive: false });
-            e.stopPropagation();
-            e.preventDefault();
-        });
-
-        // Downloads main.dart.js
-        console.log('[FlutterInit] serviceWorkerVersion:', serviceWorkerVersion);
-        _flutter.loader.load({
-            serviceWorker: {
-                serviceWorkerVersion: serviceWorkerVersion,
-            },
-            onEntrypointLoaded: function(engineInitializer) {
-                engineInitializer.initializeEngine({
-                    hostElement: document.querySelector("#flutter")
-                }).then(function(appRunner) {
-                    appRunner.runApp().then(function(){
-                        flutterDiv.classList.add('visible');
-                    });
-                });
-            }
-        });
-    });
-  </script>-->
 </body>
 
 </html>

@@ -39,7 +39,7 @@ class _ChapterSelectorState extends State<ChapterSelector> {
   void openDialog(_) {
     dev.log("Open dialog");
     ChapterSelectorGrid.pushChapterSelectorGrid(context,
-        onChapterSelected: gridSelected);
+        book: Book.of(context), onChapterSelected: gridSelected);
   }
 
   @override
@@ -77,15 +77,18 @@ class ChapterSelectorGrid extends PopupRoute {
   final void Function(int) onChapterSelected;
 
   static void pushChapterSelectorGrid(BuildContext context,
-      {required void Function(int) onChapterSelected, bool show0 = true}) {
+      {required void Function(int) onChapterSelected,
+      required Book book,
+      bool show0 = true}) {
     Navigator.push(
         context,
         ChapterSelectorGrid(
-            show0: show0, onChapterSelected: onChapterSelected));
+            book: book, show0: show0, onChapterSelected: onChapterSelected));
   }
 
   ChapterSelectorGrid({
     required this.onChapterSelected,
+    required this.book,
     this.show0 = true,
     // super.filter,
   }) : super(
@@ -95,6 +98,8 @@ class ChapterSelectorGrid extends PopupRoute {
             directionalTraversalEdgeBehavior: TraversalEdgeBehavior.closedLoop,
             //Regular traversal will leave the unimportant grid
             traversalEdgeBehavior: TraversalEdgeBehavior.parentScope);
+
+  final Book book;
 
   @override
   Color get barrierColor => const Color(0x00000000);
@@ -132,10 +137,12 @@ class ChapterSelectorGrid extends PopupRoute {
                 height: 400,
                 child: Padding(
                     padding: const EdgeInsets.all(5),
-                    child: ChapterSelectorWidget(
-                      onChapterSelected: (i) => boxSelected(i, context),
-                      show0: show0,
-                    )))));
+                    child: BookProvider(
+                        book: book,
+                        child: ChapterSelectorWidget(
+                          onChapterSelected: (i) => boxSelected(i, context),
+                          show0: show0,
+                        ))))));
   }
 
   @override

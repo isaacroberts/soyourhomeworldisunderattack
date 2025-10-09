@@ -39,19 +39,19 @@ abstract class BookTheme {
           fontFamily: fontFamily,
           fontSize: 32,
           fontWeight: FontWeight.w600,
-          color: textColor,
+          color: headerColor,
           height: 40 / 32),
       headlineMedium: TextStyle(
           fontFamily: fontFamily,
           fontSize: 28,
           fontWeight: FontWeight.w500,
-          color: textColor,
+          color: headerColor,
           height: 36 / 28),
       headlineSmall: TextStyle(
           fontFamily: fontFamily,
           fontSize: 24,
           fontWeight: FontWeight.w400,
-          color: textColor,
+          color: headerColor,
           height: 32 / 24),
       titleLarge: TextStyle(
           fontFamily: fontFamily,

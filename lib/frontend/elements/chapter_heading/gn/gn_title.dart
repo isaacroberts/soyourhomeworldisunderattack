@@ -25,7 +25,7 @@ class GnHeadingTitleRow extends StatelessWidget {
     HeaderOfText? header = this.header;
     /*
     if (header is CustomHeaderOfText) {
-      headerColor = header.font.color ?? textColor;
+      headerColor = header.font.color ?? headerColor;
 
       //TODO: Figure out Rubik headers issue
       // Then Use Holder element so CustomHeaders can be shown
@@ -34,7 +34,7 @@ class GnHeadingTitleRow extends StatelessWidget {
       //TODO: This is disabling header styles
       headerStyle = _headerFont;
     } else {
-      headerColor = textColor;
+      headerColor = headerColor;
       headerStyle = _headerFont;
     }*/
 
@@ -121,6 +121,7 @@ class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
   void onClicked() {
     ChapterSelectorGrid.pushChapterSelectorGrid(context,
         onChapterSelected: onSelected,
+        book: Book.of(context),
         //Title does not have a scrollable
         show0: false);
   }

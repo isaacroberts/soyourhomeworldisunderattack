@@ -5,19 +5,7 @@ from common.fmt_writer_functions import *
 from objects.binary import *
 
 """
-Keyword:
 Add batch:
-
-BlockObject:
-'Notification',
-'Splatbook',
-'Youtube',
-'Email',
-'MtgCard',
-
-Tag:
-'ProfileImage',
-'Source',
 
 
 """
@@ -44,6 +32,9 @@ def chapter_keywords():
     return ['Chapter', 'Section', 'Label',
         # info
 'Subtitle', 'When', 'Where',
+# TODO: Move this somewhere
+# Json data
+'CW', 'What',
         #other
         'Part',
          'Next',
@@ -91,24 +82,34 @@ def block_objects():
         'CharacterSelectionScreen',
         'HJLogo','SRABusinessCard1',
 
-# Wrappers
-    'Flyer', 'Facebook', 'AdOffer',
-    #Letter
+    # Layers
+    'Splatbook',
+    'Youtube',
+    'Email',
+    'MtgCard',
 
-# Regular
-        'GotoButton',
-        'Song', #'Letter',
-        'BG','FullBG','AdBG',
-        'GiftCard',
-        'Shirt', 'ChapterShirt', 'PrintExactShirt',
-        'BumperSticker',
-        'Expando',
-        'Terminal',
-         'Art', 'Ballot', 'Ticket', 'Sign',
-         'Tweet',
-        'GreyedOutButton',
-        'InvisiText','BallotBox',
-        'HJArt',
+
+    # Parsed by Flutter
+    'Facebook',
+
+    # App wrappers
+    'Google',
+
+    # Regular
+    'GotoButton',
+    'Notification',
+    'Song', #'Letter',
+    'BG','FullBG','AdBG',
+    'GiftCard',
+    'Shirt', 'ChapterShirt', 'PrintExactShirt',
+    'BumperSticker',
+    'Expando',
+    'Terminal',
+     'Art', 'Ballot', 'Ticket', 'Sign',
+     'Tweet',
+    'GreyedOutButton',
+    'InvisiText','BallotBox',
+    'HJArt',
 
     ]
 
@@ -123,15 +124,20 @@ def single_line_objects():
         Label: AbeLincoln
         Four score and several years ago
     """
-    return ['WHLAd',
-                'ElvenChorus',
-
-        'Image',
-        'CustomGoto',
+    return [
+        # Image
+        'Image', 'ProfileImage',
+        # Source links
+        'Source',
+        # One off
+        'ElvenChorus',
+        'WHLAd',
+        #
+        'CustomGoto', 'BackButton',
         'Divider',
-        'BackButton',
+        # 'BackButton',
         'HumanJacksAd',
-        'Read', 'Icon'
+        # 'Icon'
 
     ]
 

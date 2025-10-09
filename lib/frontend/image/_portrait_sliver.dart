@@ -179,6 +179,7 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
     //Requested overscroll amount
     overscroll =
         math.max(desiredHeight - viewportMainAxisExtent - appBarSize, 0);
+    overscroll = 0;
     //size from Overscroll
     final double paintedChildSize = _calculateOverscrollPaintExtent(
         from: 0, to: height, overscroll: overscroll);
@@ -294,9 +295,10 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
 
     //Simplify the coding
     //When first seen, the image bottom should be aligned with the bottom of the viewport
-    double initialExtent = viewportMainAxisExtent - desiredHeight;
+    double initialExtent = appBarSize;
+    double endExtent = viewportMainAxisExtent - desiredHeight;
     //Once scroll all the way up, the image top should be just under the appBar
-    double endExtent = appBarSize;
+    // double endExtent = appBarSize;
     return initialExtent + scrollPct * (endExtent - initialExtent);
   }
 

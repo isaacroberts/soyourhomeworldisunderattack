@@ -166,8 +166,6 @@ def write(chapters, filename='chapters.json'):
         if chapter.next is not None:
             chapter.next = chapter.next.id
 
-    pst.print_and_save_responses('data/chapterbreaker_responses')
-
     print('Saving files:')
 
     for chapter in chapters:

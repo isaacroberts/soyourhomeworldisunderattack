@@ -3,6 +3,7 @@ import 'package:soyourhomeworld/backend/text_utils.dart';
 
 import '../frontend/theme/base_colors.dart';
 import '../frontend/theme/base_text_theme.dart';
+import '../frontend/theme/font_family.dart';
 import '../frontend/view_settings.dart';
 import 'font_cache.dart';
 
@@ -117,7 +118,7 @@ class FontInterm {
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         color: color ?? fallbackTextColor,
-        fontFamily: 'Palatino',
+        fontFamily: globalBookFamily,
         backgroundColor: bgColor,
         decoration: wousi.textDecoration(),
         decorationColor: color ?? fallbackTextColor,

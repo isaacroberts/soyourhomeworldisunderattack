@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/binary_utils/code_params.dart';
 import '../../../backend/chapter.dart';
@@ -86,13 +86,10 @@ class _DragNotifState extends State<_DragNotif> {
 
   Future<bool> confirmDismiss(DismissDirection? d) async {
     if (widget.holder.link != null) {
-      if (mounted) {
-        final Uri url = Uri.parse(widget.holder.link!);
-        await launchUrl(url);
-      }
+      openLink(widget.holder.link, context);
     }
     await Future.delayed(const Duration(seconds: 1));
-
+//Otherwise the thingy disappears
     return false;
   }
 }

@@ -126,7 +126,7 @@ class StateBasedHorseshit:
     def copyWith(self, font):
         newState = StateBasedHorseshit(self.style_handler)
         newState.font = font
-        newState.align = self.align 
+        newState.align = self.align
         newState.is_first_such_span=False
         return newState
     def reset(self):
@@ -166,9 +166,9 @@ def para_to_spans(style_handler, para):
 
     # Newline
     if len(para.contents)==0:
-        print(f'>\t\t\tNL(empty paragraph)')
+        # print(f'>\t\t\tNL(empty paragraph)')
         add_spans(spans, NewLine(font))
-        print(spans[-1])
+        # print(spans[-1])
 
     # Process paragraph
     else:
@@ -182,10 +182,10 @@ def para_to_spans(style_handler, para):
         state.is_first_such_span = True
         # For contents
         for c in para.contents:
-            print('\tContents:', c)
+            # print('\tContents:', c)
             if isinstance(c, str):
                 if c=='\n':
-                    print('>\t\t\tNL(empty text)')
+                    # print('>\t\t\tNL(empty text)')
                     add_spans(spans, NewLine(font))
                 else:
                     # String uses main font
@@ -193,17 +193,17 @@ def para_to_spans(style_handler, para):
                     # state.reset()
                     # state.is_first_such_span=True
                     span = get_line_of_text(state, c)
-                    print(span)
+                    # print(span)
                     add_spans(spans, span)
                     state.is_first_such_span=False
             elif isinstance(c, bs4.element.Tag):
                 # Misc element
                 span = get_misc_element(state, c)
-                print(span)
+                # print(span)
                 add_spans(spans, span)
                 state.is_first_such_span = False
 
-        print(f'>\t\t\tEndOfPara()')
+        # print(f'>\t\t\tEndOfPara()')
         # Prevents joins later
         add_spans(spans, EndOfPara())
 
@@ -218,21 +218,21 @@ def get_line_of_text(state, text):
     # If text is empty
     if len(text)==0:
         # Add NewLine with correct spacing
-        print(f'>\t\t\tNL(empty maybe_header)')
+        # print(f'>\t\t\tNL(empty maybe_header)')
         return NewLine(font)
     else:
         if font is None:
             assert False, 'None font'
-            print(f'(!)\t\t\tNull-font("{text}")', '\n' in text)
+            # print(f'(!)\t\t\tNull-font("{text}")', '\n' in text)
             return TextSpan(font, text, align)
 
         # Header font means Header object
         elif font.isHeading():
-            print(f'>\t\t\tHeader("{text}")', '\n' in text)
+            # print(f'>\t\t\tHeader("{text}")', '\n' in text)
             return Header(font, text, align)
         else:
             # Non-header TextSpan
-            print(f'>\t\t\tText("{text}")', '\n' in text)
+            # print(f'>\t\t\tText("{text}")', '\n' in text)
             return TextSpan(font, text, align)
 
 def get_misc_element(state, c):
@@ -246,7 +246,7 @@ def get_misc_element(state, c):
     assert font is not None, f"! None font in handle_Misc: c='{c}' first_span = '{state.is_first_such_span}'"
     spans = []
 
-    print('\t\tMisc:', c)
+    # print('\t\tMisc:', c)
     # Span
     if c.name=='span':
         # If has font
@@ -266,12 +266,14 @@ def get_misc_element(state, c):
         return spans
     # Tab element
     elif c.name == 'tab':
-        print(f'>\t\t\tTextSpan("\\t")')
+        # print(f'>\t\t\tTextSpan("\\t")')
         return TextSpan(font, '\t', align)
     # Page break
     elif c.name == 'soft-page-break':
-        print(f'>\t\t\tMiscToken("{c.name}")')
-        return MiscToken(c.name)
+        # print(f'>\t\t\tMiscToken("{c.name}")')
+        # return MiscToken(c.name)
+        # try skipping page breaks
+        return None
     # Single space
     elif c.name=='s':
         # Single space
@@ -280,7 +282,7 @@ def get_misc_element(state, c):
         if 'text:c' in c.attrs:
             count = int(c.attrs['text:c'])
             spc = ' ' * count
-        print(f'>\t\t\tText("{spc}")')
+        # print(f'>\t\t\tText("{spc}")')
         return TextSpan(font, spc, align)
     # Line break
     elif c.name=='line-break':
@@ -288,16 +290,16 @@ def get_misc_element(state, c):
         return NewLine(font)
         if state.is_first_such_span:
             # Add fixed NewLine
-            print(f'>\t\t\tNL(starting line break)')
+            # print(f'>\t\t\tNL(starting line break)')
             return NewLine(font)
         else:
             # Prevents joins later.
             # I think there's another NewLine added later
-            print(f'>\t\t\tEndOfPara()')
+            # print(f'>\t\t\tEndOfPara()')
             return EndOfPara()
     # Only other types of elements
     elif c.name in ['bookmark-start', 'bookmark-end']:
-        print('Skipping', c.name)
+        # print('Skipping', c.name)
         return None
     elif c.name == 'a':
         # We could later auto-fill this,
@@ -320,18 +322,18 @@ def get_misc_element(state, c):
 
 def add_spans(spans, obj):
     if isinstance(obj,list):
-        print("spans+= [", ', '.join(str(s) for s in obj), ']')
+        # print("spans+= [", ', '.join(str(s) for s in obj), ']')
         spans.extend(obj)
     elif obj is None:
-        print('spans+= none (pass)')
+        # print('spans+= none (pass)')
         pass
     else:
-        print('spans+=',obj)
+        # print('spans+=',obj)
         spans.append(obj)
 
 def get_contents(state, c):
     spans = []
-    print('\t', 'contents:', c.contents)
+    # print('\t', 'contents:', c.contents)
     #Check contents of span
     for cc in c.contents:
         # If tag
@@ -363,7 +365,7 @@ def clean_raw_code_tags(spans):
     for i in range(len(spans)):
         if isinstance(spans[i], TextSpan):
             if spans[i].font.isCodeMarker():
-                print('->CodeTag', spans[i])
+                # print('->CodeTag', spans[i])
                 # Convert to CodeTag
                 spans[i] = CodeTag(spans[i].text, spans[i].font)
 
@@ -384,7 +386,7 @@ def clean_raw_code_tags(spans):
                 if did_combine:
                     spans.pop(i)
                     i-=1
-                    print('Combined:', spans[i])
+                    # print('Combined:', spans[i])
         # Increment span index
         i+=1
     for span in spans:
@@ -417,13 +419,13 @@ def manage_raw_styles(style_handler, spans):
 
     style_handler.assert_all_fonts_extant(spans, 'post namefix')
 
-    print('Repl dict:{{{{{{{{{{{{{{{{{{{\n')
+    # print('Repl dict:{{{{{{{{{{{{{{{{{{{\n')
+    #
+    # print(style_handler.repl_dict)
+    #
+    # print('\n}}}}}}}}}}}}}}}}}}}')
 
-    print(style_handler.repl_dict)
-
-    print('\n}}}}}}}}}}}}}}}}}}}')
-
-    print("Replacing fonts")
+    # print("Replacing fonts")
     # Collects all fonts in span
     style_handler.replace_fonts(spans)
 

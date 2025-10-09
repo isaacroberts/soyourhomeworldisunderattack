@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/subtitle_components.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/chapter_grid.dart';
-import 'package:soyourhomeworld/frontend/theme/timings.dart';
+import 'package:soyourhomeworld/frontend/pages/index/dropdown_chapter_names.dart';
 
-import '../../../../backend/book.dart';
 import '../../../../backend/chapter.dart';
+import '../../../parts/part.dart';
 import '../../../theme/base_text_theme.dart';
 import '../../holders/textholders.dart';
 
@@ -21,7 +19,7 @@ class AppBarTitleOnly extends StatelessWidget {
   }
 }
 
-class HeadingTitleRow extends StatelessWidget {
+class HeadingTitleRow extends StatefulWidget {
   const HeadingTitleRow({
     super.key,
     required this.chapter,
@@ -33,12 +31,68 @@ class HeadingTitleRow extends StatelessWidget {
   final HeaderOfText? header;
 
   @override
+  State<StatefulWidget> createState() => _HeadingTitleState();
+}
+
+class _HeadingTitleState extends State<HeadingTitleRow> {
+  late final MenuController menuController;
+
+  @override
+  void initState() {
+    menuController = MenuController();
+    super.initState();
+  }
+
+  Chapter? get chapter => widget.chapter;
+  HeaderOfText? get header => widget.header;
+
+  @override
   Widget build(BuildContext context) {
-    late final Color headerColor;
-    late final TextStyle headerStyle;
-    HeaderOfText? header = this.header;
+    Widget title = RawTitleRow(
+      chapter: chapter,
+    );
+    title = RawMenuAnchor(
+        controller: menuController,
+        overlayBuilder: overlayBuilder,
+        child: title);
+    title = TextButton(onPressed: () => menuController.open(), child: title);
+    return SizedBox(
+        height: 60,
+        child: Padding(
+            //Standard left gutter, then space for drawer
+            padding: const EdgeInsets.only(left: 0, right: 36),
+            child: title));
+  }
+
+  Widget overlayBuilder(BuildContext context, RawMenuOverlayInfo info) {
+    // dev.log("MenuANchor Info: ${info.anchorRect}");
+    return Positioned(
+        //Extra padding
+        top: info.anchorRect.top - 12,
+        left: info.anchorRect.left,
+        child: SizedBox(
+            width: info.anchorRect.width + 24,
+            // height: info.anchorRect.height,
+            //TODO: Switch this to regular sizing
+            height: MediaQuery.sizeOf(context).height,
+            child: ChapterTitleDropdown(
+              startChapter: chapter,
+            )));
+  }
+}
+
+class RawTitleRow extends StatelessWidget {
+  final Chapter? chapter;
+  final bool small;
+  const RawTitleRow({super.key, required this.chapter, this.small = false});
+
+  @override
+  Widget build(BuildContext context) {
+    late TextStyle headerStyle;
+    // late final Color headerColor;
+    HeaderOfText? header = chapter?.data?.header;
     if (header is CustomHeaderOfText) {
-      headerColor = header.font.color ?? textColor;
+      // headerColor = header.font.color ?? headerColor;
 
       //TODO: Figure out Rubik headers issue
       // Then Use Holder element so CustomHeaders can be shown
@@ -47,11 +101,15 @@ class HeadingTitleRow extends StatelessWidget {
       //TODO: This is disabling header styles
       headerStyle = headerFont;
     } else {
-      headerColor = textColor;
+      // headerColor = textColor;
       headerStyle = headerFont;
     }
 
-    String headerText = header?.text ?? '...';
+    if (small) {
+      headerStyle = headerStyle.copyWith(fontSize: 16);
+    }
+
+    String headerText = header?.text ?? chapter?.displayTitle ?? '...';
 
     Widget title = Text(
       key: const Key("titleText"),
@@ -70,106 +128,62 @@ class HeadingTitleRow extends StatelessWidget {
     //   alignment: Alignment.center,
     // );
 
-    // if (screenWidth < 400) {
-    //   //TODO: Align to textAlignDirection
-    //   return SizedBox(
-    //     height: 60,
-    //     child: title,
-    //   );
-    // }
-    return HeaderSizer(child: title);
-    return SizedBox(
-        height: 60,
-        child: Row(
-          key: const Key("headerRow"),
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            //Chapter number
-            // _ChapterNumberWrap(
-            //     key: Key("bookmarkButton${chapter?.key}"),
-            //     chapterNumber: chapter?.id,
-            //     headerColor: headerColor),
-            //Title
-            title,
+    //This sizes the button to the width of the text, not the full bar
 
-            //Space for drawerbutton
-            const SizedBox(width: 60),
-          ],
+    // title = Align(alignment: Alignment.centerLeft, child: title);
+
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(key: const Key('e'), child: title),
+//Chapter number
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            child: ChapterNumber(chapter: chapter)),
+      ],
+    );
+  }
+}
+
+///Modernized
+class ChapterNumber extends StatelessWidget {
+  final Chapter? chapter;
+  const ChapterNumber({
+    super.key,
+    required this.chapter,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Part part = Part.of(context);
+    return Container(
+        key: const Key('chapNumber'),
+        //Must be this wide for
+
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+            color: part.primary.s3, borderRadius: BorderRadius.circular(3)),
+        //borderRadius: BorderRadius.circular(3),
+        alignment: Alignment.center,
+        // margin: const EdgeInsets.symmetric(vertical: 12),
+        // padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: Text(
+          _chapterNumberToText(chapter),
+          style: headerFont.copyWith(fontSize: 16),
         ));
   }
 }
 
-class _ChapterNumberWrap extends StatefulWidget {
-  const _ChapterNumberWrap({
-    super.key,
-    required this.chapterNumber,
-    required this.headerColor,
-  });
-
-  final int? chapterNumber;
-  final Color headerColor;
-
-  @override
-  State<StatefulWidget> createState() => _ChapterNumberWrapState();
-}
-
-class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
-  void onSelected(int ix) {
-    Book book = Book.of(context);
-    //Get chapter
-    Chapter chapter = book.chapters[ix];
-    //Use customized scroll
-    scrollToChapter(chapter, context: context);
-  }
-
-  void onClicked() {
-    ChapterSelectorGrid.pushChapterSelectorGrid(context,
-        onChapterSelected: onSelected,
-        //Title does not have a scrollable
-        show0: false);
-  }
-
-  Widget buttonBuilder(
-      BuildContext context, MenuController controller, Widget? child) {
-    return TextButton(
-        key: const Key('TextButton'),
-        onPressed: () {
-          if (controller.isOpen) {
-            controller.close();
-          } else {
-            controller.open();
-          }
-        },
-        child: child ?? const Text('err'));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        child: SizedBox(
-            width: 60,
-            child: MenuAnchor(
-                consumeOutsideTap: false,
-
-                // childFocusNode: FocusNode(),
-                menuChildren: [
-                  SizedBox(
-                      width: 400,
-                      height: 200,
-                      child: ChapterSelectorWidget(
-                        onChapterSelected: onSelected,
-                        show0: false,
-                      )),
-                ],
-                builder: buttonBuilder,
-                child: Text(
-                  key: const Key("ChapterNumber"),
-                  '${widget.chapterNumber}.',
-                  style: bodyFont.copyWith(
-                      fontSize: 18, color: widget.headerColor),
-                ))));
+String _chapterNumberToText(Chapter? chapter) {
+  if (chapter == null) {
+    return '?';
+  } else if (chapter.index < 100) {
+    return '#${chapter.index}';
+  } else {
+    //3 digit numbers are too wide, and the # is visually confusing
+    return chapter.index.toString();
   }
 }

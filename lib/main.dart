@@ -5,16 +5,11 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:soyourhomeworld/backend/start_chapter.dart';
-import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
 import 'backend/error_handler.dart';
-//TODO: Conditional import (debugMode)
-import 'frontend/debug/debug_scaffold.dart';
 import 'frontend/parts/noir_colors.dart';
 import 'frontend/parts/noir_theme.dart';
-import 'frontend/scrollers/sliver_scroller.dart';
 import 'router.dart' as router_lib;
 
 Future<void> main() async {
@@ -44,30 +39,30 @@ Future<void> main() async {
   };
 
   if (kDebugMode && false) {
-    runApp(const DebugApp());
+    // runApp(const DebugApp());
   } else {
     runApp(const MyApp());
   }
 }
-
-class DebugApp extends StatelessWidget {
-  const DebugApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: noirTheme,
-        title: 'Help! My Debugging!',
-        home: const McDebugScaffold(
-            child: BookWaiter(
-          child: SliverScroller(
-            key: Key('DebugSliverScroller'),
-            startChapter: IntStartChapter(0),
-            hasIndex: false,
-          ),
-        )));
-  }
-}
+//
+// class DebugApp extends StatelessWidget {
+//   const DebugApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//         theme: noirTheme,
+//         title: 'Help! My Debugging!',
+//         home: const McDebugScaffold(
+//             child: BookWaiter(
+//           child: SliverScroller(
+//             key: Key('DebugSliverScroller'),
+//             startChapter: IntStartChapter(0),
+//             hasIndex: false,
+//           ),
+//         )));
+//   }
+// }
 
 final ViewSettings settings = ViewSettings.defaultsThenLoad();
 
@@ -77,7 +72,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      key: const Key('ROUTER'),
+      key: const Key('myRouter'),
       title: 'Help! My Homeworld!',
       routerConfig: router_lib.router(),
 

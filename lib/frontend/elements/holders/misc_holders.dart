@@ -19,15 +19,17 @@ class NewlineElement extends Holder {
     return '\n';
   }
 
+  double get modHeight => height * 2;
+
   @override
   Widget element(BuildContext context) {
     // return SelectableNewline(height: height);
-    return SizedBox(height: height);
+    return SizedBox(height: modHeight);
   }
 
   @override
   Widget sliver(BuildContext context) {
-    return SliverPadding(padding: EdgeInsets.only(bottom: height));
+    return SliverPadding(padding: EdgeInsets.only(bottom: modHeight));
   }
 
   @override
@@ -37,11 +39,11 @@ class NewlineElement extends Holder {
     return SliverToBoxAdapter(
         key: Key('debugNewline_$id'),
         child: SizedBox(
-            height: height,
+            height: modHeight,
             child: Align(
                 alignment: Alignment.topLeft,
                 child: Tooltip(
-                  message: 'NL: $height',
+                  message: 'NL: $height (mod to $modHeight)',
                   child: Container(
                     key: const Key('debugNewline'),
                     decoration: BoxDecoration(
@@ -50,7 +52,7 @@ class NewlineElement extends Holder {
                               BorderSide(color: part.primary.s7, width: 1)),
                     ),
                     width: 24,
-                    height: height,
+                    height: modHeight,
                     alignment: Alignment.centerLeft,
                     child: const SizedBox.expand(),
                   ),

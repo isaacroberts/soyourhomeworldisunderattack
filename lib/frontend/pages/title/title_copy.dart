@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../../parts/noir_colors.dart';
 import '../../theme/base_text_theme.dart';
 
-const String titleText = "Help! My Homeworld!";
-const String authorText = "Stop doom. Start scrolling.";
+const String titleText =
+    "Help! My Homeworld's under Attack and my Slutty Client won't pay!";
+const String? authorText = 'by Joseph Silverstein';
 
 class TitleTextWide extends StatelessWidget {
   ///
@@ -37,7 +38,7 @@ class TitleTextWide extends StatelessWidget {
                   titleText,
                   style: titleFont,
                 ),
-                Text(authorText, style: authorFont),
+                if (authorText != null) Text(authorText!, style: authorFont),
                 const SizedBox(
                   height: 48,
                 ),
@@ -76,7 +77,9 @@ class TitleTextPhone extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(titleText, textAlign: TextAlign.left, style: titleFont),
-                Text(authorText, textAlign: TextAlign.left, style: authorFont),
+                if (authorText != null)
+                  Text(authorText!,
+                      textAlign: TextAlign.left, style: authorFont),
                 const SizedBox(height: 24),
                 if (child != null) child!
               ],

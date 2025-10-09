@@ -1,6 +1,7 @@
 // import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
 
 import 'holder_base.dart';
 
@@ -66,4 +67,23 @@ class SpanHoldingCode extends CodeHolder {
 class UnhandledSpanHoldingCode extends SpanHoldingCode {
   final String clsname;
   UnhandledSpanHoldingCode({required this.clsname, required super.spans});
+
+  @override
+  Widget sliver(BuildContext context) {
+    return DecoratedSliver(
+        decoration:
+            BoxDecoration(border: Border.all(color: errorColor, width: 3)),
+        sliver: super.sliver(context));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return DecoratedSliver(
+        decoration:
+            BoxDecoration(border: Border.all(color: errorColor, width: 3)),
+        sliver: SliverMainAxisGroup(slivers: [
+          SliverToBoxAdapter(child: Text('Unhandled CodeSpan: $clsname')),
+          super.sliver(context)
+        ]));
+  }
 }

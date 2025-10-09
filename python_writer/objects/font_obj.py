@@ -193,13 +193,13 @@ class Font:
             other._isHeading=False
             other.markedNotHeading=True
         elif self._isHeading:
-            print('\t Heading')
+            # print('\t Heading')
             other._isHeading = True
 
         for v in vars:
             ov = getattr(other, v, None)
             if ov is None or ov == '' or ov == 0.0:
-                print('\t', v, getattr(self, v))
+                # print('\t', v, getattr(self, v))
                 setattr(other, v, getattr(self, v))
 
     def Err():

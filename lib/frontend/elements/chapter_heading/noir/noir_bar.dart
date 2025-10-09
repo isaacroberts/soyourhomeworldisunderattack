@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/subtitle.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/title.dart';
+import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../../components/app_bar_chop/app_bar_chop.dart';
@@ -27,6 +28,7 @@ class NoirBar extends StatelessWidget {
 
         statusBarColor: NoirPrimary.shade5, // Status bar
       ),
+      actions: [DrawerButton()],
       // shape:
       //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       flexibleSpace: NoirAppBar(key: Key("AppBar")),
@@ -34,8 +36,9 @@ class NoirBar extends StatelessWidget {
       //   key: Key("BarTitle"),
       // ),
       // bottom: ChapterHeadingSubtitle(key: Key("Subtitle")),
-      leadingWidth: 50,
-
+      // leadingWidth: 50,
+      // leading: SizedBox.shrink(),
+      actionsPadding: EdgeInsets.symmetric(horizontal: 12),
       // forceMaterialTransparency: true,
       collapsedHeight: collapsedHeight,
       // collapsedHeight: expandedHeight,
@@ -55,6 +58,29 @@ class NoirBar extends StatelessWidget {
 //       pinned: true,
 //       stretch: false,
     );
+  }
+}
+
+class DrawerButton extends StatefulWidget {
+  const DrawerButton({super.key});
+
+  @override
+  State<DrawerButton> createState() => _DrawerButtonState();
+}
+
+class _DrawerButtonState extends State<DrawerButton> {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: openDrawer,
+        icon: const Icon(
+          Icons.menu,
+          color: headerColor,
+        ));
+  }
+
+  void openDrawer() {
+    Scaffold.maybeOf(context)?.openEndDrawer();
   }
 }
 

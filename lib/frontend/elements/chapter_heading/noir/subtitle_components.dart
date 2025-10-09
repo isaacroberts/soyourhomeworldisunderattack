@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:soyourhomeworld/frontend/parts/noir_colors.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../../../backend/error_handler.dart';
 import '../../../../backend/server.dart';
 import '../../../theme/layout_constants.dart';
+
+class StdAppBarButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final String? tooltip;
+  const StdAppBarButton(
+      {super.key, required this.icon, this.onPressed, this.tooltip});
+
+  @override
+  Widget build(BuildContext context) {
+    Color color =
+        (ChapterProvider.maybeOf(context)?.part.primary ?? const NoirPrimary())
+            .sd;
+    Widget child = IconButton(
+        padding: const EdgeInsets.all(6),
+        onPressed: onPressed,
+        icon: Icon(
+          icon,
+          color: color,
+          size: 24,
+        ));
+    if (tooltip != null) {
+      child = Tooltip(message: tooltip!, child: child);
+    }
+    return child;
+  }
+}
 
 class BookmarkButton extends StatelessWidget {
   ///For any Part
@@ -14,22 +42,11 @@ class BookmarkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = ChapterProvider.partOf(context).primary.se.withAlpha(128);
-    return Tooltip(
-        message: url,
-        child: IconButton(
-            padding: const EdgeInsets.all(6),
-            onPressed: chapter != null
-                ? () {
-                    context.go(chapter!.searchUrl);
-                    // Clipboard.setData(ClipboardData(text: url));
-                  }
-                : null,
-            icon: Icon(
-              Icons.bookmark,
-              color: color,
-              size: 24,
-            )));
+    return StdAppBarButton(
+        key: const Key('bookmark'),
+        icon: Icons.bookmark,
+        tooltip: 'Link: ${chapter?.varName}',
+        onPressed: () => scrollToChapter(chapter, context: context));
   }
 }
 

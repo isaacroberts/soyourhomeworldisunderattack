@@ -112,7 +112,7 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
     // Color? bgHint =
     //     Color.lerp(b1Hint, b2Hint, ui.clampDouble(scrollPct * 1.4 - .2, 0, 1));
     Color? bgHint = colorHint?.bgColor;
-    const Radius imgRadius = Radius.elliptical(72, 36);
+    const Radius imgRadius = Radius.circular(36);
     if (bgHint != null) {
       Paint bg = Paint()
         ..color = bgHint
@@ -123,10 +123,9 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
 
       context.canvas.drawRect(bgRect.inflate(strokeWidth), bg);
     }
-    //Starts from 0
-    // rect = rect.shift(Offset(0, imgScrollIndicator));
+    //Changing this to stdHeight instead of paintExtent prevents the bottom of the RRect from curving when the image is halfway on the bottom of the screen
     final Rect rectFromZero = Rect.fromLTWH(strokeWidth, 0,
-        constraints.crossAxisExtent - strokeWidth * 2, geometry!.paintExtent);
+        constraints.crossAxisExtent - strokeWidth * 2, standardImageHeight);
 
     RRect rrect = touchingBottom
         ? RRect.fromRectAndCorners(rectFromZero,

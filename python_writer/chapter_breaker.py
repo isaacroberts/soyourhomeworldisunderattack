@@ -9,6 +9,10 @@ sys.path.append("/home/titzak/scripts/")
 import python_script_tools as pst
 pst.DEBUG=False
 
+
+json_keywords = ['CW', 'What']
+
+
 def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='fonts_clean.json', chapters_out='chapters.json'):
     """
     Files in -> File out
@@ -99,8 +103,9 @@ def clean_chapters(chapters):
     health_inspection(chapters)
     # Ensure all keywords deleted
     for c in range(len(chapters)):
+        chapters[c] = move_keywords_to_json(chapters[c])
         # doesn't return
-        check_for_keywords(chapters[c])
+        chapters[c] = check_for_keywords(chapters[c])
     # QA
     health_inspection(chapters)
     # Strip whitespace from beginning & end
@@ -265,6 +270,24 @@ def read_bookmark_keywords(chapter, chapters):
         i += 1
     return chapter
 
+def move_keywords_to_json(chapter):
+    i=0
+    while i < len(chapter.spans):
+        if isinstance(chapter.spans[i], CodeKeywordTag):
+            obj = chapter.spans[i].obj
+            if obj in json_keywords:
+                params = chapter.spans[i].params
+                if len(params.lparams)>0:
+                    chapter.data[obj] = params.main()
+                    chapter.spans.pop(i)
+                else:
+                    # No param on chapter json keyword
+                    print ('No param')
+                    print('TODO: Write error message (chapter_breaker @ move_keywords_to_json)')
+        i += 1
+    return chapter
+
+
 def check_for_keywords(chapter):
     """
     All Keywords should be fixed by this point
@@ -277,10 +300,11 @@ def check_for_keywords(chapter):
             print(chapter.spans[i])
             r = pst.saveable_response("Unhandled keyword. Skip? (y/n)")
             if r=='y':
-                chapter.spans.remove(i)
+                chapter.spans.pop(i)
             else:
                 assert False, f'Unhandled Keyword: "{obj} in chapter {chapter.id}"'
         i += 1
+    return chapter
 
 
 def remove_whitespace(chapter):
@@ -392,20 +416,26 @@ def collect_parts(chapters):
     """
     print("Collecting parts")
 
-    lastPart = None
+    lastPart = 0
 
     # Collect parts
     for chapter in chapters:
         if chapter.part:
             id = pst.saveable_response("Enter part id "+ chapter.partName+' '+chapter.varName())
-            id = int(id)
+            try:
+                id = int(id)
+            except:
+                id = 0
             chapter.partId = id
             lastPart = id
         else:
             if lastPart is None:
                 # Probably the title
                 lastPart = pst.saveable_response("Enter first part id")
-                lastPart = int(lastPart)
+                try:
+                    lastPart = int(lastPart)
+                except:
+                    lastPart=0
             chapter.partId = lastPart
     return chapters
 

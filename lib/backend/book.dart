@@ -18,7 +18,7 @@ const String defaultBook = 'SoYourHomeworld';
 
 class BookProvider extends InheritedWidget {
   final Book book;
-  const BookProvider({super.key, required super.child, required this.book});
+  const BookProvider({super.key, required this.book, required super.child});
 
   static BookProvider? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<BookProvider>();
@@ -74,6 +74,10 @@ class Book {
   // Book.mckinsey() : id = 'SoYourHomeworld';
 
   int get chapterAmt => chapters.length;
+
+  bool inBounds(int chapterIndex) {
+    return chapterIndex >= 0 && chapterIndex < chapterAmt;
+  }
 
   static Book? maybeOf(BuildContext context) {
     return BookProvider.maybeOf(context)?.book;

@@ -19,6 +19,8 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
     deferred as signs_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/source_citation.dart'
+    deferred as source_cite_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/tweet.dart'
     deferred as tweet_lib;
 import 'package:soyourhomeworld/frontend/elements/holders/raised_spans.dart'
@@ -41,10 +43,10 @@ import '../../../backend/binary_utils/code_params.dart';
 import '../holders/future_holder.dart';
 import '../holders/holder_base.dart';
 import '../holders/span_holding_code.dart';
-import '../holders/textholders.dart';
 import 'ad_widget.dart' deferred as ad_widget_lib;
 import 'art.dart' deferred as art_lib;
 import 'elven_chorus.dart' deferred as elven_chorus_lib;
+import 'google_search.dart' deferred as google;
 import 'misc_code_elements.dart' deferred as misc_code_lib;
 
 // ========= Routers =============
@@ -56,8 +58,10 @@ FutureHolder instantiateCodeTag(String cls, CodeParams params) {
 }
 
 Future<Holder> _instantiateCodeTag(String cls, CodeParams params) async {
-  if (cls == 'COPSTING') {
-    return const HiddenTextElement();
+  if (cls == 'SOURCE') {
+    await source_cite_lib.loadLibrary();
+    String? link = params.main ?? params.readLink('Link');
+    return source_cite_lib.SourceCitationHolder(link: link, params: params);
   } else if (cls == 'ICON') {
     int? iconIndex = int.tryParse(params.main ?? '0');
     await misc_code_lib.loadLibrary();
@@ -169,6 +173,11 @@ Future<Holder> _instantiateCodeBlock(
     await ballot_screen_lib.loadLibrary();
     return ballot_screen_lib.BallotHolder(
         isExtended: hasExtra, enabled: enabled);
+  } else if (cls == 'GOOGLE') {
+    await google.loadLibrary();
+    // params.print();
+    String term = spans.map((s) => s.toText()).join();
+    return google.GoogleSearchHolder(term: term);
   } else if (cls == "GOTOBUTTON") {
     String? link = params.readLink('main');
     bool? isChapter = params.readBool('IsChapter') ?? true;

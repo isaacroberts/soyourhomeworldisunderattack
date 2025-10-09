@@ -242,7 +242,7 @@ class TitleFallbackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: builder);
+    return LayoutBuilder(key: const Key('titleLayouter'), builder: builder);
   }
 }
 

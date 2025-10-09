@@ -66,7 +66,7 @@ class _McScaffoldState extends State<McScaffold>
     return Theme(
         data: noirTheme,
         child: Scaffold(
-            endDrawer: DeferredDrawer(source: widget.source),
+            drawer: DeferredDrawer(source: widget.source),
             appBar: widget.appBar,
             floatingActionButton: widget.showFAB ? const McFAB() : null,
             body: widget.child));

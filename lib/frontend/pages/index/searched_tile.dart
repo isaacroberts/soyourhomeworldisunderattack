@@ -23,7 +23,11 @@ class SearchedChapterTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         // key: Key('SearchIndexChp$ix'),
-        title: Text(chapter.displayName),
+        title: Text(
+          chapter.displayName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         // title: SearchedText(
         //   text: chapter.displayName,
         //   searchTerm: searchTerm,
@@ -96,7 +100,11 @@ class _PartListTileState extends State<PartListTile> {
 
     return ExpansionTile(
       key: const Key('partExpansionTile'),
-      title: Text(widget.chapter.displayName),
+      title: Text(
+        widget.chapter.displayName,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
       internalAddSemanticForOnTap: true,
       controlAffinity: ListTileControlAffinity.leading,
       trailing: goButton(context),
@@ -156,15 +164,23 @@ class _SubTileState extends State<_SubTile> {
 
     Widget? trailing;
     if (where != null) {
-      trailing = Text(
-        where,
-        style: whenStyle,
-      );
+      trailing = SizedBox(
+          width: 12 * 5,
+          child: Text(
+            where,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: whenStyle,
+          ));
     } else if (when != null) {
-      trailing = Text(
-        when,
-        style: whenStyle,
-      );
+      trailing = SizedBox(
+          width: 12 * 5,
+          child: Text(
+            when,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: whenStyle,
+          ));
     }
     return ListTile(
       key: const Key('subChapterTile'),
@@ -176,9 +192,12 @@ class _SubTileState extends State<_SubTile> {
 
       title: Text(
         chapter.displayName,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       subtitle: subtitle,
       trailing: trailing,
+
       // Quick Comparison
       // trailing: when != null ? Text(when, style: whenStyle) : null,
       onTap: () => context.go('/scroll/${chapter.id}'),

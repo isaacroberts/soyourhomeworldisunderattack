@@ -32,23 +32,22 @@ dependencies:
     sdk: flutter
 
   http: ^1.4.0
+  # critical
   go_router: ^14.2.8
+  # needed
   url_launcher: ^6.3.2
-  #fluttericon: ^2.0.0
+  # could eventually remove
   dynamic_cached_fonts: ^1.2.0
+  # will use to play in-browser audio
   just_audio: 0.9.42
-#  asset_cache: ^2.1.0
-#  infinite_scroll_pagination: ^4.1.0
-#  flutter_riverpod: ^2.6.1
-#  riverpod_annotation: ^2.6.1
-#  social_media_buttons: ^1.0.0
-#  visibility_detector: ^0.4.0+2
+  # only using a few icons
+  material_symbols_icons: ^4.2874.0
+  # sliver utilities
   sliver_tools: ^0.2.12
-#  provider: ^6.1.2
-#  intl:
+  # needed to save user bookmark
   shared_preferences: ^2.5.3
 
-  # Needs an engine to properly do word wrap
+  # proper word wrap - was more critical when font was larger
   #auto_hyphenating_text: ^0.3.1
   async: ^2.13.0
 

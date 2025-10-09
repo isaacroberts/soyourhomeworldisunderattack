@@ -35,6 +35,7 @@ class TextHolderDebugSliver extends StatelessWidget {
         horizontal: true,
         isCode: false,
         tooltipMessage: tooltipMessage());
+    debugIndicator = SliverToBoxAdapter(child: debugIndicator);
     sliver = SliverMainAxisGroup(
         key: const Key("dbgWrapCol"), slivers: [sliver, debugIndicator]);
 
@@ -71,6 +72,8 @@ class HolderDebugSliver extends StatelessWidget {
         horizontal: true,
         isCode: false,
         tooltipMessage: tooltipMessage());
+
+    debugIndicator = SliverToBoxAdapter(child: debugIndicator);
     sliver = SliverMainAxisGroup(
         key: const Key("dbgWrapCol"), slivers: [sliver, debugIndicator]);
 
@@ -114,10 +117,11 @@ class CodeDebugSliver extends StatelessWidget {
         onTap: null,
         isCode: true,
         tooltipMessage: message);
+
+    debugIndicator = SliverToBoxAdapter(child: debugIndicator);
     //Give CodeElement extra space
     sliver = SliverMainAxisGroup(
-        key: const Key('codeDebugCol'),
-        slivers: [sliver, SliverToBoxAdapter(child: debugIndicator)]);
+        key: const Key('codeDebugCol'), slivers: [sliver, debugIndicator]);
     return sliver;
   }
 }
@@ -277,13 +281,16 @@ class BodyDebugSliver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //Body text to cover most
-          Expanded(child: holder.element(context)),
-          button(context),
-        ]);
+    return SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        sliver: SliverToBoxAdapter(
+            child: Row(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              //Body text to cover most
+              Expanded(child: holder.element(context)),
+              button(context),
+            ])));
   }
 }

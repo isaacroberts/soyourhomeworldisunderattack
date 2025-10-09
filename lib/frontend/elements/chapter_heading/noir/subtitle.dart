@@ -40,9 +40,16 @@ class ChapterHeadingSubtitle extends StatelessWidget
       //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
       //     child: _SubtitleRow(key: Key("row")));
     }
+    //TODO: Extract
+
+    Part part = ChapterProvider.of(context).part;
     scrollRow = Row(
+      key: const Key('subtRow'),
       children: [
         BookmarkButton(key: const Key('bookmark'), chapter: chapter),
+
+        const SizedBox(width: 6),
+
         Expanded(child: scrollRow),
         //Fake pad
         const SizedBox(width: 6),
@@ -207,17 +214,11 @@ class _CopyTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = ChapterProvider.partOf(context).primary.se.withAlpha(128);
-
-    return Tooltip(
-        message: 'Copy chapter',
-        child: IconButton(
-            onPressed: () => onPressed(context),
-            padding: const EdgeInsets.all(6),
-            icon: Icon(
-              Icons.copy_all,
-              color: color,
-            )));
+    return StdAppBarButton(
+      icon: Icons.copy_all,
+      onPressed: () => onPressed(context),
+      tooltip: 'Copy text',
+    );
   }
 }
 
@@ -235,11 +236,6 @@ class _SubtitleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double elevation = 15;
-    // Color dividerColor =
-    //     ElevationOverlay.applyOverlay(context, part.primary.s6, elevation);
-    // Color dividerColor = part.primary.s6;
-    Color color = part.primary.s3;
     // Color color =
     //     ElevationOverlay.applyOverlay(context, part.primary.s4, elevation);
     return Material(
@@ -249,15 +245,15 @@ class _SubtitleContainer extends StatelessWidget {
         // borderOnForeground: true,
         // color: part.primary.s4,
         borderOnForeground: true,
-        elevation: elevation,
+        elevation: 0,
         child: Ink(
             decoration: BoxDecoration(
-              // color: part.primary.s3,
-              gradient: LinearGradient(
-                  colors: [part.primary.s3, part.primary.s2],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight),
-              // border: Border(top: BorderSide(color: dividerColor, width: 1.5)),
+              color: part.primary.s5,
+              //   gradient: LinearGradient(
+              //       colors: [part.primary.s3, part.primary.s2],
+              //       begin: Alignment.centerLeft,
+              //       end: Alignment.centerRight),
+              //   // border: Border(top: BorderSide(color: dividerColor, width: 1.5)),
             ),
             child: SizedBox(
                 key: const Key("SubtitleBG"),

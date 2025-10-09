@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart';
 
 import '../../theme/base_text_theme.dart';
+import '../../theme/font_family.dart';
 import '../../theme/text_theme.dart';
 
 class YoutubeVideo extends StatelessWidget {
@@ -107,7 +108,9 @@ class AndyThumbnailHolder extends SpanHoldingCode {
   @override
   Widget element(BuildContext context) {
     return Center(
+        key: const Key('andyThumbnailCenter'),
         child: MaterialButton(
+            key: const Key('andyButton'),
             onPressed: () => onPressed(context),
             child: const YoutubeVideo(
               key: Key('AndyYTVideo'),
@@ -122,6 +125,17 @@ class AndyThumbnailHolder extends SpanHoldingCode {
               viewCt: '1.4k',
               dateDescriptor: '1 day ago',
             )));
+  }
+
+  @override
+  Widget sliver(BuildContext context) {
+    return SliverToBoxAdapter(
+        key: const Key('andyStba'), child: element(context));
+  }
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    return sliver(context);
   }
 }
 
@@ -140,7 +154,7 @@ class _AndyIcon extends StatelessWidget {
         alignment: Alignment.center,
         child: const Text(':)',
             style: TextStyle(
-              fontFamily: 'Palatino',
+              fontFamily: globalBookFamily,
               fontSize: 24,
               color: Color(0xffdda863),
             )));

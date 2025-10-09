@@ -73,7 +73,7 @@ class _AdSupportingScaffoldState extends State<AdSupportingScaffold> {
     return Theme(
         data: noirTheme,
         child: Scaffold(
-            endDrawer: MenuDrawer(source: widget.source),
+            drawer: MenuDrawer(source: widget.source),
             //If the ad is being shown, the FAB needs to be above the ad.
             // floatingActionButtonLocation:
             //     FloatingActionButtonLocation.centerDocked,

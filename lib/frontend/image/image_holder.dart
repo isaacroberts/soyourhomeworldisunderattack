@@ -1,12 +1,9 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/image/_landscape_sliver.dart';
 import 'package:soyourhomeworld/frontend/image/_portrait_sliver.dart';
 import 'package:soyourhomeworld/frontend/image/no_image_widget.dart';
 
 import '../../backend/binary_utils/code_params.dart';
-import '../../backend/error_handler.dart';
 import '../elements/widgets/loader.dart';
 import 'base_image_holder.dart';
 import 'image_constants.dart';
@@ -127,8 +124,9 @@ class StdImageHolder extends ImageHolder {
 
   Widget errorBuilder(
       BuildContext context, Object error, StackTrace? stackTrace) {
-    ErrorList.logError(error.toString(), stackTrace);
-    dev.log("Image Error: $error");
+    //Don't log - I know some of the images are missing
+    // ErrorList.logError(error.toString(), stackTrace);
+    // dev.log("Image Error: $error");
     late final NoImageReason reason;
     if (error.toString().contains('statusCode: 404')) {
       reason = NoImageReason.suggestion;

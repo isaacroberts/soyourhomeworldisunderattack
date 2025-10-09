@@ -197,7 +197,7 @@ class RenderChapterSliver extends RenderProxySliver {
     );
 
     if (origHeight != height) {
-      // dev.log("Chp${chapter.id} ${chapter.varName} $origHeight -> $height");
+      dev.log("Chp${chapter.id} ${chapter.varName} $origHeight -> $height");
     }
     child!.parentData = SliverPhysicalParentData();
 

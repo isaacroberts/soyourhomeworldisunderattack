@@ -68,9 +68,10 @@ class _ThemedScaffoldState extends State<ThemeChangingScaffold>
             // persistentFooterButtons: [
             //   IconButton(onPressed: () {}, icon: Icon(Icons.add))
             // ],
+
             extendBody: true,
             // persistentFooterAlignment: AlignmentDirectional.topCenter,
-            endDrawer: MenuDrawer(source: widget.source),
+            drawer: MenuDrawer(source: widget.source),
             floatingActionButton: widget.showFAB ? const McFAB() : null,
             body: widget.child));
   }

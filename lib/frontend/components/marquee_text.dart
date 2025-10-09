@@ -181,7 +181,8 @@ class _MarqueeTextState extends State<MarqueeText>
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: layoutBuilder);
+    return LayoutBuilder(
+        key: const Key('marqueeLayouter'), builder: layoutBuilder);
   }
 
   Widget layoutBuilder(BuildContext context, BoxConstraints constraints) {

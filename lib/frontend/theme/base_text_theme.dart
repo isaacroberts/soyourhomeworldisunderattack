@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../parts/noir_colors.dart';
+import 'font_family.dart';
 
 const double fontScale = 1.5;
 const double k = 12 * fontScale;
@@ -10,7 +11,8 @@ const double k = 12 * fontScale;
 // const Color labelTextColor = Color(0x88ffffff);
 //TODO: Remove all of these
 const Color appTextColor = NoirPrimary.shaded;
-const Color textColor = NoirPrimary.shadee;
+const Color textColor = NoirPrimary.shadef;
+const Color headerColor = NoirPrimary.shadee;
 const Color fallbackTextColor = NoirPrimary.shadee;
 const Color labelTextColor = NoirPrimary.shadec;
 
@@ -27,9 +29,9 @@ const TextStyle bodyFont = TextStyle(
 );
 
 const TextStyle headerFont = TextStyle(
-  fontFamily: 'Palatino',
+  fontFamily: globalFontFamily,
   fontSize: 24,
-  color: textColor,
+  color: headerColor,
   fontWeight: FontWeight.w500,
 );
 

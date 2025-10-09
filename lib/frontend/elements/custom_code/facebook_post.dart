@@ -153,8 +153,8 @@ class FacebookElement extends StatelessWidget {
         key: const Key("FBPost"),
         width: 600,
         decoration: BoxDecoration(
-            color: NoirPrimary.shade3,
-            border: Border.all(color: NoirPrimary.shade5, width: 1)),
+            color: NoirPrimary.shade5,
+            border: Border.all(color: NoirPrimary.shade7, width: 1)),
         margin: const EdgeInsets.only(bottom: 12, left: 6, right: 6),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
         child: Column(

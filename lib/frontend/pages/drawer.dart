@@ -88,8 +88,8 @@ class MenuDrawer extends StatelessWidget {
       }
     }
     //Settings
-    listTiles.add(ScrollModeDropdown(
-        label: 'Scroll mode', value: ViewSettings.instance.scrollModeNotifier));
+    // listTiles.add(ScrollModeDropdown(
+    //     label: 'Scroll mode', value: ViewSettings.instance.scrollModeNotifier));
     listTiles.add(NotifiedSwitch(
       label: 'Dev Rig',
       value: ViewSettings.instance.testRigNotifier,

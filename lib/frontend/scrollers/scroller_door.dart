@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:soyourhomeworld/frontend/theme/layout_constants.dart';
 
 //TODO: Defer
 import '../../../backend/book.dart';
+import '../../backend/chapter.dart';
 import '../../backend/start_chapter.dart';
 import '../pages/drawer.dart';
 import '../parts/noir_colors.dart';
@@ -55,7 +57,10 @@ class _ScrollDoorState extends State<ScrollDoor> {
   }
 
   void onBookError(exception, trace) {
-    this.exception = ExceptionHolder(exception: exception, stackTrace: trace);
+    dev.log("Book error");
+    setState(() {
+      this.exception = ExceptionHolder(exception: exception, stackTrace: trace);
+    });
     //Show snackbar
     ErrorList.showError(exception, trace);
   }
@@ -113,6 +118,9 @@ class _BookLoadedScrollDoorState extends State<_BookLoadedScrollDoor>
   //For polling error
   Timer? timer;
 
+  //Brothers
+  final ValueNotifier<Chapter?> currentChapter = ValueNotifier(null);
+
   @override
   void initState() {
     super.initState();
@@ -126,92 +134,40 @@ class _BookLoadedScrollDoorState extends State<_BookLoadedScrollDoor>
   @override
   Widget build(BuildContext context) {
     // Part part = getPartImmediate(PartId.noir);
-    return
-        // Theme(
-        //   key: const Key("Theme"),
-        //   data: part.theme,
-        //   child:
-        Scaffold(
-            key: const Key("Scaffold"),
-//Only needs background on Small
-            //On medium, the ReaderWidth will color the background
-            backgroundColor: NoirPrimary.shade2,
-            extendBody: true,
-            endDrawer: const MenuDrawer(key: Key('drawer'), source: 'scroll'),
-            // floatingActionButton: const McFAB(),
-            body: DecoratedBox(
-                decoration: getReaderGradient(),
-                child: LayoutBuilder(
-                    key: const Key('pageLayout'), builder: layoutBuilder)));
+    return LayoutBuilder(key: const Key('pageLayout'), builder: layoutBuilder);
   }
 
   Widget layoutBuilder(BuildContext context, BoxConstraints constraints) {
     if (constraints.maxWidth > maxReaderWidth + indexSidebarWidth) {
-      return Row(
-        key: const Key('R'),
-        children: [
-          //Index
-          const SizedBox(
-              key: Key('indexW'),
-              width: indexSidebarWidth,
-              child: SidebarIndex(key: Key('sidebar'))),
-          //Reader
-          //This is expanded to fill space because gutter needs to scroll
-          Expanded(
-              key: const Key('Exp'),
-              child:
-                  // Stack(children: [],)
-                  _StackedScroller(
-                      key: const Key("stk"),
-                      startChapter: widget.startChapter,
-                      hasIndex: false)
-              // SliverScroller(
-              //   key: const Key("SliverScroller"),
-              //   startChapter: widget.startChapter,
-              //   hasIndex: true,
-              // )
-              ),
-        ],
-      );
+      return _ScrollerScaffold(
+          key: const Key('scscf'),
+          hasIndex: true,
+          child: WideView(currentChapter: currentChapter, widget: widget));
     } else if (constraints.maxWidth > minReaderWidth + indexSidebarWidth) {
-      return Row(
-        key: const Key('R'),
-        children: [
-          //Index
-          const SizedBox(
-              key: Key('indexW'),
-              width: indexSidebarWidth,
-              child: SidebarIndex(key: Key('sidebar'))),
-
-          //Reader
-          //This is expanded to fill space because gutter needs to scroll
-          Expanded(
-              key: const Key('Exp'),
-              // width: minReaderWidth,
-              child: _StackedScroller(
-                  key: const Key("stk"),
-                  startChapter: widget.startChapter,
-                  hasIndex: false)
-              // child: SliverScroller(
-              //   key: const Key("SliverScroller"),
-              //   startChapter: widget.startChapter,
-              //   hasIndex: true,
-              // )
-              ),
-        ],
-      );
+      return _ScrollerScaffold(
+          key: const Key('scscf'),
+          hasIndex: true,
+          child: MediumView(currentChapter: currentChapter, widget: widget));
     } else //if (constraints.maxWidth < maxReaderWidth) {
     {
-      return _StackedScroller(
-          key: const Key("stk"),
-          startChapter: widget.startChapter,
-          hasIndex: false);
+      return _ScrollerScaffold(
+          key: const Key('scscf'),
+          hasIndex: false,
+          child: _StackedScroller(
+              key: const Key("stk"),
+              startChapter: widget.startChapter,
+              currentChapter: currentChapter,
+              hasIndex: false));
       //Small / medium
-      return SliverScroller(
-        key: const Key("SliverScroller"),
-        startChapter: widget.startChapter,
-        hasIndex: false,
-      );
+      return _ScrollerScaffold(
+          key: const Key('scscf'),
+          hasIndex: false,
+          child: SliverScroller(
+            key: const Key("SliverScroller"),
+            startChapter: widget.startChapter,
+            currentChapter: currentChapter,
+            hasIndex: false,
+          ));
     }
   }
 
@@ -233,11 +189,138 @@ class _BookLoadedScrollDoorState extends State<_BookLoadedScrollDoor>
   }
 }
 
+class _ScrollerScaffold extends StatelessWidget {
+  const _ScrollerScaffold({
+    required super.key,
+    required this.hasIndex,
+    required this.child,
+  });
+  final Widget child;
+  final bool hasIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        key: const Key("Scaffold"),
+        //Only needs background on Small
+        //The un-expanded doesn't have a BG, currently
+        backgroundColor: hasIndex ? null : NoirPrimary.shade2,
+        extendBody: true,
+        resizeToAvoidBottomInset: true,
+        //Sorry. The drawer has to switch when the index is present.
+        //This is because the drawerButton's side needs to match the drawer. (This is automatic in flutter.)
+        //A left-side drawer interferes with the title
+
+        // drawer: hasIndex
+        //     ? const MenuDrawer(key: Key('drawer'), source: 'scroll')
+        //     : null,
+        endDrawer: const MenuDrawer(key: Key('drawer'), source: 'scroll'),
+
+        // floatingActionButton: const McFAB(),
+        body: child);
+  }
+}
+
+class MediumView extends StatelessWidget {
+  const MediumView({
+    super.key,
+    required this.currentChapter,
+    required this.widget,
+  });
+
+  final ValueNotifier<Chapter?> currentChapter;
+  final _BookLoadedScrollDoor widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      key: const Key('R'),
+      children: [
+        //Index
+        SizedBox(
+            key: const Key('indexW'),
+            width: indexSidebarWidth,
+            child: SidebarIndex(
+              key: const Key('sidebar'),
+              currentChapter: currentChapter,
+            )),
+
+        //Reader
+        //This is expanded to fill space because gutter needs to scroll
+        Expanded(
+            key: const Key('Exp'),
+            // width: minReaderWidth,
+            child: _StackedScroller(
+                key: const Key("stk"),
+                startChapter: widget.startChapter,
+                currentChapter: currentChapter,
+                hasIndex: false)
+            // child: SliverScroller(
+            //   key: const Key("SliverScroller"),
+            //   startChapter: widget.startChapter,
+            //   hasIndex: true,
+            // )
+            ),
+      ],
+    );
+  }
+}
+
+class WideView extends StatelessWidget {
+  const WideView({
+    super.key,
+    required this.currentChapter,
+    required this.widget,
+  });
+
+  final ValueNotifier<Chapter?> currentChapter;
+  final _BookLoadedScrollDoor widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      key: const Key('R'),
+      children: [
+        //Index
+        SizedBox(
+            key: Key('indexW'),
+            width: indexSidebarWidth,
+            child: SidebarIndex(
+              key: Key('sidebar'),
+              currentChapter: currentChapter,
+            )),
+        //Reader
+        //This is expanded to fill space because gutter needs to scroll
+        Expanded(
+            key: const Key('Exp'),
+            child:
+                // Stack(children: [],)
+                _StackedScroller(
+              key: const Key("stk"),
+              startChapter: widget.startChapter,
+              hasIndex: false,
+              currentChapter: currentChapter,
+            )
+            // SliverScroller(
+            //   key: const Key("SliverScroller"),
+            //   startChapter: widget.startChapter,
+            //   hasIndex: true,
+            // )
+            ),
+      ],
+    );
+  }
+}
+
 class _StackedScroller extends StatelessWidget {
   final StartChapter startChapter;
+  final ValueNotifier<Chapter?> currentChapter;
   final bool hasIndex;
   const _StackedScroller(
-      {super.key, required this.startChapter, required this.hasIndex});
+      {super.key,
+      required this.startChapter,
+      required this.hasIndex,
+      required this.currentChapter});
 
   @override
   Widget build(BuildContext context) {
@@ -248,6 +331,7 @@ class _StackedScroller extends StatelessWidget {
         SliverScroller(
             key: const Key('SliverScroller'),
             startChapter: startChapter,
+            currentChapter: currentChapter,
             hasIndex: hasIndex),
       ],
     );

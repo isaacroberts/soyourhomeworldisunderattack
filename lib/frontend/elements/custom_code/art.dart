@@ -40,10 +40,8 @@ class _ArtWidgetState extends State<ArtWidget> {
   Key get key => Key('art_$hashCode');
 
   Widget getArt(BuildContext context) {
-    return Hero(
-        tag: 'art_art_$hashCode',
-        child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300), child: art));
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 300), child: art);
   }
 
   @override

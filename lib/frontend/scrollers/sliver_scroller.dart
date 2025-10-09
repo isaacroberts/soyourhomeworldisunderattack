@@ -29,9 +29,13 @@ class SliverScroller extends StatefulWidget {
   // final int? startChapter;
   final bool hasIndex;
   final StartChapter startChapter;
+  final ValueNotifier<Chapter?> currentChapter;
 
   const SliverScroller(
-      {super.key, required this.startChapter, required this.hasIndex});
+      {super.key,
+      required this.startChapter,
+      required this.hasIndex,
+      required this.currentChapter});
 
   @override
   State<SliverScroller> createState() => _SliverScrollerState();
@@ -55,7 +59,12 @@ class _SliverScrollerState extends State<SliverScroller> {
     return book.chapters[ix];
   }
 
-  Chapter? currentChapter;
+  // Chapter? currentChapter;
+  Chapter? get currentChapter => widget.currentChapter.value;
+  set currentChapter(Chapter? set) {
+    widget.currentChapter.value = set;
+  }
+
   //This is needed for the background
   late Part part;
   // Map<Chapter, double> chapterPositions = {};
@@ -297,7 +306,8 @@ class _SliverScrollerState extends State<SliverScroller> {
       setState(() {
         firstLoadedChapter = math.max(firstLoadedChapter - 1, 0);
       });
-      scrollDelayed(currentChapter);
+      //FUCK after-scrolling
+      // scrollDelayed(currentChapter);
 
       // updateView();
 
@@ -508,6 +518,7 @@ class _HasExtraFillRemaining extends StatelessWidget {
         key: const Key("FillRemaining"),
         child: Container(
             key: const Key("fillRemCt"),
+            //Large so that user can keep scrolling, triggering another notification
             height: 200,
             color: primary.s3,
             alignment: Alignment.center,
@@ -522,11 +533,12 @@ class _HasExtraFillRemaining extends StatelessWidget {
                     onPressed: onRequestMore,
                     icon: Icon(
                       key: const Key("fillRmIcon"),
-                      RpgAwesome.fall_down,
+                      Icons.more_horiz_rounded,
                       color: primary.sa,
                       size: 48,
                     ),
                   ),
+                  const Text("Scroll to scroll"),
                 ])));
   }
 }

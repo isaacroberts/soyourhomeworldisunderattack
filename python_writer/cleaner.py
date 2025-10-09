@@ -11,8 +11,6 @@ import python_script_tools as pst
 
 logger_start('cleaner')
 
-
-REDACT=False
 # TODO: This required some extra maintenance
 COLORED_BOXES=False
 
@@ -55,6 +53,7 @@ def clean_headers(spans):
 def smooth_text(spans):
     change_log_file('text smoothing')
     # I don't wanna fuck with the order!!!
+    spans = ban_justify(spans)
     spans = find_colored_boxes(spans)
     spans = join_text(spans)
     spans = break_long_text(spans)
@@ -62,7 +61,7 @@ def smooth_text(spans):
     spans = convert_newlines_and_boxes(spans)
     spans = join_newlines(spans)
     spans = remove_comments(spans)
-    spans = redact(spans)
+    # spans = redact(spans)
     spans = multispans(spans)
     spans = remove_endofpara_spacers(spans)
     spans = extract_tabs(spans)
@@ -162,6 +161,14 @@ def delete_empty_headers(spans):
                 pst.click(1)
         i += 1
     health_inspection(spans)
+    return spans
+
+# ===========================
+def ban_justify(spans):
+    for span in spans:
+        if hasattr(span, 'align'):
+            if span.align == 'j':
+                span.align = 'l'
     return spans
 
 def find_colored_boxes(spans):
@@ -280,10 +287,11 @@ def empty_text_to_newline(spans):
 def convert_to_sized_newline(span):
     assert isinstance(span, NewLine)
     font = span.font
-    i_size = int(round(font.size / 12))
-    palatino_height = 40
-    height = palatino_height * i_size
-
+    # #
+    # i_size = int(round(font.size / 12))
+    # palatino_height = 24
+    # height = palatino_height * i_size
+    height = font.size
     # height = fldb.get_total_font_height(span.font)
     # print(height, type(height))
     span = NewLineSized(height)
@@ -412,11 +420,8 @@ def remove_comments(spans):
 
 
 def redact(spans):
-    if not REDACT:
-        return spans
     word_repl = {'White House': 'White Hoe', 'Pentagon': 'Septagon', 'CIA':'CἹÅ', 'FBI': 'Female Body Inspectors', "Wray": 'Wrey', 'Bill Burns': "Bill Boourns"}
 
-    print('TODO: Redact')
     i = 0
     while i < len(spans):
         if spans[i].hasText():
@@ -604,9 +609,12 @@ def extract_tabs_from_multispan(span):
             return NewLineSized(newline_height)
         # Make sure first span not empty
         elif span.spans[0].text is None:
+            #TODO: Likely???
             # Likely a ColoredBoxSpan
+            assert False, "the comments said LIKELY"
             newline_height = span.spans[0].height
             if span.spans[0].color is None:
+                #TODO
                 print("Damn, somebody should convert this to a newline")
             # Done
             return span
