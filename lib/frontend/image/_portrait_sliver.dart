@@ -195,13 +195,10 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
-    //Deduced from vibes. Fucky San Francisco magic.
-    // double origin = overlap / 2;
+
     geometry = SliverGeometry(
       scrollExtent: height + overscroll,
       paintExtent: paintedChildSize,
-      //0 or
-      // paintOrigin: origin,
       layoutExtent: paintedChildSize,
       cacheExtent: cacheExtent,
       maxScrollObstructionExtent: paintedChildSize + overscroll,

@@ -11,19 +11,22 @@ class GoogleSearchHolder extends CodeHolder {
   Widget element(BuildContext context) {
     Part part = Part.of(context);
     return Container(
-      // height: 24,
-      width: 600,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24), color: part.primary.sf),
-      alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-      margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
-      child: Container(
-          decoration: BoxDecoration(
-              border: Border(right: BorderSide(color: part.primary.s3))),
-          padding: const EdgeInsets.only(right: 3),
-          child: searchContent(context, part)),
-    );
+        // height: 24,
+        width: 600,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24), color: part.primary.sf),
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+        child: searchContent(context, part)
+        //This was cool but made me think i was actually typing
+        // child: Container(
+        //
+        //     decoration: BoxDecoration(
+        //         border: Border(right: BorderSide(color: part.primary.s3))),
+        //     padding: const EdgeInsets.only(right: 3),
+        //     child: searchContent(context, part)),
+        );
   }
 
   Widget searchContent(BuildContext context, Part part) {

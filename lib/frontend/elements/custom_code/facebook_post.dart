@@ -186,8 +186,8 @@ class FacebookSliver extends StatelessWidget {
     //margin
     return SliverPadding(
         key: const Key("FBPost"),
-        padding: const EdgeInsets.only(bottom: 12, left: 6, right: 6),
-        //maxWidth
+        padding: const EdgeInsets.only(bottom: 24),
+        //Max Width
         sliver: SliverCrossAxisConstrained(
             key: const Key('MaxWidth'),
             maxCrossAxisExtent: 600,
@@ -196,8 +196,9 @@ class FacebookSliver extends StatelessWidget {
             child: DecoratedSliver(
                 key: const Key('Deco'),
                 decoration: BoxDecoration(
-                    color: NoirPrimary.shade3,
-                    border: Border.all(color: NoirPrimary.shade5, width: 1)),
+                    color: NoirPrimary.shade4,
+                    border: Border.all(color: NoirPrimary.shade6, width: 1),
+                    borderRadius: BorderRadius.circular(24)),
                 //pad
                 sliver: SliverPadding(
                     key: const Key('Pad'),

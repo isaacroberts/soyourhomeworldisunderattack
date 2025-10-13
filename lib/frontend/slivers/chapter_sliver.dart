@@ -43,9 +43,10 @@ class _ChapterSliverState extends State<ChapterSliver> {
   }
 
   void chapterUpdated(var t) {
-    if (mounted) {
-      setState(() {});
-    }
+    //We already call setState through the loadNotifier
+    // if (mounted) {
+    //   setState(() {});
+    // }
   }
 
   void _chapterUpdated() {
@@ -91,18 +92,21 @@ class _ChapterSliverState extends State<ChapterSliver> {
     } else {
       sliver = const SliverReader(key: Key('Reader'));
     }
+    sliver = SliverReaderWidth(key: const Key("width"), sliver: sliver);
+
+    //Fix height
+    sliver = ChapterClampingSliver(key: const Key("Clamp"), sliver: sliver);
 
     sliver = SliverMainAxisGroup(slivers: [
       //AppBar
       const SliverHeader(key: Key("Header")),
       //Body
-      SliverReaderWidth(key: const Key("width"), sliver: sliver),
+      sliver,
       //SocialMediaFooter
       const ChapterSocialFooter(
         key: Key('SocialFooter'),
       )
     ]);
-    sliver = ChapterClampingSliver(key: const Key("Clamp"), sliver: sliver);
     if (chapter != null) {
       final Part partData = getPartData(chapter!.info.partId);
 

@@ -45,13 +45,17 @@ class LandscapeSliver extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget child = buildImage(context);
     double aspectRatio = holder.aspectRatio ?? 1;
-    child = FittedBox(key: const Key('fit'), fit: BoxFit.cover, child: child);
-
-    child = SizedBox(
-        key: const Key('imgSize'),
-        width: standardImageHeight * aspectRatio,
-        height: standardImageHeight,
+    child = FittedBox(
+        key: const Key('fit'),
+        fit: BoxFit.fitWidth,
+        alignment: Alignment.center,
         child: child);
+
+    // child = SizedBox(
+    //     key: const Key('imgSize'),
+    //     width: standardImageWidth,
+    //     height: standardImageWidth / aspectRatio,
+    //     child: child);
 
     child = LandscapeFrameSliver(
         key: const Key('landscape'), holder: holder, child: child);
@@ -91,46 +95,120 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
   ///width/height
   double aspectRatio;
   ColorHint? colorHint;
-  double desiredHeight = 0;
-  double height = 0;
+  // double desiredHeight = 0;
+  // double height = 0;
+  static const double strokeWidth = 1;
+  static const double radiusAmt = 24;
+  static const Radius imgRadius = Radius.circular(24);
 
   _LandscapeRenderSliver({required this.aspectRatio, required this.colorHint});
+
+  @override
+  void performLayout() {
+    if (child == null) {
+      return;
+    }
+    final double width = constraints.crossAxisExtent - strokeWidth * 2;
+    final double childHeight = width / aspectRatio;
+    final double height = childHeight + strokeWidth * 2 + radiusAmt * 2;
+    BoxConstraints childConstraints =
+        BoxConstraints.tight(Size(width, childHeight));
+    child!.layout(childConstraints, parentUsesSize: false);
+
+    final double paintedChildSize =
+        calculatePaintOffset(constraints, from: 0, to: height);
+    final double cacheExtent = calculateCacheOffset(
+      constraints,
+      from: 0.0,
+      to: height,
+    );
+
+    final bool isVisible = constraints.remainingPaintExtent > 0;
+
+    assert(paintedChildSize.isFinite);
+    assert(paintedChildSize >= 0.0);
+
+    geometry = SliverGeometry(
+      scrollExtent: height,
+      paintExtent: paintedChildSize,
+      layoutExtent: paintedChildSize,
+      cacheExtent: cacheExtent,
+      maxScrollObstructionExtent: paintedChildSize,
+      maxPaintExtent: height,
+      crossAxisExtent: constraints.crossAxisExtent,
+      hitTestExtent: paintedChildSize,
+      // visible: remainingPaintExtent > 0,
+      visible: isVisible,
+      hasVisualOverflow: false,
+      // hasVisualOverflow: height > remainingPaintExtent || scrollOffset > 0.0,
+    );
+    //Who knows
+    //If not, you need to copy & fix the rest from setChildParentData
+    assert(constraints.axisDirection == AxisDirection.down);
+    assert(constraints.growthDirection == GrowthDirection.forward);
+    //set ScrollPt
+
+    //Set paint offset
+    final SliverPhysicalParentData childParentData =
+        child!.parentData! as SliverPhysicalParentData;
+    childParentData.paintOffset =
+        const Offset(strokeWidth, strokeWidth + radiusAmt);
+    child!.parentData = childParentData;
+  }
 
   @override
   void paint(PaintingContext context, Offset imageOffset) {
     double height = geometry!.paintExtent;
 
-    const double strokeWidth = 3;
-
     Rect rect = Rect.fromLTWH(strokeWidth, geometry!.paintOrigin,
         constraints.crossAxisExtent - strokeWidth * 2, height);
 
-    bool touchingBottom = geometry!.paintOrigin + geometry!.paintExtent >
-        constraints.viewportMainAxisExtent;
+    //TODO: It's unclear if paintOrigin should be included in this
+    // double bottomTouch = imageOffset.dy +
+    //     geometry!.paintOrigin +
+    //     geometry!.paintExtent -
+    //     constraints.viewportMainAxisExtent;
+    bool touchingBottom =
+        imageOffset.dy + geometry!.paintOrigin + geometry!.paintExtent >=
+            constraints.viewportMainAxisExtent;
+    // dev.log(
+    //     "Img touchingBottom: ${imageOffset.dy} + ${geometry!.paintOrigin} + ${geometry!.paintExtent} >= ${constraints.viewportMainAxisExtent} = $touchingBottom amt = $bottomTouch");
     // Color? b1Hint = colorHint?.bgColor;
     // Color? b2Hint = colorHint?.outlineColor;
     // Color? bgHint =
     //     Color.lerp(b1Hint, b2Hint, ui.clampDouble(scrollPct * 1.4 - .2, 0, 1));
-    Color? bgHint = colorHint?.bgColor;
-    const Radius imgRadius = Radius.circular(36);
-    if (bgHint != null) {
-      Paint bg = Paint()
-        ..color = bgHint
-        ..style = PaintingStyle.fill;
-      Rect bgRect = rect
-          //Must follow image
-          .shift(imageOffset);
 
-      context.canvas.drawRect(bgRect.inflate(strokeWidth), bg);
-    }
-    //Changing this to stdHeight instead of paintExtent prevents the bottom of the RRect from curving when the image is halfway on the bottom of the screen
-    final Rect rectFromZero = Rect.fromLTWH(strokeWidth, 0,
-        constraints.crossAxisExtent - strokeWidth * 2, standardImageHeight);
+    final Rect rectFromZero = Rect.fromLTWH(
+        strokeWidth,
+        radiusAmt + strokeWidth,
+        constraints.crossAxisExtent - strokeWidth * 2,
+        geometry!.paintExtent - radiusAmt * 2);
 
     RRect rrect = touchingBottom
         ? RRect.fromRectAndCorners(rectFromZero,
             topRight: imgRadius, topLeft: imgRadius)
         : RRect.fromRectAndRadius(rectFromZero, imgRadius);
+
+    Color? bgHint = colorHint?.bgColor;
+    if (bgHint != null) {
+      Paint bg = Paint()
+        ..color = bgHint
+        ..style = PaintingStyle.fill;
+      Rect bgRect = Rect.fromLTWH(0, imageOffset.dy,
+          constraints.crossAxisExtent, geometry!.paintExtent);
+
+      // context.canvas.drawRect(bgRect, bg);
+    }
+    bgHint = colorHint?.outlineColor;
+    if (bgHint != null) {
+      Paint outline = Paint()
+        ..color = bgHint
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth;
+
+      context.canvas.drawRRect(rrect.shift(imageOffset), outline);
+    }
+    //Changing this to stdHeight instead of paintExtent prevents the bottom of the RRect from curving when the image is halfway on the bottom of the screen
 
     final SliverPhysicalParentData childParentData =
         child!.parentData! as SliverPhysicalParentData;
@@ -145,5 +223,27 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
         context.paintChild(child!, offset + childParentData.paintOffset);
       },
     );
+  }
+
+  @override
+  bool hitTestChildren(SliverHitTestResult result,
+      {required double mainAxisPosition, required double crossAxisPosition}) {
+    assert(geometry!.hitTestExtent > 0.0);
+    if (child != null) {
+      return hitTestBoxChild(
+        BoxHitTestResult.wrap(result),
+        child!,
+        mainAxisPosition: mainAxisPosition,
+        crossAxisPosition: crossAxisPosition,
+      );
+    }
+    return false;
+  }
+
+  @override
+  bool hitTestSelf(
+      {required double mainAxisPosition, required double crossAxisPosition}) {
+    //Does not accept clicks
+    return false;
   }
 }

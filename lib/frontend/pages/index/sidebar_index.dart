@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/subtitle_components.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/chapter_progress_indicator.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import 'package:soyourhomeworld/frontend/parts/noir_colors.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
@@ -11,6 +12,7 @@ import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
+import '../../../backend/error_handler.dart';
 import '../../parts/part.dart';
 
 class SidebarIndex extends StatefulWidget {
@@ -21,6 +23,9 @@ class SidebarIndex extends StatefulWidget {
   State<SidebarIndex> createState() => _SidebarIndexState();
 }
 
+//Pro-gamer move to preserve state
+bool expanded = false;
+
 class _SidebarIndexState extends State<SidebarIndex> {
   late ScrollController controller;
   late Book book;
@@ -28,6 +33,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
   Chapter? get currentChapter => widget.currentChapter.value;
 
   bool pin = false;
+  bool partsOnly = false;
 
   @override
   void initState() {
@@ -67,59 +73,23 @@ class _SidebarIndexState extends State<SidebarIndex> {
     if (scrollTo == null) {
       return;
     }
-    if (mounted) {
+    if (mounted && expanded) {
       //TODO: Get current chapter from a static value
       const double tileHeight = 51;
-      double offset = (scrollTo.index) * tileHeight - 50;
-      offset = math.max(0, offset);
+      double offset;
+      if (partsOnly) {
+        //There aren't enough parts to fill the screen
+        offset = 0;
+      } else {
+        offset = (scrollTo.index) * tileHeight - 50;
+        offset = math.max(0, offset);
+      }
       controller.animateTo(offset,
           duration: const Duration(milliseconds: 1000),
           curve: Curves.easeInOut);
       //Ensures dot is visible
       setState(() {});
     }
-  }
-
-  OverlayEntry? overlay;
-
-  Widget overlayPartTile(Chapter part) {
-    return ListTile(
-      onTap: () {
-        scrollToChapter(part, context: context);
-        overlay?.remove();
-        overlay = null;
-      },
-      title: Text(
-        part.displayName,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: headerFont.copyWith(color: NoirPrimary.shaded, fontSize: 16),
-      ),
-    );
-  }
-
-  Widget overlayBuilder(BuildContext context) {
-    return Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-            padding: EdgeInsets.all(12),
-            child: SizedBox(
-              width: indexSidebarWidth,
-              height: 400,
-              child: Material(
-                  color: NoirPrimary.shade4,
-                  borderRadius: BorderRadius.circular(12),
-                  child: ListView(
-                    children:
-                        book.parts.map(overlayPartTile).toList(growable: false),
-                  )),
-            )));
-  }
-
-  void showMenuOverlay() {
-    overlay?.remove();
-    overlay = OverlayEntry(builder: overlayBuilder);
-    Navigator.of(context).overlay?.insert(overlay!);
   }
 
   void togglePin() {
@@ -145,23 +115,35 @@ class _SidebarIndexState extends State<SidebarIndex> {
         //   tooltip: 'Open navigation',
         // ),
         StdAppBarButton(
-          icon: Symbols.book_5,
-          onPressed: showMenuOverlay,
-          tooltip: 'Parts',
+          icon: partsOnly ? Symbols.book_5 : Symbols.book_2,
+          onPressed: togglePartsOnly,
+          tooltip: 'Show Parts',
         ),
-        Expanded(child: SizedBox.shrink()),
         StdAppBarButton(
-          icon: pin ? Symbols.keep_off : Symbols.keep,
+          icon: pin ? Symbols.keep : Symbols.keep_off,
           tooltip: null,
           onPressed: togglePin,
-        )
+        ),
+        //Separater
+        const Expanded(child: SizedBox.shrink()),
+        _TogglingExpandoButton(
+            key: const Key('toggleExp'),
+            expanded: expanded,
+            onPressed: onCollapsed),
+        // StdAppBarButton(
+        //   icon: Icons.keyboard_arrow_left,
+        //   onPressed: onCollapsed,
+        //   tooltip: 'Hide',
+        // ),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        width: expanded ? indexSidebarWidth : collapsedIndexWidth,
         decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -175,103 +157,276 @@ class _SidebarIndexState extends State<SidebarIndex> {
             // color: Color(0xffefefef),
             // backgroundBlendMode: BlendMode.colorBurn,
             border: Border(right: BorderSide(color: NoirPrimary.shade2))),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-                decoration: const BoxDecoration(
-                    color: NoirPrimary.shade4,
-                    border: Border(
-                        bottom:
-                            BorderSide(color: NoirPrimary.shade2, width: 1))),
-                height: appBarSize,
-                padding: const EdgeInsets.all(12),
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Homeworld',
-                      style: headerFont,
-                    ))),
-            Container(
-              color: NoirPrimary.shade5,
-              height: expandedAppBarSize - appBarSize,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: subtitleButtons(context),
-            ),
-            //TODO: Extract widget
+        alignment: Alignment.topLeft,
+        child: expanded ? expandedView(context) : collapsedView(context));
+  }
 
-            Expanded(
-                child: ScrollConfiguration(
-                    //TODO: Make second ScrollBehavior
-                    behavior: const ScrollBehavior(),
+  Column expandedView(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        //Title
+        const SiteLogo(),
+        Container(
+          color: NoirPrimary.shade5,
+          height: expandedAppBarSize - appBarSize,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: subtitleButtons(context),
+        ),
+        //TODO: Extract widget
+
+        Expanded(
+            child: ScrollConfiguration(
+                //TODO: Make second ScrollBehavior
+                behavior: const ScrollBehavior(),
+                child: SizedBox(
+                    width: indexSidebarWidth,
                     child: ListView.builder(
                       controller: controller,
                       itemBuilder: itemBuilder,
                       prototypeItem: chapterTile(context, book.chapters[1]),
-                      itemCount: book.chapterAmt,
+                      itemCount: partsOnly ? null : book.chapterAmt,
                       shrinkWrap: false,
 
                       // children: book.chapters.map(chapterTile).toList(growable: false),
-                    )))
-          ],
-        ));
+                    ))))
+      ],
+    );
+  }
+
+  Widget collapsedView(BuildContext context) {
+    return Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          //Title (one letter )
+          const CollapsedSiteLogo(),
+          SizedBox(
+              // color: NoirPrimary.shade5,
+              height: expandedAppBarSize - appBarSize,
+              // alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                // child: StdAppBarButton(
+                //   icon: Icons.arrow_forward_ios,
+                //   onPressed: onExpanded,
+                // )
+                child: _TogglingExpandoButton(
+                    key: const Key('toggleExp'),
+                    expanded: expanded,
+                    onPressed: onExpanded),
+              )),
+          const Expanded(child: SizedBox.shrink()),
+
+          Padding(
+              padding: const EdgeInsets.all(12),
+              child: ReadingProgressIndicator(
+                key: const Key('progress'),
+                chapter: currentChapter?.index,
+                totalChapters: book.chapterAmt,
+                color: NoirPrimary.shadec,
+              ))
+        ]);
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
-    if (index >= 0 && index < book.chapterAmt) {
-      return chapterTile(context, book.chapters[index]);
+    if (partsOnly) {
+      //TODO: Store parts list
+      var p = book.parts.toList(growable: false);
+      if (index >= 0 && index < p.length) {
+        return chapterTile(context, p[index]);
+      }
+    } else {
+      if (index >= 0 && index < book.chapterAmt) {
+        return chapterTile(context, book.chapters[index]);
+      }
     }
     return null;
   }
 
-  Widget chapterTile(BuildContext context, Chapter chapter) {
-    bool isCurrent = currentChapter == chapter;
-    Part part = getPartImmediate(chapter.part);
-    if (chapter.isPart) {
-      return ListTile(
-        title: Text(
-          chapter.displayName,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: headerFont.copyWith(color: part.primary.se, fontSize: 16),
-        ),
-        tileColor: part.primary.s7,
-        trailing: isCurrent
-            ? const _CurrentChapterMarker()
-            : const Icon(Icons.expand_less),
+  Widget? trailingWidget(BuildContext context, Chapter chapter, Part part) {
+    if (currentChapter == chapter) {
+      return const Icon(
+        key: Key('bkMkr'),
+        Icons.bookmark,
+        color: NoirPrimary.shaded,
       );
+      ;
+    } else if (partsOnly) {
+      //TODO: This will work once parts are fully integrated, i think
+      if (currentChapter?.part == chapter.part) {
+        return const Icon(
+          key: Key('bkMkr'),
+          Icons.bookmark_rounded,
+          color: NoirPrimary.shaded,
+        );
+      }
+    } else if (chapter.isPart) {
+      Color color = part.primary.sd;
+      return Icon(Symbols.book, color: color);
+    }
+    return null;
+  }
+
+  void tileTapped(BuildContext context, Chapter chapter) {
+//TODO: If smaller than maxReaderWidth, collapse after click
+    scrollToChapter(chapter, context: context);
+  }
+
+  Widget chapterTile(BuildContext context, Chapter chapter) {
+    Part part = getPartImmediate(chapter.part);
+    final Widget? trailing = trailingWidget(context, chapter, part);
+    if (chapter.isPart && !partsOnly) {
+      return Container(
+          decoration: BoxDecoration(
+              color: part.primary.s6,
+              border: Border.symmetric(
+                  vertical: BorderSide(color: part.primary.s8))),
+          child: ListTile(
+            onTap: () => tileTapped(context, chapter),
+            title: Text(
+              chapter.displayName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: headerFont.copyWith(color: part.primary.sf, fontSize: 16),
+            ),
+            //This don't work
+            tileColor: part.primary.s7,
+            trailing: trailing,
+          ));
     } else {
       return ListTile(
           // tileColor: NoirPrimary.shade5,
-          onTap: () => scrollToChapter(chapter, context: context),
+          onTap: () => tileTapped(context, chapter),
           title: Text(
             chapter.displayName,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: headerFont.copyWith(color: part.primary.sd, fontSize: 16),
           ),
-          trailing: isCurrent ? const _CurrentChapterMarker() : null);
+          trailing: trailing);
+    }
+  }
+
+// === Callbacks ==========
+  void onCollapsed() {
+    setState(() {
+      expanded = false;
+    });
+  }
+
+  void onExpanded() {
+    setState(() {
+      expanded = true;
+    });
+    _scrollToCurrentAfterReload();
+  }
+
+  ///Only show parts in index
+  void togglePartsOnly() {
+    setState(() {
+      partsOnly = !partsOnly;
+    });
+    _scrollToCurrentAfterReload();
+  }
+
+  void _scrollToCurrentAfterReload() async {
+    //Give time to reload
+    await Future.delayed(const Duration(milliseconds: 500));
+    try {
+      //Scroll to current chapter
+      //In case pinned
+      scrollToCurrentChapter();
+    } catch (exception, trace) {
+      //I expect this to be finicky
+      ErrorList.logWarning(exception, trace);
     }
   }
 }
 
-class _CurrentChapterMarker extends StatelessWidget {
-  const _CurrentChapterMarker({super.key});
+///Just the word Homeworld to show you what site you're on
+class SiteLogo extends StatelessWidget {
+  const SiteLogo({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return
-        // const Hero(
-        //   tag: 'CurrentIcon',
-        //   child:
-        const Icon(
-      key: Key('bkMkr'),
-      Icons.bookmark_outline,
-      color: NoirPrimary.shaded,
-    );
+    return Container(
+        key: const Key('logoCtr'),
+        decoration: const BoxDecoration(
+            color: NoirPrimary.shade4,
+            border: Border(
+                bottom: BorderSide(color: NoirPrimary.shade2, width: 1))),
+        height: appBarSize,
+        padding: const EdgeInsets.all(12),
+        alignment: Alignment.centerLeft,
+        child: TextButton(
+            key: const Key('logoButton'),
+            onPressed: () {},
+            child: const Text(
+              key: Key('logoTxt'),
+              'Homeworld',
+              style: headerFont,
+              textAlign: TextAlign.start,
+            )));
+  }
+}
+
+///Just the letter H. To show you what site you're on
+class CollapsedSiteLogo extends StatelessWidget {
+  const CollapsedSiteLogo({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+        message: 'Homeworld.help',
+        child: Container(
+            key: const Key('logoCtr'),
+            decoration: const BoxDecoration(
+              color: NoirPrimary.shade4,
+              // border: Border(
+              //     bottom: BorderSide(color: NoirPrimary.shade2, width: 1)),
+            ),
+            height: appBarSize,
+            // padding: const EdgeInsets.all(12),
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+                key: const Key('logoButton'),
+                onPressed: () {},
+                child: const Text(
+                  key: Key('lgoTxt'),
+                  'H',
+                  style: headerFont,
+                  textAlign: TextAlign.start,
+                ))));
+  }
+}
+
+class _TogglingExpandoButton extends StatelessWidget {
+  final bool expanded;
+  final VoidCallback onPressed;
+  const _TogglingExpandoButton(
+      {required super.key, required this.expanded, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+        tag: key.toString(),
+        child: Tooltip(
+            message: expanded ? 'Collapse' : 'Index',
+            child: StdAppBarButton(
+              key: const Key('expToggle'),
+              icon: expanded ? Symbols.hide : Symbols.menu_book_rounded,
+              onPressed: onPressed,
+            )));
   }
 }

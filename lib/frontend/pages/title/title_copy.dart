@@ -26,7 +26,7 @@ class TitleTextWide extends StatelessWidget {
         width: size.width,
         height: size.height,
         child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               //Center
@@ -39,9 +39,9 @@ class TitleTextWide extends StatelessWidget {
                   style: titleFont,
                 ),
                 if (authorText != null) Text(authorText!, style: authorFont),
-                const SizedBox(
-                  height: 48,
-                ),
+                // const SizedBox(
+                //   height: 48,
+                // ),
                 if (child != null) child!
               ],
             )));
@@ -66,7 +66,7 @@ class TitleTextPhone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: SizedBox(
             width: size.width,
             height: size.height,
@@ -80,7 +80,7 @@ class TitleTextPhone extends StatelessWidget {
                 if (authorText != null)
                   Text(authorText!,
                       textAlign: TextAlign.left, style: authorFont),
-                const SizedBox(height: 24),
+                // const SizedBox(height: 24),
                 if (child != null) child!
               ],
             )));

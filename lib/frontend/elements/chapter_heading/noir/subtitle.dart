@@ -42,7 +42,6 @@ class ChapterHeadingSubtitle extends StatelessWidget
     }
     //TODO: Extract
 
-    Part part = ChapterProvider.of(context).part;
     scrollRow = Row(
       key: const Key('subtRow'),
       children: [
@@ -169,9 +168,8 @@ class _LengthSummaryWrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int numDots = chapter?.data?.readingLength ?? 0;
-    String message = chapter?.data != null
-        ? 'Reading length: ${ChapterData.readingLengthDescriptor(numDots)}'
-        : 'Awaiting reading length...';
+    String message =
+        chapter?.data != null ? 'Reading length' : 'Awaiting reading length...';
     return Tooltip(
         message: message,
         triggerMode: TooltipTriggerMode.tap,

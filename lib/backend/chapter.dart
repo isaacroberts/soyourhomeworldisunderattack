@@ -277,8 +277,8 @@ class ChapterProvider extends InheritedWidget {
         key: key, chapter: chapter, part: part, child: child);
   }
 
-  @override
-  Widget get child => Theme(data: part.theme, child: super.child);
+  // @override
+  // Widget get child => super.child);
 
   static ChapterProvider of(BuildContext context) {
     return maybeOf(context)!;

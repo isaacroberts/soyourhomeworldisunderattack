@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../backend/chapter.dart';
+import '../../backend/error_handler.dart';
 
 Curve get scrollToChapterCurve => Curves.easeOutExpo;
 const Duration scrollToChapterDuration = Duration(milliseconds: 2000);
@@ -115,9 +116,17 @@ class CopiedSnackbarContent extends StatelessWidget {
 
 Future<bool> openLink(String? link, BuildContext context) async {
   if (link == null) {
+    showCantOpenLinkSnackbar(context, link);
     return false;
   }
-  bool canOpen = await canLaunchUrlString(link);
+
+  Uri? uri = Uri.tryParse(link);
+  if (uri == null) {
+    ErrorList.logWarning("Can't parse link: $link to uri");
+    showCantOpenLinkSnackbar(context, link);
+    return false;
+  }
+  bool canOpen = await canLaunchUrl(uri);
   ValueNotifier<bool> shouldOpen = ValueNotifier(canOpen);
   if (context.mounted) {
     ScaffoldMessenger.maybeOf(context)?.showSnackBar(
@@ -125,29 +134,63 @@ Future<bool> openLink(String? link, BuildContext context) async {
         SnackBar(
             showCloseIcon: true,
             //Simple custom content
-            content:
-                OpenUrlSnackbarContent(shouldOpen: shouldOpen, link: link)));
+            content: OpenUrlSnackbarContent(
+                shouldOpen: shouldOpen, link: link, uri: uri)));
   } else {
     return false;
   }
-  await Future.delayed(Duration(seconds: 3));
+  await Future.delayed(const Duration(seconds: 3));
 
   if (context.mounted) {
     if (shouldOpen.value) {
-      launchUrlString(link, mode: LaunchMode.inAppBrowserView);
+      launchUrl(uri, mode: LaunchMode.inAppBrowserView);
       return true;
     }
   }
   return false;
 }
 
+void openLinkFast(String? link, BuildContext context) async {
+  if (link == null) {
+    showCantOpenLinkSnackbar(context, link);
+    return;
+  }
+  Uri? uri = Uri.tryParse(link);
+  if (uri == null) {
+    ErrorList.logWarning("Can't parse link: $link to uri");
+    showCantOpenLinkSnackbar(context, link);
+    return;
+  }
+  bool canOpen = await canLaunchUrl(uri);
+
+  if (!canOpen) {
+    showCantOpenLinkSnackbar(context, link);
+    return;
+  } else {
+    launchUrl(uri, mode: LaunchMode.inAppBrowserView);
+  }
+}
+
+void showCantOpenLinkSnackbar(BuildContext context, String? link) {
+  if (context.mounted) {
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        //Simple snackbar
+        SnackBar(
+            showCloseIcon: true,
+            //Simple custom content
+            content: CantOpenLinkSnackbar(link: link)));
+  }
+}
+
 ///TODO: Move, defer load
 class OpenUrlSnackbarContent extends StatelessWidget {
-  final String? link;
+  final String link;
+  final Uri uri;
   final ValueNotifier<bool> shouldOpen;
   const OpenUrlSnackbarContent({
     super.key,
     required this.link,
+    required this.uri,
     required this.shouldOpen,
   });
 
@@ -205,6 +248,50 @@ class OpenUrlSnackbarContent extends StatelessWidget {
               child: ListenableBuilder(
                   listenable: shouldOpen, builder: textBuilder)),
           FilledButton(onPressed: cancel, child: const Text("Cancel")),
+          IconButton(onPressed: copyLink, icon: const Icon(Icons.copy))
+        ]);
+  }
+}
+
+///TODO: Move, defer load
+class CantOpenLinkSnackbar extends StatelessWidget {
+  final String? link;
+  const CantOpenLinkSnackbar({
+    super.key,
+    required this.link,
+  });
+
+  void copyLink() {
+    Clipboard.setData(ClipboardData(text: link ?? '?'));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+//Remove newlines
+
+    return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //Copy icon for clarity
+          const Icon(
+            Icons.link,
+            size: 24,
+          ),
+          //Visual space
+          const SizedBox(
+            width: 6,
+          ),
+          //Show as much of text as possible
+          Expanded(
+              child: Text(
+            "Can't open link: [$link]",
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            //appFont
+            style: Theme.of(context).textTheme.bodyMedium,
+          )),
           IconButton(onPressed: copyLink, icon: const Icon(Icons.copy))
         ]);
   }

@@ -3,16 +3,14 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/backend/server.dart';
 import 'package:soyourhomeworld/backend/utils.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/fill_remainings.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
-import 'package:soyourhomeworld/frontend/parts/grand_swatch.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
 import '../../backend/start_chapter.dart';
 import '../elements/chapter_heading/heading_data.dart';
-import '../icons.dart';
 import '../pages/title/title.dart';
 import '../parts/noir_part.dart';
 import '../parts/part.dart';
@@ -306,10 +304,12 @@ class _SliverScrollerState extends State<SliverScroller> {
       setState(() {
         firstLoadedChapter = math.max(firstLoadedChapter - 1, 0);
       });
+      currentChapter = book.chapters[firstLoadedChapter];
       //FUCK after-scrolling
       // scrollDelayed(currentChapter);
 
       // updateView();
+      chapterBecomesMain(currentChapter);
 
       // await scrollUpDelayed(currentChapter);
       // await Future.delayed(const Duration(seconds: 3));
@@ -352,9 +352,9 @@ class _SliverScrollerState extends State<SliverScroller> {
     }
 
     if (endChapter == book.chapterAmt) {
-      slivers.add(const _FillRemaining(key: Key("fillRemaining")));
+      slivers.add(const EndOfBookFillRemaining(key: Key("fillRemaining")));
     } else {
-      slivers.add(_HasExtraFillRemaining(
+      slivers.add(LoadNextFillRemaining(
           key: const Key('refreshRemaining'), onRequestMore: onAddExtra));
     }
     return ChapterHeadingData(
@@ -452,93 +452,5 @@ class ScrollSizeWrap extends StatelessWidget {
                   ),
                   child: child)));
     }
-  }
-}
-
-class _FillRemaining extends StatelessWidget {
-  const _FillRemaining({
-    required super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    //TODO: Expand text from center
-    GrandSwatch primary = GrandSwatch.primaryOf(context);
-
-    return SliverToBoxAdapter(
-        key: const Key("FillRemaining"),
-        child: Container(
-            key: const Key("fillRemCt"),
-            height: 200,
-            color: primary.s3,
-            alignment: Alignment.center,
-            child: Column(
-                key: const Key("fillRemCol"),
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    key: const Key("fillRmIcon"),
-                    RpgAwesome.fedora,
-                    color: primary.sa,
-                    size: 48,
-                  ),
-                  const Text('Heh, thanks for reading.'),
-                  // const Text('You have Helped your Homeworld'),
-                  const Text("Why not share on social media?"),
-                  TextButton(
-                      onPressed: () => copyText(context, shareURL),
-                      style: const ButtonStyle(
-                        minimumSize: WidgetStatePropertyAll(Size(1, 5)),
-                      ),
-                      child: Text(
-                        serverDisplayURL,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(decoration: TextDecoration.underline),
-                      ))
-                ])));
-  }
-}
-
-class _HasExtraFillRemaining extends StatelessWidget {
-  final VoidCallback onRequestMore;
-  const _HasExtraFillRemaining({
-    required super.key,
-    required this.onRequestMore,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    GrandSwatch primary = GrandSwatch.primaryOf(context);
-
-    return SliverToBoxAdapter(
-        key: const Key("FillRemaining"),
-        child: Container(
-            key: const Key("fillRemCt"),
-            //Large so that user can keep scrolling, triggering another notification
-            height: 200,
-            color: primary.s3,
-            alignment: Alignment.center,
-            child: Column(
-                key: const Key("fillRemCol"),
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text("Continue"),
-                  IconButton(
-                    onPressed: onRequestMore,
-                    icon: Icon(
-                      key: const Key("fillRmIcon"),
-                      Icons.more_horiz_rounded,
-                      color: primary.sa,
-                      size: 48,
-                    ),
-                  ),
-                  const Text("Scroll to scroll"),
-                ])));
   }
 }

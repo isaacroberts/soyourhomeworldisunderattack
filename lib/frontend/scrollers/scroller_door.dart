@@ -133,6 +133,10 @@ class _BookLoadedScrollDoorState extends State<_BookLoadedScrollDoor>
 
   @override
   Widget build(BuildContext context) {
+    return _ScrollerScaffold(
+        key: const Key('scscf'),
+        hasIndex: true,
+        child: MediumView(currentChapter: currentChapter, widget: widget));
     // Part part = getPartImmediate(PartId.noir);
     return LayoutBuilder(key: const Key('pageLayout'), builder: layoutBuilder);
   }
@@ -237,13 +241,10 @@ class MediumView extends StatelessWidget {
       key: const Key('R'),
       children: [
         //Index
-        SizedBox(
-            key: const Key('indexW'),
-            width: indexSidebarWidth,
-            child: SidebarIndex(
-              key: const Key('sidebar'),
-              currentChapter: currentChapter,
-            )),
+        SidebarIndex(
+          key: const Key('sidebar'),
+          currentChapter: currentChapter,
+        ),
 
         //Reader
         //This is expanded to fill space because gutter needs to scroll
@@ -282,13 +283,10 @@ class WideView extends StatelessWidget {
       key: const Key('R'),
       children: [
         //Index
-        SizedBox(
-            key: Key('indexW'),
-            width: indexSidebarWidth,
-            child: SidebarIndex(
-              key: Key('sidebar'),
-              currentChapter: currentChapter,
-            )),
+        SidebarIndex(
+          key: Key('sidebar'),
+          currentChapter: currentChapter,
+        ),
         //Reader
         //This is expanded to fill space because gutter needs to scroll
         Expanded(

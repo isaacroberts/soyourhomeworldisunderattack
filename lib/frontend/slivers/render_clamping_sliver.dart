@@ -19,11 +19,11 @@ const bool showNext = false;
 // const double maxShrinkPerUpdate = 0;
 
 const double maxGrowPerUpdate = 3;
-const double maxShrinkPerUpdate = 2;
+const double maxShrinkPerUpdate = 1.5;
 
 const double minimumSquashSize = 360;
 
-class RenderChapterSliver extends RenderProxySliver {
+class RenderClampingSliver extends RenderProxySliver {
   /// The idea is that this sliver is moved through the tree
   /// ChapterSliver(key: Chapter5, pos: next)
   /// -> ChapterSliver(key: Chapter5, pos: current)
@@ -36,7 +36,7 @@ class RenderChapterSliver extends RenderProxySliver {
   ///Used to check whether it's moving so fast that we should skip loading
   // ScrollPosition position;
 
-  RenderChapterSliver(
+  RenderClampingSliver(
       {required this.chapter,
       required this.part,
       required this.onBecomesMain,
@@ -51,23 +51,34 @@ class RenderChapterSliver extends RenderProxySliver {
 
   //paintExtent
   double drawnHeight = 0;
+  bool waitingForCacheLoad = false;
 
   //I don't think slivers are allowed to change their maxPaintExtent
   static const double _maxPaintExtent = 20000;
 
   void loadIfStillInCacheRange() async {
+    //If a thread is already running
+    if (waitingForCacheLoad) {
+      //Quit, because it will return true if this does
+      return;
+    }
+    //Mark that we're waiting for the thread
+    waitingForCacheLoad = true;
+
     //Give it a quarter second to see if we're scrolling past
     await Future.delayed(const Duration(milliseconds: 250));
-//Check if it's already been loaded (this will be spawned multiple times)
+//Check if it's already been loaded, just in case
     if (chapter.needsLoad) {
 //Check cacheExtent
       final double cacheExtent =
           calculateCacheOffset(constraints, from: 0.0, to: height);
-
+//If still in cache extent
       if (cacheExtent > 0) {
+        //Load
         chapter.load();
       }
     }
+    waitingForCacheLoad = false;
   }
 
   bool get wantsDifferentHeight => (desiredHeight - height).abs() > 1;
@@ -163,8 +174,8 @@ class RenderChapterSliver extends RenderProxySliver {
 
     //If sliver within cache range
     if (cacheExtent > 0) {
-      //If needs load
-      if (chapter.needsLoad) {
+      //If needs load && hasn't already called thread
+      if (chapter.needsLoad && !waitingForCacheLoad) {
         //Give it some time, to see if object is still in view, or it it's scrolling past
         loadIfStillInCacheRange();
       }
@@ -172,6 +183,7 @@ class RenderChapterSliver extends RenderProxySliver {
 
     if (onBecomesMain != null && halfOfScreen()) {
       //Tell scroller that its on screen
+      //This calls every frame that it's main
       WidgetsBinding.instance.addPostFrameCallback(_onBecomesMainCallback,
           debugLabel: 'chapterBecomesMain');
     }
@@ -184,7 +196,7 @@ class RenderChapterSliver extends RenderProxySliver {
     geometry = SliverGeometry(
       scrollExtent: scrollExtent,
       paintExtent: paintedChildSize,
-      paintOrigin: overlap,
+      paintOrigin: 0,
       layoutExtent: paintedChildSize,
       cacheExtent: cacheExtent,
       maxPaintExtent: viewHeight,

@@ -31,7 +31,7 @@ class SourceCitationHolder extends CodeHolder {
   }
 
   void openSource(BuildContext context) async {
-    openLink(link, context);
+    openLinkFast(link, context);
   }
 
   @override
