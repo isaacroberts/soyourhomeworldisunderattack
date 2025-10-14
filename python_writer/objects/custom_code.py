@@ -29,12 +29,13 @@ def code_tag_replacements():
 
 # These are all top-level. For low-level Keywords, you'll have to add another classtype
 def chapter_keywords():
+    #TODO: Extend json_keywords object into this 
     return ['Chapter', 'Section', 'Label',
         # info
 'Subtitle', 'When', 'Where',
 # TODO: Move this somewhere
 # Json data
-'CW', 'What',
+'CW', 'What', 'Recap',
         #other
         'Part',
          'Next',

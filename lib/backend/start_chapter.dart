@@ -1,22 +1,10 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:soyourhomeworld/backend/bookmark_saver.dart';
 
 import 'book.dart';
 import 'chapter.dart';
 
 ///Convenience classes for moving tree out of scroller
 const defaultStartChapter = NoStartChapter();
-
-///Save current chapter to cookies
-void bookmarkCurrentChapter(int ix) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setInt('bookmark', ix);
-}
-
-///Get current chapter from cookies
-Future<int?> getStartChapter() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getInt('bookmark');
-}
 
 abstract class StartChapter {
   const StartChapter();
@@ -58,7 +46,7 @@ class NoStartChapter extends StartChapter {
   const NoStartChapter();
   @override
   Future<Chapter?> getStart(Book book) async {
-    int? chapterIx = await getStartChapter();
+    int? chapterIx = await GlobalBookmark.instance.getStartChapter();
     //If non-null & in bounds
     if (chapterIx != null) {
       if (chapterIx >= 0 && chapterIx < book.chapterAmt) {

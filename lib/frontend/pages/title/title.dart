@@ -11,7 +11,7 @@ import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
-import '../../elements/chapter_heading/sliver_header.dart';
+import '../../chapter_heading/sliver_header.dart';
 import '../../elements/holders/holder_base.dart';
 import '../../parts/noir_colors.dart';
 import '../../parts/part.dart';

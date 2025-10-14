@@ -128,51 +128,12 @@ class ChapterParser {
 
   Future<ChapterExtra> parseHeader() async {
     ptr.assertConsume('\$', debugId: debugId);
-    // int index = ptr.consumeInt32();
-    // ptr.warnConsume('=', consumeOnMiss: true);
-    // String id = ptr.consumeText()!;
-    // ptr.warnConsume('/', consumeOnMiss: true);
-    // String? display = ptr.consumeText();
     ptr.warnConsume('/', consumeOnMiss: true);
 
-    ptr.assertConsume('(', debugId: debugId);
-    String? subtitle = ptr.consumeText();
-    ptr.assertConsume(',', debugId: debugId);
-    String? where = ptr.consumeText();
-    ptr.assertConsume(',', debugId: debugId);
-    String? when = ptr.consumeText();
-    ptr.assertConsume(')', debugId: debugId);
-    ptr.assertConsume('/', debugId: debugId);
+    dynamic data = ptr.consumeJson(debugId: debugId);
+    ptr.warnConsume('/', consumeOnMiss: false);
 
-    //Some chapters have audio
-    String? audioUrl;
-    if (ptr.getChar() == '_') {
-      audioUrl = null;
-      ptr.consume(1);
-    } else {
-      audioUrl = ptr.consumeUrl();
-    }
-    ptr.assertConsume('/', debugId: debugId);
-    // skipToHeaderSeparator();
-    if (printVerbose) {
-      dev.log('/Read header $debugId');
-    }
-
-    String? cleanForNull(String? s) {
-      //TODO: Catch dashes in writer
-      if (s == null || s.isEmpty || s == '-' || s == 'null') {
-        return null;
-      }
-      return s;
-    }
-
-    subtitle = cleanForNull(subtitle);
-    when = cleanForNull(when);
-    where = cleanForNull(where);
-    audioUrl = cleanForNull(audioUrl);
-
-    return ChapterExtra(
-        subtitle: subtitle, when: when, where: where, audioUrl: audioUrl);
+    return ChapterExtra.fromJson(data);
   }
 
   void skipToHeaderSeparator() {

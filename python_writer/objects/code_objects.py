@@ -388,7 +388,7 @@ class CodeMarker: # Inherits: Font
         for v in vars:
             ov = getattr(other, v, None)
             if ov is None or ov=='' or ov==0.0:
-                print('\t', v, getattr(self, v))
+                # print('\t', v, getattr(self, v))
                 setattr(other, v, getattr(self, v))
     def __hash__(self):
         #blank if none
@@ -468,10 +468,9 @@ class CodeKeywordTag: # virtual Inherits: TextObject
         yield self
 
 
-
 def split_str(str, symbol):
     ix = str.find(symbol)
-    print('Split ix', str, symbol, ':', ix)
+    # print('Split ix', str, symbol, ':', ix)
     if ix == -1:
         return str, None
     else:

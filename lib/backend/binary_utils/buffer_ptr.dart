@@ -50,6 +50,17 @@ class BufferPtr {
     }
   }
 
+  dynamic consumeJson({String? debugId}) {
+    debugId ??= '';
+    debugId = 'json_$debugId';
+    assertConsume(Codes.LGATOR, debugId: debugId);
+    int length = consumeUint32();
+
+    String rawJson = consumeRangedString(length);
+    assertConsume(Codes.RGATOR, debugId: debugId);
+    return json.decode(rawJson);
+  }
+
   bool consumeIf(var code) {
     if (typedCodeComparison(0, code)) {
       consume(1);

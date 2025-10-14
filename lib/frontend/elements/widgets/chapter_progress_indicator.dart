@@ -28,11 +28,12 @@ class ReadingProgressIndicator extends StatelessWidget {
       //Error color
       color = const Color(0x40000000);
     }
+    String pctTooltip = (pct * 100).toStringAsPrecision(2);
     return SizedBox(
         width: 36,
         height: 36,
         child: Tooltip(
-            message: '$chapter / $totalChapters chapters',
+            message: '$pctTooltip%',
             child: CustomPaint(
                 key: const Key('progressPaint'),
                 painter: _ProgressPainter(pct, color: color))));
@@ -55,8 +56,13 @@ class _ProgressPainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill;
 
-    canvas.drawArc(
-        rect, math.pi * 3 / 2, pct * math.pi * (3 / 2 + 2), true, paint);
+    canvas.drawArc(rect, math.pi * 3 / 2, (pct) * math.pi * (2), true, paint);
+
+    paint.style = PaintingStyle.stroke;
+    paint.strokeWidth = 1;
+
+    //Outline
+    canvas.drawCircle(rect.center, dim / 2, paint);
   }
 
   @override

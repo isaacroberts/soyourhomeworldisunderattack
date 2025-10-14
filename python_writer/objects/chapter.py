@@ -94,13 +94,9 @@ class Chapter:
         self.next = None
         self.part = False
         self.hidepart=False
-        # Details (text string)
-        self.subtitle = None
-        self.where = None
-        self.when = None
         # fx
         self.audio=None
-        # other
+        # Details like subtitle, where, when
         self.data = {}
 
     # === Getters ===
@@ -174,18 +170,19 @@ class Chapter:
             if s is None:
                 return pack_text('')
             return pack_text(s)
-        self.header += '('
-        self.header += textornull(self.subtitle)
-        self.header += ','
-        self.header += textornull(self.where)
-        self.header += ','
-        self.header += textornull(self.when)
-        self.header += ')'
-        self.header += '/'
-        if self.audio is None:
-            self.header += '_'
-        else:
-            self.header += pack_url(self.audio)
+        # self.header += '('
+        self.header.pack_json(self.data)
+        # self.header += textornull(self.subtitle)
+        # self.header += ','
+        # self.header += textornull(self.where)
+        # self.header += ','
+        # self.header += textornull(self.when)
+        # self.header += ')'
+        # self.header += '/'
+        # if self.audio is None:
+        #     self.header += '_'
+        # else:
+        #     self.header += pack_url(self.audio)
         self.header += '/'
         self.binary_length = None
 

@@ -10,7 +10,7 @@ import python_script_tools as pst
 pst.DEBUG=False
 
 
-json_keywords = ['CW', 'What']
+json_keywords = [ 'Subtitle','Where', 'When',  'What', 'Recap', 'CW',]
 
 
 def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='fonts_clean.json', chapters_out='chapters.json'):
@@ -101,9 +101,14 @@ def clean_chapters(chapters):
         chapters[c] = read_bookmark_keywords(chapters[c], chapters)
     # QA
     health_inspection(chapters)
-    # Ensure all keywords deleted
+
+    # Subtitle type shit
+    print('Collecting ChapterExtra keywords')
     for c in range(len(chapters)):
         chapters[c] = move_keywords_to_json(chapters[c])
+
+    for c in range(len(chapters)):
+        # Ensure all keywords deleted
         # doesn't return
         chapters[c] = check_for_keywords(chapters[c])
     # QA
@@ -201,24 +206,6 @@ def resolve_misc_keywords(chapter):
                 chapter.spans.pop(i)
                 i-=1
                 remove_invisible_headline(chapter)
-            elif obj == 'Subtitle':
-                value = chapter.spans[i].params.main()
-                chapter.subtitle = value
-                # Delete keyword
-                chapter.spans.pop(i)
-                i-=1
-            elif obj == 'When':
-                value = chapter.spans[i].params.main()
-                chapter.when = value
-                # Delete keyword
-                chapter.spans.pop(i)
-                i-=1
-            elif obj == 'Where':
-                value = chapter.spans[i].params.main()
-                chapter.where = value
-                # Delete keyword
-                chapter.spans.pop(i)
-                i-=1
             elif obj in ['Audio', 'UnskippableAudio', 'CopSting']:
                 # TODO: Match audio to URL
                 audio = chapter.spans[i].params.main()
@@ -275,15 +262,23 @@ def move_keywords_to_json(chapter):
     while i < len(chapter.spans):
         if isinstance(chapter.spans[i], CodeKeywordTag):
             obj = chapter.spans[i].obj
+            print(obj, chapter.id)
             if obj in json_keywords:
                 params = chapter.spans[i].params
+                print('\t',obj, params)
                 if len(params.lparams)>0:
                     chapter.data[obj] = params.main()
-                    chapter.spans.pop(i)
                 else:
                     # No param on chapter json keyword
                     print ('No param')
-                    print('TODO: Write error message (chapter_breaker @ move_keywords_to_json)')
+                    print(f'Object: "{obj}" missing parameters. Span="{chapter.spans[i]}"; Params="{params}"; in chapter {chapter.varName()}')
+                    # I'm going to accidentally do this a lot, I think
+                    pass
+                chapter.spans.pop(i)
+                i-=1
+            else:
+                print('Obj:',obj,'not in json_keywords, but should already be removed')
+                print('(json_keywords):', json_keywords)
         i += 1
     return chapter
 
@@ -298,11 +293,11 @@ def check_for_keywords(chapter):
         if isinstance(chapter.spans[i], CodeKeywordTag):
             obj = chapter.spans[i].obj
             print(chapter.spans[i])
-            r = pst.saveable_response("Unhandled keyword. Skip? (y/n)")
+            r = pst.saveable_response(f"Unhandled keyword in Chp:{chapter.id}. Skip? (y/n)")
             if r=='y':
                 chapter.spans.pop(i)
             else:
-                assert False, f'Unhandled Keyword: "{obj} in chapter {chapter.id}"'
+                assert False, f'Unhandled Keyword: "{obj}" in chapter "{chapter.id}"'
         i += 1
     return chapter
 
@@ -418,10 +413,15 @@ def collect_parts(chapters):
 
     lastPart = 0
 
+    # Title screen counts as a part
+    chapters[0].part=True
+    # #
+    # chapters[1].part=True
+
     # Collect parts
     for chapter in chapters:
         if chapter.part:
-            id = pst.saveable_response("Enter part id "+ chapter.partName+' '+chapter.varName())
+            id = pst.saveable_response("Enter part id: "+chapter.varName())
             try:
                 id = int(id)
             except:

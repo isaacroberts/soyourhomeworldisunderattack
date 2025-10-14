@@ -40,7 +40,7 @@ class LoadNextFillRemaining extends StatelessWidget {
                       size: 48,
                     ),
                   ),
-                  const Text("Scroll to scroll"),
+                  const Text("Click or scroll"),
                 ])));
   }
 }

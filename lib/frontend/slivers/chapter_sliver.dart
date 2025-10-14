@@ -10,7 +10,7 @@ import 'package:soyourhomeworld/frontend/slivers/sliver_reader_width.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../../../backend/part_id.dart';
-import '../elements/chapter_heading/sliver_header.dart';
+import '../chapter_heading/sliver_header.dart';
 import '../parts/all_parts.dart';
 import '../parts/part.dart';
 import 'null_slivers.dart';

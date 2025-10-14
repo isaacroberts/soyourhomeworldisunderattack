@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/heading_data.dart';
+import 'package:soyourhomeworld/frontend/chapter_heading/heading_data.dart';
 
 import '../../../../backend/chapter.dart';
 import '../parts/part.dart';

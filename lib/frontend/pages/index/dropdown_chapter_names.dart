@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/title.dart';
+import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
@@ -117,6 +117,7 @@ class _ChapterTitleListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Part part = Part.of(context);
+    //TODO: Put border on these
     return MaterialButton(
         onPressed: onPressed,
         child: SizedBox(
@@ -139,10 +140,10 @@ class _ChapterTitleListItem extends StatelessWidget {
         style: headerFont.copyWith(fontSize: 16),
         textAlign: TextAlign.left,
       ),
-      trailing: ChapterNumber(chapter: chapter),
+      trailing: ChapterNumber(index: chapter.index),
     );
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         child: Material(
             color: part.primary.s4,
             child: InkWell(

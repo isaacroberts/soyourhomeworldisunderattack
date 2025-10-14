@@ -44,7 +44,6 @@ class LandscapeSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget child = buildImage(context);
-    double aspectRatio = holder.aspectRatio ?? 1;
     child = FittedBox(
         key: const Key('fit'),
         fit: BoxFit.fitWidth,
@@ -190,14 +189,14 @@ class _LandscapeRenderSliver extends RenderSliverToBoxAdapter {
         : RRect.fromRectAndRadius(rectFromZero, imgRadius);
 
     Color? bgHint = colorHint?.bgColor;
-    if (bgHint != null) {
+    if (bgHint != null && false) {
+      //Trying out BG
       Paint bg = Paint()
         ..color = bgHint
         ..style = PaintingStyle.fill;
       Rect bgRect = Rect.fromLTWH(0, imageOffset.dy,
           constraints.crossAxisExtent, geometry!.paintExtent);
-
-      // context.canvas.drawRect(bgRect, bg);
+      context.canvas.drawRect(bgRect, bg);
     }
     bgHint = colorHint?.outlineColor;
     if (bgHint != null) {

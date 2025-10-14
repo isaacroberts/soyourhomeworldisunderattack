@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/heading_data.dart';
+import 'package:soyourhomeworld/frontend/chapter_heading/heading_data.dart';
 
 import '../../../../backend/chapter.dart';
 import 'render_clamping_sliver.dart';

@@ -26,7 +26,7 @@ Future<void> main() async {
 
       dev.log(details.exceptionAsString());
       dev.log(details.toString());
-      if (details.exception == null || details.exception == 'null') {
+      if (details.exception == 'null') {
         dev.log("(Null exception");
       }
       ErrorList.silentLogError(details.exception, details.stack);

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/backend/bookmark_saver.dart';
 import 'package:soyourhomeworld/backend/utils.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/fill_remainings.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
@@ -10,7 +11,7 @@ import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
 import '../../backend/start_chapter.dart';
-import '../elements/chapter_heading/heading_data.dart';
+import '../chapter_heading/heading_data.dart';
 import '../pages/title/title.dart';
 import '../parts/noir_part.dart';
 import '../parts/part.dart';
@@ -272,9 +273,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     } else if (chapter?.needsLoad ?? false) {
       chapter?.load();
     }
-    if (currentChapter != null) {
-      bookmarkCurrentChapter(currentChapter!.index);
-    }
+    GlobalBookmark.instance.currentChapter = currentChapter?.index;
   }
 
   void disposeChaptersBefore(int disposeBefore) async {

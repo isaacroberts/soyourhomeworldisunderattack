@@ -72,7 +72,7 @@ enum ElementType {
 
 class GreenlandObject extends ChangeNotifier {
   ElementType _type = ElementType.rect;
-  var _data;
+  dynamic _data;
   int color = 2;
 
   Offset offset;

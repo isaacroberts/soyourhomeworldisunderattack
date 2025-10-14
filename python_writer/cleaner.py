@@ -646,8 +646,8 @@ def extract_tabs_from_span(span):
         while len(span.text)>0 and span.text[0]=='\t':
             span.tabs+=1
             span.text = span.text[1:]
-        if span.tabs > 0:
-            print(f'Extracted {span.tabs} tabs from {span}')
+        # if span.tabs > 0:
+        #     print(f'Extracted {span.tabs} tabs from {span}')
         if len(span.text) == 0:
             print(f'Removing all-tabbed span ({span.tabs})')
             span= NewLine(span.font)

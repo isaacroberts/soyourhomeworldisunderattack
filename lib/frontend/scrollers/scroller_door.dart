@@ -137,7 +137,7 @@ class _BookLoadedScrollDoorState extends State<_BookLoadedScrollDoor>
         key: const Key('scscf'),
         hasIndex: true,
         child: MediumView(currentChapter: currentChapter, widget: widget));
-    // Part part = getPartImmediate(PartId.noir);
+    //Currently all layouts are identical
     return LayoutBuilder(key: const Key('pageLayout'), builder: layoutBuilder);
   }
 
@@ -284,7 +284,7 @@ class WideView extends StatelessWidget {
       children: [
         //Index
         SidebarIndex(
-          key: Key('sidebar'),
+          key: const Key('sidebar'),
           currentChapter: currentChapter,
         ),
         //Reader

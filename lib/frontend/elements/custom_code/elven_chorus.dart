@@ -160,6 +160,7 @@ class _ElvenChorusState extends State<ElvenChorus>
 
   double getTextWidth(BuildContext context) {
     return 2100;
+    //CBA!!!
     double width = 0;
     double chorusWidth = _getTextWidth(context, chorus, 2);
     // width += 12;

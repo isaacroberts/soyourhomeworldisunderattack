@@ -422,7 +422,7 @@ class StyleHandler:
                 exit(1)
 
             tag = elem.font.tag
-            print("orig tag", tag)
+            # print("orig tag", tag)
             tag = self.replace_tag(tag)
             assert self.is_tag_present(tag), "Unrecognized tag "+tag+ 'in elem '+str(elem)
             elem.font.tag = tag

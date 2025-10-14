@@ -205,7 +205,7 @@ class OpenUrlSnackbarContent extends StatelessWidget {
   void copyLink() {
     //Presumably user doesn't want to do both
     shouldOpen.value = false;
-    Clipboard.setData(ClipboardData(text: link ?? '?'));
+    Clipboard.setData(ClipboardData(text: link));
   }
 
   Widget iconBuilder(BuildContext context, Widget? previous) {

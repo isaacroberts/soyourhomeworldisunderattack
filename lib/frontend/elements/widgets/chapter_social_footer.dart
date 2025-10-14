@@ -19,20 +19,23 @@ class _ChapterSocialFooterState extends State<ChapterSocialFooter> {
     return const SliverPadding(
       padding: EdgeInsets.zero,
     );
+    //There's no functionality
     Part part = ChapterProvider.partOf(context);
-    return DecoratedSliver(
-      key: const Key('SocialFooterDeco'),
-      decoration: BoxDecoration(
-        color: part.primary.s1,
-        // border: Border.all(color: part.primary.s7)
-      ),
-      sliver: const SliverToBoxAdapter(
-          key: Key('SocialStba'),
-          child: SizedBox(
-              height: 96,
-              child: _SocialFooterWidget(
-                key: Key('socialFooter'),
-              ))),
+    return
+        // DecoratedSliver(
+        // key: const Key('SocialFooterDeco'),
+        // decoration: BoxDecoration(
+        //   color: part.primary.s2,
+        //   // border: Border.all(color: part.primary.s7)
+        // ),
+        // sliver:
+        const SliverToBoxAdapter(
+      key: Key('SocialStba'),
+      child: SizedBox(
+          height: 96,
+          child: _SocialFooterWidget(
+            key: Key('socialFooter'),
+          )),
     );
   }
 }

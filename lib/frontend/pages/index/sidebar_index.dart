@@ -2,7 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:soyourhomeworld/frontend/elements/chapter_heading/noir/subtitle_components.dart';
+import 'package:soyourhomeworld/backend/bookmark_saver.dart';
+import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle_components.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/chapter_progress_indicator.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import 'package:soyourhomeworld/frontend/parts/noir_colors.dart';
@@ -14,6 +15,7 @@ import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
 import '../../../backend/error_handler.dart';
 import '../../parts/part.dart';
+import '../../scrollers/sliver_scroller.dart';
 
 class SidebarIndex extends StatefulWidget {
   final ValueNotifier<Chapter?> currentChapter;
@@ -141,24 +143,28 @@ class _SidebarIndexState extends State<SidebarIndex> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-        duration: const Duration(milliseconds: 350),
-        width: expanded ? indexSidebarWidth : collapsedIndexWidth,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                NoirPrimary.shade3,
-                NoirPrimary.shade4,
-              ],
-              stops: [0, 1],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
+    return ChapterProvider(
+        key: Key('dumbChpProvider'),
+        chapter: book.chapters[0],
+        part: defaultPart,
+        child: AnimatedContainer(
+            duration: const Duration(milliseconds: 350),
+            width: expanded ? indexSidebarWidth : collapsedIndexWidth,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  NoirPrimary.shade3,
+                  NoirPrimary.shade4,
+                ],
+                stops: [0, 1],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              ),
+              //TODO: I want this under the logo as well
+              // border: Border(right: BorderSide(color: NoirPrimary.shade3))
             ),
-            // color: Color(0xffefefef),
-            // backgroundBlendMode: BlendMode.colorBurn,
-            border: Border(right: BorderSide(color: NoirPrimary.shade2))),
-        alignment: Alignment.topLeft,
-        child: expanded ? expandedView(context) : collapsedView(context));
+            alignment: Alignment.topLeft,
+            child: expanded ? expandedView(context) : collapsedView(context)));
   }
 
   Column expandedView(BuildContext context) {
@@ -200,15 +206,13 @@ class _SidebarIndexState extends State<SidebarIndex> {
   Widget collapsedView(BuildContext context) {
     return Column(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           //Title (one letter )
           const CollapsedSiteLogo(),
           SizedBox(
-              // color: NoirPrimary.shade5,
               height: expandedAppBarSize - appBarSize,
-              // alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 // child: StdAppBarButton(
@@ -220,6 +224,19 @@ class _SidebarIndexState extends State<SidebarIndex> {
                     expanded: expanded,
                     onPressed: onExpanded),
               )),
+          // const Divider(),
+          const SizedBox(height: 12),
+          // const Divider(),
+
+          const BookmarkNumberDisplay(
+            key: Key('bkmkNum'),
+          ),
+          const SizedBox(height: 12),
+          const BookmarkSaveStatusIcon(
+            key: Key('bkmkStatus'),
+          ),
+          const SizedBox(height: 12),
+
           const Expanded(child: SizedBox.shrink()),
 
           Padding(
@@ -255,7 +272,6 @@ class _SidebarIndexState extends State<SidebarIndex> {
         Icons.bookmark,
         color: NoirPrimary.shaded,
       );
-      ;
     } else if (partsOnly) {
       //TODO: This will work once parts are fully integrated, i think
       if (currentChapter?.part == chapter.part) {

@@ -5,6 +5,7 @@ import '../../../backend/binary_utils/buffer_ptr.dart';
 import '../../../backend/chapter_parser.dart';
 import '../holders/holder_base.dart';
 
+///We're not using this anywhere, I rewrote the only element to not use this
 class Columns extends CodeHolder {
   /// Hacky as shit.
   /// Currently only supporting 2 columns
