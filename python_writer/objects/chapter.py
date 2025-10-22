@@ -195,8 +195,8 @@ class Chapter:
         assert hasattr(self, 'book_id')
         f= open(f'generated_book/{self.book_id}/'+self.filename(), 'wb')
 
-        self.header += fmt.pack_literal('&zoinks&')
-        self.header += '\n'
+        # self.header += fmt.pack_literal('&zoinks&')
+        # self.header += '\n'
         f.write(self.header.bstr)
 
         if len(self.output)==0:

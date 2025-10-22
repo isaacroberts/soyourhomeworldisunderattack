@@ -127,24 +127,18 @@ class ChapterParser {
   }
 
   Future<ChapterExtra> parseHeader() async {
-    ptr.assertConsume('\$', debugId: debugId);
-    ptr.warnConsume('/', consumeOnMiss: true);
+    try {
+      ptr.warnConsume('\$', consumeOnMiss: false);
+      ptr.warnConsume('/', consumeOnMiss: false);
 
-    dynamic data = ptr.consumeJson(debugId: debugId);
-    ptr.warnConsume('/', consumeOnMiss: false);
+      dynamic data = ptr.consumeJson(debugId: debugId);
+      ptr.warnConsume('/', consumeOnMiss: false);
 
-    return ChapterExtra.fromJson(data);
-  }
-
-  void skipToHeaderSeparator() {
-    const String endHeaderToken = 'zoinks&';
-    // consume Z first. If not, continue eating ampersands.
-    bool finished = false;
-    while (!finished && ptr.hasMore()) {
-      ptr.consumeUntil(Codes.AMPERSAND);
-      finished = ptr.consumeIfAsciiString(endHeaderToken);
+      return ChapterExtra.fromJson(data);
+    } catch (exception, trace) {
+      ErrorList.showError(exception, trace);
+      return ChapterExtra.fromNull(showErr: exception.toString());
     }
-    ptr.consumeIf(Codes.NEWLINE);
   }
 
   Stream<Holder> parseBody() async* {
@@ -206,7 +200,8 @@ Elements:
       if (val == 0) {
         // \0
         if (ptr.hasMore()) {
-          throw ChapterFormatException("Null terminator in middle of binary",
+          throw ChapterFormatException(
+              "Null terminator in middle of binary (pos: ${ptr.start})",
               debugId: debugId);
         }
       } else if (val == Codes.NEWLINE.code) {
@@ -293,11 +288,15 @@ Elements:
             debugId: debugId);
       } else {
         // dev.log('Please handle $char');
-        throw ChapterFormatException(
-            "Unhandled char $char (code=$val pos=${ptr.start}) in chapter binary",
-            debugId: debugId);
+        //Log & Continue
+        ErrorList.showError(
+            ChapterFormatException(
+                "Unhandled char $char (code=$val pos=${ptr.start}) in chapter binary",
+                debugId: debugId),
+            StackTrace.current);
       }
     }
+    //Unterminated
     ErrorList.logError(ChapterFormatException(
         'Unterminated TextHolder (pos=${ptr.start}; liveHolder=$liveHolder)',
         debugId: debugId));

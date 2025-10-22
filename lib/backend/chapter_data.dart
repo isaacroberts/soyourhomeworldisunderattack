@@ -19,13 +19,21 @@ class ChapterExtra {
   final String? recap, contentWarning, what;
   final String? audioUrl;
   const ChapterExtra(
-      {required this.subtitle,
-      required this.where,
-      required this.when,
+      {this.subtitle,
+      this.where,
+      this.when,
       this.recap,
       this.contentWarning,
       this.what,
       this.audioUrl});
+  const ChapterExtra.fromNull({String? showErr})
+      : contentWarning = showErr,
+        subtitle = null,
+        where = null,
+        when = null,
+        recap = null,
+        what = null,
+        audioUrl = null;
 
   bool get hasAnyChips {
     return subtitle != null ||
@@ -36,6 +44,9 @@ class ChapterExtra {
   }
 
   static ChapterExtra fromJson(data) {
+    if (data == null) {
+      return const ChapterExtra.fromNull(showErr: '(json)');
+    }
     return ChapterExtra(
         subtitle: data['Subtitle'],
         where: data['Where'],

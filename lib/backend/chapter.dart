@@ -133,7 +133,7 @@ class Chapter {
 
       //TODO: This could crash since the header could get loaded twice
       extra ??= await parser.parseHeader();
-      parser.skipToHeaderSeparator();
+      // parser.skipToHeaderSeparator();
 
       //Check thread wasn't cancelled
       if (_shouldCancelLoad) {

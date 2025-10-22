@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 import 'dart:typed_data';
 import 'dart:ui';
 
+import '../error_handler.dart';
 import '../exception_types.dart';
 import 'binary.dart';
 
@@ -50,15 +51,39 @@ class BufferPtr {
     }
   }
 
+  ///You must parse it separately. That
   dynamic consumeJson({String? debugId}) {
     debugId ??= '';
     debugId = 'json_$debugId';
     assertConsume(Codes.LGATOR, debugId: debugId);
     int length = consumeUint32();
+    if (length <= 2) {
+      //0 = no data (not allowed)
+      //1 = impossible
+      //2 = "{}"
+      //Clean up
+      assertConsume(Codes.RGATOR, debugId: debugId);
+      //Return null
+      return null;
+    }
 
     String rawJson = consumeRangedString(length);
+
     assertConsume(Codes.RGATOR, debugId: debugId);
-    return json.decode(rawJson);
+    //Empty string
+    // if (rawJson == '{}') {
+    //   return null;
+    // }
+
+    try {
+      dynamic data = json.decode(rawJson);
+      return data;
+    } catch (exception, trace) {
+      ErrorList.showError(
+          ChapterFormatException(exception.toString(), debugId: debugId),
+          trace);
+    }
+    return null;
   }
 
   bool consumeIf(var code) {
