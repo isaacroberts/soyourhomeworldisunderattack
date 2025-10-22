@@ -29,7 +29,7 @@ if(v!=null){x=D.b.hl(C.mm,v)
 v=this.c
 v.toString
 w=C.Y8[x]
-A.eZ(v).fA("/search/"+w,null)}},
+A.eZ(v).fB("/search/"+w,null)}},
 v(d){var x,w,v,u,t,s,r,q,p,o=this,n=null,m=$.aQD(),l=A.b([],y.e)
 for(x=o.gOL(),w=y.g,v=0;v<3;++v){u=o.d
 t=C.mm[v]
@@ -64,4 +64,4 @@ C.Yf=A.b(x(["You rush headlong into danger. You fear not for your own safety, bu
 C.ac5=new A.cz("Continue",null,null,D.al,null,null,null,null,null,null)
 C.a1K=new A.aG(G.iA,C.ac5,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_108",e:"endPart",h:b})})($__dart_deferred_initializers__,"LWOl3HZXOE6ZaxG37w1IUuVKeog=");
+a.eventLog.push({p:"main.dart.js_108",e:"endPart",h:b})})($__dart_deferred_initializers__,"C2IXK3B4CnFtkxNOIOTsxF6p4vw=");

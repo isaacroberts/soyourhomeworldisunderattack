@@ -58,9 +58,10 @@ class BufferPtr {
     assertConsume(Codes.LGATOR, debugId: debugId);
     int length = consumeUint32();
     if (length <= 2) {
-      //0 = no data (not allowed)
-      //1 = impossible
+      //0 = no data (illegal)
+      //1 = (impossible)
       //2 = "{}"
+      consume(length);
       //Clean up
       assertConsume(Codes.RGATOR, debugId: debugId);
       //Return null

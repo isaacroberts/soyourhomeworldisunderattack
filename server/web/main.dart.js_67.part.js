@@ -114,8 +114,8 @@ $0(){},
 $S:0}
 C.aB2.prototype={
 $0(){var x=this.b,w=this.a.a.c,v=w.b
-if(v!=null)if(w.c)A.eZ(x).fA("/search/"+v,null)
-else A.eZ(x).fA("/"+v,null)
+if(v!=null)if(w.c)A.eZ(x).fB("/search/"+v,null)
+else A.eZ(x).fB("/"+v,null)
 return null},
 $S:0};(function installTearOffs(){var x=a._instance_0u
 x(C.KN.prototype,"gawA","awB",0)})();(function inheritance(){var x=a.inherit,w=a.inheritMany
@@ -131,4 +131,4 @@ D.qn=new G.D7(null,null)
 D.MU=new A.a5(6,18,6,18)
 D.a6T=new A.ns("(No Destination)",null,B.c9,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_67",e:"endPart",h:b})})($__dart_deferred_initializers__,"bOLy5lkts3aQ0iBMP03sjXYGpWk=");
+a.eventLog.push({p:"main.dart.js_67",e:"endPart",h:b})})($__dart_deferred_initializers__,"daYqJ6/3iPvzlzdHPiQUoQUm6NY=");

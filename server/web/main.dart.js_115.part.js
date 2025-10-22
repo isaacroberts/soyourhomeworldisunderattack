@@ -70,7 +70,7 @@ else w=p!=null?new A.aq(60,u,A.ad(p,u,1,C.ae,u,u,o,u,u),u):u
 return A.oT(!1,u,u,u,!0,u,u,u,!0,u,D.agM,new A.aq(25,u,A.ad(C.h.j(v.a.c.a.a),u,u,u,u,u,u,u,u),u),u,u,new B.aH1(v,d),!1,u,u,u,u,x,u,u,A.ad(v.a.c.a.b,u,1,C.ae,u,u,u,u,u),w,u)}}
 var z=a.updateTypes(["y(lI)","~()","qo(fR)","~(mm)"])
 B.arg.prototype={
-$0(){A.eZ(this.b).fA("/scroll/"+this.a.c.a,null)
+$0(){A.eZ(this.b).fB("/scroll/"+this.a.c.a,null)
 return null},
 $S:0}
 B.aLT.prototype={
@@ -84,7 +84,7 @@ $0(){this.a.d=this.b},
 $S:0}
 B.aH1.prototype={
 $0(){var x=this.a.a.c
-return A.eZ(this.b).fA("/scroll/"+x.a.a,null)},
+return A.eZ(this.b).fB("/scroll/"+x.a.a,null)},
 $S:0};(function installTearOffs(){var x=a._instance_0u,w=a._instance_1u
 x(B.LN.prototype,"ga6q","Gq",1)
 w(B.Nl.prototype,"gazv","azw",3)})();(function inheritance(){var x=a.inherit,w=a.inheritMany
@@ -100,4 +100,4 @@ D.acb=new A.cz("Read",null,null,null,null,null,null,null,null,null)
 D.agi=new A.n("partExpansionTile",y.a)
 D.agM=new A.n("subChapterTile",y.a)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_115",e:"endPart",h:b})})($__dart_deferred_initializers__,"nurcDbJ+SqqAABO01wGqWKBTBuQ=");
+a.eventLog.push({p:"main.dart.js_115",e:"endPart",h:b})})($__dart_deferred_initializers__,"LYPzflUpGFwgraHpqbTORBXKSrk=");

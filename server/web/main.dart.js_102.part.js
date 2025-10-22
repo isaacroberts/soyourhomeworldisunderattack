@@ -31,7 +31,7 @@ if(v!=null){x=D.b.hl(C.mn,v)
 v=this.c
 v.toString
 w=C.Zn[x]
-A.eZ(v).fA("/search/"+w,null)}},
+A.eZ(v).fB("/search/"+w,null)}},
 v(d){var x,w,v,u,t,s=this,r=null,q=A.b([],y.e),p=s.gOL(),o=y.g,n=0
 while(!0){if(!(n<(s.a.c.a?5:2)))break
 x=s.d
@@ -64,4 +64,4 @@ C.Zn=A.b(x(["HumanJack","AnarchistsWin","TransgenderRabbit","AIWinsElection","Po
 C.abY=new A.cz("Vote",null,null,D.al,null,null,null,null,null,null)
 C.a1O=new A.aG(G.iA,C.abY,null)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_102",e:"endPart",h:b})})($__dart_deferred_initializers__,"4qSmRPN6uJzlAmtayWkoHMmXbOQ=");
+a.eventLog.push({p:"main.dart.js_102",e:"endPart",h:b})})($__dart_deferred_initializers__,"bX9xqdU0yL3F2+6jQS80CF4R4Ls=");

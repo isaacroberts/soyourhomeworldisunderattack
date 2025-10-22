@@ -40,7 +40,8 @@ if(d==null)d=""
 d="json_"+d
 q.er(D.pa,d)
 u=q.mF()
-if(u<=2){q.er(D.kW,d)
+if(u<=2){q.fh(u)
+q.er(D.kW,d)
 return null}y=q.a0o(u)
 q.er(D.kW,d)
 try{x=E.bJ.eQ(y)
@@ -49,13 +50,13 @@ v=A.aI(t)
 s=J.cT(w)
 r=d
 A.Dw(new C.mn(s,r),v)}return null},
-iE(d){if(this.FV(0,d)){this.fJ(1)
+iE(d){if(this.FV(0,d)){this.fh(1)
 return!0}return!1},
 er(d,e){var y=this
-if(y.FV(0,d))y.fJ(1)
+if(y.FV(0,d))y.fh(1)
 else throw A.i(C.eV("Expected "+A.p(d)+" in ChapterFormat (got "+y.ll()+" pos="+y.a+")",e))},
 G5(d,e){var y
-if(this.FV(0,d))this.fJ(1)
+if(this.FV(0,d))this.fh(1)
 else{y=this.d
 y===$&&A.a()
 A.dJ(y.getUint8(0))}},
@@ -76,32 +77,32 @@ a0o(d){var y,x="",w=0
 while(!0){if(!(w<d&&w<this.b))break
 y=this.d
 y===$&&A.a()
-x+=A.dJ(y.getUint8(w));++w}this.fJ(d)
+x+=A.dJ(y.getUint8(w));++w}this.fh(d)
 return x},
 om(){var y,x=this.d
 x===$&&A.a()
 y=x.getUint8(0)
-this.fJ(1)
+this.fh(1)
 return y},
 axi(){var y,x=this.d
 x===$&&A.a()
 y=x.getInt32(0,!1)
-this.fJ(4)
+this.fh(4)
 return y},
 mF(){var y,x=this.d
 x===$&&A.a()
 y=x.getUint32(0,!1)
-this.fJ(4)
+this.fh(4)
 return y},
 q8(){var y,x=this.d
 x===$&&A.a()
 y=x.getFloat32(0,!1)
-this.fJ(4)
+this.fh(4)
 return y},
 x4(){var y,x=this.d
 x===$&&A.a()
 y=x.getUint8(0)
-this.fJ(1)
+this.fh(1)
 return A.dJ(y)},
 axm(){var y=this.x4()
 if(y==="c")return this.x4()
@@ -114,13 +115,13 @@ x=y.getUint8(0)
 w=t.d.getUint8(1)
 v=t.d.getUint8(2)
 u=t.d.getUint8(3)
-t.fJ(4)
+t.fh(4)
 return A.c_(x,w,v,u)}else if(s==="x"||s==="X")return null
 else{if(d)throw A.i(C.eV("Unexpected typechar in color ("+s+" "+t.a+")","?"))
 return null}},
 axh(){return this.tF(!1)},
 aGL(){return J.hO(this.c,this.a,this.b)},
-fJ(d){this.a+=d
+fh(d){this.a+=d
 this.b-=d
 this.dj()},
 LP(d,e){var y,x,w,v,u,t,s=this
@@ -155,4 +156,4 @@ var z=a.updateTypes([]);(function inheritance(){var y=a.inheritMany
 y(A.C,[B.Qb,B.Tg])})()
 A.bh(b.typeUniverse,JSON.parse('{"Tg":{"bL":[]}}'))};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_14",e:"endPart",h:b})})($__dart_deferred_initializers__,"OXCTxehSpnlXi9YUHd7VVYMvo9c=");
+a.eventLog.push({p:"main.dart.js_14",e:"endPart",h:b})})($__dart_deferred_initializers__,"JPJ25v2NPD6QF7hpprgltXaBMJc=");

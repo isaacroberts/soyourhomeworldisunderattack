@@ -39,7 +39,7 @@ var z=a.updateTypes([])
 D.a9i.prototype={
 $0(){var x=this.a.b
 if(x==null)x="YTHook"
-B.eZ(this.b).fA("/search/"+x,null)
+B.eZ(this.b).fB("/search/"+x,null)
 return null},
 $S:0};(function inheritance(){var x=a.inheritMany,w=a.inherit
 x(B.L,[D.Z_,D.Za,D.Px])
@@ -94,4 +94,4 @@ A.ahD=new D.Za(A.adI)
 A.adJ=new B.n("AndyYTVideo",y.a)
 A.ahC=new D.Z_(A.adJ)})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_109",e:"endPart",h:b})})($__dart_deferred_initializers__,"ei0zSlwT2hnN4+kWo76EzV1AkcM=");
+a.eventLog.push({p:"main.dart.js_109",e:"endPart",h:b})})($__dart_deferred_initializers__,"Y3zKaPMqH+8knFf2YzlB/LoA2bM=");

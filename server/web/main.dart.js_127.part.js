@@ -425,7 +425,7 @@ x===$&&B.a()
 w=x.aDi()
 if(w!==v.d)v.Z(new A.aB4(v,w))}},
 a7R(){var x=this.c
-if(x!=null&&this.d)B.eZ(x).fA("/search/wontickets",null)},
+if(x!=null&&this.d)B.eZ(x).fB("/search/wontickets",null)},
 aGd(){if(this.c!=null)this.Z(new A.aB5(this))},
 v(d){var x,w,v=this,u=null,t=""+v.e,s=y.O,r=v.r
 r===$&&B.a()
@@ -687,4 +687,4 @@ C.abV=new B.cz("Randomize",null,null,null,null,null,null,null,null,null)
 C.ahU=new A.a_Z(0,"dropped")
 C.ahV=new A.a_Z(1,"canceled")})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_127",e:"endPart",h:b})})($__dart_deferred_initializers__,"1UxRFtcMgpeuRlaeUfy/2TaXSQU=");
+a.eventLog.push({p:"main.dart.js_127",e:"endPart",h:b})})($__dart_deferred_initializers__,"ibYwul22z/hzGiAHYmNzyqXdh/4=");
