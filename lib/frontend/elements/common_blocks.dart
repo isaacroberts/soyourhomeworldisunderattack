@@ -3,11 +3,6 @@ import 'package:soyourhomeworld/frontend/theme/extra_colors.dart';
 
 import '../icons.dart';
 import '../parts/noir_colors.dart';
-import '../theme/base_text_theme.dart';
-
-Widget blankHeader(BuildContext context) {
-  return const Text('...', style: headerFont);
-}
 
 class ColoredIconCard extends StatelessWidget {
   final IconData? icon;
@@ -50,17 +45,8 @@ class ColoredIconCard extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           StdIcon(icon: icon),
-          Column(children: [
-            Text(
-              text,
-              style: bodyFont,
-            ),
-            const SizedBox(height: 15),
-            Text(
-              extra,
-              style: bodyFont,
-            )
-          ])
+          Column(
+              children: [Text(text), const SizedBox(height: 15), Text(extra)])
         ],
       );
     }
@@ -68,16 +54,8 @@ class ColoredIconCard extends StatelessWidget {
     else if ((text == null) || (extra == null)) {
       return Stack(alignment: Alignment.center, children: [
         StdIcon(icon: icon),
-        if (text != null)
-          Text(
-            text,
-            style: bodyFont,
-          ),
-        if (extra != null)
-          Text(
-            extra,
-            style: bodyFont,
-          )
+        if (text != null) Text(text),
+        if (extra != null) Text(extra)
       ]);
     } else {
       return const Text("I don't know how boolean logic works");

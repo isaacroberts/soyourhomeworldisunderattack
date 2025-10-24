@@ -57,6 +57,10 @@ class TitleHolder extends Holder {
   String toText() {
     return '$titleText\n$authorText\n';
   }
+
+  //No free labor, king.
+  @override
+  void sweepForColor(Color find, Color? repl) {}
 }
 
 class TitleWidget extends StatefulWidget {

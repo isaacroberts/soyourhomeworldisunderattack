@@ -4,8 +4,8 @@ a[b][c].push({p:"main.dart.js_41",e:"beginPart"})})(self,"$__dart_deferred_initi
 $__dart_deferred_initializers__.current=function(a,b,c,$){var B,D,E,A={
 a8F(d,e){var x,w=null
 if(d.e!=null){x=B.H6(d)
-if(x!=null)x.vg(B.HT(w,w,w,w,w,D.u,w,new A.C4(e,w),w,D.fJ,w,w,w,w,w,w,w,!0,w))}},
-C4:function C4(d,e){this.c=d
+if(x!=null)x.vf(B.HT(w,w,w,w,w,D.u,w,new A.C3(e,w),w,D.fJ,w,w,w,w,w,w,w,!0,w))}},
+C3:function C3(d,e){this.c=d
 this.a=e},
 ER:function ER(d,e){this.a=d
 this.b=e},
@@ -24,18 +24,18 @@ else throw w}},
 bdl(d){switch(d.a){case 0:return C.C7
 case 2:return C.C9
 case 1:return C.C8
-case 3:return C.a2G
+case 3:return C.a2E
 case 4:return C.Ca}},
 aL2(d,e){return A.ber(d,e)},
 ber(d,e){var x=0,w=B.J(y.e),v,u,t,s,r,q,p
 var $async$aL2=B.F(function(f,g){if(f===1)return B.G(g,w)
-while(true)switch(x){case 0:if(e===C.X3||e===C.mi)u=!(d.gfc()==="https"||d.gfc()==="http")
+while(true)switch(x){case 0:if(e===C.X1||e===C.mi)u=!(d.gfb()==="https"||d.gfb()==="http")
 else u=!1
-if(u)throw B.i(B.hj(d,"url","To use an in-app web view, you must provide an http(s) URL."))
+if(u)throw B.i(B.hk(d,"url","To use an in-app web view, you must provide an http(s) URL."))
 u=$.aQf()
 t=d.j(0)
 s=A.bdl(e)
-r=D.c.bH(t,"http:")||D.c.bH(t,"https:")
+r=D.c.bG(t,"http:")||D.c.bG(t,"https:")
 q=!0
 if(s!==C.C8)if(s!==C.C9){p=r&&s===C.C7
 q=p}v=u.aCB(t,!0,!0,D.h7,s===C.Ca,q,q,null)
@@ -56,11 +56,11 @@ D=c[2]
 E=c[94]
 A=a.updateHolder(c[50],A)
 C=c[112]
-A.C4.prototype={
+A.C3.prototype={
 LW(){var x=this.c
 B.k9(new B.ir(x==null?"?":x))},
 v(d){var x=null
-return B.cr(B.b([C.VT,D.jU,B.fV(B.ad("Can't open link: ["+B.p(this.c)+"]",x,3,D.ae,x,x,B.M(d).ok.z,x,x),x),B.h1(x,x,E.md,x,x,this.gLV(),x,x,x)],y.l),D.J,x,D.C,D.F,x)}}
+return B.cr(B.b([C.VR,D.jU,B.fW(B.ad("Can't open link: ["+B.p(this.c)+"]",x,3,D.ae,x,x,B.M(d).ok.z,x,x),x),B.h2(x,x,E.md,x,x,this.gLV(),x,x,x)],y.l),D.J,x,D.C,D.F,x)}}
 A.ER.prototype={
 K(){return"LaunchMode."+this.b}}
 A.avU.prototype={}
@@ -80,30 +80,30 @@ $S:153}
 A.alZ.prototype={
 $1(d){return d===!0},
 $S:153};(function installTearOffs(){var x=a._instance_0u
-x(A.C4.prototype,"gLV","LW",0)})();(function inheritance(){var x=a.inherit,w=a.inheritMany
-x(A.C4,B.L)
+x(A.C3.prototype,"gLV","LW",0)})();(function inheritance(){var x=a.inherit,w=a.inheritMany
+x(A.C3,B.L)
 w(B.eI,[A.ER,A.tB])
 w(B.C,[A.avU,A.aa1])
 x(A.avw,B.US)
 x(A.alX,A.avw)
 w(B.cM,[A.alY,A.alZ])})()
-B.bh(b.typeUniverse,JSON.parse('{"C4":{"L":[],"c":[]}}'))
-var y={b:B.u("ht"),l:B.u("r<c>"),o:B.u("C"),g:B.u("m"),e:B.u("y")};(function constants(){C.ajk=new A.aa1()
-C.ajo=new A.avU()
+B.bh(b.typeUniverse,JSON.parse('{"C3":{"L":[],"c":[]}}'))
+var y={b:B.u("ht"),l:B.u("r<c>"),o:B.u("C"),g:B.u("m"),e:B.u("y")};(function constants(){C.ajj=new A.aa1()
+C.ajn=new A.avU()
 C.rf=new B.f(58240,"MaterialIcons",null,!1)
-C.VT=new B.cV(C.rf,24,null,null,null,null)
-C.ajv=new A.ER(0,"platformDefault")
-C.X3=new A.ER(1,"inAppWebView")
+C.VR=new B.cV(C.rf,24,null,null,null,null)
+C.aju=new A.ER(0,"platformDefault")
+C.X1=new A.ER(1,"inAppWebView")
 C.mi=new A.ER(2,"inAppBrowserView")
 C.yc=new B.mU("plugins.flutter.io/url_launcher",D.c8,null)
 C.C7=new A.tB(0,"platformDefault")
 C.C8=new A.tB(1,"inAppWebView")
 C.C9=new A.tB(2,"inAppBrowserView")
-C.a2G=new A.tB(3,"externalApplication")
+C.a2E=new A.tB(3,"externalApplication")
 C.Ca=new A.tB(4,"externalNonBrowserApplication")})();(function lazyInitializers(){var x=a.lazyFinal,w=a.lazy
 x($,"bia","b_f",()=>new B.C())
 w($,"bi9","aQf",()=>{var v=new A.alX()
-v.Hm($.b_f())
+v.Hl($.b_f())
 return v})})()};
 ((a,b)=>{a[b]=a.current
-a.eventLog.push({p:"main.dart.js_41",e:"endPart",h:b})})($__dart_deferred_initializers__,"fvgbsSzHFRIalcWwURr/sc4W8NM=");
+a.eventLog.push({p:"main.dart.js_41",e:"endPart",h:b})})($__dart_deferred_initializers__,"USP6KpKC8v3F8dpLFLwXavLdXcc=");

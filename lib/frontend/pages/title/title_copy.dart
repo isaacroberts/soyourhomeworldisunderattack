@@ -4,7 +4,7 @@ import '../../parts/noir_colors.dart';
 import '../../theme/base_text_theme.dart';
 
 const String titleText =
-    "Help! My Homeworld's under Attack and my Slutty Client won't pay!";
+    "Help! My Homeworld's under Attack and my Client won't pay!";
 const String? authorText = 'by Joseph Silverstein';
 
 class TitleTextWide extends StatelessWidget {

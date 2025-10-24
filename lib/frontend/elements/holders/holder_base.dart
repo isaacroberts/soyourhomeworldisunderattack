@@ -43,6 +43,9 @@ abstract class Holder {
     return true;
   }
 
+  //Sorry. Functionality.
+  void sweepForColor(Color color, Color? repl);
+
   //Visual utilities
 
   static Widget fallbackWrap(Widget child) {
@@ -60,6 +63,10 @@ abstract class CodeHolder extends Holder {
     ///Because CAN YOU IMAGINE if something only works in Debug
     return DeferredCodeWrap(holder: this, showFonts: true);
   }
+
+  //No free labor, king.
+  @override
+  void sweepForColor(Color color, Color? repl) {}
 }
 
 bool shouldShowFonts(BuildContext context) {

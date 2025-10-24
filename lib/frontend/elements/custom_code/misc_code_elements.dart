@@ -48,6 +48,9 @@ class IconHolder extends Holder {
   }
 
   @override
+  void sweepForColor(Color color, Color? repl) {}
+
+  @override
   Widget debugSliver(BuildContext context) {
     //No other information available
     return sliver(context);

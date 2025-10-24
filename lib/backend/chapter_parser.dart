@@ -151,6 +151,7 @@ class ChapterParser {
     int errorCt = 0;
     while (ptr.hasMore()) {
       try {
+        //Maybe the try block doesn't work because of the iterator
         yield readOneHolder();
       } catch (excep, trace) {
         //Add element
@@ -199,11 +200,12 @@ Elements:
       }
       if (val == 0) {
         // \0
-        if (ptr.hasMore()) {
-          throw ChapterFormatException(
-              "Null terminator in middle of binary (pos: ${ptr.start})",
-              debugId: debugId);
-        }
+        //Ignore! Shut the hell up!
+        // if (ptr.hasMore()) {
+        //   throw ChapterFormatException(
+        //       "Null terminator in middle of binary (pos: ${ptr.start})",
+        //       debugId: debugId);
+        // }
       } else if (val == Codes.NEWLINE.code) {
         //Skip newline character
         // ErrorList.registerWarning('Newline in chapter binary (id=$debugId');
@@ -253,15 +255,8 @@ Elements:
       } else if (char == 'b') {
         return parseColoredBoxHolder();
       } else if (char == 'P') {
-        String? typechar = ptr.consumeTypedChar();
-        if (typechar != null) {
-          //TODO: Use the type
-
-          if (printVerbose) {
-            dev.log('Pagebreak type = $typechar');
-          }
-          return const PageBreakOfText();
-        }
+        throw ChapterFormatException('no pagebreaks in format',
+            debugId: debugId);
       } else if (char == 'C') {
         var holder = getCustomCodeElement(
           CodeElementType.codeBlock,

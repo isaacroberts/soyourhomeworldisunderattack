@@ -96,23 +96,7 @@ class RenderSliverReaderWidth extends RenderProxySliver {
   @override
   void paint(PaintingContext context, Offset offset) {
     if (child != null) {
-      if (false) {
-        //Paint BG
-        double top = geometry!.paintOrigin;
-        double height = geometry!.paintExtent;
-        Paint bg = Paint()..color = part.gutterColor;
-        double gpad = pad - 12;
-        //Left side
-        context.canvas.drawRect(Rect.fromLTWH(0, top, gpad, height), bg);
-        //Right side
-        double right = constraints.crossAxisExtent;
-        context.canvas
-            .drawRect(Rect.fromLTWH(right - gpad, top, gpad, height), bg);
-        //Paint page
-        bg.color = part.pageColor;
-        context.canvas
-            .drawRect(Rect.fromLTWH(gpad, top, width + 24, height), bg);
-      }
+      //BG Painting on slivers is too expensive
       final parentData = child!.parentData;
       if (parentData is SliverPhysicalParentData) {
         // Use the precomputed paintOffset from performLayout

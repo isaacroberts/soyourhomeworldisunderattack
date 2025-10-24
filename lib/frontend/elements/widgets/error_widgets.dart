@@ -37,7 +37,7 @@ class ErrorPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Errors:', style: headerFont),
+          Text('Errors:', style: headerFont(color: const Color(0xffffffff))),
           const Text('Build: $buildNo', style: bodyFont),
           if (list.isEmpty)
             const Center(
@@ -109,18 +109,17 @@ class ExceptionElement extends StatelessWidget {
               title: Text(type,
                   selectionColor: const Color(0xff000000),
                   // selectionColor: ,
-                  style: appMonoFont.copyWith(
+                  style: errorFont.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.w800,
                       color: errorColor)),
               subtitle: Text(exception.toString(),
                   selectionColor: const Color(0xff000000),
-                  style: appMonoFont.copyWith(fontSize: 12, color: errorColor)),
+                  style: errorFont.copyWith(color: errorColor)),
 
               children: [
                 Text('StackTrace:\n$stackTrace',
-                    selectionColor: const Color(0xff000000),
-                    style: appMonoFont.copyWith(fontSize: 12))
+                    selectionColor: const Color(0xff000000), style: errorFont)
               ],
             ))));
   }

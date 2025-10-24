@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'base_text_theme.dart';
-
 const Color humanJack0 = Color(0xff001f33);
 const Color humanJack1 = Color(0xff052f45);
 const Color humanJack2 = Color(0xff114466);
@@ -29,7 +27,7 @@ const MaterialColor humanJackColor = MaterialColor(0xff1188cc, {
 const TextStyle humanJackBody = TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 12,
-  color: textColor,
+  color: Color(0xffffffff),
   fontWeight: FontWeight.w200,
 );
 
@@ -43,14 +41,14 @@ const TextStyle humanJackDisplay = TextStyle(
 const TextStyle humanJackHeader = TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 24,
-  color: textColor,
+  color: Color(0xffffffff),
   fontWeight: FontWeight.w500,
 );
 
 const TextStyle humanJackLabel = TextStyle(
   fontFamily: 'Montserrat',
   fontSize: 12,
-  color: textColor,
+  color: Color(0xffffffff),
   fontWeight: FontWeight.w200,
 );
 

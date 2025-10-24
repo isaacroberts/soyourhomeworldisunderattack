@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:soyourhomeworld/frontend/parts/noir_colors.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
@@ -20,9 +19,9 @@ class StdAppBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color =
-        (ChapterProvider.maybeOf(context)?.part.primary ?? const NoirPrimary())
-            .sd;
+    Part? part = ChapterProvider.maybeOf(context)?.part;
+    part!;
+    Color color = part.primary.sd;
     Widget child = IconButton(
         padding: const EdgeInsets.all(6),
         onPressed: onPressed,

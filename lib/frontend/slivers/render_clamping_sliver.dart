@@ -346,12 +346,7 @@ class RenderClampingSliver extends RenderProxySliver {
     } else {
       Rect rect = calculateClipRect();
 
-      //Fill BG to remove transparency
-      // if (onScreen()) {
-      //   Paint bg = Paint()..color = part.pageColor;
-      //   context.canvas
-      //       .drawRect(offset & Size(crossAxisExtent, drawnHeight), bg);
-      // }
+      //Painting a background eats too much GPU
       if (isRepaintBoundary) {
         //This won't clip
         context.paintChild(child!, offset);

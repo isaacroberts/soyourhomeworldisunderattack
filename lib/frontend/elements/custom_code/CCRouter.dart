@@ -15,6 +15,8 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
     deferred as goto_button_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/notif_text.dart'
     deferred as notif_text_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/raised_spans.dart'
+    deferred as raised_span_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
@@ -23,8 +25,6 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/source_citation.da
     deferred as source_cite_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/tweet.dart'
     deferred as tweet_lib;
-import 'package:soyourhomeworld/frontend/elements/holders/raised_spans.dart'
-    deferred as raised_span_lib;
 import 'package:soyourhomeworld/frontend/elements/special_widgets/ad_human_jacks.dart'
     deferred as human_jacks_lib;
 import 'package:soyourhomeworld/frontend/elements/special_widgets/andy_thumbnail.dart'
@@ -140,6 +140,12 @@ Future<Holder> _instantiateCodeBlock(
   } else if (cls == 'MTGCARD') {
     await raised_span_lib.loadLibrary();
     return raised_span_lib.MtgCardHolder(spans: spans);
+  } else if (cls == 'ID') {
+    await raised_span_lib.loadLibrary();
+    return raised_span_lib.LicenseHolder(spans: spans);
+  } else if (cls == 'ARTICLE') {
+    await raised_span_lib.loadLibrary();
+    return raised_span_lib.ArticleHolder(spans: spans);
   } else if (cls == 'SIGN') {
     await signs_lib.loadLibrary();
     return signs_lib.Sign(spans: spans);

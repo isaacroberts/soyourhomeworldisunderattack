@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
-import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../components/app_bar_chop/app_bar_chop.dart';
 import '../../parts/noir_colors.dart';
 import '../../parts/part.dart';
+import 'colors.dart';
 
 class NoirBar extends StatelessWidget {
   const NoirBar({

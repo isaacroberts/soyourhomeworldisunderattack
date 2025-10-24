@@ -6,8 +6,8 @@ import 'package:soyourhomeworld/frontend/components/sliver_center.dart';
 
 import '../../../backend/chapter.dart';
 import '../../../backend/font_interm.dart';
-import '../../../backend/text_utils.dart';
 import '../../components/deferrals/debug_wrap.dart';
+import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 import 'holder_base.dart';
 
@@ -67,27 +67,10 @@ class BodyTextElement extends TextHolder {
   Widget debugSliver(BuildContext context) {
     return DeferredBodyDebugSliver(holder: this);
   }
-}
 
-// ======= Special Fonts ==============
-abstract class FontWanterTextHolder extends TextHolder {
-  final FontInterm font;
-  const FontWanterTextHolder(this.font, {required super.text});
-
+//No color
   @override
-  Future load({required String? debugId}) {
-    return font.load(debugId: debugId);
-  }
-
-  @override
-  bool isLoaded() {
-    // dev.log("Isloaded: ${font.family}");
-    return font.isLoaded();
-  }
-
-  Widget loadingElement(BuildContext context) {
-    return SizedBox(width: text.length * 5.0, height: font.size);
-  }
+  void sweepForColor(Color find, Color? repl) {}
 }
 
 // ==== Basics ========================
@@ -131,169 +114,10 @@ class AlignedBodyText extends TextHolder {
   Widget debugSliver(BuildContext context) {
     return DeferredTextHolderDebugSliver(holder: this);
   }
-}
 
-// ========= Styles ======================
-class CustomFontText extends FontWanterTextHolder {
-  final TextAlign align;
-  final int tabs;
-  const CustomFontText(super.font,
-      {required super.text, this.align = TextAlign.start, this.tabs = 0});
-
+  //No color
   @override
-  Future load({required String? debugId}) async {
-    // await initHyphenation();
-    return font.load(debugId: debugId);
-  }
-
-  @override
-  bool isLoaded() {
-    // dev.log("Isloaded: ${font.family}");
-    return _hyphenatorInitialized && font.isLoaded();
-  }
-
-  Widget textElement(BuildContext context) {
-    double screenWidth = MediaQuery.sizeOf(context).width;
-    if (font.size > 20) {
-      if (screenWidth < 500) {
-        //TODO: Large fonts should use word wrap
-
-        return Text(
-          text,
-          style: font.instance(),
-          // selectable: true,
-
-          textAlign: align,
-        );
-      }
-    }
-    //Otherwise use regular text
-    return Text(
-      text,
-      style: font.instance(),
-      textAlign: align,
-    );
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    return WrapInTabs(
-        key: Key('tabs$hashCode'),
-        tabs: tabs,
-        align: align,
-        child: textElement(context));
-  }
-
-  @override
-  Widget sliver(BuildContext context) {
-    return SliverTabs(
-        key: Key('Tabs$hashCode'),
-        tabs: tabs,
-        align: align,
-        child: textElement(context));
-  }
-
-  @override
-  Widget debugSliver(BuildContext context) {
-    return DeferredTextHolderDebugSliver(holder: this);
-  }
-}
-
-class HiliteFontText extends FontWanterTextHolder {
-  final TextAlign align;
-  final Color color;
-  final int tabs;
-  const HiliteFontText(super.font,
-      {required super.text,
-      required this.color,
-      this.align = TextAlign.left,
-      this.tabs = 0});
-
-  @override
-  Widget element(BuildContext context) {
-    return WrapInTabs(
-        key: Key('tabs$hashCode'),
-        tabs: tabs,
-        align: align,
-        child:
-            Text(text, style: font.instanceWithColor(color), textAlign: align));
-  }
-
-  @override
-  Widget sliver(BuildContext context) {
-    return SliverTabs(
-        key: Key('Tabs$hashCode'),
-        tabs: tabs,
-        align: align,
-        child:
-            Text(text, style: font.instanceWithColor(color), textAlign: align));
-  }
-
-  @override
-  Widget debugSliver(BuildContext context) {
-    //Calls sliver
-    return DeferredTextHolderDebugSliver(holder: this);
-  }
-}
-
-class SubSuperFontText extends FontWanterTextHolder {
-  ///Covers all complex cases
-  final TextAlign align;
-  final Color color;
-  final int tabs;
-  final SubSuper subSuper;
-  const SubSuperFontText(super.font,
-      {required super.text,
-      required this.color,
-      this.align = TextAlign.left,
-      this.tabs = 0,
-      required this.subSuper});
-
-  Widget scriptAlign(BuildContext context) {
-    if (subSuper == SubSuper.superscript) {
-      TextStyle style = font.instanceWithColor(color);
-      style = style.copyWith(
-        fontSize: style.fontSize! / 2,
-        height: 2,
-      );
-      return Align(
-          alignment: Alignment.topLeft,
-          child: Text(text, style: style, textAlign: align));
-    } else if (subSuper == SubSuper.subscript) {
-      TextStyle style = font.instanceWithColor(color);
-      style = style.copyWith(fontSize: style.fontSize! / 2, height: 2);
-      return Align(
-          alignment: Alignment.bottomLeft,
-          child: Text(text, style: style, textAlign: align));
-    } else {
-      return Text(text, style: font.instanceWithColor(color), textAlign: align);
-    }
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    return WrapInTabs(
-        key: Key('tabs$hashCode'),
-        tabs: tabs,
-        align: align,
-        child: scriptAlign(context));
-  }
-
-  @override
-  Widget sliver(BuildContext context) {
-    return SliverTabs(
-        key: Key('tabs$hashCode'),
-        tabs: tabs,
-        align: align,
-        child:
-            Text(text, style: font.instanceWithColor(color), textAlign: align));
-  }
-
-  @override
-  Widget debugSliver(BuildContext context) {
-    //Calls sliver
-    return DeferredTextHolderDebugSliver(holder: this);
-  }
+  void sweepForColor(Color find, Color? repl) {}
 }
 
 // ============ Headers ============================
@@ -306,7 +130,7 @@ class HeaderOfText extends TextHolder {
 // I don't think we're using this
     return Text(
       text,
-      style: headerFont,
+      style: headerFont(color: Part.of(context).primary.se),
       // style: font.instance(),
       textAlign: TextAlign.center,
     );
@@ -319,7 +143,7 @@ class HeaderOfText extends TextHolder {
         sliver: SliverToBoxAdapter(
             child: Text(
       text,
-      style: headerFont,
+      style: headerFont(color: Part.of(context).primary.se),
       // style: font.instance(),
       textAlign: TextAlign.center,
     )));
@@ -335,12 +159,16 @@ class HeaderOfText extends TextHolder {
   String toText() {
     return '\n$text\n';
   }
+
+  //No free labor, king.
+  @override
+  void sweepForColor(Color find, Color? repl) {}
 }
 
 class CustomHeaderOfText extends HeaderOfText {
   final TextAlign align;
-  final FontInterm font;
-  const CustomHeaderOfText(
+  FontInterm font;
+  CustomHeaderOfText(
       {required super.text, required this.font, this.align = TextAlign.center});
 
   @override
@@ -352,6 +180,14 @@ class CustomHeaderOfText extends HeaderOfText {
           style: font.instance(),
           textAlign: align,
         ));
+  }
+
+  //No free labor, king.
+  @override
+  void sweepForColor(Color find, Color? repl) {
+    if (font.color == null || font.color == find) {
+      font = font.copyWithColor(repl);
+    }
   }
 }
 

@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/deferred_load_tools.dart';
-import 'package:soyourhomeworld/frontend/pages/index/sidebar_index.dart';
 import 'package:soyourhomeworld/frontend/pages/loading_page.dart';
 //Custom element to tell developer to start the server
 import 'package:soyourhomeworld/frontend/pages/server_offline_error.dart'
     deferred as server_offline_lib;
+import 'package:soyourhomeworld/frontend/pages/sidebar/sidebar.dart';
 import 'package:soyourhomeworld/frontend/readers/reader_bg.dart';
 //TODO: Defer
 import 'package:soyourhomeworld/frontend/scrollers/sliver_scroller.dart';
@@ -18,6 +18,7 @@ import 'package:soyourhomeworld/frontend/theme/layout_constants.dart';
 //TODO: Defer
 import '../../../backend/book.dart';
 import '../../backend/chapter.dart';
+import '../../backend/part_id.dart';
 import '../../backend/start_chapter.dart';
 import '../pages/drawer.dart';
 import '../parts/noir_colors.dart';
@@ -137,42 +138,6 @@ class _BookLoadedScrollDoorState extends State<_BookLoadedScrollDoor>
         key: const Key('scscf'),
         hasIndex: true,
         child: MediumView(currentChapter: currentChapter, widget: widget));
-    //Currently all layouts are identical
-    return LayoutBuilder(key: const Key('pageLayout'), builder: layoutBuilder);
-  }
-
-  Widget layoutBuilder(BuildContext context, BoxConstraints constraints) {
-    if (constraints.maxWidth > maxReaderWidth + indexSidebarWidth) {
-      return _ScrollerScaffold(
-          key: const Key('scscf'),
-          hasIndex: true,
-          child: WideView(currentChapter: currentChapter, widget: widget));
-    } else if (constraints.maxWidth > minReaderWidth + indexSidebarWidth) {
-      return _ScrollerScaffold(
-          key: const Key('scscf'),
-          hasIndex: true,
-          child: MediumView(currentChapter: currentChapter, widget: widget));
-    } else //if (constraints.maxWidth < maxReaderWidth) {
-    {
-      return _ScrollerScaffold(
-          key: const Key('scscf'),
-          hasIndex: false,
-          child: _StackedScroller(
-              key: const Key("stk"),
-              startChapter: widget.startChapter,
-              currentChapter: currentChapter,
-              hasIndex: false));
-      //Small / medium
-      return _ScrollerScaffold(
-          key: const Key('scscf'),
-          hasIndex: false,
-          child: SliverScroller(
-            key: const Key("SliverScroller"),
-            startChapter: widget.startChapter,
-            currentChapter: currentChapter,
-            hasIndex: false,
-          ));
-    }
   }
 
   void startErrorChecking() {
@@ -233,40 +198,39 @@ class MediumView extends StatelessWidget {
   });
 
   final ValueNotifier<Chapter?> currentChapter;
+  //TODO: Why?
   final _BookLoadedScrollDoor widget;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Stack(
       key: const Key('R'),
+      alignment: Alignment.centerLeft,
+      fit: StackFit.expand,
       children: [
         //Index
-        SidebarIndex(
-          key: const Key('sidebar'),
-          currentChapter: currentChapter,
-        ),
 
         //Reader
         //This is expanded to fill space because gutter needs to scroll
-        Expanded(
-            key: const Key('Exp'),
-            // width: minReaderWidth,
+        Padding(
+            padding: const EdgeInsets.only(left: collapsedIndexWidth),
             child: _StackedScroller(
                 key: const Key("stk"),
                 startChapter: widget.startChapter,
                 currentChapter: currentChapter,
-                hasIndex: false)
-            // child: SliverScroller(
-            //   key: const Key("SliverScroller"),
-            //   startChapter: widget.startChapter,
-            //   hasIndex: true,
-            // )
-            ),
+                hasIndex: false)),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Sidebar(
+              key: const Key('sidebar'),
+              currentChapter: currentChapter,
+            )),
       ],
     );
   }
 }
 
+/*
 class WideView extends StatelessWidget {
   const WideView({
     super.key,
@@ -309,7 +273,7 @@ class WideView extends StatelessWidget {
     );
   }
 }
-
+*/
 class _StackedScroller extends StatelessWidget {
   final StartChapter startChapter;
   final ValueNotifier<Chapter?> currentChapter;
@@ -323,9 +287,10 @@ class _StackedScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      key: const Key('mnStx'),
       fit: StackFit.expand,
       children: [
-        const SoftReaderBg(),
+        ChangingBg(key: const Key("bgChgr"), currentChapter: currentChapter),
         SliverScroller(
             key: const Key('SliverScroller'),
             startChapter: startChapter,
@@ -333,5 +298,72 @@ class _StackedScroller extends StatelessWidget {
             hasIndex: hasIndex),
       ],
     );
+  }
+}
+
+class ChangingBg extends StatefulWidget {
+  const ChangingBg({super.key, required this.currentChapter});
+
+  final ValueNotifier<Chapter?> currentChapter;
+
+  @override
+  State<StatefulWidget> createState() => _ChangingBgState();
+}
+
+class _ChangingBgState extends State<ChangingBg>
+    with SingleTickerProviderStateMixin {
+  Chapter? get chapter => widget.currentChapter.value;
+  PartId get part => chapter?.part ?? PartId.noir;
+
+  PartId currentPart = PartId.noir;
+  PartId lastPart = PartId.noir;
+
+  late final AnimationController animationController;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 750));
+    widget.currentChapter.addListener(chapterChanged);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.removeListener(chapterChanged);
+    super.dispose();
+  }
+
+  void chapterChanged() {
+    //Part => chapter?.part
+    //currentPart: variable
+    if (currentPart != part) {
+      if (animationController.isCompleted) {
+        animationController.reset();
+        lastPart = currentPart;
+      }
+      setState(() {
+        currentPart = part;
+      });
+      animationController.animateTo(1);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (animationController.isAnimating) {
+      return Stack(
+        key: const Key('bgStx'),
+        children: [
+          getGradientBg(lastPart),
+          FadeTransition(
+              key: const Key('bgForeFade'),
+              opacity: animationController,
+              child: getGradientBg(currentPart)),
+        ],
+      );
+    } else {
+      return getGradientBg(currentPart);
+    }
   }
 }

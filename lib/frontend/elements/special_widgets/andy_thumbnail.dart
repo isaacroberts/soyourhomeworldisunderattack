@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart';
 
-import '../../theme/base_text_theme.dart';
+import '../../parts/part.dart';
 import '../../theme/font_family.dart';
 import '../../theme/text_theme.dart';
 
@@ -182,6 +182,8 @@ class AndyVideoThumbnail extends StatelessWidget {
   }
 
   Widget stack(BuildContext context) {
+    TextStyle bodyFont = Part.of(context).bodyFont;
+
     return Stack(
       children: [
         Transform.translate(

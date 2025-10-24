@@ -174,6 +174,10 @@ class ExceptionHolder extends Holder implements ExceptionHolderBase {
     return defer.element(context, holder: this);
   }
 
+  //No free labor, king.
+  @override
+  void sweepForColor(Color color, Color? repl) {}
+
   @override
   Widget sliver(BuildContext context) {
     return SliverToText(child: element(context));

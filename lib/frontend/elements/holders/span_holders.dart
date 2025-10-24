@@ -82,6 +82,23 @@ class SpanOfText extends Holder {
   String toText() {
     return spans.map((e) => e.toText()).join();
   }
+
+  @override
+  void sweepForColor(Color find, Color? repl) {
+    for (FragOfText span in spans) {
+      if (span is FragColoredBox) {
+        //No free labor, king
+      } else if (span is FragCustom) {
+        if (span.font.color == null || span.font.color == find) {
+          span.font = span.font.copyWithColor(repl);
+        }
+      } else if (span is FragSubSuper) {
+        if (span.font.color == null || span.font.color == find) {
+          span.font = span.font.copyWithColor(repl);
+        }
+      }
+    }
+  }
 }
 
 abstract class FragOfText {
@@ -114,10 +131,10 @@ class FragBody extends FragOfText {
 }
 
 class FragCustom extends FragOfText {
-  final FontInterm font;
+  FontInterm font;
   final String text;
-  final Color? bgColor;
-  const FragCustom(this.text, this.font, {this.bgColor});
+  Color? bgColor;
+  FragCustom(this.text, this.font, {this.bgColor});
 
   @override
   String toText() {
@@ -139,12 +156,11 @@ class FragCustom extends FragOfText {
 }
 
 class FragSubSuper extends FragOfText {
-  final FontInterm font;
+  FontInterm font;
   final String text;
   final Color? color;
   final SubSuper subSuper;
-  const FragSubSuper(this.text, this.font,
-      {this.color, required this.subSuper});
+  FragSubSuper(this.text, this.font, {this.color, required this.subSuper});
 
   @override
   String toText() {
@@ -215,8 +231,8 @@ class FragSubSuper extends FragOfText {
 class FragColoredBox extends FragOfText {
   final double width;
   final double height;
-  final Color color;
-  const FragColoredBox(
+  Color color;
+  FragColoredBox(
       {required this.width, required this.height, required this.color});
 
   @override

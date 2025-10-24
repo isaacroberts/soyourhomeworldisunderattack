@@ -96,4 +96,8 @@ class FutureHolder extends Holder {
       return const SmallLoadSliver();
     }
   }
+
+  //No free labor, king.
+  @override
+  void sweepForColor(Color find, Color? repl) {}
 }

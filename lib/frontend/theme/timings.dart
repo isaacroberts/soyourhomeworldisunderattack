@@ -164,7 +164,9 @@ void openLinkFast(String? link, BuildContext context) async {
   bool canOpen = await canLaunchUrl(uri);
 
   if (!canOpen) {
-    showCantOpenLinkSnackbar(context, link);
+    if (context.mounted) {
+      showCantOpenLinkSnackbar(context, link);
+    }
     return;
   } else {
     launchUrl(uri, mode: LaunchMode.inAppBrowserView);

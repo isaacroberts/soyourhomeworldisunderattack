@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
-import 'package:soyourhomeworld/frontend/parts/noir_colors.dart';
+
+import '../frontend/parts/part.dart';
 
 enum BookmarkSaveStatus {
   current,
@@ -145,7 +146,8 @@ class GlobalBookmark {
 }
 
 class BookmarkSaveStatusIcon extends StatelessWidget {
-  const BookmarkSaveStatusIcon({super.key});
+  const BookmarkSaveStatusIcon({super.key, required this.part});
+  final Part part;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +164,7 @@ class BookmarkSaveStatusIcon extends StatelessWidget {
         message: status.tooltip,
         child: Icon(
           status.icon,
-          color: NoirPrimary.shadec,
+          color: part.primary.sc,
           size: 24,
         ));
   }

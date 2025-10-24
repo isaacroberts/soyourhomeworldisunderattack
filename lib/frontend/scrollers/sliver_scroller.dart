@@ -21,7 +21,6 @@ import '../theme/base_colors.dart';
 import '../theme/timings.dart';
 
 //TODO: Move
-const Part defaultPart = PartNoir();
 
 class SliverScroller extends StatefulWidget {
   // final Book book;
@@ -105,7 +104,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     //This is where InheritedWidgets update
     book = Book.of(context);
 
-    part = defaultPart;
+    part = const PartNoir();
 
     super.didChangeDependencies();
 

@@ -156,4 +156,8 @@ class ImageHolder extends Holder {
     //Else; unknown
     return NoImageReason.unknown;
   }
+
+  //No free labor, king.
+  @override
+  void sweepForColor(Color find, Color? repl) {}
 }

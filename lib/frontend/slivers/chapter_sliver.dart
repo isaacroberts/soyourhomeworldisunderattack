@@ -63,6 +63,7 @@ class _ChapterSliverState extends State<ChapterSliver> {
   }
 
   Part getPartData(PartId part) {
+    return getPartImmediate(part);
     if (!partReady(part)) {
       if (partNeedsLoad(part)) {
         loadPart(part).then(chapterUpdated);
@@ -109,7 +110,7 @@ class _ChapterSliverState extends State<ChapterSliver> {
     ]);
     if (chapter != null) {
       final Part partData = getPartData(chapter!.info.partId);
-
+      sliver = Theme(data: partData.theme, child: sliver);
       sliver = ChapterProvider(
           key: Key("Chp${chapter!.key}"),
           chapter: chapter!,

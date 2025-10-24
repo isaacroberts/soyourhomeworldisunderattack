@@ -4,7 +4,9 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/backend/error_handler.dart';
+import 'package:soyourhomeworld/backend/part_id.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/future_holder.dart';
+import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 
 import '../frontend/elements/holders/holder_base.dart';
 import '../frontend/elements/holders/textholders.dart';
@@ -45,7 +47,8 @@ class ChapterExtra {
 
   static ChapterExtra fromJson(data) {
     if (data == null) {
-      return const ChapterExtra.fromNull(showErr: '(json)');
+      //Normal - some chapters don't have data
+      return const ChapterExtra.fromNull();
     }
     return ChapterExtra(
         subtitle: data['Subtitle'],
@@ -191,8 +194,43 @@ class ChapterData {
     ErrorList.logErrorHolder(errorElem);
   }
 
+  //TODO: Move elsewhere
+  Color? getColorToSweepFor(PartId part) {
+    //TODO: Put this on the part objects, so we can tell when the object's switched out.
+    switch (part) {
+      case PartId.noir:
+        //Already matches page background
+        return null;
+      case PartId.greenland:
+      case PartId.redemption:
+      case PartId.revolution:
+        //Bring me Joseph Silverstein
+        return const Color(0xffffffff);
+    }
+  }
+
+  Future<void> sweepForColors() async {
+    //TODO: Do this on the python_writer later
+    //Can't do it there now, because I'm constantly turning the colorSwitching on and off.
+
+    //Page background
+    Color? colorToSweepFor = getColorToSweepFor(info.partId);
+    if (colorToSweepFor != null) {
+      //TODO: Await part loading
+      Color repl = getPartImmediate(info.partId).textColor;
+      for (Holder line in lines) {
+        //Sets the color to null
+        //This is why the Holders don't have const constructors
+        line.sweepForColor(colorToSweepFor, repl);
+      }
+    }
+  }
+
   void postLoadCleanup() async {
     sweepForFutures();
+
+    await sweepForColors();
+
     if (lines.isNotEmpty) {
       Holder? topElement = lines[0];
       if (topElement is HeaderOfText) {

@@ -41,6 +41,15 @@ class FontInterm {
       this.color})
       : weight = FontCache.intToWeight(wousi.weight);
 
+//   FontInterm copyWith({int? fileId, double? siez, WousiByte? wousi, Color? color})
+// {
+//
+// }
+  ///Realistically, this should not be called with a null color. Because it needs to know the text color.
+  FontInterm copyWithColor(Color? repl) {
+    return FontInterm(fileId: fileId, size: size, wousi: wousi, color: repl);
+  }
+
   @override
   String toString() {
     return "[id:$fileId size:$size weight:$weight ital:$italic]";
@@ -80,9 +89,9 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color ?? textColor,
+        color: color,
         decoration: wousi.textDecoration(),
-        decorationColor: color ?? textColor,
+        decorationColor: color,
       );
     } else {
       //Fallback
@@ -90,10 +99,10 @@ class FontInterm {
         fontFamily: fallbackFamily,
         fontSize: size * fontScale,
         fontWeight: weight,
-        color: color ?? fallbackTextColor,
+        color: color,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         decoration: wousi.textDecoration(),
-        decorationColor: color ?? fallbackTextColor,
+        decorationColor: color,
       );
     }
   }
@@ -106,10 +115,10 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color ?? textColor,
+        color: color,
         backgroundColor: bgColor,
         decoration: wousi.textDecoration(),
-        decorationColor: color ?? textColor,
+        decorationColor: color,
       );
     } else {
       //Fallback
@@ -117,11 +126,11 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color ?? fallbackTextColor,
+        color: color,
         fontFamily: globalBookFamily,
         backgroundColor: bgColor,
         decoration: wousi.textDecoration(),
-        decorationColor: color ?? fallbackTextColor,
+        decorationColor: color,
       );
     }
   }

@@ -92,12 +92,13 @@ class _QuicktimeEventWidgetState extends State<QuicktimeEventWidget> {
   }
 
   Widget textButton(BuildContext context) {
+    TextStyle style = Part.of(context)
+        .bodyFont
+        .copyWith(fontWeight: FontWeight.w500, fontSize: 24);
     return TextButton(
         key: const Key('QTE_Tb'),
         onPressed: _click,
-        child: Text(widget.holder.press,
-            style:
-                bodyFont.copyWith(fontWeight: FontWeight.w500, fontSize: 24)));
+        child: Text(widget.holder.press, style: style));
   }
 
   Color greyedOut(Color lightVers) {

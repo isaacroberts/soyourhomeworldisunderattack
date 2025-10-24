@@ -97,10 +97,6 @@ class WaterPainter extends CustomPainter {
   @override
   bool shouldRepaint(WaterPainter oldDelegate) {
     return true;
-    //If timer advanced
-    return anim > oldDelegate.anim ||
-        //Or restarted
-        (anim == 0 && oldDelegate.anim != 0);
   }
 }
 

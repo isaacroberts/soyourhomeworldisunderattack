@@ -56,8 +56,9 @@ class LandscapeSliver extends StatelessWidget {
     //     height: standardImageWidth / aspectRatio,
     //     child: child);
 
-    child = LandscapeFrameSliver(
-        key: const Key('landscape'), holder: holder, child: child);
+    // child = LandscapeFrameSliver(
+    //     key: const Key('landscape'), holder: holder, child: child);
+    child = SliverToBoxAdapter(child: child);
     child = SliverStack(
       key: const Key('ImgButtonStack'),
       positionedAlignment: Alignment.bottomRight,

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
-import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/book.dart';
@@ -116,7 +114,6 @@ class _ChapterTitleListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Part part = Part.of(context);
     //TODO: Put border on these
     return MaterialButton(
         onPressed: onPressed,
@@ -126,46 +123,46 @@ class _ChapterTitleListItem extends StatelessWidget {
               chapter: chapter,
               small: true,
             )));
-    return ListTile(
-      leading: chapter.isPart
-          ? Icon(
-              Symbols.brick,
-              color: part.primary.se,
-            )
-          : null,
-      onTap: onPressed,
-      title: Text(
-        key: const Key('t'),
-        chapter.displayName,
-        style: headerFont.copyWith(fontSize: 16),
-        textAlign: TextAlign.left,
-      ),
-      trailing: ChapterNumber(index: chapter.index),
-    );
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        child: Material(
-            color: part.primary.s4,
-            child: InkWell(
-                key: Key('dropdownItem${chapter.index}'),
-                onTap: onPressed,
-                // color: part.primary.s4,
-                // padding: EdgeInsets.zero,
-
-                child: DecoratedBox(
-                  decoration: BoxDecoration(border: Border.all()),
-                  //TODO: Move these up
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
-                          child: Text(
-                            key: const Key('t'),
-                            chapter.displayName,
-                            style: headerFont.copyWith(fontSize: 12),
-                            textAlign: TextAlign.left,
-                          ))),
-                ))));
+    // return ListTile(
+    //   leading: chapter.isPart
+    //       ? Icon(
+    //           Symbols.brick,
+    //           color: part.primary.se,
+    //         )
+    //       : null,
+    //   onTap: onPressed,
+    //   title: Text(
+    //     key: const Key('t'),
+    //     chapter.displayName,
+    //     style: headerFont.copyWith(fontSize: 16),
+    //     textAlign: TextAlign.left,
+    //   ),
+    //   trailing: ChapterNumber(index: chapter.index),
+    // );
+    // return Padding(
+    //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    //     child: Material(
+    //         color: part.primary.s4,
+    //         child: InkWell(
+    //             key: Key('dropdownItem${chapter.index}'),
+    //             onTap: onPressed,
+    //             // color: part.primary.s4,
+    //             // padding: EdgeInsets.zero,
+    //
+    //             child: DecoratedBox(
+    //               decoration: BoxDecoration(border: Border.all()),
+    //               //TODO: Move these up
+    //               child: Align(
+    //                   alignment: Alignment.centerLeft,
+    //                   child: Padding(
+    //                       padding: const EdgeInsets.symmetric(
+    //                           horizontal: 12, vertical: 6),
+    //                       child: Text(
+    //                         key: const Key('t'),
+    //                         chapter.displayName,
+    //                         style: headerFont.copyWith(fontSize: 12),
+    //                         textAlign: TextAlign.left,
+    //                       ))),
+    //             ))));
   }
 }

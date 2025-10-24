@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/font_interm.dart';
 import 'package:soyourhomeworld/frontend/elements/custom_code/ad_widget.dart';
 
+import '../elements/holders/font_wanters.dart';
 import '../elements/holders/holder_base.dart';
 import '../elements/holders/span_holding_code.dart';
 import '../elements/holders/textholders.dart';

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/parts/noir_theme.dart';
 
+import '../chapter_heading/noir/colors.dart';
 import 'base_text_theme.dart';
 import 'font_family.dart';
 
 //TODO: Consider finding sans serif version of palatino
 const appFontFamily = globalFontFamily;
 
-TextTheme textTheme = const TextTheme(
+TextTheme noirTextTheme = const TextTheme(
   //todo: try fontVariations: [FontVariation.width(1.5)]
   displayLarge: TextStyle(
       fontFamily: appFontFamily,

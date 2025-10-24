@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:soyourhomeworld/backend/server.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/site_logo.dart';
+import 'package:soyourhomeworld/frontend/pages/sidebar/logo.dart';
 import 'package:soyourhomeworld/frontend/parts/noir_colors.dart';
+import 'package:soyourhomeworld/frontend/parts/noir_part.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
 import '../../../backend/chapter.dart';
@@ -68,8 +69,9 @@ class _SocialMediaState extends State<NoirSocialMediaFooter> {
             const SizedBox(width: 12),
             Tooltip(
                 richMessage: const WidgetSpan(
-                    child: SiteLogo(
+                    child: CollapsedSiteLogo(
                   key: Key("logo"),
+                  part: PartNoir(),
                 )),
                 constraints: const BoxConstraints(
                     maxWidth: double.infinity, maxHeight: double.infinity),
@@ -265,7 +267,7 @@ class _OdometerState extends State<Odometer> {
             alignment: Alignment.center,
             child: Text(
               pixelsToDistance(totalScrolled),
-              style: appFont.copyWith(
+              style: appFont(
                   color: color, fontWeight: FontWeight.w200, fontSize: 12),
             )));
   }

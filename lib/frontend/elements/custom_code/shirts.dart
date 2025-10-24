@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../holders/font_wanters.dart';
 import '../holders/holder_base.dart';
 import '../holders/span_holding_code.dart';
-import '../holders/textholders.dart';
 
 class Shirt extends SpanHoldingCode {
   late final Color color;

@@ -4,6 +4,7 @@ import 'package:soyourhomeworld/backend/font_interm.dart';
 import 'package:soyourhomeworld/backend/text_utils.dart';
 import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
 
+import '../frontend/elements/holders/font_wanters.dart';
 import '../frontend/elements/holders/textholders.dart';
 import 'binary_utils/buffer_ptr.dart';
 import 'exception_types.dart';

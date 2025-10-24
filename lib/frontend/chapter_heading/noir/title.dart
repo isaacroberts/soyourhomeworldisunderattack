@@ -93,7 +93,7 @@ class RawTitleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late TextStyle headerStyle;
-    // late final Color headerColor;
+    final Color headerColor = Part.of(context).primary.se;
     HeaderOfText? header = chapter?.data?.header;
     if (header is CustomHeaderOfText) {
       // headerColor = header.font.color ?? headerColor;
@@ -103,10 +103,9 @@ class RawTitleRow extends StatelessWidget {
       //TODO: Fallback instancing?
       // headerStyle = header.font.instance();
       //TODO: This is disabling header styles
-      headerStyle = headerFont;
+      headerStyle = headerFont(color: headerColor);
     } else {
-      // headerColor = textColor;
-      headerStyle = headerFont;
+      headerStyle = headerFont(color: headerColor);
     }
 
     if (small) {
@@ -138,19 +137,6 @@ class RawTitleRow extends StatelessWidget {
     // title = HeaderSizer(child: title);
     title = Align(alignment: Alignment.centerLeft, child: title);
     return title;
-    //This adds the chapter number, which I thought looks ugly
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(key: const Key('e'), child: title),
-//Chapter number
-        Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
-            child: ChapterNumber(index: chapter?.index)),
-      ],
-    );
   }
 }
 
@@ -180,7 +166,7 @@ class ChapterNumber extends StatelessWidget {
         // padding: const EdgeInsets.symmetric(horizontal: 6),
         child: Text(
           _chapterNumberToText(index),
-          style: headerFont.copyWith(fontSize: 16),
+          style: headerFont(color: part.primary.se, fontSize: 16),
         ));
   }
 }

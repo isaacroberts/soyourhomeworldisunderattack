@@ -104,7 +104,7 @@ class NotifTextWidget extends StatelessWidget {
     // dev.log("SpanHoldingCode showFonts=$showFonts");
 
     Part part = ChapterProvider.of(context).part;
-    TextStyle style = appFont.copyWith(
+    TextStyle style = appFont(
         fontSize: 12 * fontScale,
         color: part.primary.s2,
         fontWeight: FontWeight.w400);

@@ -58,18 +58,28 @@ class NewlineElement extends Holder {
                   ),
                 ))));
   }
+
+  @override
+  void sweepForColor(Color color, Color? repl) {}
 }
 
 class ColoredBoxHolder extends Holder {
   final double width;
   final double height;
-  final Color color;
-  const ColoredBoxHolder(
+  Color color;
+  ColoredBoxHolder(
       {required this.width, required this.height, required this.color});
 
   @override
   String toText() {
     return ' ';
+  }
+
+  @override
+  void sweepForColor(Color find, Color? repl) {
+    if (color == find) {
+      color = repl ?? color;
+    }
   }
 
   @override
@@ -183,31 +193,8 @@ class HiddenTextElement extends Holder {
               size: 12,
             )));
   }
-}
 
-class PageBreakOfText extends Holder {
-  const PageBreakOfText();
-
+  //No free labor, king.
   @override
-  String toText() {
-    return '';
-  }
-
-  @override
-  Widget element(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-
-  @override
-  sliver(BuildContext context) {
-    return const SliverPadding(padding: EdgeInsets.zero);
-  }
-
-  @override
-  Widget debugSliver(BuildContext context) {
-    return const DecoratedSliver(
-        decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: Color(0xffffffff)))),
-        sliver: SliverPadding(padding: EdgeInsets.only(top: 24)));
-  }
+  void sweepForColor(Color find, Color? repl) {}
 }

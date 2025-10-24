@@ -14,6 +14,15 @@ class Columns extends CodeHolder {
   const Columns({required this.cols});
 
   @override
+  void sweepForColor(Color color, Color? repl) {
+    for (var c in cols) {
+      for (Holder h in c) {
+        h.sweepForColor(color, repl);
+      }
+    }
+  }
+
+  @override
   String toText() {
     return cols.map((c) => c.map((h) => h.toText())).join('\n');
   }

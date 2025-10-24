@@ -29,7 +29,8 @@ class _RpgIconDisplay extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Color(0xff000000),
                 ),
-                textStyle: appFont.copyWith(fontSize: 12),
+                textStyle: appFont(color: const Color(0xffffffff))
+                    .copyWith(fontSize: 12),
                 enableTapToDismiss: false,
                 exitDuration: const Duration(seconds: 0),
                 message: '$name ($ix)',
