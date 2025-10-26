@@ -468,23 +468,8 @@ Elements:
       return instantiateCodeBlock(cls, params, spans);
       //Instantiate
     } else if (type == CodeElementType.parsedCodeElement) {
-      bool wrkd = ptr.consumeIf(Codes.LBRACE);
-      if (!wrkd) {
-        throw ChapterFormatException(
-            'Missing open LBRK in CodeBlock (char = "${ptr.getChar()}" pos=${ptr.start})',
-            debugId: debugId);
-      }
-      int binLen = ptr.consumeUint32();
-      ptr.assertConsume('.', debugId: debugId);
-
-      //Scope for memory
-      BufferPtr secondPtr = ptr.subset(0, binLen);
-      ptr.consume(binLen);
-
-      dev.log('parsedBlock _akljdflsdjf)');
-      ptr.assertConsume(Codes.RBRACE, debugId: debugId);
-      dev.log('parsedBlock _ S_)DI F_)');
-      return parseParsedBlock(cls, params, secondPtr);
+      throw ChapterFormatException("ParsedBlock no longer supported.",
+          debugId: debugId);
     } else {
       throw const DeveloperException("Update CodeElementTypes if ladder");
     }

@@ -5,16 +5,38 @@ class SliverCenter extends SingleChildRenderObjectWidget {
   const SliverCenter({
     required Widget sliver,
     super.key,
+    this.align = 0,
+    this.maxExtent,
   }) : super(child: sliver);
+
+  ///-1= Left, 0=Center, 1=Right
+  final double align;
+  final double? maxExtent;
 
   @override
   RenderSliver createRenderObject(BuildContext context) {
-    return RenderSliverCenter();
+    return RenderSliverCenter(align: align, maxExtent: maxExtent);
+  }
+
+  @override
+  void updateRenderObject(
+      BuildContext context, RenderSliverCenter renderObject) {
+    //TODO: If checks
+    renderObject.align = align;
+    renderObject.maxExtent = maxExtent;
+    super.updateRenderObject(context, renderObject);
   }
 }
 
 class RenderSliverCenter extends RenderSliver
     with RenderObjectWithChildMixin<RenderSliver> {
+  //Set by widget
+  double align;
+  double? maxExtent;
+
+  RenderSliverCenter({required this.align, required this.maxExtent});
+
+  //Internal
   double? horizontalPadding;
 
   @override
@@ -27,13 +49,16 @@ class RenderSliverCenter extends RenderSliver
   @override
   void performLayout() {
     // Layout the child with the current constraints
-    child!.layout(constraints, parentUsesSize: true);
+    SliverConstraints childConstraints = constraints.copyWith(
+        crossAxisExtent: maxExtent ?? constraints.crossAxisExtent);
+    child!.layout(childConstraints, parentUsesSize: true);
 
     final childGeometry = child!.geometry;
     if (childGeometry != null) {
       // Update the center offset during layout so we don't recalc on each paint
       _updateCenterOffset();
       geometry = SliverGeometry(
+        crossAxisExtent: childConstraints.crossAxisExtent,
         scrollExtent: childGeometry.scrollExtent,
         paintExtent: childGeometry.paintExtent,
         maxPaintExtent: childGeometry.maxPaintExtent,
@@ -48,29 +73,38 @@ class RenderSliverCenter extends RenderSliver
     if (child != null) {
       final parentData = child!.parentData;
       if (parentData is SliverPhysicalParentData) {
-        final parentConstraints = parent?.constraints;
-        double? parentSize;
-        if (parentConstraints is BoxConstraints) {
-          parentSize = parentConstraints.maxWidth;
-        } else if (parentConstraints is SliverConstraints) {
-          parentSize = parentConstraints.crossAxisExtent;
-        }
+        double parentSize = constraints.crossAxisExtent;
+        // final parentConstraints = parent?.constraints;
+        // double? parentSize;
+        // if (parentConstraints is BoxConstraints) {
+        //   parentSize = parentConstraints.maxWidth;
+        // } else if (parentConstraints is SliverConstraints) {
+        //   parentSize = parentConstraints.crossAxisExtent;
+        // }
         if (parentSize != null) {
           final childConstraints = child!.constraints;
           final childSize = childConstraints.crossAxisExtent;
-          double crossAxisPadding;
-          if (child != null && child is RenderSliverConstrainedCrossAxis) {
-            final childMaxExtent =
-                (child! as RenderSliverConstrainedCrossAxis).maxExtent;
-            crossAxisPadding = childSize - childMaxExtent;
-          } else {
-            crossAxisPadding = parentSize - childSize;
-          }
-          horizontalPadding = crossAxisPadding / 2;
+          double crossAxisPadding = parentSize - childSize;
+
+          horizontalPadding = alignToPad(crossAxisPadding);
           parentData.paintOffset = Offset(horizontalPadding!, 0);
         }
       }
     }
+  }
+
+  double alignToPad(double totalSpace) {
+    //TODO: Verify visually
+    return totalSpace * ((align + 1) / 4);
+    // if (align==-1) {
+    //   return 0;
+    // }
+    // if (align==0) {
+    //   return totalSpace/2;
+    // }
+    // else if (align==1) {
+    //   return totalSpace;
+    // }
   }
 
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/book.dart';
@@ -10,13 +9,15 @@ import '../../theme/extra_styles.dart';
 
 class SearchedChapterTile extends StatelessWidget {
   /// Highlights searched term
+  /// TODO: Use regular Chapter
   final ChapterInfo chapter;
   final String? searchTerm;
   const SearchedChapterTile(
       {super.key, required this.chapter, required this.searchTerm});
 
   void goto(BuildContext context) {
-    context.go('/scroll/${chapter.id}');
+    Chapter fullChapter = Book.of(context).chapters[chapter.id];
+    scrollToChapter(fullChapter, context: context);
   }
 
   @override
@@ -41,47 +42,25 @@ class SearchedChapterTile extends StatelessWidget {
   }
 }
 
-List<PartListTile> splitParts(Book book) {
-  Chapter? lastPart;
-  int lastIx = 0;
-  List<PartListTile> parts = [];
-
-  for (int n = 0; n < book.chapterAmt; ++n) {
-    if (book.chapters[n].isPart) {
-      if (lastPart != null) {
-        parts.add(PartListTile(
-            key: Key('Part_${lastPart.id}'),
-            chapter: lastPart,
-            subChapters: book.chapters.sublist(lastIx + 1, n)));
-      }
-      lastPart = book.chapters[n];
-      lastIx = n;
-    }
-  }
-  if (lastPart != null) {
-    parts.add(PartListTile(
-        key: Key('Part_${lastPart.id}'),
-        chapter: lastPart,
-        subChapters: book.chapters.sublist(lastIx + 1)));
-  }
-  //Remove hidden parts
-  parts = parts.where((e) => !e.chapter.info.hidePart).toList(growable: false);
-
-  return parts;
-}
-
 class PartListTile extends StatefulWidget {
-  final Chapter chapter;
-  final List<Chapter> subChapters;
-  const PartListTile(
-      {super.key, required this.chapter, required this.subChapters});
+  final int partIndex;
+  // final List<Chapter> subChapters;
+  const PartListTile({super.key, required this.partIndex});
 
   @override
   State<PartListTile> createState() => _PartListTileState();
 }
 
 class _PartListTileState extends State<PartListTile> {
-  Chapter get chapter => widget.chapter;
+  late Book book;
+  @override
+  void didChangeDependencies() {
+    book = Book.of(context);
+    super.didChangeDependencies();
+  }
+
+  Chapter get chapter => book.getPartStart(widget.partIndex);
+  List<Chapter> get subChapters => book.getPartRange(widget.partIndex);
 
   void gotoPart() async {
     scrollToChapter(chapter, context: context);
@@ -101,14 +80,14 @@ class _PartListTileState extends State<PartListTile> {
     return ExpansionTile(
       key: const Key('partExpansionTile'),
       title: Text(
-        widget.chapter.displayName,
+        chapter.displayName,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
       internalAddSemanticForOnTap: true,
       controlAffinity: ListTileControlAffinity.leading,
       trailing: goButton(context),
-      children: widget.subChapters
+      children: subChapters
           .map((c) => _SubTile(key: Key('chp${c.index}'), chapter: c))
           .toList(growable: false),
     );
@@ -200,7 +179,7 @@ class _SubTileState extends State<_SubTile> {
 
       // Quick Comparison
       // trailing: when != null ? Text(when, style: whenStyle) : null,
-      onTap: () => context.go('/scroll/${chapter.id}'),
+      onTap: () => scrollToChapter(chapter, context: context),
     );
   }
 }

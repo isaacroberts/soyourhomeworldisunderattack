@@ -95,7 +95,6 @@ class CodeDebugSliver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Fallbacks
     Widget sliver = holder.sliver(context);
     String message = tooltipMessage();
 

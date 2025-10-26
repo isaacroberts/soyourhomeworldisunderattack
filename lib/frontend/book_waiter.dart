@@ -30,11 +30,13 @@ class BookWaiter extends StatelessWidget {
     //Must be under a scaffold
     assert(Scaffold.maybeOf(context) != null);
     //Check if Book is already present
+    Book? existing = Book.maybeOf(context);
     //TODO: See if this is causing unecessary cpu
-    if (Book.maybeOf(context) != null) {
+    if (existing != null) {
+      assert(false, 'Nested BookWaiters');
       assert(_bookFuture != null);
       //In theory, this can't not be set
-      _bookFuture ??= Book.maybeOf(context) as Future<Book?>?;
+      _bookFuture ??= existing as Future<Book?>?;
       return child;
     }
     //Get book if null
@@ -98,6 +100,7 @@ class CowboyBookBuilder extends StatelessWidget {
     //TODO: See if this is causing unecessary cpu
     Book? book = Book.maybeOf(context);
     if (book != null) {
+      assert(false, 'No bookProvider stacking!');
       //In theory, this can't not be set
       _bookFuture ??= book as Future<Book?>?;
       return scaffold(context, doneBuilder(context), doneSnapshot(book));
@@ -152,6 +155,7 @@ class BookBuilder extends StatelessWidget {
 
     //TODO: See if this is uneccesary CPU load
     if (Book.maybeOf(context) != null) {
+      assert(false);
       return builder(context,
           AsyncSnapshot.withData(ConnectionState.done, Book.of(context)));
     }

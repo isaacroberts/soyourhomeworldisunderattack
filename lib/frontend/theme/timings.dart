@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../backend/book.dart';
 import '../../backend/chapter.dart';
 import '../../backend/error_handler.dart';
 
@@ -16,6 +17,21 @@ enum DidScroll {
   url,
 }
 
+Future<DidScroll> scrollToSearchTerm(String varname,
+    {required BuildContext context,
+    Duration? duration,
+    Curve? curve,
+    double? alignment}) async {
+  late final Chapter? chapter;
+  if (context.mounted) {
+    chapter = await Book.of(context).findChapterBySearchTerm(varname);
+  }
+  if (chapter != null) {
+    return scrollToChapter(chapter, context: context);
+  }
+  return DidScroll.no;
+}
+
 ///Usable in CodeHolders and such
 ///Returns tri-state value: DidScroll
 ///       scrolled= Scrolled to chapter
@@ -26,9 +42,9 @@ Future<DidScroll> scrollToChapter(Chapter? chapter,
     Duration? duration,
     Curve? curve,
     double? alignment}) async {
-  //TODO: Nobody's allowed to use context.go. Instead, they must use this function, which scrolls if possible.
-  /// Scroll to chapter, if possible.
-  /// Returns true if scrolled
+  //Most shouldn't use context.go. Instead, they must use this function, which scrolls if possible.
+  // Scroll to chapter, if possible.
+  // Returns true if scrolled
   if (chapter == null) {
     //TODO: Don't allow null, remove tri-state enum
     return DidScroll.no;
@@ -152,24 +168,26 @@ Future<bool> openLink(String? link, BuildContext context) async {
 
 void openLinkFast(String? link, BuildContext context) async {
   if (link == null) {
+    ErrorList.logError('Null link (openFast)');
     showCantOpenLinkSnackbar(context, link);
     return;
   }
   Uri? uri = Uri.tryParse(link);
   if (uri == null) {
-    ErrorList.logWarning("Can't parse link: $link to uri");
+    ErrorList.logError("Can't parse link: $link to uri");
     showCantOpenLinkSnackbar(context, link);
     return;
   }
   bool canOpen = await canLaunchUrl(uri);
 
-  if (!canOpen) {
+  if (canOpen) {
+    launchUrl(uri, mode: LaunchMode.inAppBrowserView);
+  } else {
+    ErrorList.showError(
+        Exception("Can't launch Url: link='$link'; Url='$uri'"));
     if (context.mounted) {
       showCantOpenLinkSnackbar(context, link);
     }
-    return;
-  } else {
-    launchUrl(uri, mode: LaunchMode.inAppBrowserView);
   }
 }
 

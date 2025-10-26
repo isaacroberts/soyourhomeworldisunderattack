@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle_components.dart';
 import 'package:soyourhomeworld/frontend/pages/index/dropdown_chapter_names.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../elements/holders/textholders.dart';
 import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
+import '../header_elements.dart';
 
 class AppBarTitleOnly extends StatelessWidget {
   const AppBarTitleOnly({super.key});
@@ -76,12 +76,11 @@ class _HeadingTitleState extends State<HeadingTitleRow> {
         left: info.anchorRect.left,
         child: SizedBox(
             width: info.anchorRect.width + 24,
-            // height: info.anchorRect.height,
-            //TODO: Switch this to regular sizing
-            height: MediaQuery.sizeOf(context).height,
-            child: ChapterTitleDropdown(
+            //Expand vertically
+            child: SizedBox.expand(
+                child: ChapterTitleDropdown(
               startChapter: chapter,
-            )));
+            ))));
   }
 }
 

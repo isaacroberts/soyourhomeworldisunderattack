@@ -33,7 +33,6 @@ class _CommonImageContainerState extends State<CommonImageContainer> {
     Widget child = widget.childBuilder(context, expanded);
 
     Color? outlineColor = holder.outlineColor;
-    //TODO: Move this up
     outlineColor ??= Colors.black;
 
     child = Material(
@@ -78,7 +77,7 @@ class _CommonImageContainerState extends State<CommonImageContainer> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           child,
-          //TODO: Replace with image credit
+          // image credit
           Text(
             key: const Key('credit'),
             hovered ? holder.credit : '',
@@ -159,34 +158,12 @@ class _CommonImageSliverContainerState
   @override
   Widget build(BuildContext context) {
     //Get expanded
-    //TODO: Will this be a sliver?
+    //I know this is a sliver because it works
     Widget sliver = widget.childBuilder(context, expanded);
 
     Color? outlineColor = holder.outlineColor;
     outlineColor ??= Colors.black;
 
-    //
-    // sliver = Material(
-    //     key: const Key('img_mat'),
-    //     color: bgColor,
-    //     //TODO: Add glassier overlay
-    //     type: MaterialType.transparency,
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(12),
-    //       side: BorderSide(
-    //           color: outlineColor,
-    //           width: 2,
-    //           strokeAlign: BorderSide.strokeAlignCenter),
-    //     ),
-    //     elevation: 5,
-    //     borderOnForeground: true,
-    //     clipBehavior: Clip.antiAlias,
-    //     child: sliver);
-
-    // child = Padding(
-    //     padding: const EdgeInsets.all(15),
-    //     key: const Key('outl2'),
-    //     child: child);
     if (kDebugMode) {
       //For debugging the damn if ladder
       sliver = Tooltip(
@@ -204,7 +181,7 @@ class _CommonImageSliverContainerState
     // if (hovered) {
     sliver = SliverMainAxisGroup(key: const Key('credit_col'), slivers: [
       sliver,
-      //TODO: Replace with image credit
+      //Image credit
       SliverToBoxAdapter(
           key: const Key('ImgCredit'),
           child: Text(

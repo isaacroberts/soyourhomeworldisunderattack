@@ -137,7 +137,7 @@ class RenderClampingSliver extends RenderProxySliver {
         if (touchingBottom() || belowScreen()) {
           height = desiredHeight;
         } else if (onScreen()) {
-          //This, at the very least, will only expand while scrolling. TODO: Test whether it's wicked fast on profile mode
+          //This, at the very least, will only expand while scrolling.
           height = math.min(desiredHeight, height + maxGrowPerUpdate);
         }
       } else if (wantsShrink) {
@@ -190,8 +190,6 @@ class RenderClampingSliver extends RenderProxySliver {
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
-
-    //TODO: Cache if within cache range
 
     geometry = SliverGeometry(
       scrollExtent: scrollExtent,
@@ -449,7 +447,7 @@ class RenderClampingSliver extends RenderProxySliver {
   // =========== Boilerplate =============
   @override
   ui.Rect get semanticBounds => calculateClipRect();
-  // @override // TODO: implement alwaysNeedsCompositing
+  // @override
   // bool get alwaysNeedsCompositing => true;
   @override
   bool hitTestChildren(SliverHitTestResult result,
@@ -530,10 +528,9 @@ class RenderClampingSliver extends RenderProxySliver {
     config.onCut = copyChapter;
   }
 
-  @override // TODO: implement alwaysNeedsCompositing
+  @override
   bool get alwaysNeedsCompositing => child?.alwaysNeedsCompositing ?? false;
   @override
-  // TODO: implement needsCompositing
   bool get needsCompositing => child?.needsCompositing ?? false;
 
   @override

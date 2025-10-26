@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../parts/grand_swatch.dart';
-import '../parts/noir_colors.dart';
-
-//TODO: Remove these
-const Color canvasSlightElevation = NoirPrimary.shade3;
-const Color canvasFade = NoirSecondary.shadec;
-const Color canvasLightGrey = NoirSecondary.shadeb;
-
-const Color onCanvas = NoirPrimary.shaded;
-const Color canvasDisengage = NoirSecondary.shade0;
 
 class Tertiary extends GrandSwatch {
   const Tertiary();

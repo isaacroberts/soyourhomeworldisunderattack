@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/holder_base.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart'
     show SpanHoldingCode;
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
@@ -112,8 +113,9 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   void onPressed(BuildContext context) {
     if (link != null) {
       if (isChapter) {
-        context.go('/search/$link');
+        scrollToSearchTerm(link!, context: context);
       } else {
+        //Non-chapter link must go to standard URL
         context.go('/$link');
       }
     } else {
@@ -124,7 +126,8 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 600,
+        width: 400,
+        height: 200,
         // child: Theme(
         //     data: bookTheme,
         child: _TooltipWrap(
@@ -146,7 +149,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
     return Text(
       'Going to: $where',
       style: textTheme.labelLarge,
-      textAlign: TextAlign.right,
+      textAlign: TextAlign.left,
     );
   }
 
@@ -164,9 +167,9 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
       children: [
         // linkText(context),
         explanationText(context),
-        const SizedBox(height: 24),
+        const SizedBox(height: 12),
         _buttonText(context),
-        const SizedBox(height: 24),
+        const SizedBox(height: 12),
         destText(context),
       ],
     );
@@ -180,7 +183,7 @@ class _GotoButtonWidgetState extends State<_GotoButtonWidget> {
             overlayColor: ButtonOverlayColorProperty(
                 color: color, selectedColor: planColor)),
         child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             child: column(context))
         // const SizedBox.shrink()
         );
@@ -212,12 +215,8 @@ class _TooltipWrap extends StatelessWidget {
               children: [
                 Text('Destination: ${where ?? '...'}'),
                 const Divider(),
-
-                //TODO: Get chapter
                 if (when != null) Text("Time: ${when ?? '...'}"),
-
                 const Divider(),
-
                 Text('Link: ${holder.linkText}'),
               ],
             )));

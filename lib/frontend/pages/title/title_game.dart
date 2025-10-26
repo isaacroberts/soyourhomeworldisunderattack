@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/theme/base_colors.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
+import '../../../backend/book.dart' show Book;
 import 'fire_painter.dart';
 
 class FlameWidget extends StatefulWidget {
@@ -148,7 +149,8 @@ class _FireButtonState extends State<FireButton> {
   bool orange = false;
 
   void continueOn() {
-    context.go('/scroll/1');
+    scrollToChapter(Book.of(context).chapters[1], context: context);
+    // context.go('/scroll/1');
   }
 
   @override

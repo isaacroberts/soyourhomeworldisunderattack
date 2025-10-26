@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/components/deferrals/index.dart'
-    as defer;
+import 'package:soyourhomeworld/frontend/pages/index/searched_tile.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
@@ -44,33 +43,38 @@ class _IndexWidgetState extends State<IndexWidget> {
   // late final TextEditingController controller;
   // String? currentSearchTerm;
   late final SearchController controller;
-  List<Widget> listTiles = [];
+  late Book book;
+
+  late List<Widget> children;
 
   @override
   void initState() {
     super.initState();
     controller = SearchController();
     controller.text = widget.searchTerm ?? '';
-    // listTiles = splitParts(Book.of(context));
   }
 
   @override
   void didChangeDependencies() {
-    //TODO: Move this into book
-    // listTiles = splitParts(Book.of(context));
+    book = Book.of(context);
     super.didChangeDependencies();
-    defer.splitParts(Book.of(context)).then(partsGot);
-  }
-
-  void partsGot(List<Widget> parts) {
-    setState(() {
-      listTiles = parts;
-    });
+    children = [];
+    for (int ix = 0; ix < book.partAmt; ++ix) {
+      //TODO: Idk if it's better to save them like this
+      children.add(PartListTile(key: Key('partTile_$ix'), partIndex: ix));
+    }
   }
 
   Widget barBuilder(BuildContext context, SearchController controller) {
     return LiveSearchList(
         key: const Key("liveSearchTerms"), onTap: controller.openView);
+  }
+
+  Widget searchedTile(Chapter chapter, String searchTerm) {
+    return SearchedChapterTile(
+        key: Key('searched_${chapter.id}'),
+        chapter: chapter.info,
+        searchTerm: searchTerm);
   }
 
   @override
@@ -82,27 +86,16 @@ class _IndexWidgetState extends State<IndexWidget> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             key: const Key('index_main_col'),
             children: [
-          listTiles.isEmpty
+          book.partAmt == 0
               ? const BlankSearchList(key: Key("BlankSearchTerms"))
               : LiveSearchList(
                   key: const Key("liveSearchTerms"),
                   onTap: controller.openView),
-          // SearchAnchor.bar(
-          //   isFullScreen: true,
-          //   barHintText: 'Search chapters',
-          //
-          //   // barHintText: 'Chapter titles',
-          //
-          //   // builder: barBuilder,
-          //   suggestionsBuilder: blankSuggestions,
-          //   // viewLeading: Text("Search widget"),
-          //   // viewTrailing: listTiles,
-          // ),
           Expanded(
               key: const Key('index_expanded'),
               child: ListView(
                 key: const Key('SearchWidget'),
-                children: listTiles,
+                children: children,
               )),
         ]));
   }
@@ -115,8 +108,10 @@ class LiveSearchList extends StatelessWidget {
 
   Iterable<Widget> mapMatches(List<Chapter> chapters,
       {required String searchTerm}) {
-    return chapters
-        .map((Chapter chapter) => defer.searchedTile(chapter, searchTerm));
+    return chapters.map((Chapter chapter) => SearchedChapterTile(
+        key: Key('searched_${chapter.id}'),
+        chapter: chapter.info,
+        searchTerm: searchTerm));
   }
 
   Future<Iterable<Widget>> suggestionBuilder(

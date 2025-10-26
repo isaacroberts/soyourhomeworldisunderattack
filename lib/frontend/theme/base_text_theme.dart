@@ -5,13 +5,6 @@ import 'font_family.dart';
 const double fontScale = 1.5;
 const double k = 12 * fontScale;
 
-//TODO: Remove all of these
-// const Color appTextColor = NoirPrimary.shaded;
-// const Color textColor = NoirPrimary.shadef;
-// const Color headerColor = NoirPrimary.shadee;
-// const Color fallbackTextColor = NoirPrimary.shadee;
-// const Color labelTextColor = NoirPrimary.shadec;
-
 const double bookLetterSpacing = 1.1;
 
 const TextStyle bodyFont = TextStyle(

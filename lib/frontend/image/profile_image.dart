@@ -53,7 +53,6 @@ class ProfileImageHolder extends ImageHolder {
     }
   }
 
-  //TODO: Move this to subclass
   @override
   Widget sliver(BuildContext context) {
     return SliverCenter(sliver: SliverToBoxAdapter(child: element(context)));

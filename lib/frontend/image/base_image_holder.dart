@@ -128,8 +128,6 @@ class ImageHolder extends Holder {
       return TriWizardLoader(
           key: const Key('imgLoader'),
           message: displayUrl,
-          //TODO: Send the second color hint,
-          // used for the loader
           loaderColor: colorHint?.foreColor);
     }
   }

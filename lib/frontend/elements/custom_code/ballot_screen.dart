@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../parts/noir_colors.dart';
 import '../../theme/text_theme.dart';
@@ -58,7 +58,7 @@ class _BallotScreenState extends State<BallotScreen> {
     if (value != null) {
       int ix = _candidates.indexOf(value!);
 //TODO: It would be cooler if this scrolled
-      context.go('/search/${_candidateLinks[ix]}');
+      scrollToSearchTerm(_candidateLinks[ix], context: context);
     }
   }
 

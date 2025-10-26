@@ -51,7 +51,7 @@ class BufferPtr {
     }
   }
 
-  ///You must parse it separately. That
+  ///You must parse it separately.
   dynamic consumeJson({String? debugId}) {
     debugId ??= '';
     debugId = 'json_$debugId';

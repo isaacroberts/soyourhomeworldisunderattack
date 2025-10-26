@@ -6,6 +6,8 @@ import '../../parts/part.dart';
 import '../../theme/timings.dart';
 import '../holders/holder_base.dart';
 
+///Professional looking source holder.
+///TODO: It's currently not opening shit on mobile.
 class SourceCitationHolder extends CodeHolder {
   final String? link;
   final CodeParams params;

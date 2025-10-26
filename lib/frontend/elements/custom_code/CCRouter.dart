@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/elements/common_blocks.dart';
 import 'package:soyourhomeworld/frontend/elements/custom_code/ballot_screen.dart'
     deferred as ballot_screen_lib;
-import 'package:soyourhomeworld/frontend/elements/custom_code/character_selection.dart'
-    deferred as character_selection_lib;
-import 'package:soyourhomeworld/frontend/elements/custom_code/columns_holder.dart'
-    deferred as columns_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/facebook_post.dart'
     deferred as facebook_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/goto_button.dart'
@@ -29,8 +25,6 @@ import 'package:soyourhomeworld/frontend/elements/special_widgets/ad_human_jacks
     deferred as human_jacks_lib;
 import 'package:soyourhomeworld/frontend/elements/special_widgets/andy_thumbnail.dart'
     deferred as andy_thumbnail_lib;
-//TODO: Remove
-import 'package:soyourhomeworld/frontend/icons.dart';
 import 'package:soyourhomeworld/frontend/image/image_holder.dart'
     deferred as image_lib;
 import 'package:soyourhomeworld/frontend/image/profile_image.dart'
@@ -38,7 +32,6 @@ import 'package:soyourhomeworld/frontend/image/profile_image.dart'
 import 'package:soyourhomeworld/frontend/pages/title/title.dart'
     deferred as title_lib;
 
-import '../../../backend/binary_utils/buffer_ptr.dart';
 import '../../../backend/binary_utils/code_params.dart';
 import '../holders/future_holder.dart';
 import '../holders/holder_base.dart';
@@ -65,7 +58,9 @@ Future<Holder> _instantiateCodeTag(String cls, CodeParams params) async {
   } else if (cls == 'ICON') {
     int? iconIndex = int.tryParse(params.main ?? '0');
     await misc_code_lib.loadLibrary();
-    return misc_code_lib.IconHolder(iconIndex ?? RpgAwesome.errorIconIndex);
+    return misc_code_lib.IconHolder(iconIndex ??
+        // RpgAwesome.errorIconIndex = 30
+        30);
   } else if (cls == 'IMAGE') {
     await image_lib.loadLibrary();
     return image_lib.StdImageHolder(params);
@@ -192,9 +187,6 @@ Future<Holder> _instantiateCodeBlock(
 
     return goto_button_lib.GotoButtonHolder(
         link: link, spans: spans, isChapter: isChapter);
-  } else if (cls == 'CHARACTERSELECTIONSCREEN') {
-    await character_selection_lib.loadLibrary();
-    return character_selection_lib.CharacterSelectionHolder();
   } else if (cls == 'FLATEARTHANDYTHUMBNAIL') {
     String? link = params.readLink('link');
     await andy_thumbnail_lib.loadLibrary();
@@ -203,27 +195,6 @@ Future<Holder> _instantiateCodeBlock(
     dev.log("Missed CodeBlock '$cls'");
     return UnhandledSpanHoldingCode(clsname: cls, spans: spans);
   }
-}
-
-FutureHolder parseParsedBlock(String cls, CodeParams params, BufferPtr bin) {
-  Future<Holder> holder = _parseParsedBlock(cls, params, bin);
-  return FutureHolder(holder);
-}
-
-Future<Holder> _parseParsedBlock(
-    String cls, CodeParams params, BufferPtr bin) async {
-  dev.log("ParsedBlock: $cls");
-  if (cls == 'COLUMNS') {
-    // return UnhandledCodeElement(cls, "Columns");
-    await columns_lib.loadLibrary();
-    return columns_lib.Columns.parse(bin);
-  } else if (cls == 'SIGNCOLUMNS') {
-    await columns_lib.loadLibrary();
-    return columns_lib.Sign2Cols.parse(bin);
-  } else {
-    dev.log("Missed ParsedBlock '$cls'");
-  }
-  return UnhandledCodeElement(cls, 'ParsedBlock');
 }
 
 enum CodeElementType {

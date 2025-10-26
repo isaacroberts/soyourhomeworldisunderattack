@@ -7,7 +7,6 @@ import '../../../../backend/chapter.dart';
 import '../../components/app_bar_chop/app_bar_chop.dart';
 import '../../parts/noir_colors.dart';
 import '../../parts/part.dart';
-import 'colors.dart';
 
 class NoirBar extends StatelessWidget {
   const NoirBar({
@@ -58,29 +57,6 @@ class NoirBar extends StatelessWidget {
 //       pinned: true,
 //       stretch: false,
     );
-  }
-}
-
-class DrawerButton extends StatefulWidget {
-  const DrawerButton({super.key});
-
-  @override
-  State<DrawerButton> createState() => _DrawerButtonState();
-}
-
-class _DrawerButtonState extends State<DrawerButton> {
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: openDrawer,
-        icon: const Icon(
-          Icons.menu,
-          color: headerColor,
-        ));
-  }
-
-  void openDrawer() {
-    Scaffold.maybeOf(context)?.openEndDrawer();
   }
 }
 

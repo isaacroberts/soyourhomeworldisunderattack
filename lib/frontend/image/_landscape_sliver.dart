@@ -35,7 +35,7 @@ class LandscapeSliver extends StatelessWidget {
 
       width: width,
 
-      //TODO: Doesn't this need a frameBuilder
+      // Doesn't need a frameBuilder
       loadingBuilder: holder.loadingBuilder,
       errorBuilder: holder.errorBuilder,
     );

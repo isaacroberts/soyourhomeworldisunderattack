@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
 
-import '../../../../backend/error_handler.dart';
-import '../../icons.dart';
-import '../../parts/part.dart';
-import '../../theme/layout_constants.dart';
+import '../../../../backend/chapter.dart';
+import '../icons.dart';
+import '../parts/part.dart';
+import '../theme/layout_constants.dart';
+
+class DrawerButton extends StatefulWidget {
+  const DrawerButton({super.key});
+
+  @override
+  State<DrawerButton> createState() => _DrawerButtonState();
+}
+
+class _DrawerButtonState extends State<DrawerButton> {
+  @override
+  Widget build(BuildContext context) {
+    Color color = Part.of(context).primary.se;
+    return IconButton(
+        onPressed: openDrawer,
+        icon: Icon(
+          Icons.menu,
+          color: color,
+        ));
+  }
+
+  void openDrawer() {
+    Scaffold.maybeOf(context)?.openEndDrawer();
+  }
+}
 
 class StdAppBarButton extends StatelessWidget {
   final IconData icon;
@@ -16,7 +41,8 @@ class StdAppBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Part part = Part.of(context);
+    Part? part = ChapterProvider.maybeOf(context)?.part;
+    part!;
     Color color = part.primary.sd;
     Widget child = IconButton(
         padding: const EdgeInsets.all(6),
@@ -33,11 +59,53 @@ class StdAppBarButton extends StatelessWidget {
   }
 }
 
+///Show button that copies text of chapter
+class CopyTextButton extends StatelessWidget {
+  const CopyTextButton({super.key});
+
+  void onPressed(BuildContext context) {
+    Chapter chapter = Chapter.of(context);
+    chapter.data?.copyText();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StdAppBarButton(
+      icon: Icons.copy_all,
+      onPressed: () => onPressed(context),
+      tooltip: 'Copy text',
+    );
+  }
+}
+
+///Opens
+class BookmarkButton extends StatelessWidget {
+  ///For any Part
+  final Chapter? chapter;
+  const BookmarkButton({required super.key, required this.chapter});
+
+  void onPressed(BuildContext context) {
+    if (chapter != null) {
+      //Uses context.go to ensure URL is being loaded
+      context.go(chapter!.searchUrl);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StdAppBarButton(
+        key: const Key('bookmark'),
+        icon: Icons.bookmark,
+        tooltip: 'Link: ${chapter?.varName}',
+        onPressed: () => onPressed(context));
+  }
+}
+
 class CurrentChip extends StatelessWidget {
   ///Any part
   final String? value;
   final String label;
-  final IconData? icon;
+  final Widget? icon;
 
   const CurrentChip(
       {required super.key,
@@ -62,80 +130,9 @@ class CurrentChip extends StatelessWidget {
 
                   // onDeleted: () {},
                   key: const Key("chip"),
-                  avatar: icon != null ? Icon(icon) : null,
+                  avatar: icon,
                   label: Text(value!))));
     }
-  }
-}
-
-class FutureChip extends StatelessWidget {
-  final Future<String?>? value;
-  final String label;
-  final IconData? icon;
-  const FutureChip(
-      {required super.key,
-      required this.value,
-      required this.label,
-      required this.icon});
-
-  Widget buildChip(BuildContext context, String value) {
-    return CurrentChip(
-        key: const Key('currentChpi'), value: value, label: label, icon: icon);
-  }
-
-  Widget buildNoData(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-
-  Widget buildError(BuildContext context, String error) {
-    return Padding(
-        key: const Key("lpad"),
-        padding: const EdgeInsets.only(right: 12),
-        child: Tooltip(
-            key: const Key("tooltip"),
-            message: error,
-            //Because there's no onClick
-            triggerMode: TooltipTriggerMode.tap,
-            child: Chip(
-                key: const Key("chip"),
-                avatar: icon != null ? const Icon(Icons.error_outline) : null,
-                label: const Text('   '))));
-  }
-
-  Widget buildWaiting(BuildContext context) {
-    return Padding(
-        key: const Key("lpad"),
-        padding: const EdgeInsets.only(right: 12),
-        child: Chip(
-            key: const Key("chip"),
-            avatar: icon != null ? const Icon(Icons.hourglass_empty) : null,
-            label: const Text(' ')));
-  }
-
-  Widget futureBuilder(BuildContext context, AsyncSnapshot<String?> snapshot) {
-    if (snapshot.connectionState == ConnectionState.done) {
-      if (snapshot.hasData) {
-        return buildChip(context, snapshot.data!);
-      } else {
-        return buildNoData(context);
-      }
-    } else if (snapshot.hasError) {
-      ErrorList.logError(snapshot.error!, snapshot.stackTrace);
-      return buildError(context, snapshot.error!.toString());
-    } else {
-      return buildWaiting(context);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (value == null) {
-      return buildNoData(context);
-    }
-    return FutureBuilder<String?>(
-        key: const Key("futureBuilder"),
-        future: value!,
-        builder: futureBuilder);
   }
 }
 

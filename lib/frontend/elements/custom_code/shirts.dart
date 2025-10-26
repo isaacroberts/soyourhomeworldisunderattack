@@ -4,6 +4,7 @@ import '../holders/font_wanters.dart';
 import '../holders/holder_base.dart';
 import '../holders/span_holding_code.dart';
 
+///TODO: Why aren't these showing on mobile?
 class Shirt extends SpanHoldingCode {
   late final Color color;
   final double width;

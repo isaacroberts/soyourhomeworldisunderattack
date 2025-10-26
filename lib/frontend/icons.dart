@@ -10,6 +10,7 @@ class RpgAwesome {
   static const _kFontFam = 'RpgAwesome';
   static const _kFontPkg = null; //"fluttericon";
 
+  ///For typing in the value instead of importanting the library
   static const int errorIconIndex = 30;
   static const List<IconData> values = [
     acid,

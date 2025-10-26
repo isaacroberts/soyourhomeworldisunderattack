@@ -5,7 +5,7 @@ import '../chapter_heading/noir/colors.dart';
 import 'base_text_theme.dart';
 import 'font_family.dart';
 
-//TODO: Consider finding sans serif version of palatino
+//TODO: Consider finding sans serif version of palatino for appFont
 const appFontFamily = globalFontFamily;
 
 TextTheme noirTextTheme = const TextTheme(

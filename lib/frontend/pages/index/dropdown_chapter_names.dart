@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
+import 'package:soyourhomeworld/frontend/parts/noir_part.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/book.dart';
@@ -38,7 +39,7 @@ class _ChapterTitleDropdownState extends State<ChapterTitleDropdown> {
   }
 
   void onChapterSelected(Chapter? c) {
-    //TODO: I think this should callback the parent to make sure overlays are getting removed
+    //Overlays are getting removed elsewhere
     scrollToChapter(c, context: context);
   }
 
@@ -50,17 +51,16 @@ class _ChapterTitleDropdownState extends State<ChapterTitleDropdown> {
     return ScrollConfiguration(
         behavior: const ScrollBehavior(),
         child: ListView.builder(
-
-            //This allows the startItem to be shown first
-            controller: scrollController,
-            //TODO: Prototype item
-            // prototypeItem: const SizedBox(
-            //   height: 60,
-            // ),
-            itemExtent: 60,
-            findChildIndexCallback: findChildIndexCallback,
-            key: const Key('chpNameDropdownListView'),
-            itemBuilder: builder));
+          //This allows the startItem to be shown first
+          controller: scrollController,
+          itemExtent: 60,
+          findChildIndexCallback: findChildIndexCallback,
+          key: const Key('chpNameDropdownListView'),
+          itemBuilder: builder,
+          prototypeItem: const _ChapterTilePrototype(
+            key: Key('chpTileProto'),
+          ),
+        ));
   }
 
   int? findChildIndexCallback(Key key) {
@@ -76,23 +76,19 @@ class _ChapterTitleDropdownState extends State<ChapterTitleDropdown> {
   Widget? builder(BuildContext context, int index) {
     if (book.inBounds(index)) {
       Chapter chapter = book.chapters[index];
-      //TODO: Change this to nullable chec
-      //I'm so fucking sorry LMAO
-      //On the upside, this will automatically match the tile to the chapter that it's from
+      //This will automatically match the tile to the chapter that it's from
       Part part = getPartOrFallback(chapter.part);
       //TODO: Extract to widget
       return Material(
-          key: Key('chpTile$index'),
-          type: MaterialType.canvas,
-          color: part.primary.s4,
-          child: ChapterProvider(
-              key: const Key('chpDropdown'),
-              chapter: chapter,
-              part: part,
-              child: _ChapterTitleListItem(
-                  key: Key('chp$index'),
-                  chapter: book.chapters[index],
-                  onClicked: onChapterSelected)));
+        key: Key('chpTile$index'),
+        type: MaterialType.canvas,
+        color: part.primary.s4,
+        child: _ChapterTitleListItem(
+            key: Key('chp$index'),
+            chapter: book.chapters[index],
+            onClicked: onChapterSelected,
+            part: part),
+      );
     } else {
       return null;
     }
@@ -104,9 +100,13 @@ class _ChapterTitleListItem extends StatelessWidget {
   ///Use a callback instead of context.go so barrier can be dismissed properly
   final void Function(Chapter) onClicked;
   final Chapter chapter;
+  final Part part;
 
   const _ChapterTitleListItem(
-      {required super.key, required this.chapter, required this.onClicked});
+      {required super.key,
+      required this.chapter,
+      required this.onClicked,
+      required this.part});
 
   void onPressed() {
     onClicked(chapter);
@@ -122,47 +122,23 @@ class _ChapterTitleListItem extends StatelessWidget {
             child: RawTitleRow(
               chapter: chapter,
               small: true,
+              part: part,
             )));
-    // return ListTile(
-    //   leading: chapter.isPart
-    //       ? Icon(
-    //           Symbols.brick,
-    //           color: part.primary.se,
-    //         )
-    //       : null,
-    //   onTap: onPressed,
-    //   title: Text(
-    //     key: const Key('t'),
-    //     chapter.displayName,
-    //     style: headerFont.copyWith(fontSize: 16),
-    //     textAlign: TextAlign.left,
-    //   ),
-    //   trailing: ChapterNumber(index: chapter.index),
-    // );
-    // return Padding(
-    //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-    //     child: Material(
-    //         color: part.primary.s4,
-    //         child: InkWell(
-    //             key: Key('dropdownItem${chapter.index}'),
-    //             onTap: onPressed,
-    //             // color: part.primary.s4,
-    //             // padding: EdgeInsets.zero,
-    //
-    //             child: DecoratedBox(
-    //               decoration: BoxDecoration(border: Border.all()),
-    //               //TODO: Move these up
-    //               child: Align(
-    //                   alignment: Alignment.centerLeft,
-    //                   child: Padding(
-    //                       padding: const EdgeInsets.symmetric(
-    //                           horizontal: 12, vertical: 6),
-    //                       child: Text(
-    //                         key: const Key('t'),
-    //                         chapter.displayName,
-    //                         style: headerFont.copyWith(fontSize: 12),
-    //                         textAlign: TextAlign.left,
-    //                       ))),
-    //             ))));
+  }
+}
+
+//For the list view
+class _ChapterTilePrototype extends StatelessWidget {
+  const _ChapterTilePrototype({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+        height: 60,
+        child: RawTitleRow(
+          chapter: null,
+          small: true,
+          part: PartNoir(),
+        ));
   }
 }

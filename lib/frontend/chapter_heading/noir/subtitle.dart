@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle_components.dart';
 
 import '../../../../backend/book.dart';
 import '../../../../backend/chapter.dart';
 import '../../../../backend/chapter_data.dart';
 import '../../parts/part.dart';
+import '../header_elements.dart';
 
 class ChapterHeadingSubtitle extends StatelessWidget
     implements PreferredSizeWidget {
@@ -32,7 +32,7 @@ class ChapterHeadingSubtitle extends StatelessWidget
       //Add just copy button
       scrollRow = const Align(
           alignment: Alignment.centerLeft,
-          child: _CopyTextButton(key: Key("copyButton")));
+          child: CopyTextButton(key: Key("copyButton")));
       // scrollRow = const Padding(
       //     key: Key("heading_pad"),
       //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
@@ -117,7 +117,8 @@ class _SubtitleRow extends StatelessWidget {
   }
 
   Widget noChipsRow(BuildContext context, Chapter chapter) {
-    return const _CopyTextButton(key: Key('copyButton'));
+    //TODO: Move to social footer
+    return const CopyTextButton(key: Key('copyButton'));
   }
 
   Widget completedRow(BuildContext context, Chapter chapter) {
@@ -132,12 +133,14 @@ class _SubtitleRow extends StatelessWidget {
         // BookmarkButton(key: const Key("bookmark"), chapter: chapter),
         WhatIcon(key: Key('what=${extra.what}'), what: extra.what),
         if (extra.contentWarning != null)
-          //TODO: Brighter icon
           CurrentChip(
               key: const Key("CW"),
               value: 'CW: ${extra.contentWarning}',
               label: 'Content Warning',
-              icon: Icons.warning_amber),
+              icon: Icon(
+                Icons.warning_amber,
+                color: Part.of(context).primary.sa,
+              )),
         // CurrentChip(
         //     key: const Key("What"),
         //     value: extra.what,
@@ -152,12 +155,12 @@ class _SubtitleRow extends StatelessWidget {
             key: const Key("Where"),
             value: extra.where,
             label: 'Where',
-            icon: Icons.location_on_outlined),
+            icon: const Icon(Icons.location_on_outlined)),
         CurrentChip(
             key: const Key("When"),
             value: extra.when,
             label: 'When',
-            icon: Icons.calendar_month),
+            icon: const Icon(Icons.calendar_month)),
 
         // CurrentChip(
         //     key: const Key("Recap"),
@@ -166,8 +169,8 @@ class _SubtitleRow extends StatelessWidget {
         //     //Uses the same icon as above because they won't both be used
         //     icon: Icons.question_mark),
         // _LengthSummaryWrap(key: const Key("lsw"), chapter: chapter),
-        //TODO: Move to bottom
-        const _CopyTextButton(
+        //TODO: Move to social footer
+        const CopyTextButton(
           key: Key("copy"),
         ),
       ],
@@ -177,24 +180,6 @@ class _SubtitleRow extends StatelessWidget {
   Widget nullChapterRow(BuildContext context) {
     ///Empty
     return const SizedBox.shrink();
-  }
-}
-
-class _CopyTextButton extends StatelessWidget {
-  const _CopyTextButton({super.key});
-
-  void onPressed(BuildContext context) {
-    Chapter chapter = Chapter.of(context);
-    chapter.data?.copyText();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StdAppBarButton(
-      icon: Icons.copy_all,
-      onPressed: () => onPressed(context),
-      tooltip: 'Copy text',
-    );
   }
 }
 

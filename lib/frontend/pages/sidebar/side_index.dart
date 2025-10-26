@@ -7,10 +7,9 @@ import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
 import '../../../backend/error_handler.dart';
 import '../../../backend/part_id.dart';
-import '../../chapter_heading/general/subtitle_components.dart';
 import '../../chapter_heading/general/title.dart';
+import '../../chapter_heading/header_elements.dart';
 import '../../parts/all_parts.dart';
-import '../../parts/noir_colors.dart';
 import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
 import '../../theme/layout_constants.dart';
@@ -150,10 +149,8 @@ class _SidebarIndexState extends State<SidebarIndex> {
 
   Widget? itemBuilder(BuildContext context, int index) {
     if (partsOnly) {
-      //TODO: Store parts list
-      var p = book.parts.toList(growable: false);
-      if (index >= 0 && index < p.length) {
-        return chapterTile(context, p[index]);
+      if (index >= 0 && index < book.partAmt) {
+        return chapterTile(context, book.getPartStart(index));
       }
     } else {
       if (index >= 0 && index < book.chapterAmt) {
@@ -168,7 +165,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
       if (pin) {
         scrollToCurrentChapter();
       }
-      //TODO: Track part, setState if part changes
+      //Part changes upstream
       setState(() {});
     }
   }
@@ -236,23 +233,23 @@ class _SidebarIndexState extends State<SidebarIndex> {
   }
 
   Widget? trailingWidget(BuildContext context, Chapter chapter, Part part) {
+    Color color = widget.part.primary.sd;
     if (currentChapter == chapter) {
-      return const Icon(
-        key: Key('bkMkr'),
+      return Icon(
+        key: const Key('bkMkr'),
         Icons.bookmark,
-        color: NoirPrimary.shaded,
+        color: color,
       );
     } else if (partsOnly) {
       //TODO: This will work once parts are fully integrated, i think
       if (currentChapter?.part == chapter.part) {
-        return const Icon(
-          key: Key('bkMkr'),
+        return Icon(
+          key: const Key('bkMkr'),
           Icons.bookmark_rounded,
-          color: NoirPrimary.shaded,
+          color: color,
         );
       }
     } else if (chapter.isPart) {
-      Color color = part.primary.sd;
       return Icon(Symbols.book, color: color);
     }
     return null;

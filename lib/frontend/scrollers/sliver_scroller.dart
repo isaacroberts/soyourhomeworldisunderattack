@@ -20,8 +20,6 @@ import '../slivers/null_slivers.dart';
 import '../theme/base_colors.dart';
 import '../theme/timings.dart';
 
-//TODO: Move
-
 class SliverScroller extends StatefulWidget {
   // final Book book;
   // final int? startChapter;
@@ -165,10 +163,7 @@ class _SliverScrollerState extends State<SliverScroller> {
     if (chapter == null) {
       return;
     }
-    if (kDebugMode && false) {
-      //It slows down the computer too much
-      return;
-    }
+
     await Future.delayed(const Duration(milliseconds: 2000));
     //Scroll to new chapter
     //The null context doesn't allow it to retry by loading the SliverScroller
@@ -350,10 +345,13 @@ class _SliverScrollerState extends State<SliverScroller> {
     }
 
     if (endChapter == book.chapterAmt) {
-      slivers.add(const EndOfBookFillRemaining(key: Key("fillRemaining")));
+      slivers.add(
+          EndOfBookFillRemaining(key: const Key("fillRemaining"), part: part));
     } else {
       slivers.add(LoadNextFillRemaining(
-          key: const Key('refreshRemaining'), onRequestMore: onAddExtra));
+          key: const Key('refreshRemaining'),
+          onRequestMore: onAddExtra,
+          part: part));
     }
     return ChapterHeadingData(
         key: const Key("headingData"),

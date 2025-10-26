@@ -262,17 +262,20 @@ class SliverTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Alignment horizAlign = textAlignToHoriz(align);
-
-    double tabSize = math.min(24, MediaQuery.sizeOf(context).width / 8);
+    double width = MediaQuery.sizeOf(context).width;
+    double tabSize = math.min(24, width / 8);
 
     Widget alignWrap;
+    alignWrap = SliverToBoxAdapter(child: child);
+
     if (horizAlign == Alignment.topLeft) {
-      alignWrap = child;
+      // alignWrap = alignWrap;
     } else {
-      //TODO: Sliverify
-      alignWrap = Align(alignment: horizAlign, child: child);
+      alignWrap = SliverCenter(
+        sliver: alignWrap,
+        align: horizAlign.x,
+      );
     }
-    alignWrap = SliverToBoxAdapter(child: alignWrap);
 
     if (tabs == 0) {
       //Base padding

@@ -3,10 +3,10 @@ import 'dart:core';
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/icons.dart';
 import 'package:soyourhomeworld/frontend/theme/base_text_theme.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../backend/utils.dart';
 import 'greenland_ticket.dart';
@@ -85,7 +85,7 @@ class _GreenlandGameState extends State<GreenlandGame> {
 
   void submit() {
     if (mounted && submittable) {
-      context.go('/search/wontickets');
+      scrollToSearchTerm('wontickets', context: context);
     }
   }
 

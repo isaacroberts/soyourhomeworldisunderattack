@@ -155,7 +155,6 @@ class ColoredBoxFrag extends FragOfText {
 
   @override
   InlineSpan span(BuildContext context) {
-    // TODO: implement span
     return WidgetSpan(child: _element(context));
   }
 

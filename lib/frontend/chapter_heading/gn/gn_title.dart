@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/chapter_grid.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../../../backend/book.dart';
@@ -118,13 +117,7 @@ class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
     scrollToChapter(chapter, context: context);
   }
 
-  void onClicked() {
-    ChapterSelectorGrid.pushChapterSelectorGrid(context,
-        onChapterSelected: onSelected,
-        book: Book.of(context),
-        //Title does not have a scrollable
-        show0: false);
-  }
+  void onClicked() {}
 
   Widget buttonBuilder(
       BuildContext context, MenuController controller, Widget? child) {
@@ -152,15 +145,7 @@ class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
                 consumeOutsideTap: false,
 
                 // childFocusNode: FocusNode(),
-                menuChildren: [
-                  SizedBox(
-                      width: 400,
-                      height: 200,
-                      child: ChapterSelectorWidget(
-                        onChapterSelected: onSelected,
-                        show0: false,
-                      )),
-                ],
+                menuChildren: [],
                 builder: buttonBuilder,
                 child: Text(
                   key: const Key("ChapterNumber"),

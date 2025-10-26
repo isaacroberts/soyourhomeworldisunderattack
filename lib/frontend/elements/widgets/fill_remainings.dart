@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/backend/server.dart';
-import 'package:soyourhomeworld/frontend/parts/grand_swatch.dart';
 
 import '../../icons.dart';
+import '../../parts/part.dart';
 import '../../theme/timings.dart';
 
 class LoadNextFillRemaining extends StatelessWidget {
   final VoidCallback onRequestMore;
+  final Part part;
   const LoadNextFillRemaining({
     required super.key,
     required this.onRequestMore,
+    required this.part,
   });
 
   @override
   Widget build(BuildContext context) {
-    GrandSwatch primary = GrandSwatch.primaryOf(context);
-
     return SliverToBoxAdapter(
         key: const Key("FillRemaining"),
         child: Container(
             key: const Key("fillRemCt"),
             //Large so that user can keep scrolling, triggering another notification
             height: 200,
-            color: primary.s3,
+            color: part.primary.s3,
             alignment: Alignment.center,
             child: Column(
                 key: const Key("fillRemCol"),
@@ -30,13 +30,14 @@ class LoadNextFillRemaining extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  //TODO: Text style
                   const Text("Continue"),
                   IconButton(
                     onPressed: onRequestMore,
                     icon: Icon(
                       key: const Key("fillRmIcon"),
                       Icons.more_vert_rounded,
-                      color: primary.sa,
+                      color: part.primary.sa,
                       size: 48,
                     ),
                   ),
@@ -48,19 +49,18 @@ class LoadNextFillRemaining extends StatelessWidget {
 class EndOfBookFillRemaining extends StatelessWidget {
   const EndOfBookFillRemaining({
     required super.key,
+    required this.part,
   });
 
+  final Part part;
   @override
   Widget build(BuildContext context) {
-    //TODO: Expand text from center
-    GrandSwatch primary = GrandSwatch.primaryOf(context);
-
     return SliverToBoxAdapter(
         key: const Key("FillRemaining"),
         child: Container(
             key: const Key("fillRemCt"),
             height: 200,
-            color: primary.s3,
+            color: part.primary.s3,
             alignment: Alignment.center,
             child: Column(
                 key: const Key("fillRemCol"),
@@ -71,9 +71,10 @@ class EndOfBookFillRemaining extends StatelessWidget {
                   Icon(
                     key: const Key("fillRmIcon"),
                     RpgAwesome.fedora,
-                    color: primary.sa,
+                    color: part.primary.sa,
                     size: 48,
                   ),
+                  //TODO: Text style (appFont)
                   const Text('Heh, thanks for reading.'),
                   // const Text('You have Helped your Homeworld'),
                   const Text("Why not share on social media?"),

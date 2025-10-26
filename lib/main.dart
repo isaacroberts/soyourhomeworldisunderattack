@@ -38,31 +38,8 @@ Future<void> main() async {
     return true;
   };
 
-  if (kDebugMode && false) {
-    // runApp(const DebugApp());
-  } else {
-    runApp(const MyApp());
-  }
+  runApp(const MyApp());
 }
-//
-// class DebugApp extends StatelessWidget {
-//   const DebugApp({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         theme: noirTheme,
-//         title: 'Help! My Debugging!',
-//         home: const McDebugScaffold(
-//             child: BookWaiter(
-//           child: SliverScroller(
-//             key: Key('DebugSliverScroller'),
-//             startChapter: IntStartChapter(0),
-//             hasIndex: false,
-//           ),
-//         )));
-//   }
-// }
 
 final ViewSettings settings = ViewSettings.defaultsThenLoad();
 

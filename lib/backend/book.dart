@@ -44,6 +44,34 @@ class BookProvider extends InheritedWidget {
   }
 }
 
+class _PartMarker {
+  final Chapter source;
+  // final int start;
+  final int end;
+
+  _PartMarker.fromChapter(this.source, this.end);
+
+  int get start => source.index;
+}
+
+List<_PartMarker> _mapChaptersToParts(List<Chapter> chapters) {
+  List<_PartMarker> parts = [];
+  //Must get the index of the end of the part range
+  //Track last part
+  Chapter lastPart = chapters[0];
+  for (int ix = 1; ix < chapters.length; ++ix) {
+    if (chapters[ix].isPart) {
+      //Create previous partMarker
+      parts.add(_PartMarker.fromChapter(lastPart, ix));
+      //Update last
+      lastPart = chapters[ix];
+    }
+  }
+  //Close loop
+  parts.add(_PartMarker.fromChapter(lastPart, chapters.length));
+  return parts.toList(growable: false);
+}
+
 class Book {
   final String id;
 
@@ -52,7 +80,21 @@ class Book {
   final Color color;
   //TODO: Make private, and add null-aware [] operator
   final List<Chapter> chapters;
-  Iterable<Chapter> get parts => chapters.where((p) => p.isPart);
+
+  late final List<_PartMarker> _parts;
+
+  // Iterable<Chapter> get partStarts => _parts.map((p)=>p.source);
+
+  int get partAmt => _parts.length;
+  Chapter getPartStart(int partIndex) {
+    return _parts[partIndex].source;
+  }
+
+  List<Chapter> getPartRange(int partIndex) {
+    _PartMarker part = _parts[partIndex];
+    return chapters.sublist(part.start, part.end);
+  }
+
   final String byline;
 
   Book(
@@ -63,6 +105,8 @@ class Book {
       required this.byline}) {
     //Urls & names of font families
     FontCache.getInstance().readFontTable();
+    _parts = _mapChaptersToParts(chapters);
+
     if (kDebugMode) {
       for (int ch = 0; ch < chapters.length; ++ch) {
         assert(chapters[ch].index == ch,

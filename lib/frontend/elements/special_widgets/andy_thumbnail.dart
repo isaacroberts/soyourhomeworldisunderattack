@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart';
+import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../parts/part.dart';
 import '../../theme/font_family.dart';
@@ -102,7 +102,7 @@ class AndyThumbnailHolder extends SpanHoldingCode {
 
   void onPressed(BuildContext context) {
     String link = this.link ?? 'YTHook';
-    context.go('/search/$link');
+    scrollToSearchTerm(link, context: context);
   }
 
   @override

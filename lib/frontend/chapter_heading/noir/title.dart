@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle_components.dart';
 import 'package:soyourhomeworld/frontend/pages/index/dropdown_chapter_names.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../elements/holders/textholders.dart';
 import '../../parts/part.dart';
 import '../../theme/base_text_theme.dart';
+import '../header_elements.dart';
 
 class AppBarTitleOnly extends StatelessWidget {
   const AppBarTitleOnly({super.key});
@@ -51,6 +51,7 @@ class _HeadingTitleState extends State<HeadingTitleRow> {
   Widget build(BuildContext context) {
     Widget title = RawTitleRow(
       chapter: chapter,
+      part: Part.of(context),
     );
 
     title = RawMenuAnchor(
@@ -87,13 +88,18 @@ class _HeadingTitleState extends State<HeadingTitleRow> {
 
 class RawTitleRow extends StatelessWidget {
   final Chapter? chapter;
+  final Part part;
   final bool small;
-  const RawTitleRow({super.key, required this.chapter, this.small = false});
+  const RawTitleRow(
+      {super.key,
+      required this.chapter,
+      this.small = false,
+      required this.part});
 
   @override
   Widget build(BuildContext context) {
     late TextStyle headerStyle;
-    final Color headerColor = Part.of(context).primary.se;
+    final Color headerColor = part.primary.se;
     HeaderOfText? header = chapter?.data?.header;
     if (header is CustomHeaderOfText) {
       // headerColor = header.font.color ?? headerColor;

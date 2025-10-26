@@ -17,7 +17,6 @@ class _RedirectPageState extends State<RedirectPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     hasRedirected = false;
     Future.delayed(const Duration(seconds: 1), redirect);

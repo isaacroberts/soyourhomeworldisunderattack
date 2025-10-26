@@ -3,7 +3,7 @@ import 'package:soyourhomeworld/frontend/parts/gn_colors.dart';
 
 import '../../../../backend/chapter.dart';
 import '../../parts/part.dart';
-import 'gn_subtitle.dart';
+import '../noir/subtitle.dart';
 import 'gn_title.dart';
 
 class GnBar extends StatelessWidget {
@@ -152,6 +152,6 @@ class _SubtitleContainer extends StatelessWidget {
         ),
         //Only render child on expanded
         alignment: Alignment.center,
-        child: GnChapterHeadingSubtitle(key: Key("Subtitle${chapter?.key}")));
+        child: ChapterHeadingSubtitle(key: Key("Subtitle${chapter?.key}")));
   }
 }

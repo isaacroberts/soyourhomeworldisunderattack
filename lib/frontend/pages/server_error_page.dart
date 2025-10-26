@@ -7,8 +7,6 @@ import '../elements/widgets/deferred_load_tools.dart';
 import '../icons.dart';
 import 'base_error_page.dart';
 
-//TODO: It will be easier to paste the code in here
-
 Widget errorPageBuilder(
     BuildContext context, Object? exception, Object? stackTrace) {
   if (exception == null) {

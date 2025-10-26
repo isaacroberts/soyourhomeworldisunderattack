@@ -30,7 +30,6 @@ class _AdSupportingScaffoldState extends State<AdSupportingScaffold> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.showAppCTA) {
       Future.delayed(const Duration(seconds: 1), showAppCTA);

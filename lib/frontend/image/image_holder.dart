@@ -68,7 +68,6 @@ class StdImageHolder extends ImageHolder {
   @override
   Widget debugSliver(BuildContext context) {
 //No fancy image stuff
-    //TODO: Even simpler sliver
     //TODO: Buttons
     //TODO: debugPane
     return PortraitSliver(key: Key('portrait_$id'), holder: this);

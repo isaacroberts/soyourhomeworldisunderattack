@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:soyourhomeworld/backend/bookmark_saver.dart';
-import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle_components.dart';
 import 'package:soyourhomeworld/frontend/elements/widgets/chapter_progress_indicator.dart';
 import 'package:soyourhomeworld/frontend/pages/sidebar/side_index.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
@@ -10,6 +9,7 @@ import 'package:soyourhomeworld/frontend/theme/layout_constants.dart';
 
 import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
+import '../../chapter_heading/header_elements.dart';
 import '../../parts/part.dart';
 import 'logo.dart';
 
@@ -92,7 +92,7 @@ class _SidebarState extends State<Sidebar> {
 
 // === Callbacks ==========
   void onCollapsed() {
-    //TODO: Don't offer hide on Wide view
+    //TODO: Don't offer hide when screen is wide enough
     setState(() {
       expanded = false;
     });
@@ -149,7 +149,7 @@ class CollapsedSidebar extends StatelessWidget {
                 child: Center(
                     child: StdAppBarButton(
                   key: const Key('showToggle'),
-                  icon: Symbols.hide,
+                  icon: Symbols.menu_book,
                   tooltip: 'Show',
                   onPressed: onOpenIndex,
                 )),

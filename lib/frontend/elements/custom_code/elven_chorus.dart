@@ -8,7 +8,7 @@ import 'package:soyourhomeworld/backend/font_interm.dart';
 
 import '../holders/holder_base.dart';
 
-//TODO: This should extend a code object, once JSON is added
+///Scrolling Marquee doing the "A Elbereth... Gilthoniel"
 class ElvenChorusHolder extends CodeHolder {
   final int? speed;
   const ElvenChorusHolder({required this.speed});
