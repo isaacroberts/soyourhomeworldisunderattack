@@ -19,12 +19,11 @@ class SiteLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         key: const Key('logoCtr'),
-        decoration: BoxDecoration(
-            color: part.primary.s4,
-            border:
-                Border(bottom: BorderSide(color: part.primary.s2, width: 1))),
+        // decoration: BoxDecoration(
+        color: part.primary.s4,
+        // border: Border.all(color: part.primary.s2, width: 1)),
         height: appBarSize,
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(horizontal: 6),
         alignment: Alignment.centerLeft,
         child: TextButton(
             key: const Key('logoButton'),
@@ -32,7 +31,8 @@ class SiteLogo extends StatelessWidget {
             child: Text(
               key: const Key('logoTxt'),
               'Homeworld',
-              style: headerFont(color: part.primary.sc),
+              style: headerFont(
+                  color: part.primary.sd, fontWeight: FontWeight.w500),
               textAlign: TextAlign.start,
             )));
   }
@@ -54,8 +54,7 @@ class CollapsedSiteLogo extends StatelessWidget {
             key: const Key('logoCtr'),
             decoration: BoxDecoration(
               color: part.primary.s4,
-              // border: Border(
-              //     bottom: BorderSide(color: NoirPrimary.shade2, width: 1)),
+              // border: Border.all(color: part.primary.s3, width: 1),
             ),
             height: appBarSize,
             // padding: const EdgeInsets.all(12),
@@ -71,7 +70,8 @@ class CollapsedSiteLogo extends StatelessWidget {
                 child: Text(
                   key: const Key('lgoTxt'),
                   'H',
-                  style: headerFont(color: part.primary.sc),
+                  style: headerFont(
+                      color: part.primary.sd, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.start,
                 ))));
   }

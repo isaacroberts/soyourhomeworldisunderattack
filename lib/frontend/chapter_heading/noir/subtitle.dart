@@ -208,17 +208,22 @@ class _SubtitleContainer extends StatelessWidget {
         // borderOnForeground: true,
         elevation: 0,
         child: Ink(
+            // padding: EdgeInsets.symmetric(horizontal: 6),
             decoration: BoxDecoration(
-              color: part.primary.s5,
+              color: part.primary.s3,
               //   gradient: LinearGradient(
               //       colors: [part.primary.s3, part.primary.s2],
               //       begin: Alignment.centerLeft,
               //       end: Alignment.centerRight),
-              //   // border: Border(top: BorderSide(color: dividerColor, width: 1.5)),
+              borderRadius: BorderRadius.circular(0),
+              border: Border.all(
+                  color: part.primary.s3,
+                  width: 2,
+                  strokeAlign: BorderSide.strokeAlignInside),
             ),
             child: SizedBox(
                 key: const Key("SubtitleBG"),
-                height: 60,
+                height: 56,
                 child: HeaderSizer(child: child))));
   }
 }

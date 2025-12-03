@@ -77,7 +77,12 @@ class _SidebarIndexState extends State<SidebarIndex> {
           part: widget.part,
         ),
         Container(
-          color: widget.part.primary.s5,
+          decoration: BoxDecoration(
+            color: widget.part.primary.s3,
+            // border: Border.all(
+            //     color: widget.part.primary.s5,
+            //     strokeAlign: BorderSide.strokeAlignInside)
+          ),
           height: expandedAppBarSize - appBarSize,
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -137,6 +142,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
           icon: Symbols.hide,
           tooltip: 'Collapse',
           onPressed: onCollapsed,
+          hilite: true,
         ),
         // StdAppBarButton(
         //   icon: Icons.keyboard_arrow_left,
@@ -199,13 +205,16 @@ class _SidebarIndexState extends State<SidebarIndex> {
 
   Widget chapterTile(BuildContext context, Chapter chapter) {
     Part part = getPartImmediate(chapter.part);
-    final Widget? trailing = trailingWidget(context, chapter, part);
+    bool isCurrent = chapter == currentChapter;
+    Widget? trailing = trailingWidget(context, chapter, part);
+    trailing = SizedBox(width: 12, child: trailing);
     if (chapter.isPart && !partsOnly) {
       return Container(
           decoration: BoxDecoration(
-              color: part.primary.s6,
-              border: Border.symmetric(
-                  vertical: BorderSide(color: part.primary.s8))),
+            color: isCurrent ? part.primary.s5 : part.primary.s3,
+            // border: Border.symmetric(
+            //     vertical: BorderSide(color: part.primary.s8))
+          ),
           child: ListTile(
             onTap: () => tileTapped(context, chapter),
             title: Text(
@@ -214,30 +223,44 @@ class _SidebarIndexState extends State<SidebarIndex> {
               overflow: TextOverflow.ellipsis,
               style: headerFont(color: part.primary.sf, fontSize: 16),
             ),
-            //This don't work
-            tileColor: part.primary.s7,
             trailing: trailing,
           ));
     } else {
-      return ListTile(
-          // tileColor: NoirPrimary.shade5,
-          onTap: () => tileTapped(context, chapter),
-          title: Text(
-            chapter.displayName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: headerFont(color: part.primary.se, fontSize: 16),
+      return Container(
+          decoration: BoxDecoration(
+            color: isCurrent ? part.primary.s4 : part.primary.s2,
+            // border: Border.all(
+            //     // color: part.primary.s3,
+            //     width: .5,
+            //     strokeAlign: BorderSide.strokeAlignOutside)
           ),
-          trailing: trailing);
+          child: ListTile(
+              // tileColor: NoirPrimary.shade5,
+              onTap: () => tileTapped(context, chapter),
+              title: Text(
+                chapter.displayName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: headerFont(color: part.primary.se, fontSize: 16),
+              ),
+              trailing: trailing));
     }
   }
 
   Widget? trailingWidget(BuildContext context, Chapter chapter, Part part) {
     Color color = widget.part.primary.sd;
     if (currentChapter == chapter) {
+      if (chapter.isPart) {
+        return Icon(
+          key: const Key('bkMkr'),
+          //Open book
+          Symbols.book_5,
+          color: color,
+        );
+      }
       return Icon(
         key: const Key('bkMkr'),
-        Icons.bookmark,
+        Icons.bookmark_outline,
         color: color,
       );
     } else if (partsOnly) {
@@ -245,12 +268,13 @@ class _SidebarIndexState extends State<SidebarIndex> {
       if (currentChapter?.part == chapter.part) {
         return Icon(
           key: const Key('bkMkr'),
-          Icons.bookmark_rounded,
+          Symbols.book_5,
           color: color,
         );
       }
     } else if (chapter.isPart) {
-      return Icon(Symbols.book, color: color);
+      //Closed book
+      return Icon(Symbols.book_2, color: color);
     }
     return null;
   }

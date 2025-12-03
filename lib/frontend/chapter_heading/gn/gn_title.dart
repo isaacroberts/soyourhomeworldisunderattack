@@ -145,7 +145,7 @@ class _ChapterNumberWrapState extends State<_ChapterNumberWrap> {
                 consumeOutsideTap: false,
 
                 // childFocusNode: FocusNode(),
-                menuChildren: [],
+                menuChildren: const [],
                 builder: buttonBuilder,
                 child: Text(
                   key: const Key("ChapterNumber"),

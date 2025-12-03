@@ -13,7 +13,6 @@ import '../../../backend/book.dart';
 import '../../../backend/chapter.dart';
 import '../../chapter_heading/sliver_header.dart';
 import '../../elements/holders/holder_base.dart';
-import '../../parts/noir_colors.dart';
 import '../../parts/part.dart';
 
 const bool showOnDebug = true;
@@ -115,10 +114,10 @@ class _TitleWidgetState extends State<TitleWidget>
           // alignment: Alignment.center,
           children: [
             // SmokeBg(key: Key('smoke'), width: size.width, height: size.height),
-            Container(
-              color: NoirPrimary.shade2,
-              child: const SizedBox.expand(),
-            ),
+            // Container(
+            //   color: NoirPrimary.shade2,
+            //   child: const SizedBox.expand(),
+            // ),
 
             if (!kDebugMode || showOnDebug)
               WaterWrap(key: const Key('water'), animation: shaderAnimation),
@@ -146,13 +145,18 @@ class _TitleWidgetState extends State<TitleWidget>
             //     key: const Key('title'),
             //     width: size.width,
             //     height: size.height),
-            FadingTitle(
-                key: const Key('fadingTitle'),
-                animationController: animationController),
-
+            // FadingTitle(
+            //     key: const Key('fadingTitle'),
+            //     animationController: animationController),
+            // const Align(
+            //     alignment: Alignment.topLeft,
+            //     child: TitleTextPhone(
+            //       key: Key('ttp'),
+            //       size: Size(100, 200),
+            //     )),
             if (animationController.isCompleted)
               Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.bottomRight,
                 child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: IconButton(
@@ -189,7 +193,7 @@ class FadingTitle extends StatelessWidget {
     Widget child = size.width < 600
         ? TitleTextPhone(key: const Key('TitlePhone}'), size: size, child: null)
         : TitleTextWide(key: const Key('TitleWide'), size: size, child: null);
-
+    return child;
     return FadeTransition(
         key: const Key('fadeIn'),
         opacity: TweenSequence<double>([

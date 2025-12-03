@@ -354,6 +354,7 @@ class _ChangingBgState extends State<ChangingBg>
     if (animationController.isAnimating) {
       return Stack(
         key: const Key('bgStx'),
+        fit: StackFit.expand,
         children: [
           getGradientBg(lastPart),
           FadeTransition(

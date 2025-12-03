@@ -8,6 +8,12 @@ import '../icons.dart';
 import '../parts/part.dart';
 import '../theme/layout_constants.dart';
 
+extension PartSidebar on Part {
+  Color get sidebarButton => primary.s8;
+  Color get sidebarBrite => primary.sc;
+  Color get headerColor => primary.se;
+}
+
 class DrawerButton extends StatefulWidget {
   const DrawerButton({super.key});
 
@@ -36,14 +42,19 @@ class StdAppBarButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
   final String? tooltip;
+  final bool hilite;
   const StdAppBarButton(
-      {super.key, required this.icon, this.onPressed, this.tooltip});
+      {super.key,
+      required this.icon,
+      this.onPressed,
+      this.tooltip,
+      this.hilite = false});
 
   @override
   Widget build(BuildContext context) {
     Part? part = ChapterProvider.maybeOf(context)?.part;
     part!;
-    Color color = part.primary.sd;
+    Color color = hilite ? part.primary.sb : part.primary.s7;
     Widget child = IconButton(
         padding: const EdgeInsets.all(6),
         onPressed: onPressed,

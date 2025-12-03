@@ -1,60 +1,49 @@
 id,family,file,count
 96,Liberation Mono,LiberationMono-Regular.ttf,10
-1,Rubik,Rubik-VariableFont_wght.ttf,18
+1,Rubik,Rubik-VariableFont_wght.ttf,13
 245,Times New Roman,times.ttf,1
-0,Palatino,palatinolinotype_roman.ttf,84
+0,Palatino,palatinolinotype_roman.ttf,55
 9,Ani,Ani.ttf,2
-15,Azeret Mono,AzeretMono-VariableFont_wght.ttf,13
-4,Aierbazzi,aierbazzi.ttf,1
-42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,24
-264,Vampire Wars,Vampire Wars.otf,6
-38,Dhurjati,dhurjati.ttf,9
+15,Azeret Mono,AzeretMono-VariableFont_wght.ttf,6
+42,EB Garamond Medium,EBGaramond-VariableFont_wght.ttf,12
+264,Vampire Wars,Vampire Wars.otf,3
+38,Dhurjati,dhurjati.ttf,2
 20,Brains Courage Demo,Brains Courage Demo.otf,2
-227,Silkscreen,Silkscreen-Regular.ttf,1
-227,Silkscreen,Silkscreen-Bold.ttf,1
-137,Montserrat Medium,Montserrat-Italic-VariableFont_wght.ttf,44
-64,Heebo Black,Heebo-VariableFont_wght.ttf,14
-213,Rock Salt,RockSalt-Regular.ttf,5
-209,Reenie Beanie,ReenieBeanie-Regular.ttf,5
-49,Futura,Futura Medium.otf,3
-67,IBM Plex Sans ExtraLight,IBMPlexSans-ExtraLight.ttf,2
-23,Casual Sketchy,Casual Sketchy.ttf,7
-24,Celtic Garamond the 2nd,CELTG___.TTF,8
+0,Palatino,palatinolinotype_bold.ttf,15
+137,Montserrat Medium,Montserrat-Italic-VariableFont_wght.ttf,16
+64,Heebo Black,Heebo-VariableFont_wght.ttf,6
+213,Rock Salt,RockSalt-Regular.ttf,6
+209,Reenie Beanie,ReenieBeanie-Regular.ttf,2
+67,IBM Plex Sans ExtraLight,IBMPlexSans-ExtraLight.ttf,1
+23,Casual Sketchy,Casual Sketchy.ttf,1
 96,Liberation Mono,LiberationMono-BoldItalic.ttf,2
 96,Liberation Mono,LiberationMono-Bold.ttf,4
-14,Authentic,Authentic Signature.otf,4
-18,Blood Crow,bloodcrow.ttf,3
-0,Palatino,palatinolinotype_bold.ttf,30
-0,Palatino,palatinolinotype_bolditalic.ttf,9
-0,Palatino Linotype,palatinolinotype_italic.ttf,25
+14,Authentic,Authentic Signature.otf,3
+18,Blood Crow,bloodcrow.ttf,1
+42,EB Garamond Medium,EBGaramond-Italic-VariableFont_wght.ttf,8
+0,Palatino,palatinolinotype_bolditalic.ttf,4
+0,Palatino Linotype,palatinolinotype_italic.ttf,19
 96,Liberation Mono,LiberationMono-Italic.ttf,1
-42,EB Garamond Medium,EBGaramond-Italic-VariableFont_wght.ttf,11
 273,Z003,Z003-MediumItalic.t1,5
 7,Anathema,Anathema.ttf,1
-137,Montserrat SemiBold,Montserrat-VariableFont_wght.ttf,44
+137,Montserrat SemiBold,Montserrat-VariableFont_wght.ttf,17
 258,Ubuntu,Ubuntu-M.ttf,3
-152,Noto Mono,NotoMono-Regular.ttf,3
-67,IBM Plex Sans ExtraLight,IBMPlexSans-Bold.ttf,1
 282,g Grinzo,gGrinzo.ttf,4
 8,Andale Mono,andalemo.ttf,3
-12,Arial,Arial.ttf,2
 186,PerryGothic,PERRYGOT.TTF,1
-3,Affordable Afterlife DEMO,AffordableAfterlifeDEMO-Regular.otf,10
 12,Arial,ariali.ttf,1
-6,Amika Blackletter Free Font,Amika Blackletter Free Font.ttf,2
-90,Khmer OS,KhmerOS.ttf,1
+24,Celtic Garamond the 2nd,CELTG___.TTF,3
+6,Amika Blackletter Free Font,Amika Blackletter Free Font.ttf,1
 49,Futura Book,Futura Condensed ExtraBold.ttf,1
-153,Noto Sans,"NotoSans-VariableFont_wdth,wght.ttf",3
-19,Bradley Hand ITC,bradley-hand-itc.ttf,1
-45,Frank Ruhl Libre,FrankRuhlLibre-VariableFont_wght.ttf,8
+49,Futura Book,Futura Medium.otf,1
 68,Impact,Impact.ttf,2
 43,Enchanted Land,Enchanted Land.otf,1
 69,Indie Flower,IndieFlower-Regular.ttf,1
 33,Dancing Script,DancingScript-VariableFont_wght.ttf,1
-67,IBM Plex Sans ExtraLight,IBMPlexSans-Medium.ttf,1
+3,Affordable Afterlife DEMO,AffordableAfterlifeDEMO-Regular.otf,2
+57,Gloria Hallelujah,GloriaHallelujah-Regular.ttf,1
+45,Frank Ruhl Libre,FrankRuhlLibre-VariableFont_wght.ttf,6
 48,FreeSerif,FreeSerif.ttf,1
 197,Purisa,Purisa.ttf,1
 271,Yellowtail,Yellowtail-Regular.ttf,2
 47,FreeSans,FreeSans.ttf,1
-99,Liberation Serif,LiberationSerif-BoldItalic.ttf,1
-99,Liberation Serif2,LiberationSerif-Italic.ttf,1

@@ -62,6 +62,7 @@ class BufferPtr {
       //1 = (impossible)
       //2 = "{}"
       consume(length);
+      dev.log("JSON chapter $debugId length=$length");
       //Clean up
       assertConsume(Codes.RGATOR, debugId: debugId);
       //Return null

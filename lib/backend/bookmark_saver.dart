@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:soyourhomeworld/frontend/chapter_heading/header_elements.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
 
 import '../frontend/parts/part.dart';
@@ -164,7 +165,7 @@ class BookmarkSaveStatusIcon extends StatelessWidget {
         message: status.tooltip,
         child: Icon(
           status.icon,
-          color: part.primary.sc,
+          color: part.sidebarButton,
           size: 24,
         ));
   }

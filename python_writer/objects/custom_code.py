@@ -29,7 +29,7 @@ def code_tag_replacements():
 
 # These are all top-level. For low-level Keywords, you'll have to add another classtype
 def chapter_keywords():
-    #TODO: Extend json_keywords object into this 
+    #TODO: Extend json_keywords object into this
     return ['Chapter', 'Section', 'Label',
         # info
 'Subtitle', 'When', 'Where',
@@ -88,7 +88,8 @@ def block_objects():
     'Youtube',
     'Email',
     'MtgCard',
-
+    'Article',
+    'ID',
 
     # Parsed by Flutter
     'Facebook',

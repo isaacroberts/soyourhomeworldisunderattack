@@ -535,6 +535,8 @@ UNWANTED_ATTRIBUTES = [
 'text-underline-width',
 'text-underline-color',
 'text-overline-style',
+'text-overline-type',
+
 
 #libreOffice shit
 'use-window-font-color',

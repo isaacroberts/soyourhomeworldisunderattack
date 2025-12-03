@@ -34,6 +34,7 @@ import 'frontend/scrollers/scroller_door.dart';
 // const String devMain = '/scroll/20';
 //title
 const String devMain = '/';
+// const String devMain = '/dev_page/';
 
 Widget devPageBuilder(BuildContext context, GoRouterState routerState) {
   /// Dev Page

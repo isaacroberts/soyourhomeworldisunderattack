@@ -20,11 +20,16 @@ uniform float u_time;
 
 //Front smoke
 uniform vec3 cloudColor;
-
+uniform float cloudAlpha;
 //Spill
 uniform vec3 spillColor;
+uniform float spillAlpha;
 
-uniform vec3 colorLand;
+const vec3 forestColor = vec3(.00784, .3764, .192);
+const vec3 sandColor = vec3(.97, .96, .4);
+
+//You could do the cinematic flyover, or you could do a regular sphere
+const bool correctCamera=false;
 
 //THis code has been hard-coded for a radius of 1
 //const float radius=1;
@@ -34,16 +39,11 @@ const float timeK = 1;
 const float PI = 3.14159258;
 
 //-2 = -radius*2
-const vec3 camera = vec3(0, 0, -2);
+const vec3 origCamera = vec3(0, 0, -2);
 //-1.5 = -radius * 1.5
 const float pixelPt = -1.0;
 
 //const float PI = 3.14159258;
-
-
-#define NUM_OCTAVES 6
-
-#define OCTAVES 3
 
 vec2 center = vec2(u_resolution.x/2, u_resolution.y/2);
 
@@ -77,21 +77,23 @@ float dotProduct(vec3 a, vec3 b) {
 }
 
 vec3 rotateX(vec3 point, float theta) {
-    float x = point.x;
-    float z = point.z;
-    float c = cos(theta);
-    float s = sin(theta);
-    point.x = x * c + z * s;
-    point.z = - x * s - z * c;
-    return point;
-}
-vec3 rotateY(vec3 point, float theta) {
     float y = point.y;
     float z = point.z;
     float c = cos(theta);
     float s = sin(theta);
-    point.y = y * c + z * s;
-    point.z =-y * s + z * c;
+    //x=x
+    point.y = y * c - z * s;
+    point.z = y * s + z * c;
+    return point;
+}
+vec3 rotateY(vec3 point, float theta) {
+    float x = point.x;
+    float z = point.z;
+    float c = cos(theta);
+    float s = sin(theta);
+    //y=y
+    point.x =  x * c + z * s;
+    point.z = -x * s + z * c;
     return point;
 }
 vec3 rotateZ(vec3 point, float theta) {
@@ -99,6 +101,7 @@ vec3 rotateZ(vec3 point, float theta) {
     float y = point.y;
     float c = cos(theta);
     float s = sin(theta);
+    //z=z
     point.x = x * c - y * s;
     point.y = x * s + y * c;
     return point;
@@ -125,46 +128,146 @@ float random (in vec2 _st) {
 //    43758.5453123);
 }
 
+float taylorInvSqrt(in float r) { return 1.79284291400159 - 0.85373472095314 * r; }
+vec2 taylorInvSqrt(in vec2 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+vec3 taylorInvSqrt(in vec3 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+vec4 taylorInvSqrt(in vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
 
-float noise(vec2 x) {
-    vec2 i = floor(x);
-    vec2 f = fract(x);
 
-    // Four corners in 2D of a tile
-    float a = hash(i);
-    float b = hash(i + vec2(1.0, 0.0));
-    float c = hash(i + vec2(0.0, 1.0));
-    float d = hash(i + vec2(1.0, 1.0));
+float mod289(const in float x) { return x - floor(x * (1. / 289.)) * 289.; }
+vec2 mod289(const in vec2 x) { return x - floor(x * (1. / 289.)) * 289.; }
+vec3 mod289(const in vec3 x) { return x - floor(x * (1. / 289.)) * 289.; }
+vec4 mod289(const in vec4 x) { return x - floor(x * (1. / 289.)) * 289.; }
 
-    // Simple 2D lerp using smoothstep envelope between the values.
-    // return vec3(mix(mix(a, b, smoothstep(0.0, 1.0, f.x)),
-    //			mix(c, d, smoothstep(0.0, 1.0, f.x)),
-    //			smoothstep(0.0, 1.0, f.y)));
+float permute(const in float v) { return mod289(((v * 34.0) + 1.0) * v); }
+vec2 permute(const in vec2 v) { return mod289(((v * 34.0) + 1.0) * v); }
+vec3 permute(const in vec3 v) { return mod289(((v * 34.0) + 1.0) * v); }
+vec4 permute(const in vec4 v) { return mod289(((v * 34.0) + 1.0) * v); }
 
-    // Same code, with the clamps in smoothstep and common subexpressions
-    // optimized away.
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+float noise(in vec2 v) {
+    const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                        0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                        -0.577350269189626,  // -1.0 + 2.0 * C.x
+                        0.024390243902439); // 1.0 / 41.0
+    // First corner
+    vec2 i  = floor(v + dot(v, C.yy) );
+    vec2 x0 = v -   i + dot(i, C.xx);
+
+    // Other corners
+    vec2 i1;
+    //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+    //i1.y = 1.0 - i1.x;
+    i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    // x0 = x0 - 0.0 + 0.0 * C.xx ;
+    // x1 = x0 - i1 + 1.0 * C.xx ;
+    // x2 = x0 - 1.0 + 2.0 * C.xx ;
+    vec4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+
+    // Permutations
+    i = mod289(i); // Avoid truncation effects in permutation
+    vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+    + i.x + vec3(0.0, i1.x, 1.0 ));
+
+    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+    m = m*m ;
+    m = m*m ;
+
+    // Gradients: 41 points uniformly over a line, mapped onto a diamond.
+    // The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+    vec3 h = abs(x) - 0.5;
+    vec3 ox = floor(x + 0.5);
+    vec3 a0 = x - ox;
+
+    // Normalise gradients implicitly by scaling m
+    // Approximation of: m *= inversesqrt( a0*a0 + h*h );
+    m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+    // Compute final noise value at P
+    vec3 g;
+    g.x  = a0.x  * x0.x  + h.x  * x0.y;
+    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+    return 130.0 * dot(m, g);
 }
 
-float noise(vec3 x) {
-    const vec3 step = vec3(110, 241, 171);
 
-    vec3 i = floor(x);
-    vec3 f = fract(x);
+float noise(in vec3 v) {
+    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
 
-    // For performance, compute the base input to a 1D hash from the integer part of the argument and the
-    // incremental change to the 1D based on the 3D -> 1D wrapping
-    float n = dot(i, step);
+    // First corner
+    vec3 i  = floor(v + dot(v, C.yyy) );
+    vec3 x0 =   v - i + dot(i, C.xxx) ;
 
-    vec3 u = f * f * (3.0 - 2.0 * f);
-    return mix(mix(mix( hash(n + dot(step, vec3(0, 0, 0))), hash(n + dot(step, vec3(1, 0, 0))), u.x),
-    mix( hash(n + dot(step, vec3(0, 1, 0))), hash(n + dot(step, vec3(1, 1, 0))), u.x), u.y),
-    mix(mix( hash(n + dot(step, vec3(0, 0, 1))), hash(n + dot(step, vec3(1, 0, 1))), u.x),
-    mix( hash(n + dot(step, vec3(0, 1, 1))), hash(n + dot(step, vec3(1, 1, 1))), u.x), u.y), u.z);
+    // Other corners
+    vec3 g = step(x0.yzx, x0.xyz);
+    vec3 l = 1.0 - g;
+    vec3 i1 = min( g.xyz, l.zxy );
+    vec3 i2 = max( g.xyz, l.zxy );
+
+    //   x0 = x0 - 0.0 + 0.0 * C.xxx;
+    //   x1 = x0 - i1  + 1.0 * C.xxx;
+    //   x2 = x0 - i2  + 2.0 * C.xxx;
+    //   x3 = x0 - 1.0 + 3.0 * C.xxx;
+    vec3 x1 = x0 - i1 + C.xxx;
+    vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+    vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+    // Permutations
+    i = mod289(i);
+    vec4 p = permute( permute( permute(
+                i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+            + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+            + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+    // Gradients: 7x7 points over a square, mapped onto an octahedron.
+    // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+    float n_ = 0.142857142857; // 1.0/7.0
+    vec3  ns = n_ * D.wyz - D.xzx;
+
+    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+    vec4 x_ = floor(j * ns.z);
+    vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+    vec4 x = x_ *ns.x + ns.yyyy;
+    vec4 y = y_ *ns.x + ns.yyyy;
+    vec4 h = 1.0 - abs(x) - abs(y);
+
+    vec4 b0 = vec4( x.xy, y.xy );
+    vec4 b1 = vec4( x.zw, y.zw );
+
+    //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
+    //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
+    vec4 s0 = floor(b0)*2.0 + 1.0;
+    vec4 s1 = floor(b1)*2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+
+    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+    vec3 p0 = vec3(a0.xy,h.x);
+    vec3 p1 = vec3(a0.zw,h.y);
+    vec3 p2 = vec3(a1.xy,h.z);
+    vec3 p3 = vec3(a1.zw,h.w);
+
+    //Normalise gradients
+    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+    p0 *= norm.x;
+    p1 *= norm.y;
+    p2 *= norm.z;
+    p3 *= norm.w;
+
+    // Mix final noise value
+    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+    m = m * m;
+    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
+                                dot(p2,x2), dot(p3,x3) ) );
 }
 
-
+#define NUM_OCTAVES 6
 
 
 float fbm(vec2 x) {
@@ -184,9 +287,9 @@ float fbm(vec2 x) {
 
 float fbm(vec3 x) {
     float v = 0.0;
-    float a = 0.5;
-    vec3 shift = vec3(100);
-    for (int i = 0; i < NUM_OCTAVES; ++i) {
+    float a = 1./6.;
+    vec3 shift = vec3(1);
+    for (int i = 0; i < 6; ++i) {
         v += a * noise(x);
         x = x * 2.0 + shift;
         a *= 0.5;
@@ -196,90 +299,94 @@ float fbm(vec3 x) {
 
 ///This must generate noise, but not shift as the damn thing rotates
 vec2 latAndLong(vec3 v) {
-//return vec2(1);
-    //Calculate the polar coordinates
-    //Use that as input to noise function
-    float lat = v.y;
-    //Cosine of longitude
-    vec3 axis = vec3(0.0,1.0,0.0);
-    //TODO: Check if necessary
-
     v = normalize(v);
-
-    //tan(beta) = sin(beta) / cos(beta) == ((Va x Vb) . Vn) / (Va . Vb)
-    float cos = dotProduct(v, axis);
-    float sine = sin(acos(cos));
-
-    //Sine so it is unique across the circle, but wraps
-
-//    float sine = magnitude(v.xz);
-    vec2 ret = vec2( 20*lat,  100* sine);
-    return ret;
+    float lat = v.y * 2;
+//    float lat = acos(v.y) /PI*2 -1  ;
+    //Cosine of longitude
+//    vec3 axis = vec3(0.0,1.0,0.0);
+    float lng = atan(v.x/v.z) *2;
+//    float lng = (v.x*v.z/2 + v.x + v.z) ;
+    return .8 * vec2( lat,  lng);
 }
 
+vec3 getRay(vec2 st, vec3 camera) {
+    if (correctCamera) {
+        float cameraMagn = magnitude(camera);
+        camera = normalize(camera);
+        vec3 tangent1 = crossProduct(camera, normalize(vec3(0, 1, 1)));
+        tangent1 = normalize(tangent1);
+        //Second normal
+        const float spread = .35;
+        vec3 tangent2 = crossProduct(camera, tangent1);
+        tangent2 = normalize(tangent2);
+        vec3 ray= spread * tangent1 * (st.x) + spread * tangent2 * (st.y) -camera;
 
-float landFreqMod (in vec3 st) {
-    //Coordinates that gracefully handle rotation
-//    vec2 coord = latAndLong(st);
-//vec2 coord = st.xy;
-    // Initial values
-    float value = 0.0;
-    float amplitud = .5;
-    float frequency = 0.;
-    //
-    // Loop of octaves
-    for (int i = 0; i < OCTAVES; i++) {
-        value += amplitud * noise(5*st);
-        st *= 2.;
-        amplitud *= .5;
+//        vec3 pixelWindow = vec3((st), pixelPt);
+//        vec3 ray =  camera  - pixelWindow;
+        return -normalize(ray);
     }
-    return value;
+    else {
+        //This is wrong but looks cool
+        //I thought I needed a normal
+        vec3 tangent1 = crossProduct(camera, vec3(0, 1, 0));
+        //Second normal
+        vec3 tangent2 = crossProduct(camera, tangent1);
+//        st *= .8;
+        return -camera + tangent1 * st.x + tangent2 + st.y;
+    }
 }
+//
+//const vec3 shadec = vec3(116./255,97./255,227./255);
+//const vec3 shade6 = vec3(36./255,40./255,94.2/255);
+//const vec3 shade1 = vec3(3./255, 3./255, 21./255);
+//
+const vec3 shadec = vec3(116./255,97./255,227./255);
+const vec3 shade6 = vec3(36./255,40./255,94.2/255);
+const vec3 shade1 = vec3(3./255, 3./255, 21./255);
 
-//float fbm(vec3 x) {
-//    return 0;
-//}
+//Fire variant
+//const vec3 shadec = vec3(255./255, 186./255,17./255);
+//const vec3 shade6 = vec3(240./255, 156./255,10./255);
+//const vec3 shade1 = vec3(31./255,3./255, 3./255);
 
 
-vec3 getRay(vec2 st) {
-    vec3 pixelWindow = vec3((st), pixelPt);
-    vec3 ray =  camera - pixelWindow;
-    return normalize(ray);
-}
-float intersect(vec3 dir)
+vec4 starBackground(vec2 st)
 {
-    // Analytic solution
-    vec3 L = camera;
-    float a = dotProduct(dir, dir);
-    float b = 2 * dotProduct(dir, L);
-    // - 1 = -radius * radius
-    float c = dotProduct(L, L) - 1;
-
-    float t0, t1; // Solutions for t if the ray intersects
-
-    //Quadratic {
-    float discr = b * b - 4 * a * c;
-    //Miss
-    if (discr < 0) return -1;
-    else if (discr == 0)
-    t0 = t1 = -0.5 * b / a;
-    else {
-        float sqDiscr = sqrt(discr);
-        float q = (b > 0) ?
-        -0.5 * (b + sqDiscr) :
-        -0.5 * (b - sqDiscr);
-        t0 = q / a;
-        t1 = c / q;
+//    vec2 tVec = vec2(0, -u_time);
+//    st/=1.5;
+//    float f = noise(5/4 * st + .2 * tVec);
+//    f += noise(4 * (st + .1 * tVec));
+//    f = sin(f);
+//    f = clamp(1-f, 0, 1);
+////    f = f * f;
+//    vec3 color;
+//
+//    if (f < .333) {
+//        color= mix(vec3(1), shade6, f*3);
+//    }
+//    else if ( f < .666) {
+//        color = mix(shade6, shade1, f*3-1);
+//    }
+//    else {
+//        color= mix(shade1, vec3(0), f*3-2);
+//    }
+//
+//return vec4(color, 1);
+//    return vec4(.5 + f * .3, .2 + f * .3, .1 * f, 1);
+    //Stars
+    float star = noise(1+st*100);
+    if (star > .86) {
+//            fragColor = vec4(.039, .039,.101,1);
+        return vec4(1,1,1,1);
     }
-    // }
-
-    if (t0 > t1)
-    {
-        //If highest is negative, it counts as a miss
-        return t0;
+    else if (star > .1) {
+         star *= .01;
+        return vec4(.039+star*.1, .039+star*.5,.101+star,1);
     }
     else {
-        return t1;
+         //0xFF0a0a1a
+         //10, 10, 26
+        return vec4(.039, .039,.101,1);
     }
 }
 
@@ -292,7 +399,7 @@ float intersect(vec3 dir)
 //     C = (0, 0, 0)
 //     r = 1
 //     P  = camera
-float  intersectSphere( vec3 ray) {
+float  intersectSphere( vec3 ray, vec3 camera) {
     float b = -dot(ray, camera);
     // - 1 = - radius**2
     float c = dot(camera, camera) - 1;
@@ -313,91 +420,265 @@ float  intersectSphere( vec3 ray) {
     }
 }
 
+
+#define LAND_OCTAVES 4
+
+float landFreqMod (in vec2 coord) {
+    //Coordinates that gracefully handle rotation
+//coord = 4.234 * coord;
+//vec2 coord = st.xy;
+    // Initial values
+    float value = .4;
+    float amplitud = 1;
+//    float frequency = 0.;
+    //
+    // Loop of octaves
+    for (int i = 0; i < LAND_OCTAVES; i++) {
+//        value += amplitud * noise(2*st);
+        value += amplitud * noise( 1.25*coord);
+        coord = coord * 2.;
+        amplitud *= .5;
+    }
+    return value;
+}
+
+
 void main() {
+
     //Get earth coordinate from pixel
     vec2 st = 2.0 * FlutterFragCoord().xy/u_resolution.xy - vec2(1);
-    vec3 ray = getRay(st);
-    //    float dist = -intersect(ray);
-    float dist = intersectSphere( ray);
+    //Camera
+    vec3 camera;
+    if (correctCamera) {
+        //Not using "creative" flyover code
+        camera = normalize(origCamera);
+        camera = rotateY(camera, u_time * .04);
+//        camera = rotateY(camera, u_time * timeK * .14);
+//        camera = rotateX(camera, u_time * timeK * .02);
 
+        camera = normalize(camera) * 2;
+    }
+    else {
+        //Creates cinematic flyover
+        camera = rotateX(origCamera, u_time * timeK * .1);
+    }
+    vec3 ray = getRay(st, camera);
+
+    //TODO: Calculate distance without sphere intersection
+
+    float dist = intersectSphere( ray, camera);
+
+    //Check distance
     if (dist < 0) {
         //Offscreen
-        //Stars
-        float star = noise(1+st*40);
-        if (star > .98) {
-//            fragColor = vec4(.039, .039,.101,1);
-            fragColor = vec4(1,1,1,1);
-        }
-        else if (star > .1) {
-             star *= .01;
-            fragColor = vec4(.039+star*.1, .039+star*.5,.101+star,1);
-        }
-        else {
-             //0xFF0a0a1a
-             //10, 10, 26
-            fragColor = vec4(.039, .039,.101,1);
-        }
-//            fragColor = vec4(.039, .039,.101,1);
-
+        fragColor = starBackground(st);
         return;
     }
     vec3 coord = camera + dist * ray;
-//    coord= rotateX(coord, u_time/20.0);
+    coord = normalize(coord);
+//    coord = coord;
+//    coord =  rotateY( coord, u_time * timeK * 0.2);
 
     float stepStart = clamp(.45 + (u_time*timeK-4)/16, .40, .55);
          stepStart = .45;
 
-    float slur = .01;
-//    float landness = smoothstep(stepStart, stepStart+slur, landFreqMod(landSt * 7.0));
-    float landness = clamp((landFreqMod(coord)-.333) *5, 0, 1);
+//    float slur = .01;
+//    float landness = (landFreqMod(coord)-.333) *5;
+    vec2 latLong =  latAndLong(coord);
+    float temperature = cos(latLong.x * 2*PI);
 
-//    vec3 color = yesterdaysSpill;
-vec3 color = vec3(0.004,0.018,0.410);
-    vec3 q = vec3(0.);
-    q.x = fbm( coord + 0.10*u_time);
-    q.y = fbm( coord + vec3(1.0));
-    q.z = fbm(coord + vec3(1.0));
+    float climateChange = clamp(u_time - 1, 0, 1000) * timeK * .05;
+temperature += climateChange;
+    float landness = landFreqMod(latLong) + temperature/40;
+    float land2 = landFreqMod (latLong + vec2(1.0));
+    float land3 = landFreqMod (latLong + (vec2(2.0)));
 
-    vec3 r = vec3(0.);
+    float clampedLand = clamp(landness, 0, 1);
 
-    r.x = fbm(1. *coord + 1.0*q +vec3(1.690,.400, 2.53)+ 1.0*u_time );
-    r.y = fbm( coord + 1*q + vec3(0.740,0.830, 1.26)+ 1.0*u_time);
-    r.z = fbm( coord + 1*q + vec3(0.321,4.217, .12)+ 1.0*u_time);
+    //water
+    vec3 color =    vec3(0.004,0.018,0.410);
 
+    //0xff026031
+    vec3 colorLand = forestColor;
 
-    float f = fbm(coord+r);
-
-//    Spill
-    color = mix(color,
-    //    vec3(1, 0, 0),
-    spillColor,
-    clamp(length(q),0.0,1.0));
-
-    //Water color baked in
-    color = mix(color, vec3(0.024,0.118,0.410),(f*f*f+.6*f*f+.5*f) );
+    vec3 oceanColor = mix(
+    //Good water
+    vec3(0.03,0.04,.2),
+     //Bad water
+     vec3(0.1, 0.14, 0.17),
+     clamp(climateChange/7, 0, 1)
+     );
 
 
+//    vec3 q = vec3(0.);
+//    q.x = fbm( coord + 0.10*u_time);
+//    q.y = fbm( coord + vec3(1.0));
+//    q.z = fbm(coord + vec3(1.0));
+
+//    vec3 r = vec3(0.);
+//    r.x = fbm(1. *coord + 1.0*q +vec3(1.690,.400, 2.53)+ 1.0*u_time );
+//    r.y = fbm( coord + 1*q + vec3(0.740,0.830, 1.26)+ 1.0*u_time);
+//    r.z = fbm( coord + 1*q + vec3(0.321,4.217, .12)+ 1.0*u_time);
+
+    const float landthresh = .75;
+
+
+    float mtn =  fbm(vec2(1.5 * landness,.1) );
+    mtn = clamp(-mtn, -1, 1);
+    mtn = (mtn) * 2 * 2 ;
+
+    bool frozen =   fbm (latLong) - temperature * clamp(1-landness*2, 0, 1) + mtn/4> .5 ;
+
+//    bool frozen =   fbm (latLong) - temperature * clamp(1-landness*2, 0, 1)> .5 || mtn > 1;
+//bool frozen = latLong.x < -.4 || latLong.x>.4;
+
+    float biome =clamp(land3 * temperature + clamp(landness - .25, 0, 1) * temperature, 0, 1) + land3*land2 + temperature/10 - .6;
+    bool concrete = biome - clamp(landness, 0, 1) >1;
+    concrete=false;
     //Land
-
-
-    if (landness > .333) {
-//    color = mix(color, colorLand, landness);
-        color = rotateY(color, PI/2 * landness);
+    if (landness>=.333 || frozen) {
+    //Pick land color
+        //Mountain caps
+    if (frozen) {
+        if (concrete) {
+            //Frozen Concrete
+         colorLand = vec3(.5);
+        }
+        else if (biome < .2) {
+        //Forest ice
+            colorLand = vec3(1.0, .96, .86);
+        }
+        else {
+            //Sand ice
+            colorLand = vec3(1.0);
+        }
     }
-//    Clouds
-        color = mix(color,
-                    cloudColor,
-                    clamp(length(r.x) * 3 - 1.5,0.0,.9));
+    else if (biome < .2) {
+        colorLand = forestColor;
+//    colorLand = vec3(.00784, .3764, .192);
+    }
+    else if (biome < .8) {
+        colorLand = mix(forestColor, sandColor, clamp(biome- .2, 0, 1));
+    }
+    else if (!concrete) {
+        colorLand = mix(
+            sandColor,
+            //dirt
+            vec3(.54, .35, .1),
+            clamp(biome-1, 0, 1));
+    }
+    else {
+        //Concrete
+        colorLand = vec3(.29, .3, .35);
+    }
+    }
+    //Draw land
+    if (landness > .75 || frozen) {
+    //Land mtns
 
+   //Above 2 is mtn
+   //Below -2 is valley
+
+//    mtn = mtn * mtn;
+//    mtn = clamp(mtn, -1, 1);
+//    colorLand *= mtn;
+    //Screen
+    colorLand = 1- (1-colorLand)* clamp(1-mtn + 1, 0,1);
+    //Burn
+    float valleyBurn = 1-clamp(1 + mtn + 1, 0, 1);
+//    colorLand = colorLand * (1-valleyBurn);
+colorLand = clamp(colorLand - .3 * valleyBurn, .2, 1);
+
+    //Land texture
+    float f =  (landness + sin(21.24* landness * latLong.x) + sin( 12.253 * landness * latLong.y ));
+    //Less trees in sand
+    f *= clamp(1-biome, 0, 1);
+    //Clamp
+    f = clamp(f, 0, 1);
+    //Microtexture
+    f *= fbm((1+clampedLand) * (130 * coord));
+    //Clamp again, pushing
+    f = clamp(f*5 + 0, 0, 1);
+
+    //Trees
+    if (f>0) {
+        vec3 mixColor = vec3(1.0);
+        if (frozen) {
+            //Blue ice
+            mixColor = vec3(.5, .5, 1);
+        }
+        else if (concrete) {
+            //McDonalds
+            mixColor = vec3(.5, .1, .1);
+        }
+        else {
+            //Trees
+            mixColor = vec3(.2, .5, .23);
+        }
+        //color = colorLand;
+            //Texture
+            color = mix(colorLand, mixColor, f);
+        }
+        else {
+            color = colorLand;
+        }
+    }
+     else {
+         //Undersea shelves
+        float f =  fbm(vec2(10 * landness,.1) );
+        f = 1-f;
+        //Deep ocean
+        color = vec3(0, 0, .1);
+
+        float sea1 = sin(landness);
+        float sea2 = sin(land2/20);
+        float sea3 = sin(land3*100 + land2 * 109 + landness * 218) ;
+
+        float seaMtn =  2 * landness + (  sea3 * sea3 * 20.1) * clamp(sea2, 0, 1);
+
+        //Darken
+        seaMtn = clamp( 1 - ((1-seaMtn)*1), 0, 1);
+        f = clamp(f * f , 0, 1);
+//        color = oceanColor * seaMtn;
+        color = mix(color,oceanColor, seaMtn );
+        color *= (1-(1-f)*.8);
+
+
+
+        //    Spill
+//        if (spillAlpha>0) {
+//        float spillAmt =   clamp(length(q*3),0.0,1.0);
+//            color = mix(color,
+//            spillColor,
+//            spillAlpha* spillAmt)
+//           ;
+//        }
+
+        //Half land
+        //Radius around land
+        if (landness > .61) {
+        if (frozen) {
+            color = mix(oceanColor, vec3(1.0), .5);
+        }
+        else {
+            color = mix(colorLand, oceanColor, .5);
+}
+        }
+    }
+float ccCloudFactor = (clamp(cos(climateChange/10), 0, 1));
+
+    //Clouds
+    float changingLand = landFreqMod (.25*latLong * (.1+ccCloudFactor) + vec2( latLong.x*3, -.45826*u_time));
+        changingLand = clamp(changingLand, 0, 1);
+
+//        float cf = (changingLand)* (1-noise(100 * latLong + vec2( 3 * latLong.x + latLong.y, -u_time * .1) ));
+        float cf =changingLand *  ( (1-ccCloudFactor) +  noise(3.34* latLong  + vec2( latLong.x , clamp(landness*(1-ccCloudFactor), .333, 1)- .152 * u_time * timeK)));
+
+  //Lower is
+    cf = clamp(1-cf, .2, 1);
+    vec3 scrn = 1 - color;
+    scrn *= cf;
+    color = 1-scrn;
 
     fragColor = vec4(color,1.);
 }
-
-/*
-//DEBUG
-void main() {
-    //Orangish
-    fragColor = vec4(1, .7, .2, 1);
-    return;
-}
-*/

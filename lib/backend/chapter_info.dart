@@ -1,6 +1,7 @@
 import 'package:soyourhomeworld/backend/error_handler.dart';
 import 'package:soyourhomeworld/backend/part_id.dart';
 
+import '../frontend/pages/title/title_copy.dart';
 import 'exception_types.dart';
 
 typedef ChapterKey = int;
@@ -36,6 +37,7 @@ class ChapterInfo {
     //Must have varname
     assert(varName != null, 'Varname missing in index @ chapter $index');
     String display = data['display'] ?? 'Chapter';
+
     int part = data['partId'];
     //Validate partId
     if (part < 0 || part >= PartId.values.length) {
@@ -56,6 +58,13 @@ class ChapterInfo {
     // var nextS = data['next'];
     //nextS might be empty, in which case next should be null
     // int? next = int.tryParse(nextS);
+
+    //TODO: Settle on title
+    //Cleanup:
+    if (index == 0) {
+      display = titleText;
+    }
+
     return ChapterInfo(
         id: index,
         varName: varName!,

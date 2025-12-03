@@ -48,7 +48,7 @@ dependencies:
   shared_preferences: ^2.5.3
 
   # proper word wrap - was more critical when font was larger
-  #auto_hyphenating_text: ^0.3.1
+  auto_hyphenating_text: ^0.3.1
   async: ^2.13.0
 
 dev_dependencies:

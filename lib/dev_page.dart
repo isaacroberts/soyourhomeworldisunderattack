@@ -6,6 +6,7 @@ import 'package:soyourhomeworld/frontend/book_waiter.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/special_widgets/ad_list.dart';
 import 'package:soyourhomeworld/frontend/elements/special_widgets/greenland_game.dart';
+import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 
 import 'backend/book.dart';
@@ -13,6 +14,7 @@ import 'backend/chapter.dart';
 import 'backend/part_id.dart';
 import 'frontend/elements/holders/holder_base.dart';
 import 'frontend/elements/holders/textholders.dart';
+import 'frontend/parts/noir_part.dart';
 import 'frontend/parts/part.dart';
 
 class PageWrap extends StatelessWidget {
@@ -81,6 +83,14 @@ class DevPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (routerState.pathParameters.isNotEmpty) {}
+
+    return CowboyBookBuilder(
+        doneBuilder: (context) => ChapterProvider(
+            key: key,
+            chapter: Book.of(context).chapters[0],
+            part: const PartNoir(),
+            child: const TriWizardLoader(message: "Leading style...")));
+    ;
 
     // return CowboyHolderWrap(
     //     holder: NotificationTextHolder.fromSpans(

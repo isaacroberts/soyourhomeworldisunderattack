@@ -1,11 +1,12 @@
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../parts/noir_colors.dart';
 import '../../theme/base_text_theme.dart';
 
-const String titleText =
-    "Help! My Homeworld's under Attack and my Client won't pay!";
-const String? authorText = 'by Joseph Silverstein';
+// const String titleText = "Help! My Homeworld!";
+const String titleText = "My Homeworld is Under Attack!";
+const String? authorText = null; //'by Joseph Silverstein';
 
 class TitleTextWide extends StatelessWidget {
   ///
@@ -30,7 +31,7 @@ class TitleTextWide extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               //Center
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               //Left
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,18 +66,72 @@ class TitleTextPhone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      padding: const EdgeInsets.all(12),
+      height: 200,
+      decoration: BoxDecoration(
+        color: NoirPrimary.shadec,
+        border: Border.all(color: NoirPrimary.shade0),
+        borderRadius: BorderRadius.circular(24),
+        // boxShadow: const [
+        //   BoxShadow(
+        //       offset: Offset(-5, -8),
+        //       blurRadius: 5,
+        //       color: NoirPrimary.shade1)
+        // ]
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        key: Key('titleText'),
+        titleText,
+        textAlign: TextAlign.left,
+        style: titleFont,
+      ),
+    );
+    return builder(context, null);
+    return FutureBuilder(future: initHyphenation(), builder: builder);
+  }
+
+  Widget builder(BuildContext context, AsyncSnapshot? snapshot) {
+    //TODO: Move
+    if (snapshot?.connectionState != ConnectionState.done) {
+      return const SizedBox.shrink();
+    }
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+          color: NoirPrimary.shadec,
+          border: Border.all(color: NoirPrimary.shade0),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: const [
+            BoxShadow(
+                offset: Offset(-5, -8),
+                blurRadius: 5,
+                color: NoirPrimary.shade1)
+          ]),
+      alignment: Alignment.topLeft,
+      child: Text(
+        key: Key('titleText'),
+        titleText,
+        textAlign: TextAlign.left,
+        style: titleFont,
+      ),
+    );
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: SizedBox(
             width: size.width,
             height: size.height,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               //Put author name at the bottom of the screen
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(titleText, textAlign: TextAlign.left, style: titleFont),
+                AutoHyphenatingText(titleText,
+                    textAlign: TextAlign.left, style: titleFont),
                 if (authorText != null)
                   Text(authorText!,
                       textAlign: TextAlign.left, style: authorFont),
@@ -90,7 +145,7 @@ class TitleTextPhone extends StatelessWidget {
 const Color _textColor = NoirPrimary.shadef;
 
 TextStyle get titleFont => bodyFont.copyWith(
-    color: _textColor, fontSize: 48, fontWeight: FontWeight.w700);
+    color: NoirPrimary.shadee, fontSize: 36, fontWeight: FontWeight.w500);
 
 TextStyle get authorFont => bodyFont.copyWith(
     color: _textColor, fontWeight: FontWeight.w400, fontSize: 24);

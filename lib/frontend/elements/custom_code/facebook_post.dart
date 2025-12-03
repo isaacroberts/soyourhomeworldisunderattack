@@ -155,8 +155,8 @@ class FacebookElement extends StatelessWidget {
         decoration: BoxDecoration(
             color: NoirPrimary.shade5,
             border: Border.all(color: NoirPrimary.shade7, width: 1)),
-        margin: const EdgeInsets.only(bottom: 12, left: 6, right: 6),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+        margin: const EdgeInsets.only(bottom: 12, left: 12, right: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         child: Column(
           key: const Key("primaryCol"),
           mainAxisSize: MainAxisSize.min,
@@ -186,7 +186,8 @@ class FacebookSliver extends StatelessWidget {
     //margin
     return SliverPadding(
         key: const Key("FBPost"),
-        padding: const EdgeInsets.only(bottom: 24),
+        //margin
+        padding: const EdgeInsets.only(bottom: 24, left: 12, right: 0),
         //Max Width
         sliver: SliverCrossAxisConstrained(
             key: const Key('MaxWidth'),
@@ -196,14 +197,14 @@ class FacebookSliver extends StatelessWidget {
             child: DecoratedSliver(
                 key: const Key('Deco'),
                 decoration: BoxDecoration(
-                    color: NoirPrimary.shade4,
-                    border: Border.all(color: NoirPrimary.shade6, width: 1),
-                    borderRadius: BorderRadius.circular(24)),
+                    // color: NoirPrimary.shade2,
+                    border: Border.all(color: NoirPrimary.shade7, width: 1),
+                    borderRadius: BorderRadius.circular(12)),
                 //pad
                 sliver: SliverPadding(
                     key: const Key('Pad'),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 12),
                     sliver: SliverMainAxisGroup(
                       key: const Key("primaryCol"),
                       // mainAxisSize: MainAxisSize.min,
@@ -219,8 +220,6 @@ class FacebookSliver extends StatelessWidget {
                                   key: Key("fb_comment ${comment.ix}"),
                                   post: comment)),
                         //Spacer
-                        const SliverPadding(
-                            padding: EdgeInsets.only(bottom: 48))
                       ],
                     )))));
   }
@@ -240,7 +239,7 @@ class _MainFBPost extends StatelessWidget {
 
     return Padding(
         key: const Key("PostPad"),
-        padding: const EdgeInsets.only(top: 24),
+        padding: const EdgeInsets.only(top: 0),
         child: Column(
           key: const Key('PostCol'),
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +286,7 @@ class MainUsernameRow extends StatelessWidget {
                     key: Key("UserIcon"),
                     Icons.circle,
                     size: 48,
-                    color: NoirPrimary.shade1)),
+                    color: NoirPrimary.shade2)),
             Column(
               key: const Key("UserTextCol"),
               mainAxisAlignment: MainAxisAlignment.center,
@@ -338,7 +337,7 @@ class _CommentWidget extends StatelessWidget {
                 key: const Key("CommentIcon"),
                 realUser ? Icons.circle : Icons.circle_outlined,
                 size: 24 * fontScale,
-                color: NoirPrimary.shade1,
+                color: NoirPrimary.shade2,
               )),
           Expanded(
               child: Column(
@@ -385,7 +384,7 @@ class _CommentWidget extends StatelessWidget {
     } else {
       return Padding(
           key: const Key("CommentPad"),
-          padding: const EdgeInsets.only(top: 24),
+          padding: const EdgeInsets.only(top: 12),
           child: child);
     }
   }
@@ -410,7 +409,7 @@ class _FBUsername extends StatelessWidget {
           key: const Key("UsernameText"),
           '@$name$colon',
           style: bodyFont.copyWith(
-              color: NoirPrimary.shadea, decoration: TextDecoration.underline),
+              color: NoirPrimary.shadeb, decoration: TextDecoration.underline),
           textAlign: TextAlign.start,
         ));
   }

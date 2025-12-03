@@ -64,17 +64,23 @@ class _SidebarState extends State<Sidebar> {
             duration: const Duration(milliseconds: 350),
             width: expanded ? indexSidebarWidth : collapsedIndexWidth,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    part.primary.s3,
-                    part.primary.s4,
-                  ],
-                  stops: const [0, 1],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
+                color: part.primary.s2,
+                border: Border.symmetric(
+                    vertical: BorderSide(
+                        color: part.primary.s3,
+                        strokeAlign: BorderSide.strokeAlignInside))
+                // gradient: LinearGradient(
+                //   colors: [
+                //     part.primary.s1,
+                //     part.primary.s0,
+                //   ],
+                //   stops: const [0, 1],
+                //   begin: Alignment.bottomCenter,
+                //   end: Alignment.topCenter,
+                // ),
                 //TODO: I want this under the logo as well
-                border: Border(right: BorderSide(color: part.primary.s3))),
+                // border: Border(right: BorderSide(color: part.primary.s7))
+                ),
             // alignment: Alignment.topLeft,
             child: expanded
                 ? SidebarIndex(
@@ -127,6 +133,8 @@ class CollapsedSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Part part = ChapterProvider.of(context).part;
+
     return Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,36 +146,43 @@ class CollapsedSidebar extends StatelessWidget {
             key: const Key('smlLogo'),
           ),
           //This is to make it match the app bar
-          SizedBox(
+          Container(
               height: expandedAppBarSize - appBarSize,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                // child: StdAppBarButton(
-                //   icon: Icons.arrow_forward_ios,
-                //   onPressed: onExpanded,
-                // )
-                child: Center(
-                    child: StdAppBarButton(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                  color: part.primary.s3,
+                  border: Border.all(
+                      color: part.primary.s3,
+                      strokeAlign: BorderSide.strokeAlignInside)),
+              // child: StdAppBarButton(
+              //   icon: Icons.arrow_forward_ios,
+              //   onPressed: onExpanded,
+              // )
+              child: Center(
+                child: StdAppBarButton(
                   key: const Key('showToggle'),
                   icon: Symbols.menu_book,
                   tooltip: 'Show',
                   onPressed: onOpenIndex,
-                )),
+                  hilite: true,
+                ),
               )),
           // const Divider(),
           // const SizedBox(height: 12),
           // const Divider(),
+          const SizedBox(height: 6),
+
+          BookmarkSaveStatusIcon(
+            key: const Key('bkmkStatus'),
+            part: part,
+          ),
+          const SizedBox(height: 12),
 
           const Padding(
               padding: EdgeInsets.symmetric(vertical: 0),
               child: BookmarkNumberDisplay(
                 key: Key('bkmkNum'),
               )),
-          const SizedBox(height: 12),
-          BookmarkSaveStatusIcon(
-            key: const Key('bkmkStatus'),
-            part: part,
-          ),
           const SizedBox(height: 12),
 
           const Expanded(child: SizedBox.shrink()),

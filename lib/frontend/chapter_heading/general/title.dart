@@ -52,7 +52,6 @@ class _HeadingTitleState extends State<HeadingTitleRow> {
     Widget title = RawTitleRow(
       chapter: chapter,
     );
-
     title = RawMenuAnchor(
         controller: menuController,
         overlayBuilder: overlayBuilder,
@@ -60,12 +59,10 @@ class _HeadingTitleState extends State<HeadingTitleRow> {
     title = TextButton(onPressed: () => menuController.open(), child: title);
     title = HeaderSizer(child: title);
 
-    return SizedBox(
-        height: 60,
-        child: Padding(
-            //Standard left gutter, then space for drawer
-            padding: const EdgeInsets.only(left: 0, right: 36),
-            child: title));
+    return Padding(
+        //Standard left gutter, then space for drawer
+        padding: const EdgeInsets.only(left: 0, right: 36),
+        child: title);
   }
 
   Widget overlayBuilder(BuildContext context, RawMenuOverlayInfo info) {
@@ -92,7 +89,7 @@ class RawTitleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late TextStyle headerStyle;
-    final Color headerColor = Part.of(context).primary.se;
+    final Color headerColor = Part.of(context).headerColor;
     HeaderOfText? header = chapter?.data?.header;
     if (header is CustomHeaderOfText) {
       // headerColor = header.font.color ?? headerColor;
@@ -159,7 +156,7 @@ class ChapterNumber extends StatelessWidget {
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-            color: part.primary.s3, borderRadius: BorderRadius.circular(3)),
+            color: part.sidebarButton, borderRadius: BorderRadius.circular(3)),
         //borderRadius: BorderRadius.circular(3),
         alignment: Alignment.center,
         // margin: const EdgeInsets.symmetric(vertical: 12),

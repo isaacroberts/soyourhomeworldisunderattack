@@ -28,6 +28,16 @@ class ChapterExtra {
       this.contentWarning,
       this.what,
       this.audioUrl});
+
+  const ChapterExtra.title()
+      : contentWarning = null,
+        subtitle = 'Loyally and without hesitation',
+        where = 'Earth',
+        when = '2025',
+        recap = 'Donald Trump is destroying the US Planet',
+        audioUrl = null,
+        what = null;
+
   const ChapterExtra.fromNull({String? showErr})
       : contentWarning = showErr,
         subtitle = null,
@@ -50,6 +60,7 @@ class ChapterExtra {
       //Normal - some chapters don't have data
       return const ChapterExtra.fromNull();
     }
+
     return ChapterExtra(
         subtitle: data['Subtitle'],
         where: data['Where'],
@@ -68,6 +79,7 @@ class ChapterData {
   Stream<Holder>? stream;
 
   final List<Holder> lines = [];
+  //TODO: We're not using the header
   HeaderOfText? header; // = const HeaderOfText('Loading...');
 
   // ====  Ids ======

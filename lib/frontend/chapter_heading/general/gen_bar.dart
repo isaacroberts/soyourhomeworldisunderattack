@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:soyourhomeworld/frontend/chapter_heading/general/title.dart';
 import 'package:soyourhomeworld/frontend/chapter_heading/noir/subtitle.dart';
-import 'package:soyourhomeworld/frontend/chapter_heading/noir/title.dart';
 import 'package:soyourhomeworld/frontend/parts/grand_swatch.dart';
 
 import '../../../../backend/chapter.dart';
@@ -23,7 +23,7 @@ class GenBar extends StatelessWidget {
     return SliverAppBarChop(
       key: const Key("GenAppBar"),
       systemOverlayStyle: SystemUiOverlayStyle(
-        systemNavigationBarColor: primary.s5, // Navigation bar
+        systemNavigationBarColor: primary.sa, // Navigation bar
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
 
@@ -121,10 +121,6 @@ class _AppBarColState extends State<_AppBarCol> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        // DecoratedBox(
-        // decoration: const BoxDecoration(
-        //     border: Border(
-        //         bottom: BorderSide(color: GenPrimary.shade3, width: 1))),
         SizedBox(
             key: const Key("row1Size"),
             height: 60,

@@ -31,6 +31,13 @@ class WaterPainter extends CustomPainter {
     waterShader?.setFloat(i + 2, c.b);
   }
 
+  void setShader4Color(int i, Color c) {
+    waterShader?.setFloat(i, c.r);
+    waterShader?.setFloat(i + 1, c.g);
+    waterShader?.setFloat(i + 2, c.b);
+    waterShader?.setFloat(i + 3, c.a);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     // if (!watch.isRunning) {
@@ -61,30 +68,29 @@ class WaterPainter extends CustomPainter {
     ]);
 
     ColorTweenSequence chemicalSpill = ColorTweenSequence.fromColors(const [
-      // Color(0xff1177ff),
-      // Color(0xff223344),
-      Color(0x008f8f9c),
-      Color(0xff8a969c),
-
-      // Color(0xff515172),
-      // Color(0xff9f5172),
-      Color(0xff9c9306),
-      Color(0xff9f5172),
-      Color(0xff0aa3e4),
-      Color(0xffe3ba86),
-      Color(0xffe3ba86),
+      Color(0x000000ff),
+      Color(0x8f9c9306),
+      // Color(0xaf9f7102),
+      Color(0xff9fff72),
+      // Color(0xff005500),
     ]);
 
     //Unused because we're doing color rotation
     ColorTweenSequence earthColor = ColorTweenSequence.fromColors(
-        const [Color(0xff026031), Color(0xff26653f), Color(0xff565656)]);
+        const [Color(0xff026031), Color(0xff26653f), Color(0xff888888)]);
 
     //Cloud color
-    setShaderColor(3, cloudColor.transform(colorPt)!);
-//Middle color
-    setShaderColor(6, chemicalSpill.transform(colorPt)!);
+    setShader4Color(3, const Color(0xffffffff));
 
-    setShaderColor(9, earthColor.transform(colorPt)!);
+    // setShader4Color(3, cloudColor.transform(colorPt)!);
+//Middle color
+//     setShader4Color(7, chemicalSpill.transform(colorPt)!);
+
+    setShader4Color(7, const Color(0x00000000));
+    // setShaderColor(6, Color(0xffaaffff));
+
+    // setShaderColor(11, earthColor.transform(colorPt)!);
+    // setShaderColor(11, Color(0xff026031));
 
     Paint earthBg = Paint()
       // ..color = Color(0xffab97cd)

@@ -132,7 +132,7 @@ class Chapter {
       }
 
       //TODO: This could crash since the header could get loaded twice
-      extra ??= await parser.parseHeader();
+      extra ??= await parser.parseHeader(isTitle: index == 0);
       // parser.skipToHeaderSeparator();
 
       //Check thread wasn't cancelled
@@ -183,7 +183,7 @@ class Chapter {
     //Create objects
     var ptr = buffer_lib.BufferPtr(data.buffer);
     var parser = parser_lib.ChapterParser(debugId: info.varName, ptr: ptr);
-    extra = await parser.parseHeader();
+    extra = await parser.parseHeader(isTitle: index == 0);
     return extra!;
   }
 

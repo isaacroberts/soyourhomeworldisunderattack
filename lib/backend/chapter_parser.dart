@@ -126,13 +126,17 @@ class ChapterParser {
         hidePart: hidePart);
   }
 
-  Future<ChapterExtra> parseHeader() async {
+  Future<ChapterExtra> parseHeader({required bool isTitle}) async {
     try {
       ptr.warnConsume('\$', consumeOnMiss: false);
       ptr.warnConsume('/', consumeOnMiss: false);
 
       dynamic data = ptr.consumeJson(debugId: debugId);
       ptr.warnConsume('/', consumeOnMiss: false);
+
+      if (isTitle) {
+        return const ChapterExtra.title();
+      }
 
       return ChapterExtra.fromJson(data);
     } catch (exception, trace) {
@@ -275,12 +279,18 @@ Elements:
         );
         ptr.assertConsume(Codes.SEMICOLON, debugId: debugId);
         return holder;
-      } else if (')}]>'.contains(char)) {
+      } else if (')}]'.contains(char)) {
         //)}]>
         // dev.log('Unmatched close value $char');
         throw ChapterFormatException(
             "Unmatched paren $char in chapter binary (pos=${ptr.start})",
             debugId: debugId);
+      } else if (char == '<') {
+        //This is the JSON header
+        ErrorList.logWarning('Chapter JSONHeader missed in chapter $debugId');
+      } else if (char == '>') {
+        //End of header
+        //Ignore
       } else {
         // dev.log('Please handle $char');
         //Log & Continue

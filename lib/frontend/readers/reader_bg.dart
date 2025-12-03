@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 import 'package:soyourhomeworld/frontend/parts/gn_colors.dart';
 import 'package:soyourhomeworld/frontend/parts/rev_colors.dart';
 
@@ -10,9 +11,9 @@ BoxDecoration getTallReaderGradient() {
   return const BoxDecoration(
       gradient: LinearGradient(
     colors: [
-      NoirPrimary.shade2,
+      NoirPrimary.shade1,
       // NoirPrimary.shade3,
-      NoirPrimary.shade4,
+      NoirPrimary.shade3,
     ],
     stops: [0, 1],
     begin: Alignment.bottomCenter,
@@ -29,11 +30,11 @@ BoxDecoration getShortReaderGradient() {
   return const BoxDecoration(
       gradient: LinearGradient(
     colors: [
+      // NoirPrimary.shade2,
       NoirPrimary.shade2,
-      // NoirPrimary.shade3,
-      NoirPrimary.shade3,
+      NoirPrimary.shade1,
     ],
-    stops: [0, 1],
+    stops: [0, .9],
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
 
@@ -161,6 +162,12 @@ class RedReaderBg extends StatelessWidget {
 }
 
 Widget getGradientBg(PartId part) {
+  if (NOIR_ONLY) {
+    return const SoftReaderBg(
+      key: Key('noirBg'),
+    );
+  }
+
   switch (part) {
     case PartId.noir:
       return const SoftReaderBg(

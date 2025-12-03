@@ -17,12 +17,15 @@ const TextStyle bodyFont = TextStyle(
   inherit: false,
 );
 
-TextStyle headerFont({required Color color, double fontSize = 24}) {
+TextStyle headerFont(
+    {required Color color,
+    double fontSize = 24,
+    FontWeight fontWeight = FontWeight.w500}) {
   return TextStyle(
     fontFamily: globalFontFamily,
     fontSize: fontSize,
     color: color,
-    fontWeight: FontWeight.w500,
+    fontWeight: fontWeight,
   );
 }
 
