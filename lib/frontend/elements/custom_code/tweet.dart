@@ -10,9 +10,30 @@ import '../holders/holder_utils.dart';
 class TweetHolder extends CodeHolder {
   late String user;
   late String tweet;
+
   TweetHolder(List<Holder> spans) : super() {
     //TODO: Strip text out of spans & parse for @ and :
     String text = HolderUtils.stripOutText(spans);
+    List<String> parts = text.split(':');
+
+    if (parts[0].contains('@')) {
+      user = parts[0].replaceAll('@', '');
+    } else {
+      if (text.contains('@')) {
+        throw DeveloperException(
+            'Not implemented - Username in tweet hard to reach. list=($parts}) text="$text"');
+      } else {
+        user = parts[0];
+      }
+    }
+    if (parts.length > 1) {
+      tweet = parts.sublist(1).join(':');
+    } else {
+      tweet = 'Exception: Tweet JSON unparseable.';
+    }
+  }
+
+  TweetHolder.fromText(String text) : super() {
     List<String> parts = text.split(':');
 
     if (parts[0].contains('@')) {

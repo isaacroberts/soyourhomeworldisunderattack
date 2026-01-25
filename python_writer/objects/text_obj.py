@@ -46,6 +46,8 @@ class Header:
     def __init__(self, font, text, align):
         self.font = font
         self.text = text
+        self.level = font.headingLevel()
+        assert self.level is not None
         self._align = align
         # print('Text:', self.text)
         # assert '\n' not in self.text
@@ -67,7 +69,14 @@ class Header:
         pt = self.text
         # pt = pt.replace('\n','↵')
         # pt = pt.replace('\t','[\\t]')
-        return 'H:'+pt
+        return f'H{self.level}:'+pt
+
+    def breaks_chapter(self):
+        return self.level < 3
+
+    def chapter_start(self):
+        from objects.chapter import ChapterStart
+        return ChapterStart(self.text, self.level)
 
     def align(self):
         return self._align

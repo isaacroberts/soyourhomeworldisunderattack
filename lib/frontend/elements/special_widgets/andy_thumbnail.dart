@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:soyourhomeworld/frontend/elements/holders/span_holding_code.dart';
 import 'package:soyourhomeworld/frontend/theme/timings.dart';
 
 import '../../parts/part.dart';
 import '../../theme/font_family.dart';
 import '../../theme/text_theme.dart';
+import '../holders/holder_base.dart';
 
 class YoutubeVideo extends StatelessWidget {
   final Widget? profileIcon;
@@ -96,9 +96,9 @@ class YoutubeVideo extends StatelessWidget {
   }
 }
 
-class AndyThumbnailHolder extends SpanHoldingCode {
+class AndyThumbnailHolder extends CodeHolder {
   final String? link;
-  const AndyThumbnailHolder({required super.spans, this.link});
+  const AndyThumbnailHolder({this.link});
 
   void onPressed(BuildContext context) {
     String link = this.link ?? 'YTHook';
@@ -136,6 +136,11 @@ class AndyThumbnailHolder extends SpanHoldingCode {
   @override
   Widget debugSliver(BuildContext context) {
     return sliver(context);
+  }
+
+  @override
+  String toText() {
+    return '[Youtube Thumbnail: I went to Greenland to see the ice wall!]';
   }
 }
 

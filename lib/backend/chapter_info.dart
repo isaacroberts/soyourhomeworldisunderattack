@@ -14,19 +14,22 @@ class ChapterInfo {
   final String varName;
   final PartId partId;
   final bool isPart;
-  final bool hidePart;
+  // final bool hidePart;
   final int? next;
 
-  const ChapterInfo(
-      {required this.id,
-      required this.varName,
-      required this.displayName,
-      required this.filename,
-      required this.next,
-      required this.partId,
-      // required this.partId,
-      required this.isPart,
-      required this.hidePart});
+  int get level => isPart ? 1 : 2;
+
+  const ChapterInfo({
+    required this.id,
+    required this.varName,
+    required this.displayName,
+    required this.filename,
+    required this.next,
+    required this.partId,
+    // required this.partId,
+    required this.isPart,
+    // required this.hidePart
+  });
 
   static ChapterInfo fromJson(int index, var data) {
     ///Read from JSON instead of binary
@@ -66,14 +69,15 @@ class ChapterInfo {
     }
 
     return ChapterInfo(
-        id: index,
-        varName: varName!,
-        displayName: display,
-        filename: filename!,
-        next: next,
-        partId: PartId.values[part],
-        isPart: isPart,
-        hidePart: hidePart);
+      id: index,
+      varName: varName!,
+      displayName: display,
+      filename: filename!,
+      next: next,
+      partId: PartId.values[part],
+      isPart: isPart,
+      // hidePart: hidePart
+    );
   }
 
 // ChapterInfo.blank()

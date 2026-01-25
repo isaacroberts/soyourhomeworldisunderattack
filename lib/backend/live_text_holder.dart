@@ -260,12 +260,15 @@ class LiveTextHolder {
     }
   }
 
-  HeaderOfText instantiateHeader() {
+  HeaderOfText instantiateHeader({required int level}) {
     if (font.isStandardHeader()) {
-      return HeaderOfText(text: text);
+      return HeaderOfText(level: level, text: text);
     } else {
       return CustomHeaderOfText(
-          text: text, font: font.convertToFontInterm(), align: font.align);
+          level: level,
+          text: text,
+          font: font.convertToFontInterm(),
+          align: font.align);
     }
   }
 }

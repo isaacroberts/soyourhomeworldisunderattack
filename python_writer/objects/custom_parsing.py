@@ -245,3 +245,7 @@ def parse_imessage_object(tbpspan):
                 # items = [i for i in items if len(i)>0]
                 msgsObj.add_item(frm, msg)
     return menu
+
+def magic_card(span):
+    import objects.parses.magic as magic
+    return magic.parse(span)

@@ -13,6 +13,8 @@ import 'package:soyourhomeworld/frontend/elements/custom_code/notif_text.dart'
     deferred as notif_text_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/raised_spans.dart'
     deferred as raised_span_lib;
+import 'package:soyourhomeworld/frontend/elements/custom_code/receipt.dart'
+    deferred as receipt_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/shirts.dart'
     deferred as shirts_lib;
 import 'package:soyourhomeworld/frontend/elements/custom_code/sign.dart'
@@ -40,8 +42,8 @@ import 'ad_widget.dart' deferred as ad_widget_lib;
 import 'art.dart' deferred as art_lib;
 import 'elven_chorus.dart' deferred as elven_chorus_lib;
 import 'google_search.dart' deferred as google;
+import 'magic_card.dart' deferred as magic_card_lib;
 import 'misc_code_elements.dart' deferred as misc_code_lib;
-
 // ========= Routers =============
 
 //This will in the future need to hold a FutureHolder
@@ -126,15 +128,18 @@ Future<Holder> _instantiateCodeBlock(
     await notif_text_lib.loadLibrary();
     return notif_text_lib.NotificationTextHolder.fromSpans(
         data: params, spans: spans);
+  } else if (cls == 'LAYER') {
+    await raised_span_lib.loadLibrary();
+    return raised_span_lib.MiscLayerHolder(spans: spans);
   } else if (cls == 'YOUTUBE') {
     await raised_span_lib.loadLibrary();
     return raised_span_lib.YoutubeTranscriptHolder(spans: spans);
   } else if (cls == 'SPLATBOOK') {
     await raised_span_lib.loadLibrary();
     return raised_span_lib.DnDSplatHolder(spans: spans);
-  } else if (cls == 'MTGCARD') {
-    await raised_span_lib.loadLibrary();
-    return raised_span_lib.MtgCardHolder(spans: spans);
+  } else if (cls == 'RECEIPT') {
+    await receipt_lib.loadLibrary();
+    return receipt_lib.ReceiptHolder(spans: spans);
   } else if (cls == 'ID') {
     await raised_span_lib.loadLibrary();
     return raised_span_lib.LicenseHolder(spans: spans);
@@ -190,10 +195,68 @@ Future<Holder> _instantiateCodeBlock(
   } else if (cls == 'FLATEARTHANDYTHUMBNAIL') {
     String? link = params.readLink('link');
     await andy_thumbnail_lib.loadLibrary();
-    return andy_thumbnail_lib.AndyThumbnailHolder(spans: spans, link: link);
+    return andy_thumbnail_lib.AndyThumbnailHolder(link: link);
   } else {
     dev.log("Missed CodeBlock '$cls'");
     return UnhandledSpanHoldingCode(clsname: cls, spans: spans);
+  }
+}
+
+FutureHolder instantiateCodeSlab(String cls, CodeParams params, String text) {
+  //This needs to load the code's library
+  Future<Holder> future = _instantiateCodeSlab(cls, params, text);
+  //Return the element immediately
+  return FutureHolder(future);
+}
+
+Future<Holder> _instantiateCodeSlab(
+    String cls, CodeParams params, String text) async {
+  dev.log("Cls: $cls");
+  if (cls == 'FACEBOOK') {
+    await facebook_lib.loadLibrary();
+    return facebook_lib.FacebookHolder.fromText(text, params);
+  } else if (cls == 'TWEET') {
+    await tweet_lib.loadLibrary();
+    return tweet_lib.TweetHolder.fromText(text);
+  } else if (cls == 'NOTIFICATION') {
+    await notif_text_lib.loadLibrary();
+    return notif_text_lib.NotificationTextHolder.fromText(
+        data: params, text: text);
+  } else if (cls == 'MAGIC') {
+    //TODO: Not sure
+    await magic_card_lib.loadLibrary();
+    return magic_card_lib.MtgCardHolder.example();
+  } else if (cls == 'RECEIPT') {
+    await receipt_lib.loadLibrary();
+    return receipt_lib.ReceiptHolder.fromString(text: text);
+  } else if (cls == 'GOOGLE') {
+    await google.loadLibrary();
+    // params.print();
+    return google.GoogleSearchHolder(term: text);
+  } else if (cls == 'FLATEARTHANDYTHUMBNAIL') {
+    String? link = params.readLink('link');
+    await andy_thumbnail_lib.loadLibrary();
+    return andy_thumbnail_lib.AndyThumbnailHolder(link: link);
+  } else {
+    dev.log("Missed CodeSlab '$cls'");
+    return UnhandledCodeElement(cls, 'Slab');
+  }
+}
+
+FutureHolder instantiateParsedBlock(String cls, CodeParams params) {
+  //This needs to load the code's library
+  Future<Holder> future = _instantiateParsedBlock(cls, params);
+  //Return the element immediately
+  return FutureHolder(future);
+}
+
+Future<Holder> _instantiateParsedBlock(String cls, CodeParams params) async {
+  if (cls == 'MAGIC') {
+    await magic_card_lib.loadLibrary();
+    return magic_card_lib.MtgCardHolder(params: params);
+  } else {
+    dev.log("Missed ParsedBlock '$cls'");
+    return UnhandledCodeElement(cls, 'ParsedBlock');
   }
 }
 

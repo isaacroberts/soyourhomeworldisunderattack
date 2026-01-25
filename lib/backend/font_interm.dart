@@ -89,9 +89,9 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color,
+        color: color ?? Colors.white,
         decoration: wousi.textDecoration(),
-        decorationColor: color,
+        decorationColor: color ?? Colors.white,
       );
     } else {
       //Fallback
@@ -99,10 +99,10 @@ class FontInterm {
         fontFamily: fallbackFamily,
         fontSize: size * fontScale,
         fontWeight: weight,
-        color: color,
+        color: color ?? Colors.white,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
         decoration: wousi.textDecoration(),
-        decorationColor: color,
+        decorationColor: color ?? Colors.white,
       );
     }
   }
@@ -115,10 +115,10 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color,
+        color: color ?? Colors.white,
         backgroundColor: bgColor,
         decoration: wousi.textDecoration(),
-        decorationColor: color,
+        decorationColor: color ?? Colors.white,
       );
     } else {
       //Fallback
@@ -126,11 +126,11 @@ class FontInterm {
         fontSize: size * fontScale,
         fontWeight: weight,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        color: color,
+        color: color ?? Colors.white,
         fontFamily: globalBookFamily,
         backgroundColor: bgColor,
         decoration: wousi.textDecoration(),
-        decorationColor: color,
+        decorationColor: color ?? Colors.white,
       );
     }
   }

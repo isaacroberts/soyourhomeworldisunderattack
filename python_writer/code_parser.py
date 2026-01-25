@@ -122,9 +122,11 @@ def align_chapters(spans):
     i = 0
     while i < len(spans):
         if isinstance(spans[i], Header):
-            if not isinstance(spans[i-1], ChapterStart):
-                spans.insert(i, ChapterStart(spans[i].get_text()))
-                i+=1
+            # Only lvl 1 & 2
+            if spans[i].breaks_chapter():
+                if not isinstance(spans[i-1], ChapterStart):
+                    spans.insert(i, spans[i].chapter_start())
+                    i+=1
         elif isinstance(spans[i], CodeTag):
             obj = spans[i].obj
 
@@ -147,7 +149,13 @@ def align_chapters(spans):
 
                 if r == 'c':
                     t = pst.saveable_response('Enter ChapterTitle')
-                    spans.insert(i2, ChapterStart(t))
+                    l = pst.saveable_response("Enter chapter level (Default=1)")
+                    try:
+                        l = int(l)
+                    except:
+                        l=1
+                    # TODO: This assumes level = 1
+                    spans.insert(i2, ChapterStart(t, l))
                 elif r=='h':
                     t = pst.saveable_response('Enter text of headline.')
                     # Chapter will be added later
@@ -157,7 +165,12 @@ def align_chapters(spans):
                         pass
                     else:
                         t = spans[i2].get_text()
-                        spans.insert(i2, ChapterStart(t))
+                        l = pst.saveable_response("Enter chapter level (Default=1)")
+                        try:
+                            l = int(l)
+                        except:
+                            l=1
+                        spans.insert(i2, ChapterStart(t, l))
 
                 print('Removing ChapterEnd.')
                 spans.pop(i)

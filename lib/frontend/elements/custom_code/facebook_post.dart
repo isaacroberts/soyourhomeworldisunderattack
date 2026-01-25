@@ -110,6 +110,67 @@ class FacebookHolder extends CodeHolder {
         post: comments[0], comments: comments.sublist(1), image: image);
   }
 
+  factory FacebookHolder.fromText(String text, CodeParams params) {
+    if (text.isEmpty) {
+      return FacebookHolder.blank();
+    }
+
+    List<FacebookComment> comments = [];
+
+    String? user;
+    String? currentString;
+    bool replying = false;
+
+    List<String> spans = text.split('\n');
+    for (String spanText in spans) {
+      if (spanText.trim().startsWith('@')) {
+        if (user != null) {
+          bool wasReplying = replying;
+          replying = false;
+          if (currentString?.contains('|') ?? false) {
+            currentString = currentString!.replaceAll('|', '');
+            replying = true;
+          }
+          currentString = currentString?.trim();
+          //Save current open comment
+          comments.add(FacebookComment(
+              ix: comments.length,
+              user: user,
+              comment: currentString,
+              replying: wasReplying));
+        }
+        user = spanText.replaceAll('@', '');
+        user = user.replaceAll(':', '');
+        user = user.trim();
+        //In theory, user could be split over multiple spans
+        //This would be unfixable
+        currentString = null;
+      } else {
+        if (currentString == null) {
+          currentString = spanText;
+        } else {
+          currentString += spanText;
+        }
+      }
+    }
+    if (user != null) {
+      //Last comment can't have a reply under it
+      currentString = currentString?.trim();
+      comments.add(FacebookComment(
+          ix: comments.length,
+          user: user,
+          comment: currentString,
+          replying: replying));
+    }
+
+    ImageHolder? image;
+
+    if (comments.isEmpty) {
+      return FacebookHolder.blank();
+    }
+    return FacebookHolder._fromThings(
+        post: comments[0], comments: comments.sublist(1), image: image);
+  }
   @override
   String toText() {
     return '${post.toText()}\n\n${comments.map((c) => c.toText()).join('\n\n')}';

@@ -61,26 +61,30 @@ class _SidebarState extends State<Sidebar> {
         part: part,
         child: AnimatedContainer(
             key: Key('ctr_${part.id}'),
-            duration: const Duration(milliseconds: 350),
+            duration: const Duration(milliseconds: 250),
             width: expanded ? indexSidebarWidth : collapsedIndexWidth,
+            curve: Curves.linear,
             decoration: BoxDecoration(
-                color: part.primary.s2,
-                border: Border.symmetric(
-                    vertical: BorderSide(
-                        color: part.primary.s3,
-                        strokeAlign: BorderSide.strokeAlignInside))
-                // gradient: LinearGradient(
-                //   colors: [
-                //     part.primary.s1,
-                //     part.primary.s0,
-                //   ],
-                //   stops: const [0, 1],
-                //   begin: Alignment.bottomCenter,
-                //   end: Alignment.topCenter,
-                // ),
-                //TODO: I want this under the logo as well
-                // border: Border(right: BorderSide(color: part.primary.s7))
-                ),
+              color: part.primary.s1,
+              border: expanded
+                  ? Border(
+                      right: BorderSide(
+                          width: 1,
+                          color: part.primary.s0,
+                          strokeAlign: BorderSide.strokeAlignInside))
+                  : null,
+              // gradient: LinearGradient(
+              //   colors: [
+              //     part.primary.s1,
+              //     part.primary.s0,
+              //   ],
+              //   stops: const [0, 1],
+              //   begin: Alignment.bottomCenter,
+              //   end: Alignment.topCenter,
+              // ),
+              //TODO: I want this under the logo as well
+              // border: Border(right: BorderSide(color: part.primary.s7))
+            ),
             // alignment: Alignment.topLeft,
             child: expanded
                 ? SidebarIndex(
@@ -170,25 +174,23 @@ class CollapsedSidebar extends StatelessWidget {
           // const Divider(),
           // const SizedBox(height: 12),
           // const Divider(),
-          const SizedBox(height: 6),
+          const SizedBox(height: 24),
 
           BookmarkSaveStatusIcon(
             key: const Key('bkmkStatus'),
             part: part,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 24),
 
-          const Padding(
-              padding: EdgeInsets.symmetric(vertical: 0),
-              child: BookmarkNumberDisplay(
-                key: Key('bkmkNum'),
-              )),
-          const SizedBox(height: 12),
+          const BookmarkNumberDisplay(
+            key: Key('bkmkNum'),
+          ),
+          const SizedBox(height: 24),
 
           const Expanded(child: SizedBox.shrink()),
 
           Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
               child: _DetectingRPI(
                 key: const Key('chpNum'),
                 currentChapter: currentChapter,

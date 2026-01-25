@@ -29,6 +29,18 @@ class NotificationTextHolder extends CodeHolder {
       text = r.sublist(1).join().trim(); //.replaceAll('e', '\n');
     }
   }
+  NotificationTextHolder.fromText(
+      {required CodeParams? data, required String text}) {
+    link = data?['Link'];
+    List<String> r = text.split(':');
+    if (r.length == 1) {
+      from = '';
+      text = r.first.trim();
+    } else {
+      from = r.first.trim();
+      text = r.sublist(1).join().trim(); //.replaceAll('e', '\n');
+    }
+  }
 
   @override
   Widget sliver(BuildContext context) {

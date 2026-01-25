@@ -34,6 +34,7 @@ class ViewSettings {
   final ValueNotifier<bool> testRigNotifier;
   final ValueNotifier<bool> showFontsNotifier;
   final ValueNotifier<bool> showBottomNavNotifier;
+  final ValueNotifier<bool> showAdsNotifier;
 
   set scrollMode(ScrollMode? set) {
     if (set != null && set != scrollModeNotifier.value) {
@@ -92,7 +93,8 @@ class ViewSettings {
             ValueNotifier<ScrollMode>(ScrollMode.defaultScroll),
         testRigNotifier = ValueNotifier<bool>(false),
         showFontsNotifier = ValueNotifier<bool>(true),
-        showBottomNavNotifier = ValueNotifier<bool>(true) {
+        showBottomNavNotifier = ValueNotifier<bool>(true),
+        showAdsNotifier = ValueNotifier<bool>(true) {
     getFromSharedPrefs();
   }
 
@@ -100,12 +102,14 @@ class ViewSettings {
       {ScrollMode? useInfiniteScroll,
       bool? useTestRig,
       bool? showFonts,
-      bool? showBottomNav})
+      bool? showBottomNav,
+      bool? showAds})
       : scrollModeNotifier = ValueNotifier<ScrollMode>(
             useInfiniteScroll ?? ScrollMode.defaultScroll),
         testRigNotifier = ValueNotifier<bool>(useTestRig ?? false),
         showFontsNotifier = ValueNotifier<bool>(showFonts ?? true),
-        showBottomNavNotifier = ValueNotifier<bool>(showBottomNav ?? true) {
+        showBottomNavNotifier = ValueNotifier<bool>(showBottomNav ?? true),
+        showAdsNotifier = ValueNotifier<bool>(showAds ?? true) {
     scrollModeNotifier.addListener(anySet);
     testRigNotifier.addListener(anySet);
     showFontsNotifier.addListener(anySet);
@@ -130,6 +134,7 @@ class ViewSettings {
     _useTestRig = prefs.getBool('debug');
     _showFonts = prefs.getBool('showFonts');
     _showBottomNav = prefs.getBool('showBottomNav');
+    //TODO: Ad stuff
   }
 
   void setAllSharedPrefs() async {

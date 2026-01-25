@@ -9,8 +9,10 @@ import '../../components/app_bar_chop/app_bar_chop.dart';
 import '../../parts/part.dart';
 
 class GenBar extends StatelessWidget {
+  final bool isPart;
   const GenBar({
     super.key,
+    required this.isPart,
   });
 
   @override
@@ -29,7 +31,7 @@ class GenBar extends StatelessWidget {
 
         statusBarColor: primary.s5, // Status bar
       ),
-      actions: const [DrawerButton()],
+      // actions: const [DrawerButton(on)],
       // shape:
       //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       flexibleSpace: const GenAppBar(key: Key("AppBar")),
@@ -44,7 +46,7 @@ class GenBar extends StatelessWidget {
       collapsedHeight: collapsedHeight,
       // collapsedHeight: expandedHeight,
       expandedHeight: expandedHeight,
-      backgroundColor: primary.s4,
+      backgroundColor: isPart ? primary.s6 : primary.s4,
 
       //Baked into theme
       // surfaceTintColor: GenPrimary.shadec,

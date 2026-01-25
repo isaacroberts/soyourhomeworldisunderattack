@@ -39,7 +39,7 @@ class Font:
         # self.align = 'left'
         self.isSheeted = False
         # self.tags = set(self.tag)
-        self._isHeading = False
+        self._headingLevel = None
         self.markedNotHeading=False
         self.isSub = False
         if Font.static_body is None:
@@ -81,7 +81,7 @@ class Font:
         """
         f = Font(tag, '', None, None, None, mono=None)
         # f.align = None
-        f._isHeading = None
+        f._headingLevel = None
         f.isSub = True
         return f
 
@@ -110,8 +110,10 @@ class Font:
 
     def isCodeMarker(self):
         return False
+    def headingLevel(self):
+        return self._headingLevel
     def isHeading(self):
-        return self._isHeading and not self.markedNotHeading
+        return self._headingLevel is not None and self._headingLevel>0 and not self.markedNotHeading
     def hasColor(self):
         if self.fontCol is None:
             return False
@@ -187,17 +189,19 @@ class Font:
         vars = ['family', 'size', 'italic', 'bold',
                 'fontCol', 'bgCol', 'mono',
                  '_strikethrough', '_underline', '_overline',
-                 '_subSuper', '_small_caps']  # , 'align']
+                 '_subSuper', '_small_caps', '_headingLevel']  # , 'align']
         # Heading-ness needs to propagate, because i mess with the fonts on the headings
-        if self.markedNotHeading:
-            other._isHeading=False
-            other.markedNotHeading=True
-        elif self._isHeading:
-            # print('\t Heading')
-            other._isHeading = True
+        # if self.markedNotHeading:
+        #     other._headingLevel=0
+        #     other.markedNotHeading=True
+        # if self._headingLevel is not None:
+        #     # print('\t Heading')
+        #     other._headingLevel = self._headingLevel
 
         for v in vars:
+            # other value
             ov = getattr(other, v, None)
+            # if other is None
             if ov is None or ov == '' or ov == 0.0:
                 # print('\t', v, getattr(self, v))
                 setattr(other, v, getattr(self, v))
@@ -364,6 +368,10 @@ class Font:
     def __repr__(self):
         return str(self)
 
+    def set_header(self, level):
+        print(f"Set {self} to heading level {level}")
+        self._headingLevel=level
+
     def set_font_size(self, size):
         if isinstance(size, str):
             if 'pt' in size:
@@ -459,11 +467,19 @@ class Font:
                 self._small_caps = True
             else:
                 print('!!! Unrecognized font-variant', value)
-                exit(1)
+                pst.pause()
         elif name == 'text-outline':
-            value = bool(value)
-            self._isHeading=value
-            self.markedNotHeading=not value
+            print("Ignoring text-outline")
+            pst.pause()
+            # value = bool(value)
+            # if value:
+            #     # TODO
+            #     self._headingLevel=1
+            #     self.markedNotHeading=False
+            # else:
+            #     self._headingLevel=0
+            #     self.markedNotHeading=True
+
 
         else:
             print('!!! Unrecognized style value', name)

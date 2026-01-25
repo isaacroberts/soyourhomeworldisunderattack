@@ -3,10 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soyourhomeworld/frontend/book_waiter.dart';
+import 'package:soyourhomeworld/frontend/elements/custom_code/magic_card.dart';
 import 'package:soyourhomeworld/frontend/elements/scaffold.dart';
 import 'package:soyourhomeworld/frontend/elements/special_widgets/ad_list.dart';
-import 'package:soyourhomeworld/frontend/elements/special_widgets/greenland_game.dart';
-import 'package:soyourhomeworld/frontend/elements/widgets/loader.dart';
 import 'package:soyourhomeworld/frontend/parts/all_parts.dart';
 
 import 'backend/book.dart';
@@ -14,7 +13,6 @@ import 'backend/chapter.dart';
 import 'backend/part_id.dart';
 import 'frontend/elements/holders/holder_base.dart';
 import 'frontend/elements/holders/textholders.dart';
-import 'frontend/parts/noir_part.dart';
 import 'frontend/parts/part.dart';
 
 class PageWrap extends StatelessWidget {
@@ -84,13 +82,13 @@ class DevPage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (routerState.pathParameters.isNotEmpty) {}
 
-    return CowboyBookBuilder(
-        doneBuilder: (context) => ChapterProvider(
-            key: key,
-            chapter: Book.of(context).chapters[0],
-            part: const PartNoir(),
-            child: const TriWizardLoader(message: "Leading style...")));
-    ;
+    // return CowboyBookBuilder(
+    //     doneBuilder: (context) => ChapterProvider(
+    //         key: key,
+    //         chapter: Book.of(context).chapters[0],
+    //         part: const PartNoir(),
+    //         child: const TriWizardLoader(message: "Leading style...")));
+    // ;
 
     // return CowboyHolderWrap(
     //     holder: NotificationTextHolder.fromSpans(
@@ -109,10 +107,7 @@ class DevPage extends StatelessWidget {
     //   startChapter: 1,
     // ));
 
-    // return const AndyThumbnailHolder(spans: []).element(context);
-    return const GreenlandGamePage(
-      key: Key("GreenlandGame"),
-    );
+    return CowboyHolderWrap(holder: MtgCardHolder.example());
     return const AdList(
       key: Key("AdList"),
     );

@@ -300,13 +300,13 @@ float fbm(vec3 x) {
 ///This must generate noise, but not shift as the damn thing rotates
 vec2 latAndLong(vec3 v) {
     v = normalize(v);
-    float lat = v.y * 2;
+    float lat = v.y ;
 //    float lat = acos(v.y) /PI*2 -1  ;
     //Cosine of longitude
 //    vec3 axis = vec3(0.0,1.0,0.0);
-    float lng = atan(v.x/v.z) *2;
+    float lng = atan(v.x/v.z) ;
 //    float lng = (v.x*v.z/2 + v.x + v.z) ;
-    return .8 * vec2( lat,  lng);
+    return 1.5 * vec2( lat,  lng);
 }
 
 vec3 getRay(vec2 st, vec3 camera) {
@@ -316,7 +316,7 @@ vec3 getRay(vec2 st, vec3 camera) {
         vec3 tangent1 = crossProduct(camera, normalize(vec3(0, 1, 1)));
         tangent1 = normalize(tangent1);
         //Second normal
-        const float spread = .35;
+        const float spread = .75;
         vec3 tangent2 = crossProduct(camera, tangent1);
         tangent2 = normalize(tangent2);
         vec3 ray= spread * tangent1 * (st.x) + spread * tangent2 * (st.y) -camera;
@@ -374,7 +374,7 @@ vec4 starBackground(vec2 st)
 //return vec4(color, 1);
 //    return vec4(.5 + f * .3, .2 + f * .3, .1 * f, 1);
     //Stars
-    float star = noise(1+st*100);
+    float star = noise(1+st*40);
     if (star > .86) {
 //            fragColor = vec4(.039, .039,.101,1);
         return vec4(1,1,1,1);
@@ -460,7 +460,7 @@ void main() {
     }
     else {
         //Creates cinematic flyover
-        camera = rotateX(origCamera, u_time * timeK * .1);
+        camera = rotateX(origCamera, u_time * timeK * .0125);
     }
     vec3 ray = getRay(st, camera);
 
@@ -487,7 +487,7 @@ void main() {
     vec2 latLong =  latAndLong(coord);
     float temperature = cos(latLong.x * 2*PI);
 
-    float climateChange = clamp(u_time - 1, 0, 1000) * timeK * .05;
+    float climateChange = clamp(u_time - 1, 0, 1000) * timeK * .003;
 temperature += climateChange;
     float landness = landFreqMod(latLong) + temperature/40;
     float land2 = landFreqMod (latLong + vec2(1.0));
@@ -501,13 +501,28 @@ temperature += climateChange;
     //0xff026031
     vec3 colorLand = forestColor;
 
-    vec3 oceanColor = mix(
-    //Good water
-    vec3(0.03,0.04,.2),
-     //Bad water
-     vec3(0.1, 0.14, 0.17),
-     clamp(climateChange/7, 0, 1)
+    vec3 oceanColor;
+float waterPollutedness = climateChange/3;
+//waterPollutedness=3;
+    if (waterPollutedness<1) {
+    oceanColor = mix(
+        //Good water
+        vec3(0.03,0.04,.2),
+        //Bad water
+        vec3(0.17, .20, .21),
+         waterPollutedness
+         );
+    }
+else {
+
+    oceanColor = mix(
+        //Bad water
+        vec3(0.17, .20, .21),
+         //Plastic
+         vec3(0.87, 1, 0.69),
+         clamp(waterPollutedness-2, 0, 1)
      );
+}
 
 
 //    vec3 q = vec3(0.);
@@ -526,8 +541,9 @@ temperature += climateChange;
     float mtn =  fbm(vec2(1.5 * landness,.1) );
     mtn = clamp(-mtn, -1, 1);
     mtn = (mtn) * 2 * 2 ;
+    bool frozen =   fbm (latLong) - temperature + mtn/4> .5 ;
 
-    bool frozen =   fbm (latLong) - temperature * clamp(1-landness*2, 0, 1) + mtn/4> .5 ;
+//    bool frozen =   fbm (latLong) - temperature * clamp(1-landness*2, 0, 1) + mtn/4> .5 ;
 
 //    bool frozen =   fbm (latLong) - temperature * clamp(1-landness*2, 0, 1)> .5 || mtn > 1;
 //bool frozen = latLong.x < -.4 || latLong.x>.4;
@@ -632,7 +648,9 @@ colorLand = clamp(colorLand - .3 * valleyBurn, .2, 1);
 
         float sea1 = sin(landness);
         float sea2 = sin(land2/20);
-        float sea3 = sin(land3*100 + land2 * 109 + landness * 218) ;
+        float sea3 = sin(land3*100 + land2 * 109 + landness * 218
+        //Ripples
+        + u_time * 5.128) ;
 
         float seaMtn =  2 * landness + (  sea3 * sea3 * 20.1) * clamp(sea2, 0, 1);
 
@@ -668,11 +686,20 @@ colorLand = clamp(colorLand - .3 * valleyBurn, .2, 1);
 float ccCloudFactor = (clamp(cos(climateChange/10), 0, 1));
 
     //Clouds
-    float changingLand = landFreqMod (.25*latLong * (.1+ccCloudFactor) + vec2( latLong.x*3, -.45826*u_time));
-        changingLand = clamp(changingLand, 0, 1);
+float cloudScale = clamp(landness, 1, 10);
+    vec2 cloudPos = 3.34 * cloudScale * vec2 (  latLong.x, .25 * (latLong.y - .152 * u_time));
+//
+//    float cloudTexture = landFreqMod (.25*latLong * (.1+ccCloudFactor) + vec2( latLong.x*3, -.45826*u_time));
+//        cloudTexture = clamp(cloudTexture, 0, 1);
+vec2 fineCloudPos =  vec2 ( 7* latLong.x,.1 * (latLong.y) - .45826 * u_time);
+    float cloudTexture = landFreqMod (fineCloudPos);
+        cloudTexture = clamp(cloudTexture, 0, 1);
+//    cloudTexture=1;
 
-//        float cf = (changingLand)* (1-noise(100 * latLong + vec2( 3 * latLong.x + latLong.y, -u_time * .1) ));
-        float cf =changingLand *  ( (1-ccCloudFactor) +  noise(3.34* latLong  + vec2( latLong.x , clamp(landness*(1-ccCloudFactor), .333, 1)- .152 * u_time * timeK)));
+    float cloudWeather =   noise(cloudPos);
+
+        float cf =cloudTexture *  cloudWeather;
+        
 
   //Lower is
     cf = clamp(1-cf, .2, 1);

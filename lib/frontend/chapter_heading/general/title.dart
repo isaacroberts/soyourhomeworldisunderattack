@@ -89,8 +89,14 @@ class RawTitleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late TextStyle headerStyle;
-    final Color headerColor = Part.of(context).headerColor;
     HeaderOfText? header = chapter?.data?.header;
+    bool isPart = header?.level == 1 ?? false;
+    Part part = Part.of(context);
+    final Color headerColor = isPart ? part.primary.sf : part.headerColor;
+
+    if (header == null) {
+      return const SizedBox.shrink();
+    }
     if (header is CustomHeaderOfText) {
       // headerColor = header.font.color ?? headerColor;
 
@@ -119,6 +125,18 @@ class RawTitleRow extends StatelessWidget {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
+
+    if (header.level > 3) {
+      title = Row(
+        children: [
+          Text(
+            '${header.level}...',
+            style: appFont(color: headerColor, fontSize: 24),
+          ),
+          title,
+        ],
+      );
+    }
 
     //Too slow
     // Widget title = MarqueeText.lazy(

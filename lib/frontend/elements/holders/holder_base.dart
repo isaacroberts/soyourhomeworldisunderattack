@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:soyourhomeworld/frontend/components/deferrals/debug_wrap.dart';
 import 'package:soyourhomeworld/frontend/view_settings.dart';
 
+import '../../../backend/binary_utils/code_params.dart';
+
 // ============ Base ============================
 
 abstract class Holder {
@@ -67,6 +69,21 @@ abstract class CodeHolder extends Holder {
   //No free labor, king.
   @override
   void sweepForColor(Color color, Color? repl) {}
+}
+
+abstract class JsonCodeHolder extends CodeHolder {
+  const JsonCodeHolder({required this.params});
+
+  final CodeParams params;
+  Map<String, dynamic> get data => params.dict;
+
+  @override
+  Widget debugSliver(BuildContext context) {
+    ///Allowed on release mode
+    ///Because CAN YOU IMAGINE if something only works in Debug
+    ///TODO: Put data in the thingy
+    return DeferredCodeWrap(holder: this, showFonts: true);
+  }
 }
 
 bool shouldShowFonts(BuildContext context) {

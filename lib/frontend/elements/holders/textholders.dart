@@ -123,7 +123,8 @@ class AlignedBodyText extends TextHolder {
 // ============ Headers ============================
 
 class HeaderOfText extends TextHolder {
-  const HeaderOfText({required super.text});
+  final int level;
+  const HeaderOfText({required this.level, required super.text});
 
   @override
   Widget element(BuildContext context) {
@@ -169,7 +170,10 @@ class CustomHeaderOfText extends HeaderOfText {
   final TextAlign align;
   FontInterm font;
   CustomHeaderOfText(
-      {required super.text, required this.font, this.align = TextAlign.center});
+      {required super.level,
+      required super.text,
+      required this.font,
+      this.align = TextAlign.center});
 
   @override
   Widget element(BuildContext context) {

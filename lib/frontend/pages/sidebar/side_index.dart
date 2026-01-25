@@ -36,7 +36,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
   late Book book;
 
   bool pin = false;
-  bool partsOnly = false;
+  // bool partsOnly = false;
   Chapter? get currentChapter => widget.currentChapter.value;
 
   @override
@@ -67,6 +67,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: const Key('indexCol'),
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -77,6 +78,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
           part: widget.part,
         ),
         Container(
+          key: const Key('indexCtr'),
           decoration: BoxDecoration(
             color: widget.part.primary.s3,
             // border: Border.all(
@@ -91,16 +93,18 @@ class _SidebarIndexState extends State<SidebarIndex> {
         //TODO: Extract widget
 
         Expanded(
+            key: const Key('indexList'),
             child: ScrollConfiguration(
                 //TODO: Make second ScrollBehavior
                 behavior: const ScrollBehavior(),
                 child: SizedBox(
                     width: indexSidebarWidth,
                     child: ListView.builder(
+                      key: const Key('indexLV'),
                       controller: controller,
                       itemBuilder: itemBuilder,
-                      prototypeItem: chapterTile(context, book.chapters[1]),
-                      itemCount: partsOnly ? null : book.chapterAmt,
+                      // prototypeItem: partTile(context, 0),
+                      itemCount: book.partAmt,
                       shrinkWrap: false,
 
                       // children: book.chapters.map(chapterTile).toList(growable: false),
@@ -120,7 +124,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
         // ),
         StdAppBarButton(
           key: Key('partToggle_$p'),
-          icon: partsOnly ? Symbols.book_5 : Symbols.book_2,
+          icon: Symbols.book_5, //: Symbols.book_2,
           onPressed: togglePartsOnly,
           tooltip: 'Show Parts',
         ),
@@ -154,15 +158,10 @@ class _SidebarIndexState extends State<SidebarIndex> {
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
-    if (partsOnly) {
-      if (index >= 0 && index < book.partAmt) {
-        return chapterTile(context, book.getPartStart(index));
-      }
-    } else {
-      if (index >= 0 && index < book.chapterAmt) {
-        return chapterTile(context, book.chapters[index]);
-      }
+    if (index >= 0 && index < book.partAmt) {
+      return partTile(context, index);
     }
+
     return null;
   }
 
@@ -178,10 +177,7 @@ class _SidebarIndexState extends State<SidebarIndex> {
 
   ///Only show parts in index
   void togglePartsOnly() {
-    setState(() {
-      partsOnly = !partsOnly;
-    });
-    _scrollToCurrentAfterReload();
+    //TODO: Collapse all tiles
   }
 
   void togglePin() {
@@ -208,43 +204,46 @@ class _SidebarIndexState extends State<SidebarIndex> {
     bool isCurrent = chapter == currentChapter;
     Widget? trailing = trailingWidget(context, chapter, part);
     trailing = SizedBox(width: 12, child: trailing);
-    if (chapter.isPart && !partsOnly) {
-      return Container(
-          decoration: BoxDecoration(
-            color: isCurrent ? part.primary.s5 : part.primary.s3,
-            // border: Border.symmetric(
-            //     vertical: BorderSide(color: part.primary.s8))
-          ),
-          child: ListTile(
+
+    return Container(
+        decoration:
+            BoxDecoration(color: isCurrent ? part.primary.s4 : part.primary.s1),
+        child: ListTile(
+            // tileColor: NoirPrimary.shade5,
             onTap: () => tileTapped(context, chapter),
             title: Text(
               chapter.displayName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: headerFont(color: part.primary.sf, fontSize: 16),
+              style: headerFont(color: part.primary.se, fontSize: 16),
             ),
-            trailing: trailing,
-          ));
-    } else {
-      return Container(
-          decoration: BoxDecoration(
-            color: isCurrent ? part.primary.s4 : part.primary.s2,
-            // border: Border.all(
-            //     // color: part.primary.s3,
-            //     width: .5,
-            //     strokeAlign: BorderSide.strokeAlignOutside)
+            trailing: trailing));
+  }
+
+  Widget partTile(BuildContext context, int partIndex) {
+    Chapter chapter = book.getPartStart(partIndex);
+    Part part = getPartImmediate(chapter.part);
+    bool isCurrent = chapter == currentChapter;
+
+    return Container(
+        decoration: BoxDecoration(
+          color: isCurrent ? part.primary.s5 : part.primary.s3,
+          // border: Border.symmetric(
+          //     vertical: BorderSide(color: part.primary.s8))
+        ),
+        child: ExpansionTile(
+          // onTap: () => tileTapped(context, chapter),
+          title: Text(
+            chapter.displayName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: headerFont(color: part.primary.sf, fontSize: 16),
           ),
-          child: ListTile(
-              // tileColor: NoirPrimary.shade5,
-              onTap: () => tileTapped(context, chapter),
-              title: Text(
-                chapter.displayName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: headerFont(color: part.primary.se, fontSize: 16),
-              ),
-              trailing: trailing));
-    }
+          children: book
+              .getPartRange(partIndex)
+              .map((c) => chapterTile(context, c))
+              .toList(growable: false),
+        ));
   }
 
   Widget? trailingWidget(BuildContext context, Chapter chapter, Part part) {
@@ -260,18 +259,10 @@ class _SidebarIndexState extends State<SidebarIndex> {
       }
       return Icon(
         key: const Key('bkMkr'),
-        Icons.bookmark_outline,
+        //Corkboard pin
+        Symbols.keep,
         color: color,
       );
-    } else if (partsOnly) {
-      //TODO: This will work once parts are fully integrated, i think
-      if (currentChapter?.part == chapter.part) {
-        return Icon(
-          key: const Key('bkMkr'),
-          Symbols.book_5,
-          color: color,
-        );
-      }
     } else if (chapter.isPart) {
       //Closed book
       return Icon(Symbols.book_2, color: color);
@@ -287,14 +278,10 @@ class _SidebarIndexState extends State<SidebarIndex> {
     if (mounted) {
       //TODO: Get current chapter from a static value
       const double tileHeight = 51;
-      double offset;
-      if (partsOnly) {
-        //There aren't enough parts to fill the screen
-        offset = 0;
-      } else {
-        offset = (scrollTo.index) * tileHeight - 50;
-        offset = math.max(0, offset);
-      }
+      //TODO: This won't work anymore
+      double offset = (scrollTo.index) * tileHeight - 50;
+      offset = math.max(0, offset);
+
       controller.animateTo(offset,
           duration: const Duration(milliseconds: 1000),
           curve: Curves.easeInOut);

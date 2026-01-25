@@ -116,14 +116,15 @@ class ChapterParser {
     ptr.assertConsume(';', debugId: varName);
 
     return ChapterInfo(
-        id: index,
-        displayName: displayName ?? '[$varName]',
-        filename: filename,
-        varName: varName,
-        next: nextId,
-        partId: part,
-        isPart: isPart,
-        hidePart: hidePart);
+      id: index,
+      displayName: displayName ?? '[$varName]',
+      filename: filename,
+      varName: varName,
+      next: nextId,
+      partId: part,
+      isPart: isPart,
+      // hidePart: hidePart
+    );
   }
 
   Future<ChapterExtra> parseHeader({required bool isTitle}) async {
@@ -229,6 +230,7 @@ Elements:
         // ( Beginning of font or parameters
         ptr = liveHolder.font.parseDecorations(ptr);
       } else if (char == 'H') {
+        int level = ptr.consumeUint8();
         String? text = ptr.consumeText();
         if (text == null) {
           throw ChapterFormatException("No text in header", debugId: debugId);
@@ -236,7 +238,7 @@ Elements:
         liveHolder.text = text;
         ptr = liveHolder.parseFont(ptr);
         ptr.assertConsume(Codes.SEMICOLON, debugId: debugId);
-        return liveHolder.instantiateHeader();
+        return liveHolder.instantiateHeader(level: level);
       } else if (char == 'S') {
         return parseMultiSpan();
       } else if (char == 'N') {
@@ -478,8 +480,30 @@ Elements:
       return instantiateCodeBlock(cls, params, spans);
       //Instantiate
     } else if (type == CodeElementType.parsedCodeElement) {
-      throw ChapterFormatException("ParsedBlock no longer supported.",
-          debugId: debugId);
+      bool hasSpans = ptr.consumeIf(Codes.LBRACE);
+      List<Holder> spans = [];
+
+      if (hasSpans) {
+        int binLen = ptr.consumeUint32();
+        ptr.assertConsume('.', debugId: debugId);
+        ptr.assertConsume('[', debugId: debugId);
+
+        if (binLen > 0) {
+          //Scope for memory
+          BufferPtr secondPtr = ptr.subset(0, binLen);
+          ptr.consume(binLen);
+
+          // Open a Second ChapterParser.
+          ChapterParser subParser =
+              ChapterParser(debugId: debugId, ptr: secondPtr);
+          //This technically could send a stream
+          spans = subParser.parseHolders().toList(growable: false);
+        }
+        ptr.assertConsume(']', debugId: debugId);
+        ptr.assertConsume(';', debugId: debugId);
+        ptr.assertConsume(Codes.RBRACE, debugId: debugId);
+      }
+      return instantiateParsedBlock(cls, params);
     } else {
       throw const DeveloperException("Update CodeElementTypes if ladder");
     }

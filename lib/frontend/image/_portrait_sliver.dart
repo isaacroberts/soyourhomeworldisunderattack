@@ -355,11 +355,20 @@ class _PortraitRenderSliver extends RenderSliverToBoxAdapter {
         context.paintChild(child!, offset);
       },
     );
-
-    Rect testRect =
-        Rect.fromLTWH(0, imageOffset.dy, width, geometry!.layoutExtent);
-    // context.canvas.drawRect(rect.shift(imageOffset).deflate(3), bgCover);
-    context.canvas.drawRect(testRect.deflate(3), bgCover);
+    // layer = context.pushClipRRect(
+    //   //This allows animations
+    //   true,
+    //   imageOffset,
+    //   rect,
+    //   RRect.fromRectAndRadius(rect, Radius.circular(12)),
+    //   (context, offset) {
+    //     context.paintChild(child!, offset + childParentData.paintOffset);
+    //   },
+    // );
+    // Rect testRect =
+    //     Rect.fromLTWH(0, imageOffset.dy, width, geometry!.layoutExtent);
+    // // context.canvas.drawRect(rect.shift(imageOffset).deflate(3), bgCover);
+    // context.canvas.drawRect(testRect.deflate(3), bgCover);
   }
 
   // ===== Utility ===================

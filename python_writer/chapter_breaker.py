@@ -38,7 +38,13 @@ def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='font
         pst.recall_saved_responses('data/chapterbreaker_responses')
 
     chapters = break_chapters(spans)
-    assert (len(chapters)>0)
+
+    print(chapters)
+    # pst.pause()
+
+    assert (len(chapters)>1)
+
+
     chapters = clean_chapters(chapters)
 
     pst.print_and_save_responses('data/chapterbreaker_responses')
@@ -46,12 +52,18 @@ def run_all(use_saved_responses=None, spans_in='spans_coded.json',fonts_in='font
     write(chapters, chapters_out)
 
 def break_chapters(spans):
+    """
+    Uses existing ChapterStart demarcations
+    TODO: Redo ChapterStart insertions
+    """
     chapters = []
 
     if not isinstance(spans[0], ChapterStart):
         spans.insert(0, ChapterStart.leadingTitleChapter())
 
     # Om nom nom
+    # Eat spans into list of chapters
+    # Using existing ChapterStarts inserted by code_parse.py
     while len(spans) > 0 :
         print(spans[0], type(spans[0]))
         print(len(spans))

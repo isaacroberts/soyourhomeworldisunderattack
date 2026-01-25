@@ -22,7 +22,7 @@ class LoadNextFillRemaining extends StatelessWidget {
             key: const Key("fillRemCt"),
             //Large so that user can keep scrolling, triggering another notification
             height: 200,
-            color: part.primary.s3,
+            color: part.primary.s1,
             alignment: Alignment.center,
             child: Column(
                 key: const Key("fillRemCol"),

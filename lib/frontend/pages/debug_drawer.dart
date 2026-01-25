@@ -55,7 +55,7 @@ class DebugDrawer extends StatelessWidget {
       value: ViewSettings.instance.testRigNotifier,
     )); // listTiles.add(SwitchListTile(
     listTiles.add(NotifiedSwitch(
-      label: 'Fonts',
+      label: 'Ads',
       value: ViewSettings.instance.showFontsNotifier,
     )); //Drawer
     return Drawer(

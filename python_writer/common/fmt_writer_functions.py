@@ -182,6 +182,9 @@ def text_in_style(span):
 def headerElement(span):
     b = BinList('hdrElem')
     b += 'H'
+    level = str(span.level)
+    assert level in '1234567890'
+    b += pack_untyped_short(level)
     b += pack_text(span.text)
     #TODO: Add this
     # if !span.font.isHeading():
@@ -394,6 +397,8 @@ def code_span_element(span):
     assert isinstance(span, code_objects.CodeSection)
 
     obj = span.obj
+    # clean non-ascii chars
+    obj = ''.join(c for c in obj if ord(c) < 128)
     # fname = f'handle_{obj.upper()}'
     b = BinList("code_span_element")
     b += 'C'

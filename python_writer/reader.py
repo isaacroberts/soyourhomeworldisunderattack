@@ -68,7 +68,7 @@ def soup_to_styles(style_soup, content_soup):
 
         style_handler = StyleHandler()
         style_handler.health_inspection()
-        #
+        #bulk of the work
         for style in master_styles:
             print('Master style:', style['style:name'])
             # print(style['style:name'])
@@ -76,6 +76,8 @@ def soup_to_styles(style_soup, content_soup):
 
             style_handler.read(style, is_sub_font=False)
                     # assert isinstance(font.size, double)
+
+        # pst.pause()
 
         style_handler.health_inspection()
         for style in sub_styles:
@@ -89,6 +91,7 @@ def soup_to_styles(style_soup, content_soup):
         print('Wo fill')
         print(style_handler.fonts)
         print(style_handler.sub_fonts)
+
         pst.click(3)
 
         print('Parents:')
@@ -105,6 +108,18 @@ def soup_to_styles(style_soup, content_soup):
         print('Filled:')
         print(style_handler.fonts)
         print(style_handler.sub_fonts)
+
+
+        for tag, style in style_handler.fonts.items():
+            if style.isHeading():
+                print(f"Font '{tag}' {style} is heading {style.headingLevel()}")
+
+        for tag, style in style_handler.sub_fonts.items():
+            if style.isHeading():
+                print(f"SubFont '{tag}' {style} is heading {style.headingLevel()}")
+
+        # pst.pause()
+
         pst.click(3)
     finally:
         logger_end()

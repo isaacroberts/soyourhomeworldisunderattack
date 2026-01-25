@@ -9,17 +9,17 @@ class ChapterStart:
     IDMaxLen = 15
     DisplayMaxLen = 75
 
-    def __init__(self, headline_text):
+    def __init__(self, headline_text, level):
         # self.index=None
         assert headline_text is not None
         self.headline_text = headline_text
-        self.part = None
+        self.part = level<=1
         # self.id = ChapterStart.create_var_name(self.headline_text)
         # self.display_name = ChapterStart.abbrev_name(headline_text.strip(), ChapterStart.DisplayMaxLen)
         # self.next = None
 
     def leadingTitleChapter():
-        c= ChapterStart('Title')
+        c= ChapterStart('Title', 0)
         c.index=0
         c.display_name='Help! My Homeworld!'
         c.id='title'
@@ -100,20 +100,16 @@ class Chapter:
         self.data = {}
 
     # === Getters ===
+    def __str__(self):
+        return self.id
+    def __repr__(self):
+        return self.id
     def matches_bookmark(self, tag):
         if tag in self.bookmarks:
             return True
 
     def varName(self):
         return self.id
-
-    def leadingTitleChapter():
-        c= ChapterStart('Title')
-        c.index=0
-        c.display_name='>'
-        c.id='title'
-        return c
-
 
     # ======= Text Formatting ==================
     def set_id(self, orig_id):

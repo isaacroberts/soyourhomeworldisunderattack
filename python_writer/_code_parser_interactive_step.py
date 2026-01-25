@@ -284,6 +284,7 @@ class InteractiveMatchingStep():
         if self.openBO is not None:
             prompt += "\no = matches CustomBlock,"
         prompt += """
+y = Match
 c = Change (type)
 w = add ParsedBlock, a=add CustomBlock, z=add tag,
 k = convert to keyword,
@@ -628,7 +629,7 @@ p=print, x=exit
                 "Blahblahblah"
             /Article = tag
         """
-        # - always assumed to be close
+        # - always a close
         if tag == '-':
             return True
         # Anything with a ':' is definitely a new object
@@ -660,6 +661,8 @@ p=print, x=exit
 
         To avoid 1000 "nos", uses "no_bother":
             No_bother = [0 (most desparate), 5 (only correct answers)]
+
+        Returns i, is_end_included_in_block
         """
         start_i = i
         self.openPO = self.spans[i]
@@ -693,6 +696,9 @@ p=print, x=exit
             elif isinstance(self.spans[i], CodeTag):
                 clashingObj = self.spans[i].obj
                 print('Found CodeTag:', clashingObj)
+                if clashingObj == '-':
+                    return i, True
+                    
                 if clashingObj.startswith('//'):
                     closed, is_end = self._offer_parsed_object_close(0, i, True)
                     if closed:

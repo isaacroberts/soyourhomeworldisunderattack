@@ -52,6 +52,7 @@ class StdImageHolder extends ImageHolder {
       return NoImageWidget(
           key: Key("NoImg$url"), reason: getNoImageReason(), holder: this);
     }
+    return LandscapeSliver(key: Key('landscape_$id'), holder: this);
     if (aspectRatio == null) {
       // return SliverToBoxAdapter(child: widget.child);
       return LandscapeSliver(key: Key('landscape_$id'), holder: this);

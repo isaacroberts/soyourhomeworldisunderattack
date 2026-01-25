@@ -127,7 +127,7 @@ class ChapterData {
   }
 
   HeaderOfText get headerOrPlaceholder =>
-      header ?? const HeaderOfText(text: 'Loading...');
+      header ?? const HeaderOfText(level: 1, text: 'Loading...');
 
   ///Used for rounding up images for display & dipose
   Iterable<StdImageHolder> getImages() sync* {
@@ -241,7 +241,7 @@ class ChapterData {
   void postLoadCleanup() async {
     sweepForFutures();
 
-    await sweepForColors();
+    // await sweepForColors();
 
     if (lines.isNotEmpty) {
       Holder? topElement = lines[0];
@@ -295,7 +295,7 @@ class ChapterData {
 
   void handleLoadFailed() {
     dev.log("Load failed!");
-    header ??= const HeaderOfText(text: '[Error]');
+    header ??= const HeaderOfText(level: 1, text: '[Error]');
     if (lines.isEmpty) {
       lines.add(const BodyTextElement('[text]'));
     }

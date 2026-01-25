@@ -11,6 +11,7 @@ class CodeParams {
   final String? main;
   final Map<String, dynamic> dict;
   const CodeParams({this.main, this.dict = const {}});
+  const CodeParams.dict(this.dict) : main = null;
 
   const CodeParams.empty()
       : main = null,

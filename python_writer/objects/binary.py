@@ -34,7 +34,7 @@ class BinList:
         self.bstr+= pack_untyped_uint(dataSize)
         # Data
         self.bstr += jsonstr
-        # Close > for symmetry 
+        # Close > for symmetry
         self.bstr += pack_literal('>')
 
 
@@ -224,6 +224,8 @@ def pack_short_int(num):
         if '.' in num:
             num = float(num)
             num = int(np.round(num))
+        else:
+            num = int(num)
     else:
         try:
             num = int(num)
@@ -474,18 +476,20 @@ def pack_untyped_short(num):
         if '.' in num:
             num = float(num)
             num = int(np.round(num))
+        else:
+            num = int(num)
     else:
         try:
             num = int(num)
         except:
-            assert False, f'Passed non-number {type(num)} to pack_short_int'
+            assert False, f'Passed non-number {type(num)} to pack_untyped_short'
 
     if num >=0 and num < 128:
         # Can remove leading zeros here
         packed = struct.pack('!B', num)
         assert(len(packed)==1)
     else:
-        assert False, 'Number too large for pack_short_int'
+        assert False, 'Number too large for pack_untyped_short'
 
     return packed
 

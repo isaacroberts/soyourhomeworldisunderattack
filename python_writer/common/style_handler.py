@@ -11,6 +11,10 @@ import font_lookup as font_lookup
 
 import common.files as cf
 
+import sys
+sys.path.append("/home/titzak/scripts/")
+import python_script_tools as pst
+
 CODE_TAG_STYLE_NAME = 'code_5f_marker'
 
 """
@@ -101,7 +105,19 @@ class StyleHandler:
 
         # if name == 'Heading':
         if 'Heading' in name:
-            font._isHeading = True
+            if name == 'Heading_20_1' or \
+                name=='Heading':
+                font.set_header(1)
+            elif name.startswith('Heading_20_'):
+                n = name.replace('Heading_20_','')
+                value = int(n)
+                print(f"Heading level {value}")
+                font.set_header(value)
+            elif name == 'List_20_Heading':
+                pass
+            else:
+                print(f'Unrecognized heading level: "{name}"')
+                exit(1)
         # if 'style:display-name' in style.attrs:
         #     font.set_display_name(style.attrs['style:display-name'])
 

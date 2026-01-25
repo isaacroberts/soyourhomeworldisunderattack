@@ -23,6 +23,7 @@ def code_tag_replacements():
         'Menu': 'SoupMenu',
         'Button': 'GotoButton',
         'Goto': 'Next',
+        'Tiktok':'TikTok',
         # 'Chapter': 'ChapterStart',
     }
 
@@ -54,7 +55,9 @@ def uniquely_parsed_objects():
     """
     return [
         'TimedAudio', 'Columns', "SoupMenu", 'CheckboxRows',
-        'Texts', 'Sign2Columns'
+        'Texts', 'Sign2Columns',
+        'Magic',
+
     ]
 
 def block_objects():
@@ -84,11 +87,13 @@ def block_objects():
         'HJLogo','SRABusinessCard1',
 
     # Layers
+    'Layer',
     'Splatbook',
     'Youtube',
+    'TikTok',
     'Email',
-    'MtgCard',
     'Article',
+    'Receipt',
     'ID',
 
     # Parsed by Flutter
@@ -155,6 +160,8 @@ def parse_custom(span, obj):
     print("Parsing", obj, '(ParsedBlock)')
     if obj == 'Columns':
         return custom_parsing.parse_columns(span)
+    elif obj == 'Magic':
+        return custom_parsing.magic_card(span)
     elif obj == 'SoupMenu':
         return custom_parsing.parse_soup_menu(span)
     elif obj == 'TimedAudio':

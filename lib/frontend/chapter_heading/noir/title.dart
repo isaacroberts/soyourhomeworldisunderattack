@@ -172,7 +172,7 @@ class ChapterNumber extends StatelessWidget {
         // padding: const EdgeInsets.symmetric(horizontal: 6),
         child: Text(
           _chapterNumberToText(index),
-          style: headerFont(color: part.primary.se, fontSize: 16),
+          style: headerFont(color: part.primary.sc, fontSize: 16),
         ));
   }
 }

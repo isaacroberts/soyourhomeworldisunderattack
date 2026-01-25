@@ -79,13 +79,14 @@ def upgrade_to_headers(spans):
     print('Upgrade to Headers')
     # for sp in spans:
     for i in range(len(spans)):
-
         if isinstance(spans[i], TextSpan):
             if spans[i].font.isHeading():
-                # This is an attribute from the style manager
-                if not spans[i].font.markedNotHeading:
-                    print('->Heading', spans[i])
-                    spans[i] = Header(spans[i].font, spans[i].text, spans[i].align())
+                print('->Heading', spans[i])
+                spans[i] = Header(spans[i].font, spans[i].text, spans[i].align())
+        elif isinstance(spans[i], Header):
+            print('->Heading', spans[i])
+    print("That's all the headers")
+    # pst.pause()
     health_inspection(spans)
     return spans
 
@@ -509,6 +510,7 @@ def create_multi_spans(spans):
 # ============= From Multispan creator ===========
 
 def span0_check(span0):
+    # I believe this checks whether spans can be merged with the next span
     t= type(span0).__name__
     print(t, span0)
     if t == 'TextSpan':
